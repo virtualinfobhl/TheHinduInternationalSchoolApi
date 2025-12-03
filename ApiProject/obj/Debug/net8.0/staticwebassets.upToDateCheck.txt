@@ -1,0 +1,11 @@
+wwwroot\Image\ALLSchoolData\1\EAadharPhoto\5.png
+wwwroot\Image\ALLSchoolData\1\EBankpassbookPhoto\5.png
+wwwroot\Image\ALLSchoolData\1\EmployeePhoto\5.png
+wwwroot\Image\ALLSchoolData\1\StudentPhoto\390.jpeg
+wwwroot\Image\SchoolLogo\Logo\1.png
+wwwroot\Image\ALLSchoolData\1\Aadhar\782.png
+wwwroot\Image\ALLSchoolData\1\father_aadhar\782.png
+wwwroot\Image\ALLSchoolData\1\JanAadhar\782.png
+wwwroot\Image\ALLSchoolData\1\mother_aadhar\782.png
+wwwroot\Image\ALLSchoolData\1\stubirth\782.png
+wwwroot\Image\ALLSchoolData\1\StudentPhoto\782.png

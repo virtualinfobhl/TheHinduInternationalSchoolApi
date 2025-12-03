@@ -1,0 +1,725 @@
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\appsettings.Development.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\appsettings.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.runtime.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.endpoints.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.exe
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.deps.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.runtimeconfig.json
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ApiProject.pdb
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\AutoMapper.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Azure.Core.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Azure.Identity.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\EPPlus.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\EPPlus.Interfaces.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\EPPlus.System.Drawing.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Humanizer.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Build.Locator.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Data.SqlClient.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Memory.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Json.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyModel.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Options.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Primitives.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Abstractions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Logging.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Tokens.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.OpenApi.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Mono.TextTemplating.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.ClientModel.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.CodeDom.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Composition.AttributedModel.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Composition.Convention.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Composition.Hosting.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Composition.Runtime.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Composition.TypedParts.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Configuration.ConfigurationManager.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Diagnostics.DiagnosticSource.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Drawing.Common.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Formats.Asn1.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.IdentityModel.Tokens.Jwt.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.IO.Pipelines.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Memory.Data.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Runtime.Caching.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Security.Cryptography.ProtectedData.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Security.Permissions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Text.Encodings.Web.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Text.Json.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\System.Windows.Extensions.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+G:\web project\School\ApiProject\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.csproj.AssemblyReference.cache
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfoInputs.cache
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfo.cs
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.csproj.CoreCompileInputs.cache
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cs
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cache
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\scopedcss\bundle\ApiProject.styles.css
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets.build.json
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets.development.json
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets.build.endpoints.json
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.ApiProject.Microsoft.AspNetCore.StaticWebAssets.props
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.ApiProject.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.build.ApiProject.props
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.buildMultiTargeting.ApiProject.props
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.buildTransitive.ApiProject.props
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets.pack.json
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.csproj.Up2Date
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.dll
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\refint\ApiProject.dll
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.pdb
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ApiProject.genruntimeconfig.cache
+G:\web project\School\ApiProject\ApiProject\obj\Release\net8.0\ref\ApiProject.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.Development.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.endpoints.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.runtime.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.exe
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.deps.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.runtimeconfig.json
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.pdb
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\AutoMapper.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Core.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Identity.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.Interfaces.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.System.Drawing.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Humanizer.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Build.Locator.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Data.SqlClient.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Memory.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Json.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyModel.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Options.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Primitives.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Abstractions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Logging.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Tokens.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.OpenApi.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Mono.TextTemplating.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.ClientModel.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.CodeDom.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.AttributedModel.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Convention.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Hosting.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Runtime.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.TypedParts.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Configuration.ConfigurationManager.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Diagnostics.DiagnosticSource.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Drawing.Common.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Formats.Asn1.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IdentityModel.Tokens.Jwt.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IO.Pipelines.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Memory.Data.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Runtime.Caching.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.ProtectedData.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Permissions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Encodings.Web.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Json.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Windows.Extensions.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+G:\Github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.AssemblyReference.cache
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfoInputs.cache
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfo.cs
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.CoreCompileInputs.cache
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cs
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cache
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.sourcelink.json
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\scopedcss\bundle\ApiProject.styles.css
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.json
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.development.json
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.endpoints.json
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.ApiProject.Microsoft.AspNetCore.StaticWebAssets.props
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.ApiProject.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.build.ApiProject.props
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.buildMultiTargeting.ApiProject.props
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets\msbuild.buildTransitive.ApiProject.props
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.pack.json
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.Up2Date
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.dll
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\refint\ApiProject.dll
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.pdb
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.genruntimeconfig.cache
+G:\Github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ref\ApiProject.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.Development.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.runtime.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.endpoints.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.exe
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.deps.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.runtimeconfig.json
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.pdb
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\AutoMapper.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Core.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Identity.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.Interfaces.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.System.Drawing.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Humanizer.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Build.Locator.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Data.SqlClient.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Json.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Options.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Primitives.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.OpenApi.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Mono.TextTemplating.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.ClientModel.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.CodeDom.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.AttributedModel.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Convention.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Hosting.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Runtime.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.TypedParts.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Configuration.ConfigurationManager.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Diagnostics.DiagnosticSource.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Drawing.Common.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Formats.Asn1.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IO.Pipelines.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Memory.Data.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Runtime.Caching.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Permissions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Encodings.Web.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Json.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Windows.Extensions.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.AssemblyReference.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rpswa.dswa.cache.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfoInputs.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfo.cs
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.CoreCompileInputs.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cs
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.sourcelink.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjimswa.dswa.cache.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjsmrazor.dswa.cache.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjsmcshtml.dswa.cache.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\scopedcss\bundle\ApiProject.styles.css
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.json.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.development.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.endpoints.json
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.Up2Date
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.dll
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\refint\ApiProject.dll
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.pdb
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.genruntimeconfig.cache
+D:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ref\ApiProject.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.Development.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\appsettings.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.runtime.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.staticwebassets.endpoints.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.exe
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.deps.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.runtimeconfig.json
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ApiProject.pdb
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\AutoMapper.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Core.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Azure.Identity.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.Interfaces.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\EPPlus.System.Drawing.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Humanizer.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Build.Locator.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Data.SqlClient.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Caching.Memory.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Configuration.Json.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.DependencyModel.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Options.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Extensions.Primitives.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Abstractions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Logging.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IdentityModel.Tokens.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.OpenApi.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Mono.TextTemplating.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.ClientModel.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.CodeDom.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.AttributedModel.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Convention.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Hosting.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.Runtime.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Composition.TypedParts.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Configuration.ConfigurationManager.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Diagnostics.DiagnosticSource.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Drawing.Common.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Formats.Asn1.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IdentityModel.Tokens.Jwt.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.IO.Pipelines.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Memory.Data.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Runtime.Caching.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.Pkcs.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Cryptography.ProtectedData.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Security.Permissions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Encodings.Web.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Text.Json.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\System.Windows.Extensions.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+F:\github\api.vedusoft.in\ApiProject\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.AssemblyReference.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rpswa.dswa.cache.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfoInputs.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.AssemblyInfo.cs
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.CoreCompileInputs.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cs
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.MvcApplicationPartsAssemblyInfo.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.sourcelink.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjimswa.dswa.cache.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjsmrazor.dswa.cache.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\rjsmcshtml.dswa.cache.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\scopedcss\bundle\ApiProject.styles.css
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.json.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.development.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.build.endpoints.json
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.csproj.Up2Date
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.dll
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\refint\ApiProject.dll
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.pdb
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ApiProject.genruntimeconfig.cache
+F:\github\api.vedusoft.in\ApiProject\obj\Release\net8.0\ref\ApiProject.dll

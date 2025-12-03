@@ -1,0 +1,424 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/Aadhar/24.eniymdp5bc.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\Aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"eniymdp5bc"},{"Name":"integrity","Value":"sha256-6ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/Aadhar/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"232861"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/Aadhar/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\Aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-6ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"232861"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/father_aadhar/24.45obuhtg16.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\father_aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"45obuhtg16"},{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/father_aadhar/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/father_aadhar/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\father_aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/IncomeCertificate/24.fvqxmvtjyn.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\IncomeCertificate\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"fvqxmvtjyn"},{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/IncomeCertificate/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:09 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/IncomeCertificate/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\IncomeCertificate\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:09 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/mother_aadhar/24.1ff3a5qwp4.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\mother_aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"1ff3a5qwp4"},{"Name":"integrity","Value":"sha256-zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/mother_aadhar/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3878956"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/mother_aadhar/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\mother_aadhar\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3878956"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:07 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/24.gzmt0wavlq.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentPhoto\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"gzmt0wavlq"},{"Name":"integrity","Value":"sha256-nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2773"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentPhoto\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2773"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/390.5ipweew5fc.jpeg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentPhoto\390.jpeg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5ipweew5fc"},{"Name":"integrity","Value":"sha256-47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/390.jpeg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"0"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002247DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 06:36:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentPhoto/390.jpeg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentPhoto\390.jpeg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"0"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002247DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 06:36:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentTC/24.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentTC\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/1/StudentTC/24.rj34pgmsyf.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\1\StudentTC\24.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rj34pgmsyf"},{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/1/StudentTC/24.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 08:27:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/0.1vvbwsp9cu.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"1vvbwsp9cu"},{"Name":"integrity","Value":"sha256-86lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/Aadhar/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"67025"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002286lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-86lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"67025"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002286lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/22.1vvbwsp9cu.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"1vvbwsp9cu"},{"Name":"integrity","Value":"sha256-86lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/Aadhar/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"67025"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002286lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-86lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"67025"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002286lc\u002BpybHabngVT7Vp/EHKL/tc1q494saoGe8Bdlnqc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/23.2jprhuurpc.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"2jprhuurpc"},{"Name":"integrity","Value":"sha256-Ar2bbigHCxrvJm9WZBuE3iYm3uw4ol3gH418jlClhlw="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/Aadhar/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"69035"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Ar2bbigHCxrvJm9WZBuE3iYm3uw4ol3gH418jlClhlw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:42 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/Aadhar/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\Aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Ar2bbigHCxrvJm9WZBuE3iYm3uw4ol3gH418jlClhlw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"69035"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Ar2bbigHCxrvJm9WZBuE3iYm3uw4ol3gH418jlClhlw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:42 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/0.1ff3a5qwp4.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"1ff3a5qwp4"},{"Name":"integrity","Value":"sha256-zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/father_aadhar/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3878956"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3878956"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zY5Qo1JJIdtOBpgkAnfM2M9J7snRcC5YFU4bgdqef\u002Bs=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"444986"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/22.yv2s6e00rj.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"yv2s6e00rj"},{"Name":"integrity","Value":"sha256-YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/father_aadhar/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"444986"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"444986"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/father_aadhar/23.yv2s6e00rj.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\father_aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"yv2s6e00rj"},{"Name":"integrity","Value":"sha256-YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/father_aadhar/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"444986"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022YkTGx1jMBfHV8UYjfZi0\u002BFlBMBWLwJHYCXUMap55/mc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/0.fvqxmvtjyn.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"fvqxmvtjyn"},{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/22.afqv0c2704.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"afqv0c2704"},{"Name":"integrity","Value":"sha256-hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"145677"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"145677"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/23.afqv0c2704.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"afqv0c2704"},{"Name":"integrity","Value":"sha256-hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"145677"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:44 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/IncomeCertificate/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\IncomeCertificate\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"145677"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hic4d90SVn9EW6HN9li\u002BHVaQHUCK5/75U6GVpwuUuE0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:44 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/0.54swa5vxc8.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\0.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"54swa5vxc8"},{"Name":"integrity","Value":"sha256-VQRSl2KcWTZaN6gFYR8mhWxOGyTJK1kTiwnObpYuZlU="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/JanAadhar/0.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"174968"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VQRSl2KcWTZaN6gFYR8mhWxOGyTJK1kTiwnObpYuZlU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:24 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/0.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\0.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-VQRSl2KcWTZaN6gFYR8mhWxOGyTJK1kTiwnObpYuZlU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"174968"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VQRSl2KcWTZaN6gFYR8mhWxOGyTJK1kTiwnObpYuZlU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:24 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/22.fvqxmvtjyn.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"fvqxmvtjyn"},{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/JanAadhar/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/23.fvqxmvtjyn.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"fvqxmvtjyn"},{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/JanAadhar/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/JanAadhar/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\JanAadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"184269"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022tbeYFH8X6HrXxX1kUD8cqSy0N3OxjzqqcL44nE7duKQ=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/0.rj34pgmsyf.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rj34pgmsyf"},{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/22.lre8mn3730.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lre8mn3730"},{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:46 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/23.rj34pgmsyf.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\LastMarkSheetPhoto\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rj34pgmsyf"},{"Name":"integrity","Value":"sha256-90PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/LastMarkSheetPhoto/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"185491"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002290PmyXkXWGk06tVvcGee/2FZMDWBGkojjT8ZYZs0mJ4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:46 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/0.45obuhtg16.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"45obuhtg16"},{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/mother_aadhar/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/22.eniymdp5bc.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"eniymdp5bc"},{"Name":"integrity","Value":"sha256-6ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/mother_aadhar/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"232861"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-6ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"232861"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226ozB29\u002BLsNJSxNQxnLrkouSg8RxtGJq\u002BKR6mk0J7Azc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/23.ipsjce7rib.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ipsjce7rib"},{"Name":"integrity","Value":"sha256-FsxeougjrzEIomWgeQEk\u002BdMTG1g\u002BlfEA89e\u002B\u002B9vVHi4="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/mother_aadhar/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"252272"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FsxeougjrzEIomWgeQEk\u002BdMTG1g\u002BlfEA89e\u002B\u002B9vVHi4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/mother_aadhar/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\mother_aadhar\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-FsxeougjrzEIomWgeQEk\u002BdMTG1g\u002BlfEA89e\u002B\u002B9vVHi4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"252272"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FsxeougjrzEIomWgeQEk\u002BdMTG1g\u002BlfEA89e\u002B\u002B9vVHi4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/0.lre8mn3730.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lre8mn3730"},{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/stubirth/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/22.ov6s4gp63y.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ov6s4gp63y"},{"Name":"integrity","Value":"sha256-LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/stubirth/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"75764"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"75764"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/23.ov6s4gp63y.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ov6s4gp63y"},{"Name":"integrity","Value":"sha256-LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/stubirth/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"75764"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/stubirth/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\stubirth\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"75764"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022LBpyDdSjWszg1ZgcpJAwoSYJqnKU/L5FtTex/jzZesA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/0.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\0.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-FvEFKVspfo7rEfX5Qz7dgBe3SJuiVYElAeH179HCmLI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"13996"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FvEFKVspfo7rEfX5Qz7dgBe3SJuiVYElAeH179HCmLI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/0.qovunzbetu.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\0.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qovunzbetu"},{"Name":"integrity","Value":"sha256-FvEFKVspfo7rEfX5Qz7dgBe3SJuiVYElAeH179HCmLI="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentPhoto/0.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"13996"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FvEFKVspfo7rEfX5Qz7dgBe3SJuiVYElAeH179HCmLI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/22.nb3xqb3y6i.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nb3xqb3y6i"},{"Name":"integrity","Value":"sha256-7Vop1Um\u002ByGmbvL0H4wo\u002Bs1frODV5XVCRwZnzwM6prKg="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentPhoto/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3953"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00227Vop1Um\u002ByGmbvL0H4wo\u002Bs1frODV5XVCRwZnzwM6prKg=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-7Vop1Um\u002ByGmbvL0H4wo\u002Bs1frODV5XVCRwZnzwM6prKg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3953"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00227Vop1Um\u002ByGmbvL0H4wo\u002Bs1frODV5XVCRwZnzwM6prKg=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/23.gzmt0wavlq.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"gzmt0wavlq"},{"Name":"integrity","Value":"sha256-nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentPhoto/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2773"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:39 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentPhoto/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentPhoto\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2773"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nPnWlR70hQMdoFahkMI/o6CDszJnnqc22TlM932ch3E=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:39 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/0.19df9g6qhe.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"19df9g6qhe"},{"Name":"integrity","Value":"sha256-1blhT7ekHawi32cOBHwV0pFvyXgX1DFt61kwjkWELm8="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentTC/0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"330587"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00221blhT7ekHawi32cOBHwV0pFvyXgX1DFt61kwjkWELm8=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:26 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-1blhT7ekHawi32cOBHwV0pFvyXgX1DFt61kwjkWELm8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"330587"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00221blhT7ekHawi32cOBHwV0pFvyXgX1DFt61kwjkWELm8=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:19:26 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/22.45obuhtg16.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"45obuhtg16"},{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentTC/22.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/22.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\22.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"3628346"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BOD/9B5mMd4NhZjL4rqdky4Sp97RfI8PlpmT41b8iso=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 06:48:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/23.lre8mn3730.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lre8mn3730"},{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="},{"Name":"label","Value":"_content/ApiProject/Image/ALLSchoolData/StudentTC/23.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:46 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/ALLSchoolData/StudentTC/23.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\ALLSchoolData\StudentTC\23.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"251785"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022P4G9jhqJX3\u002Bteo5vkOkBYdNn9aRYx657kjFEuJPfyR0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Jul 2025 07:17:46 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/SchoolLogo/Logo/1.g8afr6b7rl.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\SchoolLogo\Logo\1.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"g8afr6b7rl"},{"Name":"integrity","Value":"sha256-cNt4xESl/NKkqJhjZSL6YHcrop237wHfioP36ZxT3hg="},{"Name":"label","Value":"_content/ApiProject/Image/SchoolLogo/Logo/1.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"121482"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022cNt4xESl/NKkqJhjZSL6YHcrop237wHfioP36ZxT3hg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 17 May 2025 09:47:50 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ApiProject/Image/SchoolLogo/Logo/1.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\SchoolLogo\Logo\1.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-cNt4xESl/NKkqJhjZSL6YHcrop237wHfioP36ZxT3hg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"121482"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022cNt4xESl/NKkqJhjZSL6YHcrop237wHfioP36ZxT3hg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 17 May 2025 09:47:50 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
