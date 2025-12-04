@@ -2463,6 +2463,11 @@
         "Name": "admissionReceipt.FeeDiscount",
         "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.PaymentDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -3057,7 +3062,7 @@
       },
       {
         "Name": "rte",
-        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -3276,7 +3281,7 @@
         "IsRequired": false
       },
       {
-        "Name": "feeInstallments",
+        "Name": "feeInstallment",
         "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Request.FeeInstallmentReqDto, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
       },
@@ -3303,6 +3308,11 @@
       {
         "Name": "admissionReceipt.FeeDiscount",
         "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.PaymentDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -3960,8 +3970,8 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.TransportController",
-    "Method": "UpdateStudentRouteAssign",
-    "RelativePath": "api/Transport/UpdateStudentRouteAssign",
+    "Method": "UpdateStudentRouteAss",
+    "RelativePath": "api/Transport/UpdateStudentRouteAss",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

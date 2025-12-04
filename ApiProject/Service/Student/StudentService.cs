@@ -15,6 +15,7 @@ using System.Collections.Immutable;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Linq.Expressions;
 using static ApiProject.Models.Response.ClassByFeeInResponse;
 
 
@@ -545,7 +546,7 @@ namespace ApiProject.Service.Student
 
                     var allSchoolDataRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image", "ALLSchoolData");
                     var schoolFolderPath = Path.Combine(allSchoolDataRoot, SchoolId.ToString());
-                    
+
                     if (!Directory.Exists(schoolFolderPath))
                     {
                         Directory.CreateDirectory(schoolFolderPath);
@@ -604,7 +605,7 @@ namespace ApiProject.Service.Student
                     student.university_id = request.ClassId;
                     student.college_id = request.SectionId;
                     student.stu_code = StudentCode;
-                       
+
                     student.stu_name = request.stu_name;
                     student.DOB = request.DOB;
                     student.gender = request.gender;
@@ -740,12 +741,12 @@ namespace ApiProject.Service.Student
                         RollNo = "",
                         RTE = request.RTE != "0",
                         Status = "AdmissionPayfee",
-                      //  AdmissionPayfee = 
-                   //   AFeeDiscount = 
+                        //  AdmissionPayfee = 
+                        //   AFeeDiscount = 
                         Active = true,
                         completed = false,
-                        StuDetail = false,
-                        StuFees = false,
+                        StuDetail = true,
+                        StuFees = true,
                         Dropout = false,
                         Date = request.admission_date,
                         CompanyId = SchoolId,
@@ -775,7 +776,7 @@ namespace ApiProject.Service.Student
                     else
                     {
                         studentrenew.admission_fee = studentfee.admission_fee;
-                    
+
                         studentrenew.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
                         studentrenew.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
                         studentrenew.PramoteFees = 0;
@@ -803,28 +804,62 @@ namespace ApiProject.Service.Student
                             .Where(p => p.university_id == studentrenew.ClassId && p.CompanyId == SchoolId && p.SessionId == SessionId)
                             .ToListAsync();
 
-                        foreach (var inst in installments)
+                        // पहला max id एक बार निकालो
+                        int maxId = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
+
+                        // अब for loop use करो
+                        for (int i = 0; i < request.feeInstallments.Count; i++)
                         {
+                            var inst = request.feeInstallments[i];
+
+                            maxId++; // हर नई entry के लिए नया ID
+
                             var feeInstall = new fee_installment
                             {
-                                Id = (_context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1),
+                                Id = maxId,
                                 stu_id = student.stu_id,
                                 university_id = studentrenew.ClassId,
                                 paid_date = DateTime.Now,
-                                IntallmentID = inst.InstallmentId,
+                                IntallmentID = inst.IntallmentID,
                                 total_fee = studentrenew.total_fee,
                                 Installment = inst.Installment,
-                                due_fee = inst.FeeAmount,
-                                FAmount = inst.FeeAmount,
+                                FAmount = inst.FAmount,
+                                due_fee = inst.FAmount,
                                 active = true,
                                 Date = DateTime.Now,
                                 SessionId = SessionId,
                                 CompanyId = SchoolId,
-                                Userid = UserId,
+                                Userid = UserId
                             };
+
                             _context.fee_installment.Add(feeInstall);
-                            await _context.SaveChangesAsync();
                         }
+
+                        // एक बार में save
+                        await _context.SaveChangesAsync();
+
+                        //foreach (var inst in installments)
+                        //{
+                        //    var feeInstall = new fee_installment
+                        //    {
+                        //        Id = (_context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1),
+                        //        stu_id = student.stu_id,
+                        //        university_id = studentrenew.ClassId,
+                        //        paid_date = DateTime.Now,
+                        //        IntallmentID = inst.InstallmentId,
+                        //        total_fee = studentrenew.total_fee,
+                        //        Installment = inst.Installment,
+                        //        due_fee = inst.FeeAmount,
+                        //        FAmount = inst.FeeAmount,
+                        //        active = true,
+                        //        Date = DateTime.Now,
+                        //        SessionId = SessionId,
+                        //        CompanyId = SchoolId,
+                        //        Userid = UserId,
+                        //    };
+                        //    _context.fee_installment.Add(feeInstall);
+                        //    await _context.SaveChangesAsync();
+                        //}
 
                         // fee Receipt
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
@@ -866,7 +901,7 @@ namespace ApiProject.Service.Student
                             int FDId = (_context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1);
                             var receipt = new M_FeeDetail
                             {
-                               
+
                                 ReceiptNo = ReceiptCode,
                                 OrderNo = NewOrderNo.ToString(),
                                 OrderStatus = "Succcessfully",
@@ -1169,10 +1204,10 @@ namespace ApiProject.Service.Student
                     //}
 
                     var allSchoolDataRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image", "ALLSchoolData");
-                  
+
                     var schoolFolderPath = Path.Combine(allSchoolDataRoot, SchoolId.ToString());
 
-                   
+
                     if (!Directory.Exists(schoolFolderPath))
                     {
                         Directory.CreateDirectory(schoolFolderPath);
@@ -1234,25 +1269,37 @@ namespace ApiProject.Service.Student
                     student.cast_category = request.cast_category;
                     student.blood_group = request.blood_group;
                     student.Caste = request.caste;
-                    student.ParentsId = parentid;
 
-                    student.address = request.address;
-                    student.district = request.district;
-                    student.city = request.city;
+                    student.university_id = request.classId;
+                    student.college_id = request.sectionId;
+                    //   student.ParentsId = parentid;
+
+                    student.father_name = request.fathername == null ? " " : request.fathername;
+                    student.father_mobile = request.fathermobileno == null ? " " : request.fathermobileno;
+                    student.father_occupation = request.fatherOP == null ? " " : request.fatherOP;
+                    student.Fatherlncome = request.fatherIncome;
+                    student.mother_name = request.mothername == null ? " " : request.mothername;
+                    student.mother_mobile = request.mothermobileno == null ? " " : request.mothermobileno;
+                    student.mother_occupation = request.motherOP == null ? " " : request.motherOP;
+                    student.MotherIncome = request.motherIncome;
+
+                    student.address = request.address == null ? " " : request.address;
                     student.state = request.state;
-                    student.pincode = request.pincode;
-                    student.p_address = request.p_address;
-                    student.p_district = request.p_district;
-                    student.p_city = request.p_city;
+                    student.district = request.district;
+                    student.city = request.city == null ? " " : request.city;
+                    student.pincode = request.pincode == null ? " " : request.pincode;
+                    student.p_address = request.p_address == null ? " " : request.p_address;
                     student.p_state = request.p_state;
-                    student.p_pincode = request.p_pincode;
+                    student.p_district = request.p_district;
+                    student.p_city = request.p_city == null ? " " : request.p_city;
+                    student.p_pincode = request.p_pincode == null ? " " : request.p_pincode;
 
-                    student.LastSchlName = request.lastSchlName;
-                    student.LastClass = request.lastClass;
+                    student.LastSchlName = request.lastSchlName == null ? " " : request.lastSchlName;
+                    student.LastClass = request.lastClass == null ? " " : request.lastClass;
                     student.LastExanTotalMarks = request.lastExanTotalMarks;
-                    student.LastDivision = request.lastDivision;
-                    student.LastParecentage = request.lastParecentage;
-                    student.LastRemarks = request.lastRemarks;
+                    student.LastDivision = request.lastDivision == null ? " " : request.lastDivision;
+                    student.LastParecentage = request.lastParecentage == null ? " " : request.lastParecentage;
+                    student.LastRemarks = request.lastRemarks == null ? " " : request.lastRemarks;
 
                     student.StuDetail = true;
                     student.StuFee = true;
@@ -1262,13 +1309,15 @@ namespace ApiProject.Service.Student
                     Student_Renew studentrenew = _context.Student_Renew.Where(r => r.StuId == student.stu_id && r.ClassId == request.classId && r.CompanyId == SchoolId && r.SessionId == SessionId).FirstOrDefault();
                     var studentfee = _context.fees.Where(p => p.university_id == request.classId && p.CompanyId == SchoolId && p.SessionId == SessionId).FirstOrDefault();
 
-
                     studentrenew.ClassId = request.classId == null ? studentrenew.ClassId : request.classId;
-                    studentrenew.RTE = request.rte == false ? false : true;
-                    //studentrenew.RollNo = request.rollNo == null ? "" : request.rollNo;
                     studentrenew.SectionId = request.sectionId == 0 ? 0 : request.sectionId;
-                    studentrenew.ParentsId = parentid;
-                    if (studentrenew.RTE == true)
+                    studentrenew.RTE = request.rte != "0";
+                    studentrenew.StuDetail = true;
+                    studentrenew.StuFees = true;
+
+                    //studentrenew.RollNo = request.rollNo == null ? "" : request.rollNo;
+                    //  studentrenew.ParentsId = parentid;
+                    if ((bool)studentrenew.RTE)
                     {
                         studentrenew.admission_fee = 0;
                         studentrenew.PramoteFees = 0;
@@ -1296,7 +1345,7 @@ namespace ApiProject.Service.Student
                         studentrenew.total = studentfee.total;
                         studentrenew.discount = request.admissionReceipt.FeeDiscount ?? 0;
                         //   studentrenew.OldDuefees = request.admissionReceipt.oldDuefees ?? 0;
-                        studentrenew.total_fee = (studentrenew.total ?? 0) - (studentrenew.discount ?? 0) + (studentrenew.OldDuefees ?? 0);
+                        studentrenew.total_fee = (studentrenew.total ?? 0) - (studentrenew.discount ?? 0) /*+ (studentrenew.OldDuefees ?? 0)*/;
                     }
 
                     studentrenew.Userid = UserId;
@@ -1310,24 +1359,26 @@ namespace ApiProject.Service.Student
                         _context.SaveChanges();
                     }
 
-                    if (studentrenew.RTE == false)
+                    if ((bool)!studentrenew.RTE)
                     {
-                        for (int i = 0; i < request.feeInstallments.Count; i++)
+                        for (int i = 0; i < request.feeInstallment.Count; i++)
                         {
                             fee_installment feeInstall = new fee_installment();
                             feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
-                            feeInstall.university_id = studentrenew.ClassId;
-                            feeInstall.FAmount = request.feeInstallments[i].SInsAmount;
                             feeInstall.stu_id = student.stu_id;
+                            feeInstall.university_id = studentrenew.ClassId;
+                            feeInstall.IntallmentID = request.feeInstallment[i].IntallmentID;
+                            feeInstall.Installment = request.feeInstallment[i].Installment;
+                            feeInstall.FAmount = request.feeInstallment[i].FAmount;
+                            feeInstall.due_fee = request.feeInstallment[i].FAmount;
                             feeInstall.SessionId = SessionId;
                             feeInstall.CompanyId = SchoolId;
                             feeInstall.Userid = UserId;
-                            //      feeInstall.CreateDate = DateTime.Now;
-                            //      feeInstall.UpdateDate = DateTime.Now;
 
                             _context.fee_installment.Add(feeInstall);
                             _context.SaveChanges();
                         }
+
 
                         M_FeeDetail RStudentFeesU = await _context.M_FeeDetail.Where(r => r.stu_id == studentrenew.StuId && r.CompanyId == SchoolId && r.ClassId == studentrenew.ClassId && r.SessionId == SessionId && r.Status == "AdmissionPayFee").FirstOrDefaultAsync();
 
@@ -1337,10 +1388,24 @@ namespace ApiProject.Service.Student
                             {
                                 ReceiptId = RStudentFeesU.FDId;
                                 RStudentFeesU.Userid = UserId;
-                                //  RStudentFeesU.UpdateDate = DateTime.Now;
-                                RStudentFeesU.PaymentDate = DateTime.Now;
+                                RStudentFeesU.AdmissionFees = studentfee.admission_fee;
+                                RStudentFeesU.ExamFees = studentfee.exam_fee;
+                                RStudentFeesU.Tutionfee = studentfee.tution_fee;
+                                RStudentFeesU.Develoment_fee = studentfee.Develoment_fee;
+                                RStudentFeesU.Games_fees = studentfee.Games_fees;
+                                RStudentFeesU.FeeTotal = studentfee.total;
+                                RStudentFeesU.Discount = 0;
+                                RStudentFeesU.OldDuefees = 0;
+                                RStudentFeesU.TotalFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                RStudentFeesU.NetDueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                RStudentFeesU.DueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+
+                                RStudentFeesU.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
+                                RStudentFeesU.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
+                                RStudentFeesU.PramoteFees = request.admissionReceipt.pramoteFees;
+
+                                RStudentFeesU.PaymentDate = request.admissionReceipt.PaymentDate;
                                 RStudentFeesU.PaymentMode = request.admissionReceipt.PaymentMode;
-                                RStudentFeesU.PayFees = (studentrenew.AdmissionPayfee ?? 0) + (studentrenew.PramoteFees ?? 0);
                                 RStudentFeesU.Cash = 0;
                                 RStudentFeesU.Upi = 0;
                                 _context.SaveChanges();
@@ -1373,11 +1438,29 @@ namespace ApiProject.Service.Student
                                 RStudentFees.Userid = UserId;
                                 RStudentFees.SessionId = SessionId;
                                 RStudentFees.Date = DateTime.Now.Date;
-                                //   RStudentFees.CreateDate = DateTime.Now;
-                                //   RStudentFees.UpdateDate = DateTime.Now;
-                                RStudentFees.PaymentDate = DateTime.Now;
+
+                                RStudentFeesU.AdmissionFees = studentfee.admission_fee;
+                                RStudentFeesU.ExamFees = studentfee.exam_fee;
+                                RStudentFeesU.Tutionfee = studentfee.tution_fee;
+                                RStudentFeesU.Develoment_fee = studentfee.Develoment_fee;
+                                RStudentFeesU.Games_fees = studentfee.Games_fees;
+                                RStudentFeesU.FeeTotal = studentfee.total;
+                                RStudentFeesU.Discount = 0;
+                                RStudentFeesU.OldDuefees = 0;
+                                RStudentFeesU.TotalFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                RStudentFeesU.NetDueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                RStudentFeesU.DueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+
+                                RStudentFeesU.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
+                                RStudentFeesU.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
+                                RStudentFeesU.PramoteFees = request.admissionReceipt.pramoteFees;
+
+                                RStudentFees.PaymentDate = request.admissionReceipt.PaymentDate;
                                 RStudentFees.PaymentMode = request.admissionReceipt.PaymentMode;
-                                RStudentFees.PayFees = (studentrenew.AdmissionPayfee ?? 0) + (studentrenew.PramoteFees ?? 0);
+                                RStudentFeesU.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
+                                RStudentFeesU.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
+                                RStudentFeesU.PramoteFees = request.admissionReceipt.pramoteFees;
+                                //  RStudentFees.PayFees = (studentrenew.AdmissionPayfee ?? 0) + (studentrenew.PramoteFees ?? 0);
                                 RStudentFees.Cash = 0;
                                 RStudentFees.Upi = 0;
 
@@ -1398,7 +1481,7 @@ namespace ApiProject.Service.Student
                         }
                     }
 
-                    await transaction.CommitAsync();
+                     await transaction.CommitAsync();
                     var result = new quickadmissionres
                     {
                         StudentId = student.stu_id,
@@ -1676,24 +1759,23 @@ namespace ApiProject.Service.Student
                 int SessionId = _loginUser.SessionId;
 
                 var students = await _context.StudentRenewView.Where(c => (request.ClassId == 0 ? true : c.ClassId == request.ClassId)
-                                && (request.SectionId == -1 ? true : c.SectionId == request.SectionId)
-                                && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.SessionId == SessionId && c.CompanyId == SchoolId)
-                            .OrderBy(c => c.stu_name).Select(c => new StudentRollNoResponse
-                            {
-                                StudentId = c.StuId,
-                                ClassId = c.ClassId,
-                                SectionId = c.SectionId,
-                                StudentName = c.stu_name,
-                                StudentPhoto = c.stu_photo,
-                                DateOfBirth = c.DOB,
-                                Attendance = c.Attendance,
-                                SRNo = c.registration_no,
-                                RollNo = c.RollNo,
-                                ClassName = _context.University.Where(p => p.university_id == c.ClassId && p.CompanyId == SchoolId).Select(p => p.university_name).FirstOrDefault(),
-                                Sectionname = _context.collegeinfo.Where(s => s.collegeid == c.SectionId && s.CompanyId == SchoolId).Select(s => s.collegename).FirstOrDefault()
+                                && (request.SectionId == -1 ? true : c.SectionId == request.SectionId) && c.RActive == true && c.StuDetail == true && c.Dropout == false
+                                && c.StuFees == true && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name)
+                                .Select(c => new StudentRollNoResponse
+                                {
+                                    StudentId = c.StuId,
+                                    ClassId = c.ClassId,
+                                    SectionId = c.SectionId,
+                                    StudentName = c.stu_name,
+                                    //  StudentPhoto = c.stu_photo,
+                                    DateOfBirth = c.DOB,
+                                    Attendance = c.Attendance,
+                                    SRNo = c.registration_no,
+                                    RollNo = c.RollNo,
+                                    ClassName = _context.University.Where(p => p.university_id == c.ClassId && p.CompanyId == SchoolId).Select(p => p.university_name).FirstOrDefault(),
+                                    Sectionname = _context.collegeinfo.Where(s => s.collegeid == c.SectionId && s.CompanyId == SchoolId).Select(s => s.collegename).FirstOrDefault()
 
-
-                            }).ToListAsync();
+                                }).ToListAsync();
                 if (students == null || !students.Any())
                 {
                     return ApiResponse<List<StudentRollNoResponse>>.ErrorResponse("No students found matching the criteria");
@@ -1734,6 +1816,7 @@ namespace ApiProject.Service.Student
                             studentRenew.RollNo = currentStuRollNo.RollNo;
                             studentRenew.Attendance = currentStuRollNo.Attendance;
                             studentRenew.SectionId = currentStuRollNo.SectionId;
+                            studentRenew.TotalGrade = currentStuRollNo.Grade;
                             await _context.SaveChangesAsync();
                         }
                     }
@@ -1760,12 +1843,12 @@ namespace ApiProject.Service.Student
 
                 var students = await _context.StudentRenewView.Where(c => (request.ClassId == 0 ? true : c.ClassId == request.ClassId)
                                 && (request.SectionId == -1 ? true : c.SectionId == request.SectionId)
-                                && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.SessionId == SessionId && c.CompanyId == SchoolId)
+                                && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.Dropout == false && c.SessionId == SessionId && c.CompanyId == SchoolId)
                             .OrderBy(c => c.stu_name).Select(c => new StudentDiscountFeeResponse
                             {
                                 StudentId = c.StuId,
                                 StudentName = c.stu_name,
-                                StudentPhoto = c.stu_photo,
+                                //  StudentPhoto = c.stu_photo,
                                 ClassId = c.ClassId,
                                 SectionId = c.SectionId,
                                 RollNo = c.RollNo,
@@ -1800,11 +1883,11 @@ namespace ApiProject.Service.Student
             int SchoolId = _loginUser.SchoolId;
             int UserId = _loginUser.UserId;
             int SessionId = _loginUser.SessionId;
+
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
-
                     if (request == null || request.Count == 0)
                     {
                         return ApiResponse<bool>.ErrorResponse("No student data provided");
@@ -1814,8 +1897,8 @@ namespace ApiProject.Service.Student
                     {
                         for (int i = 0; i < request.Count; i++)
                         {
-                            var StudentFeeDiscont = request[i];
-                            var studentRenew = _context.Student_Renew.Where(p => p.StuId == StudentFeeDiscont.StudentId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true).FirstOrDefault();
+                            var FeeDiscont = request[i];
+                            var studentRenew = _context.Student_Renew.Where(p => p.StuId == FeeDiscont.StudentId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true).FirstOrDefault();
                             if (studentRenew.RTE == false)
                             {
                                 var classfee = _context.fees.Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId && f.university_id == studentRenew.ClassId && f.active == true).FirstOrDefault();
@@ -1829,72 +1912,137 @@ namespace ApiProject.Service.Student
                                     studentRenew.Develoment_fee = classfee.Develoment_fee;
                                     studentRenew.Games_fees = classfee.Games_fees;
                                     studentRenew.total = classfee.total;
-                                    studentRenew.discount = StudentFeeDiscont.discount;
+                                    studentRenew.discount = FeeDiscont.discount;
                                     studentRenew.total_fee = (studentRenew.total + studentRenew.OldDuefees) - studentRenew.discount;
 
                                     await _context.SaveChangesAsync();
                                 }
-                            }
-                            var FeeInstalment = _context.fee_installment.Where(c => c.stu_id == studentRenew.StuId && c.CompanyId == SchoolId && c.SessionId == SessionId).ToList();
-                            _context.fee_installment.RemoveRange(FeeInstalment);
-                            await _context.SaveChangesAsync();
 
-                            var newinstallment = _context.InstallmentTbl.Where(p => p.university_id == studentRenew.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId).ToList();
-                            if (newinstallment != null && newinstallment.Count > 0)
-                            {
-                                double remainingFee = (double)studentRenew.total_fee / newinstallment.Count;
+                                var student = _context.student_admission.Where(p => p.stu_id == FeeDiscont.StudentId && p.CompanyId == SchoolId && p.active == true).FirstOrDefault();
 
-                                for (int l = 0; l < newinstallment.Count; l++)
+                                if (student != null)
+
                                 {
-                                    fee_installment feeInstall = new fee_installment();
-                                    feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
+                                    student.admission_fee = classfee.admission_fee;
+                                    student.tution_fee = classfee.tution_fee;
+                                    student.exam_fee = classfee.exam_fee;
+                                    student.Develoment_fee = classfee.Develoment_fee;
+                                    student.Games_fees = classfee.Games_fees;
+                                    student.total = studentRenew.total;
+                                    student.discount = studentRenew.discount;
+                                    student.total_fee = studentRenew.total_fee;
+                                    student.due_fee = studentRenew.total_fee;
 
-                                    feeInstall.university_id = studentRenew.ClassId;
-                                    feeInstall.stu_id = studentRenew.StuId;
-                                    feeInstall.FAmount = remainingFee;
-                                    feeInstall.Installment = newinstallment[l].Installment;
-                                    feeInstall.SessionId = SessionId;
-                                    feeInstall.CompanyId = SchoolId;
-                                    feeInstall.Userid = UserId;
-                                    //      feeInstall.CreateDate = DateTime.Now;
-                                    //     feeInstall.UpdateDate = DateTime.Now;
-
-                                    _context.fee_installment.Add(feeInstall);
                                     await _context.SaveChangesAsync();
                                 }
-                            }
-                            var FeeDetail = _context.M_FeeDetail.Where(a => a.stu_id == studentRenew.StuId && a.ClassId == StudentFeeDiscont.ClassId && a.SessionId == SessionId && a.CompanyId == SchoolId && a.Active == true).ToList();
 
-                            if (FeeDetail != null && FeeDetail.Count > 0)
-                            {
-                                // decimal remainingFee = (decimal)studentRenew.total_fee; 
+                                var FeeInstalment = _context.fee_installment.Where(c => c.stu_id == studentRenew.StuId && c.CompanyId == SchoolId && c.SessionId == SessionId).ToList();
+                                _context.fee_installment.RemoveRange(FeeInstalment);
+                                await _context.SaveChangesAsync();
 
-                                for (int k = 0; k < FeeDetail.Count; k++)
+                                var newinstallment = _context.InstallmentTbl.Where(p => p.university_id == studentRenew.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId).ToList();
+                                if (newinstallment != null && newinstallment.Count > 0)
                                 {
-                                    var FeeDeia = FeeDetail[k].FDId;
+                                    double remainingFee = (double)studentRenew.total_fee / newinstallment.Count;
 
-                                    M_FeeDetail FeeDetaildata = _context.M_FeeDetail.Where(s => s.FDId == FeeDeia && s.stu_id == studentRenew.StuId && s.CompanyId == SchoolId && s.SessionId == SessionId).FirstOrDefault();
-
-                                    if (FeeDetaildata != null)
+                                    for (int l = 0; l < newinstallment.Count; l++)
                                     {
-                                        FeeDetaildata.ReceiptNo = FeeDetail[k].ReceiptNo;
-                                        FeeDetaildata.stu_id = FeeDetail[k].stu_id;
-                                        FeeDetaildata.ClassId = FeeDetail[k].ClassId;
-                                        FeeDetaildata.Status = FeeDetail[k].Status;
-                                        FeeDetaildata.PayFees = FeeDetail[k].PayFees;
-                                        FeeDetaildata.Cash = FeeDetail[k].Cash;
-                                        FeeDetaildata.Upi = FeeDetail[k].Upi;
-                                        FeeDetaildata.PaymentMode = FeeDetail[k].PaymentMode;
-                                        FeeDetaildata.PaymentDate = FeeDetail[k].PaymentDate;
-                                        FeeDetaildata.Remark = FeeDetail[k].Remark;
-                                        FeeDetaildata.Date = DateTime.Now;
-                                        //       FeeDetaildata.CreateDate = DateTime.Now;
-                                        //       FeeDetaildata.UpdateDate = DateTime.Now;
+                                        fee_installment feeInstall = new fee_installment();
+                                        feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
 
+                                        feeInstall.university_id = studentRenew.ClassId;
+                                        feeInstall.stu_id = studentRenew.StuId;
+                                        feeInstall.IntallmentID = newinstallment[l].InstallmentId;
+                                        feeInstall.total_fee = studentRenew.total_fee;
+                                        feeInstall.FAmount = remainingFee;
+                                        feeInstall.due_fee = remainingFee;
+                                        feeInstall.Installment = newinstallment[l].Installment;
+                                        feeInstall.paid_date = DateTime.Now;
+                                        feeInstall.Date = DateTime.Now;
+                                        feeInstall.active = true;
+                                        feeInstall.SessionId = SessionId;
+                                        feeInstall.CompanyId = SchoolId;
+                                        feeInstall.Userid = UserId;
+
+                                        _context.fee_installment.Add(feeInstall);
                                         await _context.SaveChangesAsync();
                                     }
                                 }
+
+                                var installment = _context.fee_installment.Where(c => c.university_id == studentRenew.ClassId && c.stu_id == studentRenew.StuId && c.SessionId == SessionId && c.active == true && c.CompanyId == SchoolId).ToList();
+
+                                if (installment != null && installment.Count > 0)
+                                {
+                                    decimal remainingFee = (decimal)studentRenew.stu_fee;
+
+                                    for (int j = 0; j < installment.Count; j++)
+                                    {
+                                        var installmentId = installment[j].Id;
+
+                                        fee_installment feeInstall = _context.fee_installment.Where(p => p.stu_id == studentRenew.StuId && p.Id == installmentId).FirstOrDefault();
+
+                                        if (feeInstall != null)
+                                        {
+                                            decimal deduction = Math.Min(remainingFee, Convert.ToDecimal((double)installment[j].FAmount));
+                                            feeInstall.total_fee = studentRenew.total_fee;
+                                            feeInstall.due_fee = Convert.ToDouble((installment[j].FAmount ?? 0) - (double)deduction);
+                                            feeInstall.FAmount = installment[j].FAmount;
+                                            feeInstall.Installment = installment[j].Installment;
+                                            feeInstall.IntallmentID = installment[j].IntallmentID;
+
+                                            feeInstall.paid_date = DateTime.Now;
+                                            feeInstall.Date = DateTime.Now;
+
+                                            remainingFee -= deduction;
+                                            await _context.SaveChangesAsync();
+                                        }
+                                    }
+                                }
+
+                                var FeeDetail = _context.M_FeeDetail.Where(a => a.stu_id == studentRenew.StuId && a.ClassId == FeeDiscont.ClassId && a.SessionId == SessionId && a.CompanyId == SchoolId && a.Active == true).ToList();
+
+                                if (FeeDetail != null && FeeDetail.Count > 0)
+                                {
+                                    decimal remainingFee = (decimal)studentRenew.total_fee;
+
+                                    for (int k = 0; k < FeeDetail.Count; k++)
+                                    {
+                                        var FeeDeia = FeeDetail[k].FDId;
+
+                                        M_FeeDetail FeeDetaildata = _context.M_FeeDetail.Where(s => s.FDId == FeeDeia && s.stu_id == studentRenew.StuId && s.CompanyId == SchoolId && s.SessionId == SessionId).FirstOrDefault();
+
+                                        if (FeeDetaildata != null)
+                                        {
+                                            FeeDetaildata.stu_id = FeeDetail[k].stu_id;
+                                            FeeDetaildata.ReceiptNo = FeeDetail[k].ReceiptNo;
+                                            FeeDetaildata.ClassId = FeeDetail[k].ClassId;
+                                            FeeDetaildata.Status = FeeDetail[k].Status;
+                                            FeeDetaildata.AdmissionPayfee = FeeDetail[k].AdmissionPayfee;
+                                            FeeDetaildata.AFeeDiscount = FeeDetail[k].AFeeDiscount;
+                                            FeeDetaildata.PramoteFees = FeeDetail[k].PramoteFees;
+                                            FeeDetaildata.Discount = studentRenew.discount;
+                                            FeeDetaildata.TotalFees = studentRenew.total_fee;
+                                            FeeDetaildata.PayFees = FeeDetail[k].PayFees;
+
+                                            remainingFee -= (decimal)FeeDetail[k].PayFees;
+
+                                            FeeDetaildata.DueFees = (double)remainingFee > 0 ? (double)remainingFee : 0;
+                                            FeeDetaildata.NetDueFees = (double)remainingFee > 0 ? (double)remainingFee : 0;
+
+                                            FeeDetaildata.Cash = FeeDetail[k].Cash;
+                                            FeeDetaildata.Upi = FeeDetail[k].Upi;
+                                            FeeDetaildata.PaymentMode = FeeDetail[k].PaymentMode;
+                                            FeeDetaildata.PaymentDate = FeeDetail[k].PaymentDate;
+                                            FeeDetaildata.Remark = FeeDetail[k].Remark;
+                                            FeeDetaildata.Date = DateTime.Now;
+                                            FeeDetaildata.Date = DateTime.Now;
+
+                                            await _context.SaveChangesAsync();
+                                        }
+                                    }
+                                }
                             }
+
                         }
                     }
 
@@ -1929,7 +2077,7 @@ namespace ApiProject.Service.Student
                                  on stu.StuId equals per.StuId into perJoin
                                  from per in perJoin.Where(p => p.CompanyId == SchoolId && p.SessionId == SessionId).DefaultIfEmpty()
 
-                                 where stu.RActive == true && stu.StuDetail == true && stu.StuFees == true && stu.CompanyId == SchoolId
+                                 where stu.RActive == true && stu.StuDetail == true && stu.StuFees == true && stu.Dropout == false && stu.CompanyId == SchoolId
                                      && stu.SessionId == SessionId && (request.ClassId == -1 || stu.ClassId == request.ClassId)
                                      && (request.SectionId == -1 || stu.SectionId == request.SectionId)
 
@@ -2064,7 +2212,7 @@ namespace ApiProject.Service.Student
 
                     }).ToListAsync();
 
-                var Subjectlist = await _context.Subject.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId)
+                var Subjectlist = await _context.Subject.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId && a.SessionId == SessionId)
                     .Select(a => new GetSubjectModel
                     {
                         SubjectId = a.subject_id,
@@ -2138,13 +2286,21 @@ namespace ApiProject.Service.Student
                                 Total = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.MarksType == request.MatksType
                                     && q.TestType == request.TestType && q.stu_id == c.StuId && q.SessionId == SessionId && q.CompanyId == SchoolId).Select(p => p.Total ?? 0).FirstOrDefault(),
 
+                                SubjectId = _context.Subject.Where(a => a.subject_id == request.SubjectId && a.university_id == request.ClassId).Select(a => a.subject_id).FirstOrDefault(),
+                                SubjectName = _context.Subject.Where(a => a.subject_id == request.SubjectId && a.university_id == request.ClassId).Select(a => a.subject_name).FirstOrDefault(),
+
+
                                 MaxTotal = _context.Subject.Where(a => a.university_id == c.ClassId && a.subject_id == request.SubjectId && a.Marks_Type == request.MatksType &&
                                      a.SessionId == SessionId && a.CompanyId == SchoolId).Select(a =>
                                      request.TestType == "Quarterly" ? a.Quarterly : request.TestType == "first_test" ? a.first_test : request.TestType == "second_test" ? a.second_test :
                                       request.TestType == "half_yearly" ? a.half_yearly : request.TestType == "third_test" ? a.third_test : request.TestType == "fourth_test" ? a.fourth_test :
                                       request.TestType == "yearly" ? a.yearly : 0)
-                                     .FirstOrDefault()
+                                     .FirstOrDefault(),
 
+                                Grade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId
+                                && q.TestType == request.TestType && q.SessionId == SessionId && q.CompanyId == SchoolId && q.MarksType == request.MatksType).Select(p => p.Grade).FirstOrDefault(),
+                                MGrade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId 
+                                && q.TestType == request.TestType && q.SessionId == SessionId && q.CompanyId == SchoolId && q.MarksType == request.MatksType).Select(p => p.MGrade).FirstOrDefault(),
 
                             }).OrderBy(c => c.stu_name).ToListAsync();
 
@@ -2309,7 +2465,7 @@ namespace ApiProject.Service.Student
                             if (studentid != 0)
                             {
                                 var testeaxmdatachk = _context.TestExamTbl.Where(q => q.CompanyId == SchoolId && q.university_id == request.ClassId && q.stu_id == studentid
-                                                        && q.subject_id == request.SubjectId && q.TestType == request.TestType && q.SessionId == SessionId && q.MarksType == request.MarksType).FirstOrDefault();
+                                    && q.subject_id == request.SubjectId && q.TestType == request.TestType && q.SessionId == SessionId && q.MarksType == request.MarksType).FirstOrDefault();
                                 if (request.MarksType == "Marks")
                                 {
                                     if (testeaxmdatachk == null)
@@ -2463,7 +2619,6 @@ namespace ApiProject.Service.Student
                                           {
                                               stu_name = stu.stu_name,
                                               SRNo = stu.registration_no,
-                                              ParentsId = stu.ParentsId,
                                               RollNo = stu.RollNo,
                                               FatherName = prt.FatherName,
                                               FatherMobileNo = prt.FatherMobileNo,
@@ -2518,8 +2673,6 @@ namespace ApiProject.Service.Student
                     SessionId = SessionId,
                     CompanyId = SchoolId,
                     Userid = UserId,
-                    //  CreateDate = DateTime.Now,
-                    //   UpdateDate = DateTime.Now,
                     Active = true,
 
                 };

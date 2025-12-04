@@ -55,7 +55,7 @@ namespace ApiProject.Service.Transport
         Task<ApiResponse<UpdateTransportFee>> GetTransportFeeById(int StoppageId);
         Task<ApiResponse<List<GetStuRouteAssignModel>>> GetStudentRouteAssign();
         Task<ApiResponse<bool>> AddStudentRouteAssign(StuRouteAssignReq req);
-        Task<ApiResponse<bool>> UpdateStuRouteAssign(UpdateStuRouteAssignReq req);
+        Task<ApiResponse<bool>> UpdateStudentRouteAssign(UpdateStuRouteAssignReq req);
         Task<ApiResponse<bool>> ChangeStatusStuRouteAssignFee(int TSRAId);
 
 

@@ -160,7 +160,7 @@ namespace ApiProject.Models.Request
         public string? stu_name { get; set; }
         public int? classId { get; set; }
         public int? sectionId { get; set; }
-        public bool? rte { get; set; }
+        public string? rte { get; set; }
         public DateTime? dob { get; set; }
         public string? gender { get; set; }
         public string? cast_category { get; set; }
@@ -174,7 +174,7 @@ namespace ApiProject.Models.Request
 
         public int? parentid { get; set; }
         public string? fathername { get; set; }
-        public string fathermobileno { get; set; }
+        public string? fathermobileno { get; set; }
         public string? fatherOP { get; set; }
         public double? fatherIncome { get; set; }
         public IFormFile? fatheraadhar { get; set; }
@@ -209,14 +209,21 @@ namespace ApiProject.Models.Request
         public string? lastRemarks { get; set; }
 
         // Fee Installments
-        public List<FeeInstallmentReqDto> feeInstallments { get; set; }
+        public List<FeeInstallmentReqDto> feeInstallment { get; set; }
         // Admission Fee Receipts
         public AdmissionFeeReceiptReqDto admissionReceipt { get; set; }
+
+     //   public string JsonData { get; set; }
     }
 
     public class FeeInstallmentReqDto
     {
-        public double? SInsAmount { get; set; }
+        //public double? SInsAmount { get; set; }
+        public Nullable<int> IntallmentID { get; set; }
+        public Nullable<double> total_fee { get; set; }
+     //   public Nullable<double> due_fee { get; set; }
+        public string? Installment { get; set; }
+        public Nullable<double> FAmount { get; set; }
     }
 
     public class AdmissionFeeReceiptReqDto
@@ -227,8 +234,8 @@ namespace ApiProject.Models.Request
         public string? PaymentMode { get; set; }
         public double? FeeDiscount { get; set; }
 
-     //   public DateTime? PaymentDate { get; set; }
-    //    public double? oldDuefees { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        //    public double? oldDuefees { get; set; }
     }
 
     public class StudentExcelUploadListReq
@@ -274,9 +281,10 @@ namespace ApiProject.Models.Request
     public class studentRollNoAttendaceReq
     {
         public int? StudentId { get; set; }
+        public int? SectionId { get; set; }
         public string? RollNo { get; set; }
         public string? Attendance { get; set; }
-        public int? SectionId { get; set; }
+        public string? Grade { get; set; }
     }
 
     public class studentDiscountfeeReq

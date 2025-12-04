@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Writers;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 
@@ -683,10 +684,10 @@ namespace ApiProject.Service.Transport
                 int SessionId = _loginUser.SessionId;
 
                 var RouteAssignEntity = await _context.RouteAssignTbl.Where(c => c.CompanyId == SchoolId)
-                    .GroupBy(c => new { c.BusId, c.Active })
+                    .GroupBy(c => new { c.RAId, c.BusId, c.Active })
                     .Select(g => new GetRouteAssignModel
                     {
-
+                       
                         Vehicleno = _context.TransBusTbl.Where(a => a.BusId == g.Key.BusId && a.CompanyId == SchoolId && a.Active == true).Select(a => a.VihecleNo).FirstOrDefault(),
                         Active = g.Key.Active,
                         Route = g.Select(r => new UpdateRouteModel
@@ -848,6 +849,7 @@ namespace ApiProject.Service.Transport
                     {
                         TFId = a.TransFeeId,
                         StoppageId = a.StopageId,
+                        StoppageName = _context.TransStoppageTbl.Where(c => c.StoppageId == StoppageId && c.CompanyId == SchoolId).Select(c => c.Stoppage).FirstOrDefault(),
                         MonthFee = a.MonthFee,
 
                     }).FirstOrDefaultAsync();
@@ -869,7 +871,7 @@ namespace ApiProject.Service.Transport
                     .Select(c => new GetStuRouteAssignModel
                     {
                         TSRAId = c.StuRouteAssignId,
-                        StudentId = c.StuRouteAssignId,
+                        StudentId = c.stu_id,
                         ClassId = c.university_id,
                         SectionId = c.SectionId,
                         VehicleId = c.BusId,
@@ -945,8 +947,7 @@ namespace ApiProject.Service.Transport
                 // 🔹 Month list (April–March academic year)
                 string[] months = new string[]
                 {
-            "January","February","March","April","May","June","July"
-            ,"August","September","October","November","December"
+                    "January","February","March","April","May","June","July" ,"August","September","October","November","December"
                 };
 
                 // 🔹 For loop se installments save karna
@@ -959,8 +960,10 @@ namespace ApiProject.Service.Transport
                         ClassId = req.ClassId,
                         InstallmentNo = (i + 1).ToString(),   // Installment number 1 se start hoga
                         MonthName = months[i],
-                        TotalTransFee = (months[i] == "June") ? 0 : req.NetTransportFee,   // June = 0
-                        InstallFee = (months[i] == "June") ? 0 : req.NetTransportFee,
+                        TotalTransFee = (months[i] == "June") ? 0 : req.NetTransportFee,  // June = 0
+                        InstallFee = (months[i] == "June") ? 0 : req.NetTransportFee,     // June = 0
+                        DueFee = (months[i] == "June") ? 0 : req.NetTransportFee,         // June = 0
+
                         StoppageId = req.StoppageId,
                         Date = req.Date,
                         SessionId = SessionId,
@@ -983,7 +986,7 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
             }
         }
-        public async Task<ApiResponse<bool>> UpdateStuRouteAssign(UpdateStuRouteAssignReq req)
+        public async Task<ApiResponse<bool>> UpdateStudentRouteAssign(UpdateStuRouteAssignReq req)
         {
             try
             {
@@ -993,9 +996,9 @@ namespace ApiProject.Service.Transport
                 StuRouteAssignTbl result = await _context.StuRouteAssignTbl.Where(c => c.StuRouteAssignId == req.TSRAId && c.CompanyId == SchoolId).FirstOrDefaultAsync();
 
                 result.StuRouteAssignId = req.TSRAId;
-                result.stu_id = -req.StudentId;
-                result.university_id = -req.ClassId;
-                result.SectionId = -req.SectionId;
+                result.stu_id = req.StudentId;
+                result.university_id = req.ClassId;
+                result.SectionId = req.SectionId;
                 result.BusId = req.VehicleId;
                 result.RouteId = req.RouteId;
                 result.StoppageId = req.StoppageId;
@@ -1005,6 +1008,57 @@ namespace ApiProject.Service.Transport
                 result.Date = req.Date;
                 result.Userid = UserId;
                 result.UpdateDate = DateTime.Now;
+                await _context.SaveChangesAsync();
+
+                // Prepare month logic
+                int currentMonth = DateTime.Now.Month;
+                string currentMonthName = DateTime.Now.ToString("MMMM");
+
+                var TransInstallment = _context.TransInstallmentTbl.Where(p => p.StuId == req.StudentId && p.CompanyId == SchoolId).ToList();
+
+                for (int i = 0; i < TransInstallment.Count; i++)
+                {
+                    var Tinstall = TransInstallment[i];
+
+                    if (Tinstall.Date.HasValue)
+                    {
+                        int dateMonth = Tinstall.Date.Value.Month;
+                        string dateMonthName = Tinstall.Date.Value.ToString("MMMM");
+
+                        // Build list of month names between Date month and Current month
+                        List<string> monthsBetween = new List<string>();
+                        int monthPointer = dateMonth;
+
+                        while (true)
+                        {
+                            monthPointer++;
+                            if (monthPointer > 12) monthPointer = 1; // Wrap to Jan
+
+                            if (monthPointer == currentMonth) break; // Stop when reaching current month
+
+                            monthsBetween.Add(new DateTime(2000, monthPointer, 1).ToString("MMMM"));
+                        }
+
+                        // Skip update if:
+                        // - It's the current month
+                        // - Or MonthName is in the monthsBetween list
+                        // - Or Date month itself
+                        if (Tinstall.Date.Value.Month == currentMonth ||
+                            monthsBetween.Contains(Tinstall.MonthName) ||
+                            Tinstall.MonthName == dateMonthName)
+                        {
+                            continue;
+                        }
+                    }
+
+                    // ✅ Update the record
+                    Tinstall.StoppageId = req.StoppageId;
+                    Tinstall.TotalTransFee = req.NetTransportFee;
+                    Tinstall.InstallFee = req.NetTransportFee;
+                    Tinstall.DueFee = req.NetTransportFee;
+                    Tinstall.Updatedate = DateTime.Now;
+                }
+
                 await _context.SaveChangesAsync();
 
                 return ApiResponse<bool>.SuccessResponse(true, "Student Route Assign update successfully");

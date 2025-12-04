@@ -86,6 +86,7 @@ namespace ApiProject.Models.Response
     {
         public int? TFId { get; set; }
         public Nullable<int> StoppageId { get; set; }
+        public string? StoppageName { get; set; }
         public Nullable<double> MonthFee { get; set; }
     }
 

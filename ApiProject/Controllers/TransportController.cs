@@ -426,12 +426,12 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("UpdateStudentRouteAssign")]
-        public async Task<IActionResult> UpdateStudentRouteAssign(UpdateStuRouteAssignReq req)
+        [HttpPost("UpdateStudentRouteAss")]
+        public async Task<IActionResult> UpdateStudentRouteAss(UpdateStuRouteAssignReq req)
         {
             try
             {
-                var res = await _transportService.UpdateStuRouteAssign(req);
+                var res = await _transportService.UpdateStudentRouteAssign(req);
                 return Ok(res);
             }
             catch (Exception ex)

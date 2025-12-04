@@ -62,7 +62,7 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public string? StudentName { get; set; }
-        public string? StudentPhoto { get; set; }
+     //   public string? StudentPhoto { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Attendance { get; set; }
         public string? SRNo { get; set; }
@@ -81,7 +81,7 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public string? StudentName { get; set; }
-        public string? StudentPhoto { get; set; }
+   //     public string? StudentPhoto { get; set; }
         public string? SRNo { get; set; }
         public string? RollNo { get; set; }
         public string? ClassName { get; set; }
@@ -98,13 +98,18 @@
         public int? SectionId { get; set; }
         public string? stu_name { get; set; }
         public string? SRNo { get; set; }
+        public int? SubjectId { get; set; }
+        public string? SubjectName { get; set; }
+        public decimal? MaxTotal { get; set; }
         public double? Written { get; set; }
         public double? Oral { get; set; }
         public double? Pratical { get; set; }
         public double? Total { get; set; }
-        public decimal? MaxTotal { get; set; }
+        public string? Grade { get; set; }
+        public string? MGrade { get; set; }
     }
 
+   
     public class GetTestvaluemodel
     {
         public int? SubjectId { get; set; }
@@ -138,15 +143,15 @@
         public int? ECId { get; set; }
         public int? EventId { get; set; }
         public int? EmployeId { get; set; }
+        public string? EventName { get; set; }
         public int? StudentId { get; set; }
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
         public string? RankType { get; set; }
         public string? Description { get; set; }
         public DateTime? IssueDate { get; set; }
-        public string? ClassName { get; set; }
-        public string? SectionName { get; set; }
-        public string? EventName { get; set; }
         public GetEmployeDataModel TeacherDetail { get; set; }
         public GetStudentDatamodel StudentDetails { get; set; }
     }
@@ -162,9 +167,6 @@
         public string? stu_name { get; set; }
         public string? SRNo { get; set; }
         public string? RollNo { get; set; }
-        public int? ParentsId { get; set; }
-        public string? GuardianName { get; set; }
-        public string? GuardianMobileNo { get; set; }
         public string? FatherName { get; set; }
         public string? FatherMobileNo { get; set; }
         public string? MotherName { get; set; }

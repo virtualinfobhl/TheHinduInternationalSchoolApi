@@ -15,7 +15,7 @@ using OfficeOpenXml;
 namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+
     [Authorize]
 
     public class StudentController : BaseController
@@ -119,6 +119,63 @@ namespace ApiProject.Controllers
             }
         }
 
+        // For updating student data (JSON only)
+        //[HttpPost("updatestudentdata")]
+        //public async Task<IActionResult> updatestudentdata([FromBody] StudentUpdateReqModel request)
+        //{
+        //    try
+        //    {
+        //        var res = await _studentService.updatestudentdata(request);
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
+
+        //// For uploading files separately
+        //[HttpPost("uploadstudentfile")]
+        //[Consumes("multipart/form-data")]
+        //public async Task<IActionResult> UploadStudentFile([FromForm] StudentUpdateReqModel model)
+        //{
+        //    try
+        //    {
+        //        if (model.File == null || model.File.Length == 0)
+        //            return BadRequest("No file uploaded");
+
+        //        var filePath = await SaveFile(model.File);
+
+        //        // Update student record with file path
+        //        await _studentService.UpdateStudentFilePath(model.StudentId, model.FileType, filePath);
+
+        //        return Ok(new { filePath, message = "File uploaded successfully" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest($"Error uploading file: {ex.Message}");
+        //    }
+        //}
+
+        //private async Task<string> SaveFile(IFormFile file)
+        //{
+        //    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+        //    if (!Directory.Exists(uploadsFolder))
+        //        Directory.CreateDirectory(uploadsFolder);
+
+        //    var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+        //    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await file.CopyToAsync(stream);
+        //    }
+
+        //    return Path.Combine("uploads", uniqueFileName);
+        //}
+
+
         [HttpPost("studentexcelupload")]
         public async Task<IActionResult> studentexcelupload([FromForm] IFormFile file)
         {
@@ -137,8 +194,9 @@ namespace ApiProject.Controllers
                 var (validList, errorList) = await ReadAndValidateExcel(path);
 
                 ApiResponse<bool> result = null;
-                if (validList.Any()) { 
-                
+                if (validList.Any())
+                {
+
                     result = await _studentService.studentexcelupload(validList);
 
                 }
@@ -189,7 +247,7 @@ namespace ApiProject.Controllers
                     AdmissionPayfee = string.IsNullOrWhiteSpace(sheet.Cells[row, 11].Text) ? 0 : Convert.ToDouble(sheet.Cells[row, 11].Text),
                     Discount = string.IsNullOrWhiteSpace(sheet.Cells[row, 12].Text) ? 0 : Convert.ToDouble(sheet.Cells[row, 12].Text),
                     OldDuefees = string.IsNullOrWhiteSpace(sheet.Cells[row, 13].Text) ? 0 : Convert.ToDouble(sheet.Cells[row, 13].Text),
-                    PaymentDate = string.IsNullOrWhiteSpace(sheet.Cells[row, 14].Text) ? DateTime.Now.Date : Convert.ToDateTime(sheet.Cells[row, 14].Text) ,
+                    PaymentDate = string.IsNullOrWhiteSpace(sheet.Cells[row, 14].Text) ? DateTime.Now.Date : Convert.ToDateTime(sheet.Cells[row, 14].Text),
                     PaymentMode = string.IsNullOrWhiteSpace(sheet.Cells[row, 15].Text.Trim()) ? "" : sheet.Cells[row, 15].Text.Trim(),
                 };
 
@@ -632,12 +690,12 @@ namespace ApiProject.Controllers
             try
             {
                 var res = await _studentService.GetQuickStudentList(req);
-                return Ok(res); 
+                return Ok(res);
             }
             catch (Exception ex)
             {
                 var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                    return BadRequest(response);
+                return BadRequest(response);
             }
         }
 
@@ -674,8 +732,8 @@ namespace ApiProject.Controllers
         }
 
 
-      
-        
-       
-    } 
+
+
+
+    }
 }

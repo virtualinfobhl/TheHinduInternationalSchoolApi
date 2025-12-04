@@ -3970,6 +3970,14 @@
               "type": "number",
               "format": "double"
             }
+          },
+          {
+            "name": "admissionReceipt.PaymentDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           }
         ],
         "requestBody": {
@@ -4089,7 +4097,7 @@
                     "format": "int32"
                   },
                   "rte": {
-                    "type": "boolean"
+                    "type": "string"
                   },
                   "dob": {
                     "type": "string",
@@ -4234,7 +4242,7 @@
                   "lastRemarks": {
                     "type": "string"
                   },
-                  "feeInstallments": {
+                  "feeInstallment": {
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/FeeInstallmentReqDto"
@@ -4258,6 +4266,10 @@
                   "admissionReceipt.FeeDiscount": {
                     "type": "number",
                     "format": "double"
+                  },
+                  "admissionReceipt.PaymentDate": {
+                    "type": "string",
+                    "format": "date-time"
                   }
                 }
               },
@@ -4412,7 +4424,7 @@
                 "lastRemarks": {
                   "style": "form"
                 },
-                "feeInstallments": {
+                "feeInstallment": {
                   "style": "form"
                 },
                 "admissionReceipt.AdmissionPayFees": {
@@ -4428,6 +4440,9 @@
                   "style": "form"
                 },
                 "admissionReceipt.FeeDiscount": {
+                  "style": "form"
+                },
+                "admissionReceipt.PaymentDate": {
                   "style": "form"
                 }
               }
@@ -6155,7 +6170,7 @@
         }
       }
     },
-    "/api/Transport/UpdateStudentRouteAssign": {
+    "/api/Transport/UpdateStudentRouteAss": {
       "post": {
         "tags": [
           "Transport"
@@ -7178,7 +7193,21 @@
       "FeeInstallmentReqDto": {
         "type": "object",
         "properties": {
-          "sInsAmount": {
+          "intallmentID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total_fee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "installment": {
+            "type": "string",
+            "nullable": true
+          },
+          "fAmount": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -8409,6 +8438,10 @@
             "format": "int32",
             "nullable": true
           },
+          "stoppageName": {
+            "type": "string",
+            "nullable": true
+          },
           "monthFee": {
             "type": "number",
             "format": "double",
@@ -8779,6 +8812,11 @@
             "format": "int32",
             "nullable": true
           },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "rollNo": {
             "type": "string",
             "nullable": true
@@ -8787,9 +8825,8 @@
             "type": "string",
             "nullable": true
           },
-          "sectionId": {
-            "type": "integer",
-            "format": "int32",
+          "grade": {
+            "type": "string",
             "nullable": true
           }
         },
