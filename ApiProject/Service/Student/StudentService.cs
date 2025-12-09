@@ -675,62 +675,6 @@ namespace ApiProject.Service.Student
                     _context.student_admission.Add(student);
                     await _context.SaveChangesAsync();
 
-                    //Student_Renew studentrenew = new Student_Renew();
-                    //studentrenew.SRId = _context.Student_Renew.DefaultIfEmpty().Max(r => r == null ? 0 : r.SRId) + 1;
-                    //studentrenew.Active = true;
-                    ////  studentrenew.stutc = false;
-                    //studentrenew.ParentsId = parentid;
-                    //studentrenew.StuId = student.stu_id;
-                    //studentrenew.ClassId = request.ClassId;
-                    //studentrenew.SessionId = request.SectionId;
-
-                    //var studentfee = _context.fees.Where(p => p.university_id == studentrenew.ClassId && p.CompanyId == SchoolId && p.SessionId == SessionId).FirstOrDefault();
-
-                    //studentrenew.RTE = request.RTE == false ? false : true;
-                    //if (studentrenew.RTE == true)
-                    //{
-                    //    studentrenew.admission_fee = 0;
-                    //    studentrenew.PramoteFees = 0;
-                    //    studentrenew.AFeeDiscount = 0;
-                    //    studentrenew.AdmissionPayfee = 0;
-                    //    studentrenew.exam_fee = 0;
-                    //    studentrenew.Tution_fee = 0;
-                    //    studentrenew.Develoment_fee = 0;
-                    //    studentrenew.Games_fees = 0;
-                    //    studentrenew.total = 0;
-                    //    studentrenew.discount = 0;
-                    //    studentrenew.OldDuefees = 0;
-                    //    studentrenew.total_fee = 0;
-                    //}
-                    //else
-                    //{
-                    //    studentrenew.admission_fee = studentfee.admission_fee;
-                    //    studentrenew.AFeeDiscount = request.admissionReceipts.aFeeDiscount == null ? 0 : request.admissionReceipts.aFeeDiscount;
-                    //    studentrenew.PramoteFees = request.admissionReceipts.pramoteFees == null ? 0 : request.admissionReceipts.pramoteFees;
-                    //    studentrenew.AdmissionPayfee = studentfee.admission_fee - studentrenew.AFeeDiscount;
-                    //    studentrenew.exam_fee = studentfee.exam_fee;
-                    //    studentrenew.Tution_fee = studentfee.tution_fee;
-                    //    studentrenew.Develoment_fee = studentfee.Develoment_fee;
-                    //    studentrenew.Games_fees = studentfee.Games_fees;
-                    //    studentrenew.total = studentfee.total;
-                    //    studentrenew.discount = request.admissionReceipts.discount == null ? 0 : request.admissionReceipts.discount;
-                    //    studentrenew.OldDuefees = 0;
-                    //    studentrenew.total_fee = studentrenew.total - studentrenew.discount + studentrenew.OldDuefees;
-                    //}
-
-                    //studentrenew.CompanyId = SchoolId;
-                    //studentrenew.Userid = UserId;
-                    //studentrenew.SessionId = SessionId;
-                    //studentrenew.CreateDate = DateTime.Now;
-                    //studentrenew.UpdateDate = DateTime.Now;
-                    //studentrenew.Active = true;
-                    //studentrenew.completed = false;
-
-                    //_context.Student_Renew.Add(studentrenew);
-                    //await _context.SaveChangesAsync();
-
-
-
                     var studentrenew = new Student_Renew
                     {
                         SRId = (_context.Student_Renew.DefaultIfEmpty().Max(r => r == null ? 0 : r.SRId) + 1),
@@ -838,28 +782,7 @@ namespace ApiProject.Service.Student
                         // एक बार में save
                         await _context.SaveChangesAsync();
 
-                        //foreach (var inst in installments)
-                        //{
-                        //    var feeInstall = new fee_installment
-                        //    {
-                        //        Id = (_context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1),
-                        //        stu_id = student.stu_id,
-                        //        university_id = studentrenew.ClassId,
-                        //        paid_date = DateTime.Now,
-                        //        IntallmentID = inst.InstallmentId,
-                        //        total_fee = studentrenew.total_fee,
-                        //        Installment = inst.Installment,
-                        //        due_fee = inst.FeeAmount,
-                        //        FAmount = inst.FeeAmount,
-                        //        active = true,
-                        //        Date = DateTime.Now,
-                        //        SessionId = SessionId,
-                        //        CompanyId = SchoolId,
-                        //        Userid = UserId,
-                        //    };
-                        //    _context.fee_installment.Add(feeInstall);
-                        //    await _context.SaveChangesAsync();
-                        //}
+
 
                         // fee Receipt
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
@@ -945,170 +868,6 @@ namespace ApiProject.Service.Student
                         }
                     }
 
-
-                    //if (studentrenew.RTE == false)
-                    //{
-                    //    var installments = _context.InstallmentTbl.Where(p => p.university_id == studentrenew.ClassId && p.CompanyId == SchoolId && p.SessionId == SessionId).ToList();
-
-                    //    for (int i = 0; i < installments.Count; i++)
-                    //    {
-                    //        fee_installment feeInstall = new fee_installment();
-                    //        feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
-
-                    //        feeInstall.university_id = studentrenew.ClassId;
-                    //        feeInstall.FAmount = installments[i].FeeAmount;
-                    //        feeInstall.Installment = installments[i].Installment;
-                    //        feeInstall.stu_id = student.stu_id;
-                    //        feeInstall.SessionId = SessionId;
-                    //        feeInstall.CompanyId = SchoolId;
-                    //        feeInstall.Userid = UserId;
-
-                    //        _context.fee_installment.Add(feeInstall);
-                    //        await _context.SaveChangesAsync();
-                    //    }
-
-                    //    if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
-                    //    {
-                    //        string ReceiptCode = "";
-
-                    //        var lastReceipt = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
-
-                    //        int NewOrderNo = 1;
-                    //        var LastOrderNo = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
-                    //            .Select(s => s.OrderNo).FirstOrDefault();
-
-                    //        if (LastOrderNo != null && LastOrderNo != "")
-
-                    //            if (!string.IsNullOrEmpty(LastOrderNo))
-                    //            {
-                    //                int lastNum;
-                    //                if (int.TryParse(LastOrderNo, out lastNum))
-                    //                {
-                    //                    NewOrderNo = lastNum + 1;
-                    //                }
-                    //            }
-
-                    //        var Id = 0;
-                    //        if (lastReceipt != null)
-                    //        {
-                    //            var Receipt = lastReceipt.ReceiptNo.Split('/');
-                    //            ReceiptCode = Receipt[1];
-
-                    //            Id = int.Parse(ReceiptCode);
-                    //            Id++;
-                    //        }
-                    //        else
-                    //        {
-                    //            Id = 1;
-                    //        }
-                    //        ReceiptCode = threeLetters + "/" + Id;
-
-                    //        int FDId = (_context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1);
-                    //        var receipt = new M_FeeDetail
-                    //        {
-                    //            // ReceiptNo = lastReceipt == null ? "1" : (Convert.ToInt32(lastReceipt.ReceiptNo) + 1).ToString(),
-                    //            ReceiptNo = ReceiptCode,
-                    //            OrderNo = NewOrderNo.ToString(),
-                    //            OrderStatus = "Succcessfully",
-                    //            TransactionId = "",
-                    //            ReceiptType = "Offline",
-                    //            ClassId = studentrenew.ClassId,
-                    //            stu_id = studentrenew.StuId,
-                    //            Status = "AdmissionPayfee",
-                    //            PayFees = 0,
-                    //            AdmissionFees = studentfee.admission_fee,
-                    //            ExamFees = studentfee.exam_fee,
-                    //            Tutionfee = studentfee.tution_fee,
-                    //            Develoment_fee = studentfee.Develoment_fee,
-                    //            Games_fees = studentfee.Games_fees,
-                    //            FeeTotal = studentfee.total,
-                    //            Discount = 0,
-                    //            OldDuefees = 0,
-                    //            TotalFees = studentfee.total,
-                    //            NetDueFees = studentfee.total,
-                    //            DueFees = studentfee.total,
-                    //            Date = DateTime.Now.Date,
-                    //            RTS = DateTime.Now.Date,
-                    //            PaymentDate = DateTime.Now.Date,
-                    //          //  PaymentMode = request.p,
-                    //            AdmissionPayfee = studentrenew.AdmissionPayfee,
-                    //            AFeeDiscount = studentrenew.AFeeDiscount,
-                    //            Cash = 0,
-                    //            Upi = 0,
-                    //            Remark = "",
-                    //            Active = true,
-                    //            CompanyId = SchoolId,
-                    //            Userid = UserId,
-                    //            SessionId = SessionId,
-                    //        };
-
-                    //        ReceiptId = FDId;
-
-                    //        _context.M_FeeDetail.Add(receipt);
-                    //        await _context.SaveChangesAsync();
-                    //    }
-
-                    //    //if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
-                    //    //{
-                    //    //    M_FeeDetail RStudentFees = new M_FeeDetail();
-
-                    //    //    RStudentFees.FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1;
-                    //    //    ReceiptId = RStudentFees.FDId;
-                    //    //    int NewOrderNo = 1;
-                    //    //    var LastOrderNo = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
-                    //    //        .Select(s => s.OrderNo).FirstOrDefault();
-
-                    //    //    if (LastOrderNo != null && LastOrderNo != "")
-
-                    //    //        if (!string.IsNullOrEmpty(LastOrderNo))
-                    //    //        {
-                    //    //            int lastNum;
-                    //    //            if (int.TryParse(LastOrderNo, out lastNum))
-                    //    //            {
-                    //    //                NewOrderNo = lastNum + 1;
-                    //    //            }
-                    //    //        }
-
-                    //    //    var existingReceiptNos = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).Take(1).FirstOrDefault();
-
-                    //    //    if (existingReceiptNos == null)
-                    //    //    {
-                    //    //        RStudentFees.ReceiptNo = "1";
-                    //    //    }
-                    //    //    else
-                    //    //    {
-                    //    //        int rno = Convert.ToInt32(existingReceiptNos.ReceiptNo) + 1;
-                    //    //        RStudentFees.ReceiptNo = rno.ToString();
-                    //    //    }
-                    //    //    RStudentFees.ClassId = studentrenew.ClassId;
-                    //    //    RStudentFees.stu_id = studentrenew.StuId;
-                    //    //    RStudentFees.OrderNo = NewOrderNo.ToString();
-                    //    //    RStudentFees.OrderStatus = "Succcessfully";
-                    //    //    RStudentFees.TransactionId = "";
-                    //    //    RStudentFees.ReceiptType = "Offline";
-
-                    //    //    RStudentFees.Remark = "";
-                    //    //    RStudentFees.Active = true;
-                    //    //    RStudentFees.Status = "AdmissionPayFee";
-                    //    //    RStudentFees.CompanyId = SchoolId;
-                    //    //    RStudentFees.Userid = UserId;
-                    //    //    RStudentFees.SessionId = SessionId;
-                    //    //    RStudentFees.Date = DateTime.Now.Date;
-
-                    //    //    RStudentFees.PaymentMode = request.admissionReceipts.PaymentMode;
-                    //    //    RStudentFees.PayFees = studentrenew.AdmissionPayfee + studentrenew.PramoteFees;
-                    //    //    RStudentFees.PaymentDate = DateTime.Now.Date;
-                    //    //    RStudentFees.PayFees = studentrenew.AdmissionPayfee + studentrenew.PramoteFees;
-                    //    //    RStudentFees.Cash = 0;
-                    //    //    RStudentFees.Upi = 0;
-
-                    //    //    _context.M_FeeDetail.Add(RStudentFees);
-                    //    //    await _context.SaveChangesAsync();
-
-                    //    //}
-                    //}
-
-
                     await transaction.CommitAsync();
                     var result = new quickadmissionres
                     {
@@ -1172,6 +931,7 @@ namespace ApiProject.Service.Student
                         parent.GuardianMobileNo = request.guardianMobileNo;
                         _context.SaveChangesAsync();
                     }
+
                     //else
                     //{
                     //    var parentdata = await _context.ParentsTbl.Where(p => p.FatherMobileNo == request.fathermobileno && p.CompanyId == SchoolId).FirstOrDefaultAsync();
@@ -1309,7 +1069,8 @@ namespace ApiProject.Service.Student
                     Student_Renew studentrenew = _context.Student_Renew.Where(r => r.StuId == student.stu_id && r.ClassId == request.classId && r.CompanyId == SchoolId && r.SessionId == SessionId).FirstOrDefault();
                     var studentfee = _context.fees.Where(p => p.university_id == request.classId && p.CompanyId == SchoolId && p.SessionId == SessionId).FirstOrDefault();
 
-                    studentrenew.ClassId = request.classId == null ? studentrenew.ClassId : request.classId;
+                    // studentrenew.ClassId = request.classId == null ? studentrenew.ClassId : request.classId;
+                    studentrenew.ClassId = request.classId;
                     studentrenew.SectionId = request.sectionId == 0 ? 0 : request.sectionId;
                     studentrenew.RTE = request.rte != "0";
                     studentrenew.StuDetail = true;
@@ -1361,16 +1122,16 @@ namespace ApiProject.Service.Student
 
                     if ((bool)!studentrenew.RTE)
                     {
-                        for (int i = 0; i < request.feeInstallment.Count; i++)
+                        for (int i = 0; i < request.feeInstallmentlist.Count; i++)
                         {
                             fee_installment feeInstall = new fee_installment();
                             feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
                             feeInstall.stu_id = student.stu_id;
                             feeInstall.university_id = studentrenew.ClassId;
-                            feeInstall.IntallmentID = request.feeInstallment[i].IntallmentID;
-                            feeInstall.Installment = request.feeInstallment[i].Installment;
-                            feeInstall.FAmount = request.feeInstallment[i].FAmount;
-                            feeInstall.due_fee = request.feeInstallment[i].FAmount;
+                            feeInstall.IntallmentID = request.feeInstallmentlist[i].IntallmentID;
+                            feeInstall.Installment = request.feeInstallmentlist[i].Installment;
+                            feeInstall.FAmount = request.feeInstallmentlist[i].FAmount;
+                            feeInstall.due_fee = request.feeInstallmentlist[i].FAmount;
                             feeInstall.SessionId = SessionId;
                             feeInstall.CompanyId = SchoolId;
                             feeInstall.Userid = UserId;
@@ -1481,7 +1242,7 @@ namespace ApiProject.Service.Student
                         }
                     }
 
-                     await transaction.CommitAsync();
+                    await transaction.CommitAsync();
                     var result = new quickadmissionres
                     {
                         StudentId = student.stu_id,
@@ -1496,6 +1257,83 @@ namespace ApiProject.Service.Student
                 }
             }
         }
+
+        //public async Task<ApiResponse<quickadmissionres>> UpdateStuinstallment(FeeInstallmentReqMOdel request)
+        //{
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+        //    {
+        //        try
+        //        {
+        //            int SchoolId = _loginUser.SchoolId;
+        //            int UserId = _loginUser.UserId;
+        //            int SessionId = _loginUser.SessionId;
+        //            int ReceiptId = 0;
+
+        //         //   var duplicateStudent = await _context.student_admission.FirstOrDefaultAsync(p => p.registration_no == request.srNo && p.CompanyId == SchoolId && p.stu_id != request.studentId);
+
+        //            //if (duplicateStudent != null)
+        //            //    return ApiResponse<quickadmissionres>.ErrorResponse("Student already exists");
+
+        //            var student = await _context.student_admission.FirstOrDefaultAsync(p => p.stu_id == request.StudentId && p.CompanyId == SchoolId);
+        //            if (student == null)
+        //                return ApiResponse<quickadmissionres>.ErrorResponse("Student not found");
+
+
+        //            var fee_installmenttbl = _context.fee_installment.Where(c => c.stu_id == request.StudentId && c.university_id == request.ClassId && c.CompanyId == SchoolId && c.SessionId == SessionId).ToList();
+        //            if (fee_installmenttbl != null)
+        //            {
+        //                _context.fee_installment.RemoveRange(fee_installmenttbl);
+        //                _context.SaveChanges();
+        //            }
+
+        //            fee_installment feeInstall = new fee_installment();
+        //            feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
+        //            feeInstall.stu_id = student.stu_id;
+        //            feeInstall.university_id = request.ClassId;
+        //            feeInstall.IntallmentID = request.IntallmentID;
+        //            feeInstall.Installment = request.Installment;
+        //            feeInstall.FAmount = request.FAmount;
+        //            feeInstall.due_fee = request.FAmount;
+        //            feeInstall.SessionId = SessionId;
+        //            feeInstall.CompanyId = SchoolId;
+        //            feeInstall.Userid = UserId;
+
+        //            _context.fee_installment.Add(feeInstall);
+        //            _context.SaveChanges();
+
+        //            //for (int i = 0; i < request.feeInstallmentlist.Count; i++)
+        //            //{
+        //            //    fee_installment feeInstall = new fee_installment();
+        //            //    feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
+        //            //    feeInstall.stu_id = student.stu_id;
+        //            //    feeInstall.university_id = request.feeInstallmentlist[i].ClassId;
+        //            //    feeInstall.IntallmentID = request.feeInstallmentlist[i].IntallmentID;
+        //            //    feeInstall.Installment = request.feeInstallmentlist[i].Installment;
+        //            //    feeInstall.FAmount = request.feeInstallmentlist[i].FAmount;
+        //            //    feeInstall.due_fee = request.feeInstallmentlist[i].FAmount;
+        //            //    feeInstall.SessionId = SessionId;
+        //            //    feeInstall.CompanyId = SchoolId;
+        //            //    feeInstall.Userid = UserId;
+
+        //            //    _context.fee_installment.Add(feeInstall);
+        //            //    _context.SaveChanges();
+        //            //}
+
+        //            await transaction.CommitAsync();
+        //            var result = new quickadmissionres
+        //            {
+        //                StudentId = student.stu_id,
+        //                ReceiptId = ReceiptId
+        //            };
+        //            return ApiResponse<quickadmissionres>.SuccessResponse(result, "Update successful");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            return ApiResponse<quickadmissionres>.ErrorResponse("Error: " + ex.Message);
+        //        }
+        //    }
+        //}
 
         private async Task<string> SaveStudentFileAsync(IFormFile file, string folderPath, int studentId, string schoolId, string subFolderName)
         {
@@ -2299,7 +2137,7 @@ namespace ApiProject.Service.Student
 
                                 Grade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId
                                 && q.TestType == request.TestType && q.SessionId == SessionId && q.CompanyId == SchoolId && q.MarksType == request.MatksType).Select(p => p.Grade).FirstOrDefault(),
-                                MGrade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId 
+                                MGrade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId
                                 && q.TestType == request.TestType && q.SessionId == SessionId && q.CompanyId == SchoolId && q.MarksType == request.MatksType).Select(p => p.MGrade).FirstOrDefault(),
 
                             }).OrderBy(c => c.stu_name).ToListAsync();

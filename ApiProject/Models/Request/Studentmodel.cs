@@ -152,6 +152,7 @@ namespace ApiProject.Models.Request
         public AdmissionFeeReceiptReqDto admissionReceipt { get; set; }
     }
 
+
     public class StudentUpdateReqModel
     {
         public int studentId { get; set; }
@@ -168,25 +169,19 @@ namespace ApiProject.Models.Request
         public string? caste { get; set; }
         public string? email { get; set; }
         public string? blood_group { get; set; }
-        public IFormFile? stuphoto { get; set; }
-        public IFormFile? stuaadhar { get; set; }
-        public IFormFile? stubirth { get; set; }
 
         public int? parentid { get; set; }
         public string? fathername { get; set; }
         public string? fathermobileno { get; set; }
         public string? fatherOP { get; set; }
         public double? fatherIncome { get; set; }
-        public IFormFile? fatheraadhar { get; set; }
         public string? mothername { get; set; }
         public string? mothermobileno { get; set; }
         public string? motherOP { get; set; }
         public double? motherIncome { get; set; }
-        public IFormFile? motheraadhar { get; set; }
         public string? guardianName { get; set; }
         public string? guardianMobileNo { get; set; }
-        public IFormFile? IncomeCertificate { get; set; }
-        public IFormFile? JanAadhar { get; set; }
+
         public string? address { get; set; }
         public string? state { get; set; }
         public string? district { get; set; }
@@ -197,23 +192,41 @@ namespace ApiProject.Models.Request
         public string? p_district { get; set; }
         public string? p_city { get; set; }
         public string? p_pincode { get; set; }
+
         public string? lastSchlName { get; set; }
         public string? lastClass { get; set; }
         public double? lastExanTotalMarks { get; set; }
         public string? lastDivision { get; set; }
         public string? lastParecentage { get; set; }
-        //public string? lastMarkSheetPhoto { get; set; }
-        public IFormFile? LastMarkSheetPhotos { get; set; }
-        //public bool? studentTc { get; set; }
-        public IFormFile? studentTcfile { get; set; }
+        public bool? studentTc { get; set; }
         public string? lastRemarks { get; set; }
 
-        // Fee Installments
-        public List<FeeInstallmentReqDto> feeInstallment { get; set; }
-        // Admission Fee Receipts
-        public AdmissionFeeReceiptReqDto admissionReceipt { get; set; }
 
-     //   public string JsonData { get; set; }
+        public IFormFile? stuphoto { get; set; }
+        public IFormFile? stuaadhar { get; set; }
+        public IFormFile? stubirth { get; set; }
+        public IFormFile? fatheraadhar { get; set; }
+        public IFormFile? motheraadhar { get; set; }
+        public IFormFile? IncomeCertificate { get; set; }
+        public IFormFile? JanAadhar { get; set; }
+        public IFormFile? lastMarkSheetPhoto { get; set; }
+        public IFormFile? LastMarkSheetPhotos { get; set; }
+        public IFormFile? studentTcfile { get; set; }
+
+        public AdmissionFeeReceiptReqDto admissionReceipt { get; set; }
+        public List<FeeInstallmentReqMOdel> feeInstallmentlist { get; set; }
+
+    }
+
+    public class FeeInstallmentReqMOdel
+    {
+        //public int? StudentId { get; set; }
+        //public int? ClassId { get; set; }
+        //public int? SectionId { get; set; }
+        public int? IntallmentID { get; set; }
+        public Nullable<double> total_fee { get; set; }
+        public string? Installment { get; set; }
+        public Nullable<double> FAmount { get; set; }
     }
 
     public class FeeInstallmentReqDto
@@ -221,7 +234,7 @@ namespace ApiProject.Models.Request
         //public double? SInsAmount { get; set; }
         public Nullable<int> IntallmentID { get; set; }
         public Nullable<double> total_fee { get; set; }
-     //   public Nullable<double> due_fee { get; set; }
+        //   public Nullable<double> due_fee { get; set; }
         public string? Installment { get; set; }
         public Nullable<double> FAmount { get; set; }
     }
@@ -233,7 +246,6 @@ namespace ApiProject.Models.Request
         public double? pramoteFees { get; set; }
         public string? PaymentMode { get; set; }
         public double? FeeDiscount { get; set; }
-
         public DateTime? PaymentDate { get; set; }
         //    public double? oldDuefees { get; set; }
     }
@@ -250,8 +262,8 @@ namespace ApiProject.Models.Request
         public string Address { get; set; }
         public string? PaymentMode { get; set; }
         public string? RTE { get; set; }
-        public string ClassName { get; set; }
-        public string SectionName { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
         public double? Discount { get; set; }
         public double? OldDuefees { get; set; }
         public double? AdmissionPayfee { get; set; }

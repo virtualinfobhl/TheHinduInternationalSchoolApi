@@ -13,7 +13,7 @@
         public string? Note { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
-        public System.DateTime Date { get; set; }
+    //    public System.DateTime Date { get; set; }
 
 
     }
@@ -186,7 +186,7 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public string? SectionName { get; set; }
-        public int? SectionPriority { get; set; }
+    //    public int? SectionPriority { get; set; }
     }
     public class StudentExamData
     {

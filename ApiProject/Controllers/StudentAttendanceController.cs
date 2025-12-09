@@ -105,60 +105,58 @@ namespace ApiProject.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet("studentattendance")]
-        public async Task<IActionResult> studentattendance(string srno)
-        {           
-            try
-            {
+        //[Authorize]
+        //[HttpGet("studentattendance")]
+        //public async Task<IActionResult> studentattendance(string srno)
+        //{           
+        //    try
+        //    {
 
-                var res = await _studentAttendanceService.studentattendance(srno,_loginUser.SchoolId);
+        //        var res = await _studentAttendanceService.studentattendance(srno,_loginUser.SchoolId);
 
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(response);
-            }
-        }
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
 
-        [HttpGet("schoolstudentattendance")]
-        public async Task<IActionResult> schoolstudentattendance(string srno, int schoolid)
-        {
-            try
-            {
-                var res = await _studentAttendanceService.studentattendance(srno, schoolid);
+        //[HttpGet("schoolstudentattendance")]
+        //public async Task<IActionResult> schoolstudentattendance(string srno, int schoolid)
+        //{
+        //    try
+        //    {
+        //        var res = await _studentAttendanceService.studentattendance(srno, schoolid);
 
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(response);
-            }
-        }
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
 
+        //[Authorize]
+        //[HttpGet("todaystudentattendance")]
+        //public async Task<IActionResult> todaystudentattendance()
+        //{       
+        //    try
+        //    {
+        //        var res = await _studentAttendanceService.todaystudentattendance();
 
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-        [Authorize]
-        [HttpGet("todaystudentattendance")]
-        public async Task<IActionResult> todaystudentattendance()
-        {       
-            try
-            {
-                var res = await _studentAttendanceService.todaystudentattendance();
-
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-
-                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(response);
-            }
-        }
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
     }
 }

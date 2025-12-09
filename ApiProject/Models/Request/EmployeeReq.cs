@@ -9,7 +9,7 @@ namespace ApiProject.Models.Request
         public int EmpId { get; set; }
     }
 
-    public class EmpBankdetailsReq
+    public class EmpBankdetailReq
     {
         public string? AHName { get; set; }
         public string? BankName { get; set; }
@@ -21,7 +21,7 @@ namespace ApiProject.Models.Request
     public class AddEmployeeDetailReq
     {
         public Nullable<System.DateTime> JoiningDate { get; set; }
-        public string? Emp_Type { get; set; }
+     //   public string? Emp_Type { get; set; }
         public string? Emp_Name { get; set; }
         public string? Father_husband_Name { get; set; }
         public string? DOB { get; set; }
@@ -78,7 +78,7 @@ namespace ApiProject.Models.Request
         //public IFormFile? PostGraduationmarksheet { get; set; }
         //public IFormFile? BankPassbook { get; set; }
 
-        public EmpBankdetailsReq BankDetail { get; set; }
+        public EmpBankdetailReq BankDetail { get; set; }
 
     }
 
@@ -96,7 +96,7 @@ namespace ApiProject.Models.Request
     {
         public int Emp_Id { get; set; }
         public Nullable<System.DateTime> JoiningDate { get; set; }
-        public string? Emp_Type { get; set; }
+     //   public string? Emp_Type { get; set; }
         public string? Emp_Name { get; set; }
         public string? Father_husband_Name { get; set; }
         public string? DOB { get; set; }

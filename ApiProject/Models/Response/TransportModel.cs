@@ -171,7 +171,7 @@ namespace ApiProject.Models.Response
     {
         public int? StudentId { get; set; }
         public string? StudentName { get; set; }
-        public string? SRNo { get; set; }
+    //    public string? SRNo { get; set; }
     }
 
     public class GetTClassbySectionNdStudent

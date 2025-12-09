@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Linq;
 using ThisApiProject.Data;
 using static ApiProject.Models.Response.ClassByFeeInResponse;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ApiProject.Service.Employee
 {
@@ -34,7 +35,6 @@ namespace ApiProject.Service.Employee
             _context = context;
             _mapper = mapper;
         }
-
 
         private async Task<string> SaveEmployeeFileAsync(IFormFile file, string folderPath, int Emp_Id, string schoolId, string subFolderName)
         {
@@ -68,155 +68,199 @@ namespace ApiProject.Service.Employee
         }
 
         // Employee Details Start
-        public async Task<ApiResponse<bool>> AddEmployeeDetail(AddEmployeeDetailReq request)
+        public async Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit()
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                EmployeeRegister Employee = new EmployeeRegister();
-                Employee.Emp_Id = _context.EmployeeRegister.DefaultIfEmpty().Max(r => r == null ? 0 : r.Emp_Id) + 1;
-
-                var allEmployeeDataRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image", "ALLSchoolData");
-                var EmployeeFolderPath = Path.Combine(allEmployeeDataRoot, SchoolId.ToString());
-                // 👉 Check & create Employee folder
-                if (!Directory.Exists(EmployeeFolderPath))
-                {
-                    Directory.CreateDirectory(EmployeeFolderPath);
-                }
-
-                if (request.Employeeimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EmployeePhoto");
-                    Employee.EmployrPhoto = await SaveEmployeeFileAsync(request.Employeeimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EmployeePhoto");
-                }
-                if (request.Aadharimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EAadharPhoto");
-                    Employee.AadharcardPhoto = await SaveEmployeeFileAsync(request.Aadharimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EAadharPhoto");
-                }
-                if (request.Panimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EPanCardPhoto");
-                    Employee.PancardPhoto = await SaveEmployeeFileAsync(request.Panimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EPanCardPhoto");
-                }
-                if (request.Educationimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EEducationPhoto");
-                    Employee.EducationPhoto = await SaveEmployeeFileAsync(request.Educationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EEducationPhoto");
-                }
-                if (request.Graduationimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EGraductionPhoto");
-                    Employee.GraduationPhoto = await SaveEmployeeFileAsync(request.Graduationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EGraductionPhoto");
-                }
-                if (request.PostGraduationimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EPostEducationPhoto");
-                    Employee.PostGraductionPhoto = await SaveEmployeeFileAsync(request.PostGraduationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EPostEducationPhoto");
-                }
-                if (request.Resumeimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EResumePhoto");
-                    Employee.ResumePhoto = await SaveEmployeeFileAsync(request.Resumeimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EResumePhoto");
-                }
-                if (request.Experienceimg != null)
-                {
-                    string photoFolder = Path.Combine(EmployeeFolderPath, "EExperiencePhoto");
-                    Employee.ExperiencePhoto = await SaveEmployeeFileAsync(request.Experienceimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EExperiencePhoto");
-                }
-                if (request.BPassbookimg != null)
-                {
-                    string tcFolder = Path.Combine(EmployeeFolderPath, "EBankpassbookPhoto");
-                    Employee.BankPssbookPhoto = await SaveEmployeeFileAsync(request.BPassbookimg, tcFolder, Employee.Emp_Id, SchoolId.ToString(), "EBankpassbookPhoto");
-                }
-
-                Employee.JoiningDate = request.JoiningDate;
-                Employee.Emp_Type = request.Emp_Type;
-                Employee.Emp_Name = request.Emp_Name;
-                Employee.Father_husband_Name = request.Father_husband_Name;
-                Employee.DOB = request.DOB;
-                Employee.Gendar = request.Gendar;
-                Employee.Marital_Status = request.Marital_Status;
-                Employee.Nationality = request.Nationality;
-                Employee.Religion = request.Religion;
-                Employee.Cast = request.Cast;
-                Employee.Bloodgroup = request.Bloodgroup;
-                Employee.Adharcard = request.Aadharcard;
-
-                Employee.Address = request.Address;
-                Employee.State = request.State;
-                Employee.District = request.District;
-                Employee.City = request.City;
-                //  Employee.PinCode = request.PinCode;
-                Employee.Phoneno = request.Phoneno;
-                Employee.Mobileno = request.Mobileno;
-                Employee.EmailId = request.EmailId;
-
-                Employee.P_Address = request.P_Address;
-                Employee.P_District = request.P_District;
-                Employee.P_State = request.P_State;
-                Employee.P_City = request.P_City;
-                Employee.P_EmailId = request.P_EmailId;
-                Employee.P_Phoneno = request.P_Phoneno;
-                Employee.P_Mobileno = request.P_Mobileno;
-                //   Employee.P_PinCode = request.P_PinCode;
-
-                Employee.Qualification = request.Qualification;
-                Employee.Experience = request.Experience;
-                Employee.Specialization = request.Specialization;
-
-                Employee.Applied_Post = request.Applied_Post;
-                Employee.Appointed_Post = request.Appointed_Post;
-                Employee.Basic_Salary = request.Basic_Salary;
-                Employee.Allowances = request.Allowances;
-                Employee.TotalSalary = request.TotalSalary;
-
-                Employee.Specialnote = request.Specialnote;
-                Employee.Adharcard = request.Aadharcard;
-                Employee.CheckTerms = true;
-                Employee.Active = true;
-                Employee.Userid = UserId;
-                Employee.CompanyId = SchoolId;
-                Employee.SessionId = SessionId;
-                Employee.Date = DateTime.Now;
-                //   Employee.CreateDate = DateTime.Now;
-                //    Employee.UpdateDate = DateTime.Now;
-
-                _context.EmployeeRegister.Add(Employee);
-                await _context.SaveChangesAsync();
-
-                EmployeeBankDetailTbl BankDet = new EmployeeBankDetailTbl();
-
-                BankDet.BankId = _context.EmployeeBankDetailTbl.DefaultIfEmpty().Max(r => r == null ? 0 : r.BankId) + 1;
-
-                BankDet.EmployeeId = Employee.Emp_Id;
-                BankDet.AHName = request.BankDetail.AHName;
-                BankDet.BankName = request.BankDetail.BankName;
-                BankDet.BranchName = request.BankDetail.BranchName;
-                BankDet.AccountNumber = request.BankDetail.AccountNumber;
-                BankDet.IFSCCode = request.BankDetail.IFSCCode;
-                BankDet.SchoolId = SchoolId;
-                BankDet.SessionId = SessionId;
-                BankDet.UserId = UserId;
-                BankDet.Active = true;
-                BankDet.Date = DateTime.Now;
-                BankDet.CreateDate = DateTime.Now;
-                BankDet.UpdateDate = DateTime.Now;
-
-                _context.EmployeeBankDetailTbl.Add(BankDet);
-                await _context.SaveChangesAsync();
-
-                return ApiResponse<bool>.SuccessResponse(true, "Employee saved successfully");
+                var EmployeeEntity = await _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId)
+                    .Select(c => new GetEmployeeModel
+                    {
+                        Emp_Id = c.Emp_Id,
+                        Emp_Name = c.Emp_Name,
+                        Active = c.Active,
+                    }).ToListAsync();
+                return ApiResponse<List<GetEmployeeModel>>.SuccessResponse(EmployeeEntity, "Employee list fetched successfully");
 
             }
             catch (Exception ex)
             {
-                return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<List<GetEmployeeModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
+        public async Task<ApiResponse<bool>> AddEmployeeDetail(AddEmployeeDetailReq request)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            {
+                try
+                {
+                    int SchoolId = _loginUser.SchoolId;
+                    int UserId = _loginUser.UserId;
+                    int SessionId = _loginUser.SessionId;
+
+                    EmployeeRegister Employee = new EmployeeRegister();
+                    Employee.Emp_Id = _context.EmployeeRegister.DefaultIfEmpty().Max(r => r == null ? 0 : r.Emp_Id) + 1;
+
+                    var allEmployeeDataRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image", "ALLSchoolData");
+                    var EmployeeFolderPath = Path.Combine(allEmployeeDataRoot, SchoolId.ToString());
+
+                    if (!Directory.Exists(EmployeeFolderPath))
+                    {
+                        Directory.CreateDirectory(EmployeeFolderPath);
+                    }
+
+                    string EmployeeCode = "";
+                    institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+
+                    var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == SchoolId && p.Active == true);
+                    var startYearY = Convert.ToDateTime(sessioninfo.StartSession).ToString("yy");
+
+                    EmployeeRegister LastCode = _context.EmployeeRegister.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.Emp_Id).FirstOrDefault();
+
+                    string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+
+                    int NewId = 1;
+                    if (LastCode != null)
+                    {
+                        var parts = LastCode.Emp_Code.Split('/');
+                        if (parts.Length == 2 && int.TryParse(parts[1], out int lastId))
+                        {
+                            NewId = lastId + 1;
+                        }
+                    }
+
+                    EmployeeCode = threeLetters + "-" + startYearY + "/" + NewId;
+
+                    if (request.Employeeimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EmployeePhoto");
+                        Employee.EmployrPhoto = await SaveEmployeeFileAsync(request.Employeeimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EmployeePhoto");
+                    }
+                    if (request.Aadharimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EAadharPhoto");
+                        Employee.AadharcardPhoto = await SaveEmployeeFileAsync(request.Aadharimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EAadharPhoto");
+                    }
+                    if (request.Panimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EPanCardPhoto");
+                        Employee.PancardPhoto = await SaveEmployeeFileAsync(request.Panimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EPanCardPhoto");
+                    }
+                    if (request.Educationimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EEducationPhoto");
+                        Employee.EducationPhoto = await SaveEmployeeFileAsync(request.Educationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EEducationPhoto");
+                    }
+                    if (request.Graduationimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EGraductionPhoto");
+                        Employee.GraduationPhoto = await SaveEmployeeFileAsync(request.Graduationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EGraductionPhoto");
+                    }
+                    if (request.PostGraduationimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EPostEducationPhoto");
+                        Employee.PostGraductionPhoto = await SaveEmployeeFileAsync(request.PostGraduationimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EPostEducationPhoto");
+                    }
+                    if (request.Resumeimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EResumePhoto");
+                        Employee.ResumePhoto = await SaveEmployeeFileAsync(request.Resumeimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EResumePhoto");
+                    }
+                    if (request.Experienceimg != null)
+                    {
+                        string photoFolder = Path.Combine(EmployeeFolderPath, "EExperiencePhoto");
+                        Employee.ExperiencePhoto = await SaveEmployeeFileAsync(request.Experienceimg, photoFolder, Employee.Emp_Id, SchoolId.ToString(), "EExperiencePhoto");
+                    }
+                    if (request.BPassbookimg != null)
+                    {
+                        string tcFolder = Path.Combine(EmployeeFolderPath, "EBankpassbookPhoto");
+                        Employee.BankPssbookPhoto = await SaveEmployeeFileAsync(request.BPassbookimg, tcFolder, Employee.Emp_Id, SchoolId.ToString(), "EBankpassbookPhoto");
+                    }
+
+                    Employee.Emp_Code = EmployeeCode;
+                    Employee.JoiningDate = request.JoiningDate;
+                    //  Employee.Emp_Type = request.Emp_Type;
+                    Employee.Emp_Name = request.Emp_Name;
+                    Employee.Father_husband_Name = request.Father_husband_Name;
+                    Employee.DOB = request.DOB;
+                    Employee.Gendar = request.Gendar;
+                    Employee.Marital_Status = request.Marital_Status;
+                    Employee.Nationality = request.Nationality;
+                    Employee.Religion = request.Religion;
+                    Employee.Cast = request.Cast;
+                    Employee.Bloodgroup = request.Bloodgroup;
+                    Employee.Adharcard = request.Aadharcard;
+
+                    Employee.Address = request.Address;
+                    Employee.State = request.State;
+                    Employee.District = request.District;
+                    Employee.City = request.City;
+                    Employee.Phoneno = request.Phoneno;
+                    Employee.Mobileno = request.Mobileno;
+                    Employee.EmailId = request.EmailId;
+
+                    Employee.P_Address = request.P_Address;
+                    Employee.P_District = request.P_District;
+                    Employee.P_State = request.P_State;
+                    Employee.P_City = request.P_City;
+                    Employee.P_EmailId = request.P_EmailId;
+                    Employee.P_Phoneno = request.P_Phoneno;
+                    Employee.P_Mobileno = request.P_Mobileno;
+
+                    Employee.Qualification = request.Qualification;
+                    Employee.Experience = request.Experience;
+                    Employee.Specialization = request.Specialization;
+
+                    Employee.Applied_Post = request.Applied_Post;
+                    Employee.Appointed_Post = request.Appointed_Post;
+                    Employee.Basic_Salary = request.Basic_Salary;
+                    Employee.Allowances = request.Allowances;
+                    Employee.TotalSalary = request.TotalSalary;
+                    Employee.Specialnote = request.Specialnote;
+
+                    Employee.CheckTerms = true;
+                    Employee.Active = true;
+                    Employee.Userid = UserId;
+                    Employee.CompanyId = SchoolId;
+                    Employee.SessionId = SessionId;
+                    Employee.Date = DateTime.Now;
+
+                    _context.EmployeeRegister.Add(Employee);
+                    await _context.SaveChangesAsync();
+
+                    TrnBankDetails BankDet = new TrnBankDetails();
+                    // BankDet.AID = _context.TrnBankDetails.DefaultIfEmpty().Max(r => r == null ? 0 : r.AID) + 1;
+
+                    BankDet.Emp_Id = Employee.Emp_Id;
+                    BankDet.AccountHolder = request.BankDetail.AHName;
+                    BankDet.BankName = request.BankDetail.BankName;
+                    BankDet.BranchName = request.BankDetail.BranchName;
+                    BankDet.AccountNumber = request.BankDetail.AccountNumber;
+                    BankDet.IFSCCode = request.BankDetail.IFSCCode;
+                    BankDet.CompanyId = SchoolId;
+                    BankDet.SessionId = SessionId;
+                    BankDet.Userid = UserId;
+                    BankDet.ActiveStatus = true;
+                    BankDet.RTS = DateTime.Now;
+
+                    _context.TrnBankDetails.Add(BankDet);
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                    return ApiResponse<bool>.SuccessResponse(true, "Employee saved successfully");
+
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                }
+            }
+        }
+
 
         public async Task<ApiResponse<bool>> UpdateEmoloyeeDetail(UpdatreEmployeeDetailReq request)
         {
@@ -284,7 +328,7 @@ namespace ApiProject.Service.Employee
                         result.BankPssbookPhoto = await SaveEmployeeFileAsync(request.BPassbookimg, tcFolder, result.Emp_Id, SchoolId.ToString(), "EBankpassbookPhoto");
                     }
 
-                    result.Emp_Type = request.Emp_Type;
+                    //  result.Emp_Type = request.Emp_Type;
                     result.JoiningDate = request.JoiningDate;
                     result.Emp_Name = request.Emp_Name;
                     result.Father_husband_Name = request.Father_husband_Name;
@@ -322,19 +366,18 @@ namespace ApiProject.Service.Employee
                     result.CheckTerms = true;
                     result.Active = true;
                     result.Date = DateTime.Now;
-                    // result.UpdateDate = DateTime.Now;
 
                     _context.SaveChanges();
 
-                    EmployeeBankDetailTbl Bank = await _context.EmployeeBankDetailTbl.Where(p => p.BankId == request.BankDetail.BankId).FirstOrDefaultAsync();
+                    TrnBankDetails Bank = await _context.TrnBankDetails.Where(p => p.AID == request.BankDetail.BankId).FirstOrDefaultAsync();
 
-                    Bank.EmployeeId = request.Emp_Id;
+                    Bank.Emp_Id = request.Emp_Id;
+                    Bank.AccountHolder = request.BankDetail.AHName;
                     Bank.IFSCCode = request.BankDetail.IFSCCode;
                     Bank.BankName = request.BankDetail.BankName;
                     Bank.BranchName = request.BankDetail.BranchName;
-                    Bank.AHName = request.BankDetail.AHName;
                     Bank.AccountNumber = request.BankDetail.AccountNumber;
-                    Bank.UpdateDate = DateTime.Now;
+                    Bank.ActiveStatus = true;
                     _context.SaveChanges();
 
                     await transaction.CommitAsync();
@@ -348,28 +391,6 @@ namespace ApiProject.Service.Employee
             }
         }
 
-        public async Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit()
-        {
-            try
-            {
-                int SchoolId = _loginUser.SchoolId;
-                int SessionId = _loginUser.SessionId;
-
-                var EmployeeEntity = await _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId)
-                    .Select(c => new GetEmployeeModel
-                    {
-                        Emp_Id = c.Emp_Id,
-                        Emp_Name = c.Emp_Name,
-                        Active = c.Active,
-                    }).ToListAsync();
-                return ApiResponse<List<GetEmployeeModel>>.SuccessResponse(EmployeeEntity, "Employee list fetched successfully");
-
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<List<GetEmployeeModel>>.ErrorResponse("Error: " + ex.Message);
-            }
-        }
         public async Task<ApiResponse<List<GetEmployeeListModel>>> EmployeeReport(GetEmployeReq req)
         {
             try
@@ -379,29 +400,29 @@ namespace ApiProject.Service.Employee
                 int SessionId = _loginUser.SessionId;
 
                 var res = await _context.EmployeeRegister.Where(c => (req.EmpId == -1 ? true : c.Emp_Id == req.EmpId)
-                && c.Active == true && c.CompanyId == SchoolId).Select(c => new GetEmployeeListModel
-                {
-                    Emp_Id = c.Emp_Id,
-                    Emp_Name = c.Emp_Name,
-                    DOB = c.DOB,
-                    Father_husband_Name = c.Father_husband_Name,
-                    JoiningDate = c.JoiningDate,
-                    Mobileno = c.Mobileno,
-                    Address = c.Address,
-                    City = c.City,
-                    District = c.District,
-                    //  PinCode = c.,
-                    State = c.State,
-                    Basic_Salary = c.Basic_Salary,
-                    Allowances = c.Allowances,
-                    TotalSalary = c.TotalSalary,
-                    EmployeePhoto = c.EmployrPhoto,
-                    Gendar = c.Gendar,
-                    EmailId = c.EmailId,
-                    Date = c.Date,
-                    Active = c.Active,
+                 && c.CompanyId == SchoolId).Select(c => new GetEmployeeListModel
+                 {
+                     Emp_Id = c.Emp_Id,
+                     Emp_Name = c.Emp_Name,
+                     DOB = c.DOB,
+                     Father_husband_Name = c.Father_husband_Name,
+                     JoiningDate = c.JoiningDate,
+                     Mobileno = c.Mobileno,
+                     Address = c.Address,
+                     City = c.City,
+                     District = c.District,
+                     //  PinCode = c.,
+                     State = c.State,
+                     Basic_Salary = c.Basic_Salary,
+                     Allowances = c.Allowances,
+                     TotalSalary = c.TotalSalary,
+                     EmployeePhoto = c.EmployrPhoto,
+                     Gendar = c.Gendar,
+                     EmailId = c.EmailId,
+                     Date = c.Date,
+                     Active = c.Active,
 
-                }).ToListAsync();
+                 }).ToListAsync();
 
                 if (res == null || !res.Any())
                 {
@@ -443,110 +464,6 @@ namespace ApiProject.Service.Employee
         // Employee Details End
 
         // Employee Work Allocation Start
-        //public async Task<ApiResponse<bool>> GetEmployeeNdClassBySubjectData(int ClassId, int EmpId)
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int UserId = _loginUser.UserId;
-        //        int SessionId = _loginUser.SessionId;
-
-        //        var EmpWorkAllo = _context.Emp_Workallocation.Where(e => e.Emp_Id == EmpId).FirstOrDefault();
-
-        //        if (EmpWorkAllo != null)
-        //        {
-
-        //            var res = new GetEmpClassbySubjectModel
-        //            {
-        //                EmpWorkAllocation = _context.Emp_Workallocation.Where(a => a.Emp_Id == EmpId && a.ClassId == ClassId)
-        //                  .Select(a => new getEmpWorkAllo
-        //                  {
-        //                      Emp_Id = a.Emp_Id,
-        //                      ClassId = a.ClassId,
-        //                      SectionId = a.SectionId,
-        //                      SubjectId = a.SubjectId,
-        //                  }).ToList(),
-
-        //                Sectiondata = _context.ClassSectionTbl.Where(a => a.ClassId == ClassId && a.SchoolId == SchoolId).Select(a => new SectionData
-        //                {
-        //                    SectionId = a.SectionId,
-        //                    SectionName = _context.sectionTbl.Where(p => p.SectionId == a.SectionId && p.SchoolId == SchoolId).Select(p => p.SectionName).FirstOrDefault(),
-        //                    SectionPriority = _context.sectionTbl.Where(p => p.SectionId == a.SectionId && p.SchoolId == SchoolId).Select(p => p.SectionPriority).FirstOrDefault(),
-
-        //                }).ToList(),
-
-        //            };
-        //        };
-        //        if (res == null)
-        //        {
-        //            return ApiResponse<bool>.ErrorResponse("No Fetch section by student ");
-        //        }
-
-        //        return ApiResponse<bool>.SuccessResponse(res, "Fetch successfully section by student");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
-
-        //    }
-        //}
-
-        //public async Task<ApiResponse<GetEmpClassbySubjectModel>> GetEmployeeNdClassBySubjectData(int ClassId, int EmpId)
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int UserId = _loginUser.UserId;
-        //        int SessionId = _loginUser.SessionId;
-
-        //        var EmpWorkAllo = _context.Emp_Workallocation
-        //            .FirstOrDefault(e => e.Emp_Id == EmpId);
-
-        //        if (EmpWorkAllo == null)
-        //        {
-        //            return ApiResponse<GetEmpClassbySubjectModel>.ErrorResponse("No work allocation found for this employee.");
-        //        }
-
-        //        var res = new GetEmpClassbySubjectModel
-        //        {
-        //            EmpWorkAllocation = _context.Emp_Workallocation
-        //                .Where(a => a.Emp_Id == EmpId && a.ClassId == ClassId)
-        //                .Select(a => new getEmpWorkAllo
-        //                {
-        //                    Emp_Id = a.Emp_Id,
-        //                    ClassId = a.ClassId,
-        //                    SectionId = a.SectionId,
-        //                    SubjectId = a.SubjectId,
-        //                }).ToList(),
-
-        //            Sectiondata = _context.ClassSectionTbl
-        //                .Where(a => a.ClassId == ClassId && a.SchoolId == SchoolId)
-        //                .Select(a => new SectionData
-        //                {
-        //                    SectionId = a.SectionId,
-        //                    SectionName = _context.sectionTbl
-        //                        .Where(p => p.SectionId == a.SectionId && p.SchoolId == SchoolId)
-        //                        .Select(p => p.SectionName)
-        //                        .FirstOrDefault(),
-        //                    SectionPriority = _context.sectionTbl
-        //                        .Where(p => p.SectionId == a.SectionId && p.SchoolId == SchoolId)
-        //                        .Select(p => p.SectionPriority)
-        //                        .FirstOrDefault(),
-        //                }).ToList()
-        //        };
-
-        //        if (res == null || (!res.EmpWorkAllocation.Any() && !res.Sectiondata.Any()))
-        //        {
-        //            return ApiResponse<GetEmpClassbySubjectModel>.ErrorResponse("No data found for the given Class and Employee.");
-        //        }
-
-        //        return ApiResponse<GetEmpClassbySubjectModel>.SuccessResponse(res, "Fetch successfully section by student");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<GetEmpClassbySubjectModel>.ErrorResponse("Error: " + ex.Message);
-        //    }
-        //}
 
         public async Task<ApiResponse<GetEmpClassbySubjectModel>> GetEmployeeNdClassBySubjectData(int EmpId, int ClassId)
         {
@@ -566,26 +483,19 @@ namespace ApiProject.Service.Employee
 
                 var res = new GetEmpClassbySubjectModel
                 {
-                    EmpWorkAllocation = _context.Emp_Workallocation
-                        .Where(a => a.Emp_Id == EmpId && a.UniversityId == ClassId)
-                        .Select(a => new getEmpWorkAllo
-                        {
-                            Emp_Id = a.Emp_Id,
-                            //ClassId = a.ClassId,
-                            //SectionId = a.SectionId,
-                            SubjectId = a.SubjectId,
-                            Subject = _context.Subject.Where(c => c.subject_id == a.SubjectId && c.CompanyId == SchoolId).Select(c => c.subject_name).FirstOrDefault(),
-                        }).ToList(),
+                    EmpWorkAllocation = _context.Emp_Workallocation.Where(a => a.Emp_Id == EmpId && a.UniversityId == ClassId).Select(a => new getEmpWorkAllo
+                    {
+                        Emp_Id = a.Emp_Id,
+                        SubjectId = a.SubjectId,
+                        Subject = _context.Subject.Where(c => c.subject_id == a.SubjectId && c.CompanyId == SchoolId).Select(c => c.subject_name).FirstOrDefault(),
+                    }).ToList(),
 
-                    Sectiondata = _context.ClassSectionTbl
-                        .Where(a => a.ClassId == ClassId && a.SchoolId == SchoolId)
-                        .Select(a => new SectionData
-                        {
-                            SectionId = a.SectionId,
-                            SectionName = _context.collegeinfo.Where(p => p.collegeid == a.SectionId && p.CompanyId == SchoolId).Select(p => p.collegename).FirstOrDefault(),
-                            //  SectionPriority = _context.sectionTbl.Where(p => p.SectionId == a.SectionId && p.SchoolId == SchoolId).Select(p => p.SectionPriority).FirstOrDefault(),
+                    Sectiondata = _context.collegeinfo.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId).Select(a => new SectionData
+                    {
+                        SectionId = a.collegeid,
+                        SectionName = a.collegename,
 
-                        }).ToList(),
+                    }).ToList(),
 
                     EmpsubjectData = (from cs in _context.ClassSubjectExamTbl
                                       join s in _context.Subject
@@ -595,7 +505,6 @@ namespace ApiProject.Service.Employee
                                       {
                                           SubjectId = s.subject_id,
                                           SubjectName = s.subject_name,
-                                          //    SubjectPriority = s.SubjectPriority
                                       }).Distinct().ToList(),
                 };
 
@@ -717,7 +626,7 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EmployeeRegister.Where(a => a.Active == true).Select(a => new EmpAttendanceDetail
+                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.JoiningDate <= req.Date).Select(a => new EmpAttendanceDetail
                 {
                     Emp_Id = a.Emp_Id,
                     Employeename = a.Emp_Name,
@@ -785,7 +694,7 @@ namespace ApiProject.Service.Employee
             }
         }
 
-        public async Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(EmpAttendanceReportReq req)
+        public async Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(int Month)
         {
             try
             {
@@ -793,17 +702,16 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId).Select(a => new EmpAttendanceReportModel
+                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).Select(a => new EmpAttendanceReportModel
                 {
                     Emp_Id = a.Emp_Id,
                     Employeename = a.Emp_Name,
-                    // Monthname = req.Month,
-                    // TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == month && p.SessionId == SessionId && p.SchoolId == SchoolId),
-                    TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == req.Months && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Present").Count(),
-                    TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == req.Months && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Absent").Count(),
-                    TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == req.Months && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Holiday").Count(),
-                    TotalL = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == req.Months && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Leave").Count(),
-                    TotalHF = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == req.Months && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "HalfDay").Count(),
+                    
+                    TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Present").Count(),
+                    TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Absent").Count(),
+                    TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Holiday").Count(),
+                    TotalL = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Leave").Count(),
+                    TotalHF = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "HalfDay").Count(),
 
                 }).ToListAsync();
                 return ApiResponse<List<EmpAttendanceReportModel>>.SuccessResponse(res, "Fetch successfully Employee Attendance");
@@ -813,6 +721,7 @@ namespace ApiProject.Service.Employee
                 return ApiResponse<List<EmpAttendanceReportModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
 
         // Employee Saalary 
         public async Task<ApiResponse<List<GetAdvsalaryModel>>> GetAdvanceSalaryList()
@@ -949,7 +858,6 @@ namespace ApiProject.Service.Employee
             }
         }
 
-
         public async Task<ApiResponse<bool>> AddEmployeeSalary(List<AddEmployeeSalaryModel> model)
         {
             try
@@ -1025,8 +933,6 @@ namespace ApiProject.Service.Employee
                 return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
-
 
 
     }

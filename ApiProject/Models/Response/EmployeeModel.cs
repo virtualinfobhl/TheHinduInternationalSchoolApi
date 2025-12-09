@@ -45,7 +45,7 @@ namespace ApiProject.Models.Response
     {
         public int? SubjectId { get; set; }
         public string? SubjectName { get; set; }
-        public int? SubjectPriority { get; set; }
+       // public int? SubjectPriority { get; set; }
     }
 
     public class GetEmpWorkAllocationModel

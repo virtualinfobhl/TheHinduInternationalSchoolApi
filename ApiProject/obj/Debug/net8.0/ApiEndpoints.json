@@ -29,11 +29,6 @@
         "IsRequired": false
       },
       {
-        "Name": "Emp_Type",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "Emp_Name",
         "Type": "System.String",
         "IsRequired": false
@@ -338,9 +333,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "req",
-        "Type": "ApiProject.Models.Request.EmpAttendanceReportReq",
-        "IsRequired": true
+        "Name": "Month",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -482,11 +477,6 @@
       {
         "Name": "JoiningDate",
         "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Emp_Type",
-        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -3031,289 +3021,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "studentId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "admission_date",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "srNo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "stu_name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "classId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "sectionId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "rte",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "dob",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "gender",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "cast_category",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "religion",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "caste",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "blood_group",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "stuphoto",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "stuaadhar",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "stubirth",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "parentid",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "fathername",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "fathermobileno",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "fatherOP",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "fatherIncome",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "fatheraadhar",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "mothername",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "mothermobileno",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "motherOP",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "motherIncome",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "motheraadhar",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "guardianName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "guardianMobileNo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "IncomeCertificate",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "JanAadhar",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "address",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "state",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "district",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "city",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "pincode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "p_address",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "p_state",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "p_district",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "p_city",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "p_pincode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastSchlName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastClass",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastExanTotalMarks",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastDivision",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastParecentage",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "LastMarkSheetPhotos",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "studentTcfile",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "lastRemarks",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "feeInstallment",
-        "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Request.FeeInstallmentReqDto, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.AdmissionPayFees",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.AdmissionFeeDiscount",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.pramoteFees",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.PaymentMode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.FeeDiscount",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.PaymentDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "ApiProject.Models.Request.StudentUpdateReqModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -3383,53 +3093,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "ApiProject.Controllers.StudentAttendanceController",
-    "Method": "schoolstudentattendance",
-    "RelativePath": "api/StudentAttendance/schoolstudentattendance",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "srno",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "schoolid",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.StudentAttendanceController",
-    "Method": "studentattendance",
-    "RelativePath": "api/StudentAttendance/studentattendance",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "srno",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.StudentAttendanceController",
-    "Method": "todaystudentattendance",
-    "RelativePath": "api/StudentAttendance/todaystudentattendance",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "AddDriver",
     "RelativePath": "api/Transport/AddDriver",
@@ -3456,22 +3119,6 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Request.AddRouteReq",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.TransportController",
-    "Method": "AddVehicleByRouteAssign",
-    "RelativePath": "api/Transport/AddRouteAssign",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "ApiProject.Models.Request.AddRouteAssignRequest",
         "IsRequired": true
       }
     ],
@@ -3552,6 +3199,22 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Request.AddVehicleReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "AddVehicleByRouteAssign",
+    "RelativePath": "api/Transport/AddVehicleByRouteAssign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ApiProject.Models.Request.AddRouteAssignRequest",
         "IsRequired": true
       }
     ],
@@ -3667,16 +3330,6 @@
     "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "GetRoute",
     "RelativePath": "api/Transport/GetRoute",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.TransportController",
-    "Method": "GetVehicleByRouteAssign",
-    "RelativePath": "api/Transport/GetRouteAssign",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -3858,6 +3511,16 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "GetVehicleByRouteAssign",
+    "RelativePath": "api/Transport/GetVehicleByRouteAssign",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "TransportDetailsReport",
     "RelativePath": "api/Transport/TransportDetailsReport",
     "HttpMethod": "POST",
@@ -3915,22 +3578,6 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Response.UpdateRouteModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.TransportController",
-    "Method": "UpdateVehicleByRouteAssign",
-    "RelativePath": "api/Transport/UpdateRouteAssign",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "ApiProject.Models.Request.UpdateRouteAssignRequest",
         "IsRequired": true
       }
     ],
@@ -4011,6 +3658,22 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Response.UpdateVehicleModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "UpdateVehicleByRouteAssign",
+    "RelativePath": "api/Transport/UpdateVehicleByRouteAssign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ApiProject.Models.Request.UpdateRouteAssignRequest",
         "IsRequired": true
       }
     ],

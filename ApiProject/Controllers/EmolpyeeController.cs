@@ -103,22 +103,22 @@ namespace ApiProject.Controllers
         }
         // ********* Employee Details End 
 
+
+
         // ********* Employee Worl alocation Start 
-        [HttpPost("EmpWorkallocationReport")]
-        public async Task<IActionResult> EmpWorkallocationReport(GetEmployeReq req)
+        [HttpPost("AddEmpWorkAllocation")]
+        public async Task<IActionResult> AddEmpWorkAllocation(AddWorkallcation req)
         {
             try
             {
-                var res = await _employeeService.EmpWorkallocationReport(req);
+                var res = await _employeeService.AddEmpWorkAllocation(req);
                 return Ok(res);
             }
             catch (Exception ex)
             {
-                var res = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(res);
+                return BadRequest(ex.Message);
             }
         }
-
 
         [HttpGet("GetEmployeeNdClassBySubjectData")]
         public async Task<IActionResult> GetEmployeeNdClassBySubjectData(int EmpId, int ClassId)
@@ -134,22 +134,25 @@ namespace ApiProject.Controllers
             }
         }
 
-
-        [HttpPost("AddEmpWorkAllocation")]
-        public async Task<IActionResult> AddEmpWorkAllocation(AddWorkallcation req)
+        [HttpPost("EmpWorkallocationReport")]
+        public async Task<IActionResult> EmpWorkallocationReport(GetEmployeReq req)
         {
             try
             {
-                var res = await _employeeService.AddEmpWorkAllocation(req);
+                var res = await _employeeService.EmpWorkallocationReport(req);
                 return Ok(res);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var res = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
             }
         }
 
         // ********* Employee Worl alocation End 
+
+
+
 
         // ********* Employee Attendance Start 
         [HttpPost("GetEmployeeAttendance")]
@@ -183,11 +186,11 @@ namespace ApiProject.Controllers
 
 
         [HttpPost("EmployeeAttendanceReport")]
-        public async Task<IActionResult> EmployeeAttendanceReport(EmpAttendanceReportReq req)
+        public async Task<IActionResult> EmployeeAttendanceReport(int Month)
         {
             try
             {
-                var res = await _employeeService.EmployeeAttendanceReport(req);
+                var res = await _employeeService.EmployeeAttendanceReport(Month);
                 return Ok(res);
             }
             catch (Exception ex)

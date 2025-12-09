@@ -19,13 +19,6 @@
             }
           },
           {
-            "name": "Emp_Type",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "Emp_Name",
             "in": "query",
             "schema": {
@@ -412,13 +405,6 @@
             "schema": {
               "type": "string",
               "format": "date-time"
-            }
-          },
-          {
-            "name": "Emp_Type",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -869,7 +855,7 @@
         }
       }
     },
-    "/api/Emolpyee/EmpWorkallocationReport": {
+    "/api/Emolpyee/AddEmpWorkAllocation": {
       "post": {
         "tags": [
           "Emolpyee"
@@ -878,17 +864,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetEmployeReq"
+                "$ref": "#/components/schemas/AddWorkallcation"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetEmployeReq"
+                "$ref": "#/components/schemas/AddWorkallcation"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/GetEmployeReq"
+                "$ref": "#/components/schemas/AddWorkallcation"
               }
             }
           }
@@ -930,7 +916,7 @@
         }
       }
     },
-    "/api/Emolpyee/AddEmpWorkAllocation": {
+    "/api/Emolpyee/EmpWorkallocationReport": {
       "post": {
         "tags": [
           "Emolpyee"
@@ -939,17 +925,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddWorkallcation"
+                "$ref": "#/components/schemas/GetEmployeReq"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddWorkallcation"
+                "$ref": "#/components/schemas/GetEmployeReq"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AddWorkallcation"
+                "$ref": "#/components/schemas/GetEmployeReq"
               }
             }
           }
@@ -1037,25 +1023,16 @@
         "tags": [
           "Emolpyee"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmpAttendanceReportReq"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmpAttendanceReportReq"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmpAttendanceReportReq"
-              }
+        "parameters": [
+          {
+            "name": "Month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -4070,381 +4047,19 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "studentId": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "admission_date": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "srNo": {
-                    "type": "string"
-                  },
-                  "stu_name": {
-                    "type": "string"
-                  },
-                  "classId": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "sectionId": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "rte": {
-                    "type": "string"
-                  },
-                  "dob": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "gender": {
-                    "type": "string"
-                  },
-                  "cast_category": {
-                    "type": "string"
-                  },
-                  "religion": {
-                    "type": "string"
-                  },
-                  "caste": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "blood_group": {
-                    "type": "string"
-                  },
-                  "stuphoto": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "stuaadhar": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "stubirth": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "parentid": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "fathername": {
-                    "type": "string"
-                  },
-                  "fathermobileno": {
-                    "type": "string"
-                  },
-                  "fatherOP": {
-                    "type": "string"
-                  },
-                  "fatherIncome": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "fatheraadhar": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "mothername": {
-                    "type": "string"
-                  },
-                  "mothermobileno": {
-                    "type": "string"
-                  },
-                  "motherOP": {
-                    "type": "string"
-                  },
-                  "motherIncome": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "motheraadhar": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "guardianName": {
-                    "type": "string"
-                  },
-                  "guardianMobileNo": {
-                    "type": "string"
-                  },
-                  "IncomeCertificate": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "JanAadhar": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "address": {
-                    "type": "string"
-                  },
-                  "state": {
-                    "type": "string"
-                  },
-                  "district": {
-                    "type": "string"
-                  },
-                  "city": {
-                    "type": "string"
-                  },
-                  "pincode": {
-                    "type": "string"
-                  },
-                  "p_address": {
-                    "type": "string"
-                  },
-                  "p_state": {
-                    "type": "string"
-                  },
-                  "p_district": {
-                    "type": "string"
-                  },
-                  "p_city": {
-                    "type": "string"
-                  },
-                  "p_pincode": {
-                    "type": "string"
-                  },
-                  "lastSchlName": {
-                    "type": "string"
-                  },
-                  "lastClass": {
-                    "type": "string"
-                  },
-                  "lastExanTotalMarks": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "lastDivision": {
-                    "type": "string"
-                  },
-                  "lastParecentage": {
-                    "type": "string"
-                  },
-                  "LastMarkSheetPhotos": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "studentTcfile": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "lastRemarks": {
-                    "type": "string"
-                  },
-                  "feeInstallment": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/FeeInstallmentReqDto"
-                    }
-                  },
-                  "admissionReceipt.AdmissionPayFees": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "admissionReceipt.AdmissionFeeDiscount": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "admissionReceipt.pramoteFees": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "admissionReceipt.PaymentMode": {
-                    "type": "string"
-                  },
-                  "admissionReceipt.FeeDiscount": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "admissionReceipt.PaymentDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
-                }
-              },
-              "encoding": {
-                "studentId": {
-                  "style": "form"
-                },
-                "admission_date": {
-                  "style": "form"
-                },
-                "srNo": {
-                  "style": "form"
-                },
-                "stu_name": {
-                  "style": "form"
-                },
-                "classId": {
-                  "style": "form"
-                },
-                "sectionId": {
-                  "style": "form"
-                },
-                "rte": {
-                  "style": "form"
-                },
-                "dob": {
-                  "style": "form"
-                },
-                "gender": {
-                  "style": "form"
-                },
-                "cast_category": {
-                  "style": "form"
-                },
-                "religion": {
-                  "style": "form"
-                },
-                "caste": {
-                  "style": "form"
-                },
-                "email": {
-                  "style": "form"
-                },
-                "blood_group": {
-                  "style": "form"
-                },
-                "stuphoto": {
-                  "style": "form"
-                },
-                "stuaadhar": {
-                  "style": "form"
-                },
-                "stubirth": {
-                  "style": "form"
-                },
-                "parentid": {
-                  "style": "form"
-                },
-                "fathername": {
-                  "style": "form"
-                },
-                "fathermobileno": {
-                  "style": "form"
-                },
-                "fatherOP": {
-                  "style": "form"
-                },
-                "fatherIncome": {
-                  "style": "form"
-                },
-                "fatheraadhar": {
-                  "style": "form"
-                },
-                "mothername": {
-                  "style": "form"
-                },
-                "mothermobileno": {
-                  "style": "form"
-                },
-                "motherOP": {
-                  "style": "form"
-                },
-                "motherIncome": {
-                  "style": "form"
-                },
-                "motheraadhar": {
-                  "style": "form"
-                },
-                "guardianName": {
-                  "style": "form"
-                },
-                "guardianMobileNo": {
-                  "style": "form"
-                },
-                "IncomeCertificate": {
-                  "style": "form"
-                },
-                "JanAadhar": {
-                  "style": "form"
-                },
-                "address": {
-                  "style": "form"
-                },
-                "state": {
-                  "style": "form"
-                },
-                "district": {
-                  "style": "form"
-                },
-                "city": {
-                  "style": "form"
-                },
-                "pincode": {
-                  "style": "form"
-                },
-                "p_address": {
-                  "style": "form"
-                },
-                "p_state": {
-                  "style": "form"
-                },
-                "p_district": {
-                  "style": "form"
-                },
-                "p_city": {
-                  "style": "form"
-                },
-                "p_pincode": {
-                  "style": "form"
-                },
-                "lastSchlName": {
-                  "style": "form"
-                },
-                "lastClass": {
-                  "style": "form"
-                },
-                "lastExanTotalMarks": {
-                  "style": "form"
-                },
-                "lastDivision": {
-                  "style": "form"
-                },
-                "lastParecentage": {
-                  "style": "form"
-                },
-                "LastMarkSheetPhotos": {
-                  "style": "form"
-                },
-                "studentTcfile": {
-                  "style": "form"
-                },
-                "lastRemarks": {
-                  "style": "form"
-                },
-                "feeInstallment": {
-                  "style": "form"
-                },
-                "admissionReceipt.AdmissionPayFees": {
-                  "style": "form"
-                },
-                "admissionReceipt.AdmissionFeeDiscount": {
-                  "style": "form"
-                },
-                "admissionReceipt.pramoteFees": {
-                  "style": "form"
-                },
-                "admissionReceipt.PaymentMode": {
-                  "style": "form"
-                },
-                "admissionReceipt.FeeDiscount": {
-                  "style": "form"
-                },
-                "admissionReceipt.PaymentDate": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/StudentUpdateReqModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentUpdateReqModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentUpdateReqModel"
               }
             }
           }
@@ -5457,68 +5072,6 @@
         }
       }
     },
-    "/api/StudentAttendance/studentattendance": {
-      "get": {
-        "tags": [
-          "StudentAttendance"
-        ],
-        "parameters": [
-          {
-            "name": "srno",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/StudentAttendance/schoolstudentattendance": {
-      "get": {
-        "tags": [
-          "StudentAttendance"
-        ],
-        "parameters": [
-          {
-            "name": "srno",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "schoolid",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/StudentAttendance/todaystudentattendance": {
-      "get": {
-        "tags": [
-          "StudentAttendance"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/Transport/GetDriverList": {
       "get": {
         "tags": [
@@ -5903,7 +5456,7 @@
         }
       }
     },
-    "/api/Transport/GetRouteAssign": {
+    "/api/Transport/GetVehicleByRouteAssign": {
       "get": {
         "tags": [
           "Transport"
@@ -5915,7 +5468,7 @@
         }
       }
     },
-    "/api/Transport/AddRouteAssign": {
+    "/api/Transport/AddVehicleByRouteAssign": {
       "post": {
         "tags": [
           "Transport"
@@ -5946,7 +5499,7 @@
         }
       }
     },
-    "/api/Transport/UpdateRouteAssign": {
+    "/api/Transport/UpdateVehicleByRouteAssign": {
       "post": {
         "tags": [
           "Transport"
@@ -7041,6 +6594,41 @@
         },
         "additionalProperties": false
       },
+      "AdmissionFeeReceiptReqDto": {
+        "type": "object",
+        "properties": {
+          "admissionPayFees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "admissionFeeDiscount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "pramoteFees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "feeDiscount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BulkStudentReq": {
         "type": "object",
         "properties": {
@@ -7107,17 +6695,6 @@
           "pageSize": {
             "type": "integer",
             "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "EmpAttendanceReportReq": {
-        "type": "object",
-        "properties": {
-          "months": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7191,6 +6768,31 @@
         "additionalProperties": false
       },
       "FeeInstallmentReqDto": {
+        "type": "object",
+        "properties": {
+          "intallmentID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total_fee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "installment": {
+            "type": "string",
+            "nullable": true
+          },
+          "fAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FeeInstallmentReqMOdel": {
         "type": "object",
         "properties": {
           "intallmentID": {
@@ -7813,10 +7415,247 @@
           "remark": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentUpdateReqModel": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
           },
-          "dueFee": {
+          "admission_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "srNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "stu_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "classId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rte": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "cast_category": {
+            "type": "string",
+            "nullable": true
+          },
+          "religion": {
+            "type": "string",
+            "nullable": true
+          },
+          "caste": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "blood_group": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fathername": {
+            "type": "string",
+            "nullable": true
+          },
+          "fathermobileno": {
+            "type": "string",
+            "nullable": true
+          },
+          "fatherOP": {
+            "type": "string",
+            "nullable": true
+          },
+          "fatherIncome": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "mothername": {
+            "type": "string",
+            "nullable": true
+          },
+          "mothermobileno": {
+            "type": "string",
+            "nullable": true
+          },
+          "motherOP": {
+            "type": "string",
+            "nullable": true
+          },
+          "motherIncome": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "guardianName": {
+            "type": "string",
+            "nullable": true
+          },
+          "guardianMobileNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "district": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "pincode": {
+            "type": "string",
+            "nullable": true
+          },
+          "p_address": {
+            "type": "string",
+            "nullable": true
+          },
+          "p_state": {
+            "type": "string",
+            "nullable": true
+          },
+          "p_district": {
+            "type": "string",
+            "nullable": true
+          },
+          "p_city": {
+            "type": "string",
+            "nullable": true
+          },
+          "p_pincode": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSchlName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastClass": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastExanTotalMarks": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lastDivision": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastParecentage": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentTc": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastRemarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "stuphoto": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "stuaadhar": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "stubirth": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "fatheraadhar": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "motheraadhar": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "incomeCertificate": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "janAadhar": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "lastMarkSheetPhoto": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "lastMarkSheetPhotos": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "studentTcfile": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "admissionReceipt": {
+            "$ref": "#/components/schemas/AdmissionFeeReceiptReqDto"
+          },
+          "feeInstallmentlist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeeInstallmentReqMOdel"
+            },
             "nullable": true
           }
         },

@@ -50,7 +50,7 @@ namespace ApiProject.Data
         public DbSet<NewTransportFeeTbl> NewTransportFeeTbl { get; set; }
 
         public DbSet<EmployeeRegister> EmployeeRegister { get; set; }
-        public DbSet<EmployeeBankDetailTbl> EmployeeBankDetailTbl { get; set; }
+        public DbSet<TrnBankDetails> TrnBankDetails { get; set; }
         public DbSet<Emp_Workallocation> Emp_Workallocation { get; set; }
         public DbSet<Emp_Attendance> Emp_Attendance { get; set; }
         public DbSet<EmpAdvanceSalaryTbl> EmpAdvanceSalaryTbl { get; set; }

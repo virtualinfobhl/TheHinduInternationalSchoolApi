@@ -147,7 +147,7 @@ namespace ApiProject.Models.Request
         public string? Remark { get; set; }
         //  public Nullable<System.DateTime> Date { get; set; }
         //  public Nullable<bool> Active { get; set; }
-        public Nullable<double> DueFee { get; set; }
+      //  public Nullable<double> DueFee { get; set; }
     }
 
     public class UpdateOldFeeReq

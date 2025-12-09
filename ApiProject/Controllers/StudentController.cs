@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OfficeOpenXml;
+using System.Text.Json;
+
+//using Newtonsoft.Json;
 
 namespace ApiProject.Controllers
 {
@@ -21,6 +24,9 @@ namespace ApiProject.Controllers
     public class StudentController : BaseController
     {
         private readonly IStudentService _studentService;
+
+        //  public object JsonConvert { get; private set; }
+
         public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
@@ -104,13 +110,14 @@ namespace ApiProject.Controllers
         }
 
         [HttpPost("updatestudentdata")]
-        public async Task<IActionResult> updatestudentdata([FromForm] StudentUpdateReqModel request)
+        public async Task<IActionResult> updatestudentdata([FromBody] StudentUpdateReqModel request)
         {
             try
             {
-                var res = await _studentService.updatestudentdata(request);
 
+                var res = await _studentService.updatestudentdata(request);
                 return Ok(res);
+
             }
             catch (Exception ex)
             {
@@ -118,6 +125,25 @@ namespace ApiProject.Controllers
                 return BadRequest(response);
             }
         }
+
+
+        //[HttpPost("UpdateStuinstallment")]
+        //public async Task<IActionResult> UpdateStuinstallment(FeeInstallmentReqMOdel request)
+        //{
+        //    try
+        //    {
+
+        //        var res = await _studentService.UpdateStuinstallment(request);
+        //        return Ok(res);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
+
 
         // For updating student data (JSON only)
         //[HttpPost("updatestudentdata")]
@@ -135,45 +161,7 @@ namespace ApiProject.Controllers
         //    }
         //}
 
-        //// For uploading files separately
-        //[HttpPost("uploadstudentfile")]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> UploadStudentFile([FromForm] StudentUpdateReqModel model)
-        //{
-        //    try
-        //    {
-        //        if (model.File == null || model.File.Length == 0)
-        //            return BadRequest("No file uploaded");
 
-        //        var filePath = await SaveFile(model.File);
-
-        //        // Update student record with file path
-        //        await _studentService.UpdateStudentFilePath(model.StudentId, model.FileType, filePath);
-
-        //        return Ok(new { filePath, message = "File uploaded successfully" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest($"Error uploading file: {ex.Message}");
-        //    }
-        //}
-
-        //private async Task<string> SaveFile(IFormFile file)
-        //{
-        //    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-        //    if (!Directory.Exists(uploadsFolder))
-        //        Directory.CreateDirectory(uploadsFolder);
-
-        //    var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
-        //    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
-
-        //    return Path.Combine("uploads", uniqueFileName);
-        //}
 
 
         [HttpPost("studentexcelupload")]

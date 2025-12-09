@@ -259,7 +259,7 @@ namespace ApiProject.Controllers
 
 
         // *************************** Transport Vehicle by Route Assign Start *********************** //
-        [HttpGet("GetRouteAssign")]
+        [HttpGet("GetVehicleByRouteAssign")]
         public async Task<IActionResult> GetVehicleByRouteAssign()
         {
             try
@@ -273,7 +273,7 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("AddRouteAssign")]
+        [HttpPost("AddVehicleByRouteAssign")]
         public async Task<IActionResult> AddVehicleByRouteAssign(AddRouteAssignRequest model)
         {
             try
@@ -287,7 +287,7 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("UpdateRouteAssign")]
+        [HttpPost("UpdateVehicleByRouteAssign")]
         public async Task<IActionResult> UpdateVehicleByRouteAssign(UpdateRouteAssignRequest model)
         {
             try

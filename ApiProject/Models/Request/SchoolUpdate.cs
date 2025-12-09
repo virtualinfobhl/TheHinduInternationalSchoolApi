@@ -71,8 +71,11 @@
     }
     public class ClassALLReqModel
     {
-        public int ClassId { get; set; }
-        public string? ClassName { get; set; }
+        //public int ClassId { get; set; }
+        //public string? ClassName { get; set; }
+        //public Nullable<bool> Active { get; set; }
+        public int university_id { get; set; }
+        public string? university_name { get; set; }
         public Nullable<bool> Active { get; set; }
 
     }

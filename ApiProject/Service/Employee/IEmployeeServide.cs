@@ -10,9 +10,9 @@ namespace ApiProject.Service.Employee
     public interface IEmployeeServide
     {
         // Employee detail stsrt
+        Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit();
         Task<ApiResponse<bool>> AddEmployeeDetail(AddEmployeeDetailReq req);
         Task<ApiResponse<bool>> UpdateEmoloyeeDetail(UpdatreEmployeeDetailReq req);
-        Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit();
         Task<ApiResponse<List<GetEmployeeListModel>>> EmployeeReport(GetEmployeReq req);
         Task<ApiResponse<bool>> ChangeStatusEmployee(int EmpId);
         // Employee detail end
@@ -26,7 +26,7 @@ namespace ApiProject.Service.Employee
         // Employee Attendance start 
         Task<ApiResponse<List<EmpAttendanceDetail>>> GetEmployeeAttendance(getEmployeeAttendance req);
         Task<ApiResponse<bool>> InsertEmployeeAttendance(List<addEmployeeAttendanceReq> EAttendance);
-        Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(EmpAttendanceReportReq req);
+        Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(int Month);
 
         // Employee Salary
         Task<ApiResponse<List<GetAdvsalaryModel>>> GetAdvanceSalaryList();

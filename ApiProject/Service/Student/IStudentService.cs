@@ -16,6 +16,8 @@ namespace ApiProject.Service.Student
         Task<ApiResponse<quickadmissionres>> AddStuQuickadmission(quickadmissionmodel request);
         Task<ApiResponse<quickadmissionres>> AddStudentAdmissionAsync(AddStudentReqModel request);
         Task<ApiResponse<quickadmissionres>> updatestudentdata(StudentUpdateReqModel request);
+
+     //   Task<ApiResponse<quickadmissionres>> UpdateStuinstallment(FeeInstallmentReqMOdel request);
         Task<ApiResponse<bool>> studentexcelupload(List<StudentExcelUploadListReq> request);
 
 

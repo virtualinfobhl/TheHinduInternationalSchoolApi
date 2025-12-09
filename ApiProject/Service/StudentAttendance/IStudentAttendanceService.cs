@@ -14,10 +14,10 @@ namespace ApiProject.Service.StudentAttendance
         Task<ApiResponse<List<StudentMonthlyAttendanceResModel>>> getmonthlyattendance(StudentMonthlyAttendanceReqModel req);
 
 
-        Task<ApiResponse<StudentAttendanceResModel>> studentattendance(string srno,int schoolid);
+      //  Task<ApiResponse<StudentAttendanceResModel>> studentattendance(string srno,int schoolid);
 
 
-        Task<ApiResponse<TodayAttendancePercentageRes>> todaystudentattendance();
+    //    Task<ApiResponse<TodayAttendancePercentageRes>> todaystudentattendance();
 
 
 

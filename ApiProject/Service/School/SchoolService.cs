@@ -188,7 +188,7 @@ namespace ApiProject.Service.School
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
-                var UserList = await _context.UserInformation.Where(p => p.CompanyId == SchoolId && p.Active == true)
+                var UserList = await _context.UserInformation.Where(p => p.CompanyId == SchoolId)
                     .Select(p => new GetUserReqmodel
                     {
                         UserId = p.id,

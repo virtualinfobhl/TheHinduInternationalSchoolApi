@@ -28,6 +28,7 @@ namespace ApiProject.Models.Response
 
     public class InstallmentDetail
     {
+        public int? InstallmentId { get; set; }
         public string? Installmentno { get; set; }
         public string? Installment { get; set; }
         public Nullable<double> FeeAmount { get; set; }

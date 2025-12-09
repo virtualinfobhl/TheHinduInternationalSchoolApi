@@ -204,6 +204,7 @@ namespace ApiProject.Service.SchoolFees
                     installments = _context.InstallmentTbl.Where(u => u.university_id == c.university_id && u.SessionId == SessionId && u.CompanyId == SchoolId)
                                     .Select(a => new InstallmentDetail
                                     {
+                                        InstallmentId = a.InstallmentId,
                                         FeeAmount = a.FeeAmount,
                                         Installment = a.Installment,
                                         Installmentno = a.Installmentno,

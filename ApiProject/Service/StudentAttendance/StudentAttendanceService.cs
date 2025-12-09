@@ -40,21 +40,22 @@ namespace ApiProject.Service.StudentAttendance
                 int SessionId = _loginUser.SessionId;
 
                 var res = await _context.StudentRenewView.Where(c => c.ClassId == req.ClassId && (req.SectionId == -1 || c.SectionId == req.SectionId)
-                             && c.RActive == true && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name)
-                    .Select(c => new StudentAttendanceListResModel
-                    {
-                        ClassId = c.ClassId,
-                        SectionId = c.SectionId,
-                        //   ClassName = c.ClassName,
-                        //  SectionName = c.SectionName,
-                        stu_name = c.stu_name,
-                        StudentId = c.StuId,
-                        RollNo = c.RollNo,
-                        SRNo = c.registration_no,
-                        Status = _context.Student_Attendance.Where(p => p.StudentId == c.StuId && p.ClassId == c.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Date == req.Date).Select(p => p.Status).FirstOrDefault(),
-                        Note = _context.Student_Attendance.Where(p => p.StudentId == c.StuId && p.ClassId == c.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Date == req.Date).Select(p => p.Note).FirstOrDefault()
-                    })
-                    .ToListAsync();
+                            && c.StuDetail == true && c.Dropout == false && c.StuFees == true && c.RActive == true && c.SessionId == SessionId &&
+                                c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new StudentAttendanceListResModel
+                                {
+                                    ClassId = c.ClassId,
+                                    SectionId = c.SectionId,
+                                    stu_name = c.stu_name,
+                                    StudentId = c.StuId,
+                                    RollNo = c.RollNo,
+                                    SRNo = c.registration_no,
+                                    Status = _context.Student_Attendance.Where(p => p.StudentId == c.StuId && p.ClassId == c.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Date == req.Date).Select(p => p.Status).FirstOrDefault(),
+                                    Note = _context.Student_Attendance.Where(p => p.StudentId == c.StuId && p.ClassId == c.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Date == req.Date).Select(p => p.Note).FirstOrDefault(),
+                                    ClassName = _context.University.Where(p => p.university_id == c.ClassId && p.CompanyId == SchoolId).Select(p => p.university_name).FirstOrDefault(),
+                                    SectionName = _context.collegeinfo.Where(p => p.university_id == c.ClassId && p.collegeid == c.SectionId && p.CompanyId == SchoolId).Select(p => p.collegename).FirstOrDefault(),
+                                    // Date = _context.Student_Attendance.Where(p => p.StudentId == c.StuId && p.ClassId == c.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Date == req.Date).Select(p => p.Note).FirstOrDefault(),
+                                    //  Date = c.date,
+                                }).ToListAsync();
 
                 return ApiResponse<List<StudentAttendanceListResModel>>.SuccessResponse(res);
             }
@@ -78,9 +79,8 @@ namespace ApiProject.Service.StudentAttendance
                     DateTime? date = req[0].Date;
 
                     // Delete existing attendance
-                    var attendancedelete = await _context.Student_Attendance
-                        .Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date && k.CompanyId == SchoolId)
-                        .ToListAsync();
+                    var attendancedelete = await _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date
+                      && k.CompanyId == SchoolId).ToListAsync();
 
 
                     if (attendancedelete.Any())
@@ -90,6 +90,7 @@ namespace ApiProject.Service.StudentAttendance
 
                     List<Student_Attendance> attendanceList = req.Select(item => new Student_Attendance
                     {
+                        SAId = _context.Student_Attendance.DefaultIfEmpty().Max(r => r == null ? 0 : r.SAId) + 1,
                         StudentId = item.StudentId,
                         ClassId = item.ClassId,
                         Status = item.Status,
@@ -98,6 +99,7 @@ namespace ApiProject.Service.StudentAttendance
                         Userid = UserId,
                         SessionId = SessionId,
                         Date = item.Date,
+                        Active = true,
                         Time = DateTime.Now.TimeOfDay,
                         CreateDate = DateTime.Now,
                         UpdateDate = DateTime.Now
@@ -106,7 +108,7 @@ namespace ApiProject.Service.StudentAttendance
                     _context.Student_Attendance.AddRange(attendanceList);
                     await _context.SaveChangesAsync();
 
-                    return ApiResponse<bool>.SuccessResponse(true);
+                    return ApiResponse<bool>.SuccessResponse(true, "Student attendance saved successfully");
                 }
 
                 return ApiResponse<bool>.ErrorResponse("Invalid request: Empty data.");
@@ -125,17 +127,16 @@ namespace ApiProject.Service.StudentAttendance
                 int sessionId = _loginUser.SessionId;
 
                 // All students of class/section
-                var students = await _context.StudentRenewView.Where(s => s.ClassId == req.ClassId && s.RActive == true && s.SessionId == sessionId && s.CompanyId == schoolId)
-                    .OrderBy(s => s.stu_name)
-                    .ToListAsync();
+                var students = await _context.StudentRenewView.Where(s => s.ClassId == req.ClassId && s.SessionId == sessionId && s.CompanyId == schoolId
+                && s.RActive == true && s.StuDetail == true && s.Dropout == false && s.StuFees == true).OrderBy(s => s.stu_name).ToListAsync();
 
                 // Get attendance for the full month
                 var year = DateTime.Now.Year;
                 var startDate = new DateTime(year, req.Month, 1);
                 var endDate = startDate.AddMonths(1).AddDays(-1);
 
-                var attendance = await _context.Student_Attendance.Where(a => a.ClassId == req.ClassId && a.SessionId == sessionId && a.CompanyId == schoolId && a.Date >= startDate && a.Date <= endDate)
-                    .ToListAsync();
+                var attendance = await _context.Student_Attendance.Where(a => a.ClassId == req.ClassId && a.SessionId == sessionId && a.CompanyId == schoolId
+                      && a.Date >= startDate && a.Date <= endDate).ToListAsync();
 
                 var response = students.Select(student =>
                 {
@@ -150,8 +151,8 @@ namespace ApiProject.Service.StudentAttendance
                         StuName = student.stu_name,
                         classid = student.ClassId,
                         sectionid = student.SectionId,
-                          ClassName = _context.University.Where(a => a.university_id == student.ClassId).Select(a => a.university_name).FirstOrDefault(),
-                         SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId ).Select(a => a.collegename).FirstOrDefault(),
+                        ClassName = _context.University.Where(a => a.university_id == student.ClassId).Select(a => a.university_name).FirstOrDefault(),
+                        SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId).Select(a => a.collegename).FirstOrDefault(),
                         SRNo = student.registration_no,
 
                         AttendanceByDate = dailyAttendance,
@@ -174,115 +175,116 @@ namespace ApiProject.Service.StudentAttendance
             }
         }
 
-        public async Task<ApiResponse<StudentAttendanceResModel>> studentattendance(string srno, int schoolid)
-        {
-            try
-            {
-                var student = _context.StudentRenewView.FirstOrDefault(c => c.registration_no == srno && c.CompanyId == schoolid);
-                if (student != null)
-                {
-                    DateTime today = DateTime.Today;
-                    TimeSpan nowTime = DateTime.Now.TimeOfDay;
-                    var studentAttendance = _context.Student_Attendance.FirstOrDefault(s => s.CompanyId == schoolid && s.StudentId == student.stu_id && s.Date == today);
 
-                    if (studentAttendance == null)
-                    {
-                        var stuatt = new Student_Attendance
-                        {
-                            StudentId = student.StuId,
-                            ClassId = student.ClassId ?? 0,
-                            Status = "Present",
-                            Time = nowTime,
-                            Note = "",
-                            CompanyId = schoolid,
-                            Userid = 1,
-                            Date = today,
-                            CreateDate = DateTime.Now,
-                            UpdateDate = DateTime.Now
-                        };
-                        _context.Student_Attendance.Add(stuatt);
-                        _context.SaveChanges();
-                    }
+        //public async Task<ApiResponse<StudentAttendanceResModel>> studentattendance(string srno, int schoolid)
+        //{
+        //    try
+        //    {
+        //        var student = _context.StudentRenewView.FirstOrDefault(c => c.registration_no == srno && c.CompanyId == schoolid);
+        //        if (student != null)
+        //        {
+        //            DateTime today = DateTime.Today;
+        //            TimeSpan nowTime = DateTime.Now.TimeOfDay;
+        //            var studentAttendance = _context.Student_Attendance.FirstOrDefault(s => s.CompanyId == schoolid && s.StudentId == student.stu_id && s.Date == today);
 
-                    //else if (studentAttendance.Time == null)
-                    //{
-                    //    TimeSpan timeSinceInTime = nowTime - studentAttendance.InTime.Value;
-                    //    if (timeSinceInTime.TotalMinutes < 5)
-                    //    {
+        //            if (studentAttendance == null)
+        //            {
+        //                var stuatt = new Student_Attendance
+        //                {
+        //                    StudentId = student.StuId,
+        //                    ClassId = student.ClassId ?? 0,
+        //                    Status = "Present",
+        //                    Time = nowTime,
+        //                    Note = "",
+        //                    CompanyId = schoolid,
+        //                    Userid = 1,
+        //                    Date = today,
+        //                    CreateDate = DateTime.Now,
+        //                    UpdateDate = DateTime.Now
+        //                };
+        //                _context.Student_Attendance.Add(stuatt);
+        //                _context.SaveChanges();
+        //            }
 
-                    //        return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Attendance already recorded. Please wait at least 5 minutes.");
+        //            //else if (studentAttendance.Time == null)
+        //            //{
+        //            //    TimeSpan timeSinceInTime = nowTime - studentAttendance.InTime.Value;
+        //            //    if (timeSinceInTime.TotalMinutes < 5)
+        //            //    {
+
+        //            //        return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Attendance already recorded. Please wait at least 5 minutes.");
 
 
-                    //    }
-                    //    studentAttendance.Time = nowTime;
+        //            //    }
+        //            //    studentAttendance.Time = nowTime;
 
-                    //    TimeSpan duration = studentAttendance.Time.Value - studentAttendance.InTime.Value;
+        //            //    TimeSpan duration = studentAttendance.Time.Value - studentAttendance.InTime.Value;
 
-                    //    studentAttendance.Status = duration.TotalHours >= 6 ? "Present" :
-                    //                               duration.TotalHours >= 3 ? "Half Day" : "Absent";
+        //            //    studentAttendance.Status = duration.TotalHours >= 6 ? "Present" :
+        //            //                               duration.TotalHours >= 3 ? "Half Day" : "Absent";
 
-                    //    studentAttendance.UpdateDate = DateTime.Now;
-                    //    _context.SaveChanges();
-                    //}
-                    else
-                    {
-                        return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Attendance already recorded.");
-                    }
-                    var data = new StudentAttendanceResModel()
-                    {
-                        stu_name = student.stu_name,
-                        SRNo = student.registration_no,
-                        //  ClassName = student.ClassName,
-                    };
-                    return ApiResponse<StudentAttendanceResModel>.SuccessResponse(data);
-                }
-                else
-                {
-                    return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Student not found.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Error: " + ex.Message);
-            }
-        }
+        //            //    studentAttendance.UpdateDate = DateTime.Now;
+        //            //    _context.SaveChanges();
+        //            //}
+        //            else
+        //            {
+        //                return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Attendance already recorded.");
+        //            }
+        //            var data = new StudentAttendanceResModel()
+        //            {
+        //                stu_name = student.stu_name,
+        //                SRNo = student.registration_no,
+        //                //  ClassName = student.ClassName,
+        //            };
+        //            return ApiResponse<StudentAttendanceResModel>.SuccessResponse(data);
+        //        }
+        //        else
+        //        {
+        //            return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Student not found.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<StudentAttendanceResModel>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
 
-        public async Task<ApiResponse<TodayAttendancePercentageRes>> todaystudentattendance()
-        {
-            try
-            {
-                int schoolId = _loginUser.SchoolId;
-                int sessionId = _loginUser.SessionId;
+        //public async Task<ApiResponse<TodayAttendancePercentageRes>> todaystudentattendance()
+        //{
+        //    try
+        //    {
+        //        int schoolId = _loginUser.SchoolId;
+        //        int sessionId = _loginUser.SessionId;
 
-                var today = DateTime.Today;
+        //        var today = DateTime.Today;
 
-                var todayAttendance = await _context.Student_Attendance.Where(a => a.Date.Value.Date == today && a.CompanyId == schoolId && a.SessionId == a.SessionId).ToListAsync();
+        //        var todayAttendance = await _context.Student_Attendance.Where(a => a.Date.Value.Date == today && a.CompanyId == schoolId && a.SessionId == a.SessionId).ToListAsync();
 
-                int totalStudents = todayAttendance.Count;
-                int presentCount = todayAttendance.Count(a => a.Status != "A");
-                int absentCount = todayAttendance.Count(a => a.Status == "A");
+        //        int totalStudents = todayAttendance.Count;
+        //        int presentCount = todayAttendance.Count(a => a.Status != "A");
+        //        int absentCount = todayAttendance.Count(a => a.Status == "A");
 
-                double presentPercentage = totalStudents > 0 ? (presentCount * 100.0) / totalStudents : 0;
-                double absentPercentage = totalStudents > 0 ? (absentCount * 100.0) / totalStudents : 0;
+        //        double presentPercentage = totalStudents > 0 ? (presentCount * 100.0) / totalStudents : 0;
+        //        double absentPercentage = totalStudents > 0 ? (absentCount * 100.0) / totalStudents : 0;
 
-                var data = new TodayAttendancePercentageRes
-                {
-                    TotalStudents = totalStudents,
-                    PresentCount = presentCount,
-                    AbsentCount = absentCount,
-                    PresentPercentage = Math.Round(presentPercentage, 2),
-                    AbsentPercentage = Math.Round(absentPercentage, 2)
-                };
+        //        var data = new TodayAttendancePercentageRes
+        //        {
+        //            TotalStudents = totalStudents,
+        //            PresentCount = presentCount,
+        //            AbsentCount = absentCount,
+        //            PresentPercentage = Math.Round(presentPercentage, 2),
+        //            AbsentPercentage = Math.Round(absentPercentage, 2)
+        //        };
 
-                return ApiResponse<TodayAttendancePercentageRes>.SuccessResponse(data);
+        //        return ApiResponse<TodayAttendancePercentageRes>.SuccessResponse(data);
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return ApiResponse<TodayAttendancePercentageRes>.ErrorResponse("Error: " + ex.Message);
+        //        return ApiResponse<TodayAttendancePercentageRes>.ErrorResponse("Error: " + ex.Message);
 
-            }
-        }
+        //    }
+        //}
     }
 }
