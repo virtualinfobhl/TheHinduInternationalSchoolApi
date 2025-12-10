@@ -361,7 +361,9 @@ namespace ApiProject.Service.Report
                     ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
                     SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
 
-                    TransportDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.StuId && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName)).Sum(a => a.DueFee),
+                    TransportDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.StuId && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName)).Sum(a => a.DueFee) +
+                          _context.StuRouteAssignTbl.Where(a => a.stu_id == c.StuId && a.CompanyId == SchoolId && a.SessionId == SessionId).Sum(a => a.OldDueFee),
+
 
                 }).ToListAsync();
 
@@ -615,7 +617,6 @@ namespace ApiProject.Service.Report
                     a.TestType == "yearly" ? p.yearly : 0).FirstOrDefault()
                     }).Sum(x => x.Marks),
 
-
                 }).ToListAsync();
 
                 if (res == null || !res.Any())
@@ -643,7 +644,6 @@ namespace ApiProject.Service.Report
                 {
                   "Quarterly",  "first_test",   "half_yearly", "second_test",  "third_test", "fourth_test",  "yearly"
                 };
-
 
                 // find index of selected test type
                 int maxIndex = testOrder.IndexOf(req.TestType);
@@ -709,8 +709,6 @@ namespace ApiProject.Service.Report
 
             if (req.ClassId.HasValue)
                 query = query.Where(p => p.ClassId == req.ClassId);
-
-
 
             if (!string.IsNullOrEmpty(req.Srno))
                 query = query.Where(p => p.registration_no == req.Srno);

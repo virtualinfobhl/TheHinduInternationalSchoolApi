@@ -2055,6 +2055,7 @@ namespace ApiProject.Service.Student
                     {
                         SubjectId = a.subject_id,
                         SubjectName = a.subject_name,
+                        Markstype = a.Marks_Type,
                     }).ToListAsync();
 
                 var res = new GetClassbySectionSubject
@@ -2543,14 +2544,14 @@ namespace ApiProject.Service.Student
 
                     }).ToListAsync();
 
-                var StudentDatas = await _context.StudentRenewView.Where(a => a.ClassId == ClassId && a.CompanyId == SchoolId)
-                    .Select(a => new StudentDataList
-                    {
-                        ClassId = a.ClassId,
-                        StudentId = a.StuId,
-                        StudentName = a.stu_name,
-                        SectionId = a.SectionId,
-                    }).ToListAsync();
+                var StudentDatas = await _context.StudentRenewView.Where(a => a.ClassId == ClassId && a.CompanyId == SchoolId && a.SessionId == SessionId && a.StuFees == true
+                && a.StuDetail == true && a.Dropout == false).OrderBy(a => a.stu_name).Select(a => new StudentDataList
+                {
+                    ClassId = a.ClassId,
+                    StudentId = a.StuId,
+                    StudentName = a.stu_name,
+                    SectionId = a.SectionId,
+                }).ToListAsync();
 
                 var res = new GetClassbySectionNdStudent
                 {
@@ -2573,14 +2574,14 @@ namespace ApiProject.Service.Student
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StudentRenewView.Where(p => p.ClassId == ClassId && p.SectionId == SectionId && p.CompanyId == SchoolId)
-                    .Select(p => new StudentDataList
-                    {
-                        ClassId = p.ClassId,
-                        SectionId = p.SectionId,
-                        StudentId = p.StuId,
-                        StudentName = p.stu_name,
-                    }).ToListAsync();
+                var res = await _context.StudentRenewView.Where(a => a.ClassId == ClassId && a.SectionId == SectionId && a.CompanyId == SchoolId && a.SessionId == SessionId
+                  && a.StuFees == true && a.StuDetail == true && a.Dropout == false).OrderBy(a => a.stu_name).Select(a => new StudentDataList
+                  {
+                      ClassId = a.ClassId,
+                      StudentId = a.StuId,
+                      StudentName = a.stu_name,
+                      SectionId = a.SectionId,
+                  }).ToListAsync();
 
                 if (res == null || !res.Any())
                 {
@@ -2656,7 +2657,7 @@ namespace ApiProject.Service.Student
                         TransportDueFee = _context.TransInstallmentTbl.Where(c => c.StuId == a.StuId && c.CompanyId == SchoolId && validMonths.Contains(c.MonthName)).Sum(c => c.DueFee),
                     }).FirstOrDefaultAsync();
 
-                return ApiResponse<StudentFeeTCModel>.SuccessResponse(res, "Fetch successfully class by section and student data ");
+                return ApiResponse<StudentFeeTCModel>.SuccessResponse(res, "Fetch successfully student dueFee for TC ");
             }
             catch (Exception ex)
             {

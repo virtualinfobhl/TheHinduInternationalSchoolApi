@@ -5,12 +5,12 @@ namespace ApiProject.Models.Response
 
     public class GetStudentFeeListModel
     {
-        public int StudentId { get; set; }
+        public int stu_id { get; set; }
         public Nullable<int> ClassId { get; set; }
         public Nullable<int> SectionId { get; set; }
         public string? stu_name { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
-        public string? SRNo { get; set; }
+        public string? registration_no { get; set; }
         public string? RollNo { get; set; }
         public Nullable<System.DateTime> admission_date { get; set; }
         public Nullable<bool> RTE { get; set; }

@@ -114,7 +114,6 @@ namespace ApiProject.Controllers
         {
             try
             {
-
                 var res = await _studentService.updatestudentdata(request);
                 return Ok(res);
 
@@ -160,8 +159,6 @@ namespace ApiProject.Controllers
         //        return BadRequest(response);
         //    }
         //}
-
-
 
 
         [HttpPost("studentexcelupload")]

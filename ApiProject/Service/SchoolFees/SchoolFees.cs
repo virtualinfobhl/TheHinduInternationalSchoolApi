@@ -369,8 +369,7 @@ namespace ApiProject.Service.SchoolFees
                 var studentDetail = _mapper.Map<StudentFeesDetailRes>(studentEntity);
 
                 var totalPaid = await _context.M_FeeDetail.Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
-                f.ClassId == req.ClassId && f.stu_id == req.StudentId && f.Status == "1" && f.Active == true)
-                    .SumAsync(f => (decimal?)f.PayFees) ?? 0;
+                f.ClassId == req.ClassId && f.stu_id == req.StudentId && f.Status == "1" && f.Active == true).SumAsync(f => (decimal?)f.PayFees) ?? 0;
 
                 studentDetail.TotalPaid = totalPaid;
 
