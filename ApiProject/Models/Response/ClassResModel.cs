@@ -40,6 +40,7 @@ namespace ApiProject.Models.Response
         public int? collegeid { get; set; }
         public string? collegename { get; set; }
         public Nullable<int> university_id { get; set; }
+        public string? ClassName { get; set; }
         public Nullable<bool> active { get; set; }
 
     }

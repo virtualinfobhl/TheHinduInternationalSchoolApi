@@ -457,6 +457,9 @@ namespace ApiProject.Service.Parents
                             TotalFee = a.NetTransFee,
                             PayFee = a.PayFee,
                             FeeDiscount = a.Paydiscount,
+                            Date = a.Date,
+                            PaymentMode = a.PaymentMode,
+                            Remark  = a.Remark,
                         }).ToList(),
 
                     }).FirstOrDefaultAsync();

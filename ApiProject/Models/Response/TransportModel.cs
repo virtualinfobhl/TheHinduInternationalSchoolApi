@@ -198,6 +198,9 @@ namespace ApiProject.Models.Response
         public Nullable<double> TotalFee { get; set; }
         public Nullable<double> PayFee { get; set; }
         public Nullable<double> FeeDiscount { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string? PaymentMode { get; set; }
+        public string? Remark { get; set; }
     }
 
     public class TransStudentDetailModel

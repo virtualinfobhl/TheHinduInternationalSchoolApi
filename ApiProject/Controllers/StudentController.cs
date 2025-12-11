@@ -44,7 +44,6 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
             }
         }
@@ -427,8 +426,6 @@ namespace ApiProject.Controllers
         }
 
 
-
-
         // ************ Event Code 
         [HttpGet("GetEventList")]
         public async Task<IActionResult> GetEventList()
@@ -571,13 +568,6 @@ namespace ApiProject.Controllers
         }
 
 
-
-
-
-
-
-
-
         [HttpGet("GetClassSubject")]
         public async Task<IActionResult> GetClassSubject(int ClassId)
         {
@@ -715,9 +705,6 @@ namespace ApiProject.Controllers
                 return BadRequest(response);
             }
         }
-
-
-
 
 
     }

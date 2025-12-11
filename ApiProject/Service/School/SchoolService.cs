@@ -30,15 +30,12 @@ namespace ApiProject.Service.School
 
         }
 
-
-
         // *********** School Informaction 
         #region School Informaction
         public async Task<ApiResponse<SchoolDetail>> SchoolDetail()
         {
             try
             {
-
                 int SchoolId = _loginUser.SchoolId;
 
                 var SchoolDetail = await _context.institute.Where(p => p.institute_id == SchoolId).Select(p => new SchoolDetail
@@ -60,18 +57,13 @@ namespace ApiProject.Service.School
                     statename = p.state_name,
                     mobileno1 = p.mob_num,
                     mobileno2 = p.alternatemob_num,
-                    //companyactive = p.activ,
-                    //  joiningdate = p.JoiningDate,
-                    //  expiredate = p.ExpireDate,
-                    //  active = p.Active,
 
                 }).FirstOrDefaultAsync();
 
-                return ApiResponse<SchoolDetail>.SuccessResponse(SchoolDetail, "Fetch School list successfully");
+                return ApiResponse<SchoolDetail>.SuccessResponse(SchoolDetail, "Fetch School Details successfully");
             }
             catch (Exception ex)
             {
-
                 return ApiResponse<SchoolDetail>.ErrorResponse("Error: " + ex.Message);
             }
         }
@@ -175,7 +167,6 @@ namespace ApiProject.Service.School
             }
 
         }
-
         #endregion
 
 
@@ -251,10 +242,8 @@ namespace ApiProject.Service.School
                     return ApiResponse<bool>.ErrorResponse("User not found");
                 }
 
-                // Status toggle karo
                 UserEntity.Active = UserEntity.Active == null ? true : !UserEntity.Active;
 
-                // Changes save karo
                 await _context.SaveChangesAsync();
 
                 return ApiResponse<bool>.SuccessResponse(true, "Status updated successfully");
@@ -277,7 +266,6 @@ namespace ApiProject.Service.School
                 int SessionId = _loginUser.SessionId;
 
                 var classEntities = await _context.University.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
-                //  .OrderBy(s => s.ClassPriority)
 
                 var classList = new List<ClassALLReqModel>();
 
@@ -328,10 +316,7 @@ namespace ApiProject.Service.School
                     _context.University.Add(classEntity);
                     await _context.SaveChangesAsync();
 
-
-
                     await transaction.CommitAsync();
-
 
                     return ApiResponse<bool>.SuccessResponse(true, "Class saved successfully.");
                 }
@@ -349,7 +334,6 @@ namespace ApiProject.Service.School
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             {
-
                 try
                 {
                     int SchoolId = _loginUser.SchoolId;
@@ -359,14 +343,12 @@ namespace ApiProject.Service.School
                     if (University != null)
                     {
                         return ApiResponse<bool>.ErrorResponse("Class Name Already available");
-
                     }
 
                     var result = await _context.University.Where(r => r.university_id == request.university_id && r.CompanyId == SchoolId).FirstOrDefaultAsync();
 
                     result.university_name = request.university_name;
                     result.Userid = UserId;
-
 
                     await _context.SaveChangesAsync();
 
@@ -396,10 +378,8 @@ namespace ApiProject.Service.School
                     return ApiResponse<bool>.ErrorResponse("Class not found");
                 }
 
-                // Status toggle karo
                 classEntity.Active = classEntity.Active == null ? true : !classEntity.Active;
 
-                // Changes save karo
                 await _context.SaveChangesAsync();
 
                 return ApiResponse<bool>.SuccessResponse(true, "Status updated successfully");
@@ -414,30 +394,45 @@ namespace ApiProject.Service.School
 
         // ************ Section Details
         #region Section Details
+        //public async Task<ApiResponse<List<ClassSectionResModel>>> getsection()
+        //{
+        //    try
+        //    {
+
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var sectionEntities = await _context.collegeinfo.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
+
+        //        var sectionlist = _mapper.Map<List<ClassSectionResModel>>(sectionEntities);
+
+
+        //        return ApiResponse<List<ClassSectionResModel>>.SuccessResponse(sectionlist, "section list fetched successfully");
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return ApiResponse<List<ClassSectionResModel>>.ErrorResponse("Error: " + ex.Message);
+
+        //    }
+        //}
         public async Task<ApiResponse<List<ClassSectionResModel>>> getsection()
         {
-            try
+            int SchoolId = _loginUser.SchoolId;
+
+            var ClassResModel = await _context.collegeinfo.Where(c => c.CompanyId == SchoolId).Select(c => new ClassSectionResModel
             {
+                collegeid = c.collegeid,
+                collegename = c.collegename,
+                university_id = c.university_id,
+                ClassName = _context.University.Where(a => a.university_id == c.university_id && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                active = c.active,
+            }).ToListAsync();
 
-                int SchoolId = _loginUser.SchoolId;
-                int SessionId = _loginUser.SessionId;
+            return ApiResponse<List<ClassSectionResModel>>.SuccessResponse(ClassResModel, "section list fetched successfully");
 
-                var sectionEntities = await _context.collegeinfo.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
-
-                var sectionlist = _mapper.Map<List<ClassSectionResModel>>(sectionEntities);
-
-
-                return ApiResponse<List<ClassSectionResModel>>.SuccessResponse(sectionlist, "section list fetched successfully");
-
-            }
-            catch (Exception ex)
-            {
-
-                return ApiResponse<List<ClassSectionResModel>>.ErrorResponse("Error: " + ex.Message);
-
-            }
         }
-
         public async Task<ApiResponse<bool>> insertsection(AddSectionReq request)
         {
             try
@@ -906,7 +901,6 @@ namespace ApiProject.Service.School
             }
         }
         #endregion
-
 
 
         /// *************** Exam Code Start 

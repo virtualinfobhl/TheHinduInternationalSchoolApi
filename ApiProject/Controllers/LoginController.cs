@@ -27,6 +27,7 @@ namespace ApiProject.Controllers
             _parentLoginService = parentLogin;
         }
 
+
         //[HttpGet("check-school-code")]
         //public async Task<IActionResult> CheckSchoolCode(string schoolcode)
         //{
@@ -48,6 +49,7 @@ namespace ApiProject.Controllers
         //        return StatusCode(500, new { success = false, error = ex.Message });
         //    }
         //}
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(RequestLogin request)
@@ -85,8 +87,6 @@ namespace ApiProject.Controllers
 
             }
         }
-
-
 
     }
 }

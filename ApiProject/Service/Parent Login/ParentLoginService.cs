@@ -54,16 +54,16 @@ namespace ApiProject.Service.Parent_Login
                 {
                     return ApiResponse<LoginRes>.ErrorResponse("User Password Incorrect");
                 }
-
-                var company = await _context.student_admission.FirstOrDefaultAsync(p => p.ParentsId == user.ParentsId && p.active == true);
-                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == company.CompanyId && p.Active == true);
+                var schoolInfo = await _context.institute.FirstOrDefaultAsync(a => a.institute_id == user.CompanyId);
+                var Student = await _context.student_admission.FirstOrDefaultAsync(p => p.ParentsId == user.ParentsId && p.active == true);
+                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == Student.CompanyId && p.Active == true);
 
                 var startdate = Convert.ToDateTime(sessioninfo.StartSession).ToString("dd-MMM-yyyy");
                 var enddate = Convert.ToDateTime(sessioninfo.EndSession).ToString("dd-MMM-yyyy");
                 var startYear = Convert.ToDateTime(sessioninfo.StartSession).Year.ToString();
                 var endYear = Convert.ToDateTime(sessioninfo.EndSession).Year.ToString();
 
-                var studentDetail = _context.StudentRenewView.Where(r => r.ParentsId == user.ParentsId && r.CompanyId == company.CompanyId && r.RActive == true && r.SessionId == sessioninfo.Id).FirstOrDefault();
+                var studentDetail = _context.StudentRenewView.Where(r => r.ParentsId == user.ParentsId && r.CompanyId == Student.CompanyId && r.RActive == true && r.SessionId == sessioninfo.Id).FirstOrDefault();
 
                 var token = GenerateJwtToken(user, studentDetail, sessioninfo.Id);
 
@@ -72,7 +72,7 @@ namespace ApiProject.Service.Parent_Login
                 {
                     Token = token,
                    // SchoolCode = company.SchoolCode,
-                   // SchoolName = company.,
+                   SchoolName = schoolInfo.institute_name,
                     ParentId = user.ParentsId,
                     ParentName = user.FatherName,
                     ParentMobile = user.FatherMobileNo,

@@ -84,9 +84,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -133,9 +131,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -153,9 +149,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -169,9 +163,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -185,9 +177,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -201,11 +191,11 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
+
+
 
         #endregion
 
@@ -222,9 +212,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -238,9 +226,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -254,9 +240,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -270,9 +254,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
         #endregion
@@ -290,9 +272,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -306,9 +286,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -322,9 +300,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -338,9 +314,7 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return ErrorRepsponse(ex.Message);
-
             }
         }
 
@@ -361,7 +335,6 @@ namespace ApiProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -376,7 +349,6 @@ namespace ApiProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -390,7 +362,6 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }
@@ -424,7 +395,6 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }
@@ -439,7 +409,6 @@ namespace ApiProject.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }
@@ -451,12 +420,10 @@ namespace ApiProject.Controllers
             {
                 var res = await _schoolService.ChangeEventStatus(EventId);
                 return Ok(res);
-
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-
             }
         }
 
