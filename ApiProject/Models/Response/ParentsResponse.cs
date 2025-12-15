@@ -1,4 +1,6 @@
-﻿namespace ApiProject.Models.Response
+﻿using Newtonsoft.Json;
+
+namespace ApiProject.Models.Response
 {
     public class ParentsResponse
     {
@@ -64,6 +66,18 @@
         public Nullable<double> DueAmount { get; set; }
     }
 
+    public class StudentFeePaymentResult
+    {
+        public int FDId { get; set; }
+        public string ReceiptNo { get; set; }
+        public string OrderId { get; set; }
+        public string State { get; set; }
+        public long? ExpireAt { get; set; }
+       public string Token { get; set; }
+       // public string Merchentid { get; set; }
+    }
+
+
     public class GetStuFeeInstallmentModel
     {
         public List<Nullable<double>> Installment { get; set; }
@@ -100,6 +114,7 @@
 
     public class GetTransportInstallFeeModel
     {
+        public int? StuRouteAssignId { get; set; }
         public int? StudentId { get; set; }
         public string? StudentName { get; set; }
         public string? Srno { get; set; }

@@ -179,3 +179,4 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\refint\Th
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ThisApiProject.pdb
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ThisApiProject.genruntimeconfig.cache
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ref\ThisApiProject.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Newtonsoft.Json.dll

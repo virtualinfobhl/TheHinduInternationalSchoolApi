@@ -5,7 +5,6 @@ namespace ApiProject.Data
     public class M_FeeDetail
     {
         [Key]
-
         public int FDId { get; set; }
         public string? ReceiptNo { get; set; }
         public Nullable<int> stu_id { get; set; }

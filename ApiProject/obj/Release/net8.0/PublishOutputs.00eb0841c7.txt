@@ -40,6 +40,7 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Ou
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

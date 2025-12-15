@@ -6353,16 +6353,6 @@
             "format": "double",
             "nullable": true
           },
-          "duefee": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "paymentDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "remark": {
             "type": "string",
             "nullable": true
@@ -6483,47 +6473,13 @@
             "format": "int32",
             "nullable": true
           },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "monthName": {
             "type": "string",
-            "nullable": true
-          },
-          "discount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "spclDiscount": {
-            "type": "number",
-            "format": "double",
             "nullable": true
           },
           "payFee": {
             "type": "number",
             "format": "double",
-            "nullable": true
-          },
-          "payDiscount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "duefee": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "paymentDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "remark": {
-            "type": "string",
             "nullable": true
           }
         },

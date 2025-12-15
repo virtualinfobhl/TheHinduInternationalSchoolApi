@@ -180,8 +180,8 @@ F:\Project\api.this.in\ApiProject\obj\Debug\net8.0\ThisApiProject.genruntimeconf
 F:\Project\api.this.in\ApiProject\obj\Debug\net8.0\ref\ThisApiProject.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\appsettings.Development.json
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\appsettings.json
-F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.staticwebassets.endpoints.json
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.staticwebassets.runtime.json
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.staticwebassets.endpoints.json
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.exe
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.deps.json
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\ThisApiProject.runtimeconfig.json
@@ -234,6 +234,7 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Microsoft.O
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Mono.TextTemplating.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Newtonsoft.Json.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
