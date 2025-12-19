@@ -71,12 +71,22 @@ namespace ApiProject.Models.Response
         public int FDId { get; set; }
         public string ReceiptNo { get; set; }
         public string OrderId { get; set; }
+        public string merchantOrderId { get; set; }
         public string State { get; set; }
         public long? ExpireAt { get; set; }
        public string Token { get; set; }
-       // public string Merchentid { get; set; }
     }
 
+    public class StudentTransportPaymentResult
+    {
+        public int NewPaymentId { get; set; }
+        public string ReceiptNo { get; set; }
+        public string OrderId { get; set; }
+         public string merchantOrderId { get; set; }
+        public string State { get; set; }
+        public long? ExpireAt { get; set; }
+        public string Token { get; set; }
+    }
 
     public class GetStuFeeInstallmentModel
     {

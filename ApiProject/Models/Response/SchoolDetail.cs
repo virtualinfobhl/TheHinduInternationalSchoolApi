@@ -20,6 +20,9 @@
         public string pincode { get; set; }
         public string email { get; set; }
         public string weburl { get; set; }
+        public string Servicetaxno{ get; set; }
+        public string TINno { get; set; }
+        public string PANno { get; set; }
         public string rlogo { get; set; }
         public string logoimg { get; set; }
      //   public Nullable<System.DateTime> joiningdate { get; set; }

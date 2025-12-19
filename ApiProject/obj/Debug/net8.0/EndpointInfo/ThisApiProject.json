@@ -1892,6 +1892,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "orderno",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2456,14 +2463,14 @@
         ],
         "parameters": [
           {
-            "name": "ownername",
+            "name": "Registrationno",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "rgtno",
+            "name": "InstituteCode",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2477,7 +2484,7 @@
             }
           },
           {
-            "name": "address",
+            "name": "email",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2499,6 +2506,34 @@
           },
           {
             "name": "mobileno2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "weburl",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ServiceTaxNo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TINno",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PANno",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2533,28 +2568,7 @@
             }
           },
           {
-            "name": "email",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "weburl",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "logoimg",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "rlogo",
+            "name": "address",
             "in": "query",
             "schema": {
               "type": "string"

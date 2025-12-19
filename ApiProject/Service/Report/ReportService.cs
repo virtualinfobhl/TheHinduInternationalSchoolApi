@@ -30,7 +30,7 @@ namespace ApiProject.Service.Report
             _loginUser = loginUser;
             _mapper = mapper;
         }
-
+       
         public async Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req)
         {
             try
@@ -87,8 +87,8 @@ namespace ApiProject.Service.Report
 
                 var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
                 && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && (req.StudentId == -1 ? true : c.StuId == req.StudentId)
-                && (string.IsNullOrEmpty(req.srno) || c.registration_no == req.srno)
-                && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.SessionId == SessionId && c.CompanyId == SchoolId)
+                && (string.IsNullOrEmpty(req.srno) || c.registration_no == req.srno) && c.Dropout == false && c.RActive == true && c.StuDetail == true
+                && c.StuFees == true && c.SessionId == SessionId && c.CompanyId == SchoolId)
                     .OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
                     {
                         stu_id = c.StuId,
@@ -134,7 +134,7 @@ namespace ApiProject.Service.Report
                 int SessionId = _loginUser.SessionId;
 
                 var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
-                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true
+                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.Dropout == false
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
                 {
                     stu_id = c.StuId,
@@ -468,6 +468,7 @@ namespace ApiProject.Service.Report
             }
         }
 
+        // exam section
         public async Task<ApiResponse<List<TestExamMarksmOdel>>> GetTestExamMarks(GetTestExamReq req)
         {
             try
@@ -476,7 +477,7 @@ namespace ApiProject.Service.Report
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == req.ClassId)
+                var res = await _context.StudentRenewView.Where(c => (c.ClassId == req.ClassId)
                 && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.Dropout == false
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new TestExamMarksmOdel
                 {

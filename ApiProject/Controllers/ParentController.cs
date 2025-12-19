@@ -92,11 +92,11 @@ namespace ApiProject.Controllers
         }
 
         [HttpGet("UpdateStudentPaymentSuccessfully")]
-        public async Task<IActionResult> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId)
+        public async Task<IActionResult> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId, string orderno)
         {
             try
             {
-                var res = await _ParentsService.UpdateStudentPaymentSuccessfully(StudentId, ReceiptId);
+                var res = await _ParentsService.UpdateStudentPaymentSuccessfully(StudentId, ReceiptId, orderno);
                 return Ok(res);
             }
             catch (Exception ex)

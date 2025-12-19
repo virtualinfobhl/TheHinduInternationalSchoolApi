@@ -1257,6 +1257,11 @@
         "Name": "ReceiptId",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "orderno",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1749,12 +1754,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ownername",
+        "Name": "Registrationno",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "rgtno",
+        "Name": "InstituteCode",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -1764,7 +1769,7 @@
         "IsRequired": false
       },
       {
-        "Name": "address",
+        "Name": "email",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -1780,6 +1785,26 @@
       },
       {
         "Name": "mobileno2",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "weburl",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ServiceTaxNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TINno",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PANno",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -1804,22 +1829,7 @@
         "IsRequired": false
       },
       {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "weburl",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "logoimg",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "rlogo",
+        "Name": "address",
         "Type": "System.String",
         "IsRequired": false
       },

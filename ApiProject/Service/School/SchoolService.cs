@@ -40,23 +40,26 @@ namespace ApiProject.Service.School
 
                 var SchoolDetail = await _context.institute.Where(p => p.institute_id == SchoolId).Select(p => new SchoolDetail
                 {
-                    schoolname = p.institute_name,
                     //    ownername = p.OwnerName,
+                    schoolname = p.institute_name,
                     rgtno = p.regist_num,
-                    rgstdate = p.regist_date,
-                    address = p.address,
-                    cityname = p.city_name,
-                    landlinenum = p.landline_num,
-                    pincode = p.pincode,
                     schoolcode = p.instituteCode,
-                    districtname = p.district_name,
+                    rgstdate = p.regist_date,
                     email = p.email,
-                    logoimg = p.logo_img,
-                    rlogo = p.institute_img,
-                    weburl = p.weburl,
-                    statename = p.state_name,
+                    landlinenum = p.landline_num,
                     mobileno1 = p.mob_num,
                     mobileno2 = p.alternatemob_num,
+                    weburl = p.weburl,
+                    Servicetaxno = p.servicetax_num,
+                    TINno = p.tin_num,
+                    PANno = p.pan_num,
+                    statename = p.state_name,
+                    districtname = p.district_name,
+                    cityname = p.city_name,
+                    pincode = p.pincode,
+                    address = p.address,
+                    logoimg = p.logo_img,
+                    rlogo = p.institute_img,
 
                 }).FirstOrDefaultAsync();
 
@@ -73,13 +76,11 @@ namespace ApiProject.Service.School
 
             var school = await _context.institute.FirstOrDefaultAsync(p => p.institute_id == SchoolId);
 
-
             if (request.logo != null)
             {
                 var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "SchoolLogo", "Logo");
                 var extension = Path.GetExtension(request.logo.FileName);
                 var fileNameWithoutExtension = school.institute_id.ToString();
-
 
                 var existingFiles = Directory.GetFiles(folderPath, fileNameWithoutExtension + ".*");
                 foreach (var file in existingFiles)
@@ -100,21 +101,24 @@ namespace ApiProject.Service.School
                 school.logo_img = "/image/SchoolLogo/Logo/" + fileNameWithoutExtension + extension;
             }
 
-
             // school.SchoolName = request.schoolname;
             // school.OwnerName = request.ownername == null ? " " : request.ownername;
-            school.regist_num = request.rgtno == null ? " " : request.rgtno;
+            school.regist_num = request.Registrationno == null ? " " : request.Registrationno;
+            school.instituteCode = request.InstituteCode == null ? " " : request.InstituteCode;
             school.regist_date = request.rgstdate;
-            school.address = request.address == null ? " " : request.address;
-            school.city_name = request.cityname == null ? " " : request.cityname;
-            school.landline_num = request.landlinenum == null ? " " : request.landlinenum;
-            school.pincode = request.pincode == null ? " " : request.pincode;
-            school.district_name = request.districtname == null ? " " : request.districtname;
             school.email = request.email == null ? " " : request.email;
-            school.weburl = request.weburl == null ? " " : request.weburl;
-            // school.StateName = request.statename == null ? " " : request.statename;
+            school.landline_num = request.landlinenum == null ? " " : request.landlinenum;
             school.mob_num = request.mobileno1 == null ? " " : request.mobileno1;
             school.alternatemob_num = request.mobileno2 == null ? " " : request.mobileno2;
+            school.weburl = request.weburl == null ? " " : request.weburl;
+            school.servicetax_num = request.ServiceTaxNo == null ? " " : request.ServiceTaxNo;
+            school.tin_num = request.TINno == null ? " " : request.TINno;
+            school.pan_num = request.PANno == null ? " " : request.PANno;
+            school.state_name = request.statename == null ? " " : request.statename;
+            school.district_name = request.districtname == null ? " " : request.districtname;
+            school.city_name = request.cityname == null ? " " : request.cityname;
+            school.pincode = request.pincode == null ? " " : request.pincode;
+            school.address = request.address == null ? " " : request.address;
             //  school.UpdateDate = DateTime.Now.Date;
 
             await _context.SaveChangesAsync();
@@ -123,21 +127,25 @@ namespace ApiProject.Service.School
             return new SchoolDetail
             {
                 //   schoolname = school.SchoolName,
-                //   ownername = school.OwnerName,
+                //    schoolco = school.OwnerName,
                 rgtno = school.regist_num,
+                schoolcode = school.instituteCode,
                 rgstdate = school.regist_date,
-                address = school.address,
-                cityname = school.city_name,
-                landlinenum = school.landline_num,
-                pincode = school.pincode,
-                schoolcode = school.district_name,
                 email = school.email,
+                landlinenum = school.landline_num,
+                mobileno1 = school.mob_num,
+                mobileno2 = school.alternatemob_num,
+                weburl = school.weburl,
+                Servicetaxno = school.servicetax_num,
+                TINno = school.tin_num,
+                PANno = school.pan_num,
+                statename = school.state_name,
+                districtname = school.district_name,
+                cityname = school.city_name,
+                pincode = school.pincode,
+                address = school.address,
                 logoimg = school.institute_img,
                 rlogo = school.logo_img,
-                weburl = school.weburl,
-                //statename = school.StateName,
-                mobileno1 = school.mob_num,
-                mobileno2 = school.alternatemob_num
             };
         }
         public async Task<ApiResponse<List<State>>> GetState()
@@ -165,7 +173,6 @@ namespace ApiProject.Service.School
             {
                 return ApiResponse<List<DistrictResModel>>.ErrorResponse("Error: " + ex.Message);
             }
-
         }
         #endregion
 

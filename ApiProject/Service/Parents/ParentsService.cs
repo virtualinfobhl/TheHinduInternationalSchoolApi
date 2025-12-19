@@ -48,7 +48,6 @@ namespace ApiProject.Service.Parents
             _configuration = configuration;
         }
 
-
         public async Task<ApiResponse<List<GetStudentModel>>> GetStudentList()
         {
             try
@@ -191,7 +190,7 @@ namespace ApiProject.Service.Parents
             }
         }
 
-        // StudentInstallment Fee
+        // Student Installment Fee
         public async Task<ApiResponse<getStudentInstallmentModel>> GetStudentInstallmentFee()
         {
             try
@@ -232,81 +231,6 @@ namespace ApiProject.Service.Parents
                 return ApiResponse<getStudentInstallmentModel>.ErrorResponse("Error :" + ex.Message);
             }
         }
-        //public async Task<ApiResponse<bool>> AddStudentInstallmentFee(AddStudentinstallReq req)
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int SessionId = _loginUser.SessionId;
-
-        //        var student = await _context.Student_Renew.Where(a => a.ClassId == req.ClassId && a.StuId == req.StudentId && a.due_fee == 0).FirstOrDefaultAsync();
-        //        if (student != null)
-        //        {
-        //            return ApiResponse<bool>.ErrorResponse("duefee already availble");
-        //        }
-
-        //        var GetInstituteCodeName = await _context.institute.FirstOrDefaultAsync(i => i.institute_id == SchoolId);
-        //        var LastCode = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
-
-        //        string instCode = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
-
-        //        int newId = (LastCode != null) ? int.Parse(LastCode.ReceiptNo.Split('/')[1]) + 1 : 1;
-
-        //        string ReceiptCode = $"{instCode}/{newId}";
-        //        int NewOrderNo = 1;
-        //        var LastOrderNo = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
-        //            .Select(s => s.OrderNo).FirstOrDefaultAsync();
-
-        //        if (LastOrderNo != null && LastOrderNo != "")
-
-        //            if (!string.IsNullOrEmpty(LastOrderNo))
-        //            {
-        //                int lastNum;
-        //                if (int.TryParse(LastOrderNo, out lastNum))
-        //                {
-        //                    NewOrderNo = lastNum + 1;
-        //                }
-        //            }
-
-        //        int FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(s => s == null ? 0 : s.FDId) + 1;
-
-        //        var StuInstall = new M_FeeDetail
-        //        {
-        //            FDId = FDId,
-        //            stu_id = req.StudentId,
-        //            ClassId = req.ClassId,
-        //            OrderNo = NewOrderNo.ToString(),
-        //            OrderStatus = "Pending",
-        //            TransactionId = "",
-        //            ReceiptType = "Online",
-        //            DueFees = req.Duefee,
-        //            PayFees = req.PaidFee,
-        //            Cash = 0,
-        //            Upi = 0,
-        //            AdmissionPayfee = 0,
-        //            AFeeDiscount = 0,
-        //            PramoteFees = 0,
-        //            Date = DateTime.Now,
-        //            Status = "Pending",
-        //            Active = false,
-        //            CompanyId = SchoolId,
-        //            SessionId = SessionId,
-        //            NetDueFees = req.Duefee,
-        //            PaymentMode = "UPI",
-        //            PaymentDate = req.PaymentDate,
-        //            Remark = req.Remark,
-        //            RTS = DateTime.Now,
-        //        };
-        //        _context.M_FeeDetail.Add(StuInstall);
-        //        await _context.SaveChangesAsync();
-
-        //        return ApiResponse<bool>.SuccessResponse(true, "Student installment fee saved successfully");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
-        //    }
-        //}
 
         public async Task<ApiResponse<StudentFeePaymentResult>> AddStudentInstallmentFee(AddStudentinstallReq req)
         {
@@ -317,9 +241,7 @@ namespace ApiProject.Service.Parents
                     int SchoolId = _loginUser.SchoolId;
                     int SessionId = _loginUser.SessionId;
 
-                    // ===========================================
-                    // CHECK — Student has no pending due already
-                    // ===========================================
+                    // =========================================== CHECK — Student has no pending due already
                     var student = await _context.Student_Renew.FirstOrDefaultAsync(a => a.ClassId == req.ClassId && a.StuId == req.StudentId && a.due_fee != 0);
 
                     if (student == null)
@@ -327,9 +249,7 @@ namespace ApiProject.Service.Parents
                         return ApiResponse<StudentFeePaymentResult>.ErrorResponse("Due fee already available");
                     }
 
-                    // ===========================================
-                    // INSTITUTE CODE & RECEIPT NUMBER
-                    // ===========================================
+                    // =========================================== INSTITUTE CODE & RECEIPT NUMBER
                     var GetInstituteCodeName = await _context.institute.FirstOrDefaultAsync(i => i.institute_id == SchoolId);
 
                     var LastCode = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId)
@@ -342,9 +262,8 @@ namespace ApiProject.Service.Parents
 
                     string ReceiptCode = $"{instCode}/{newId}";
 
-                    // ===========================================
-                    // GENERATE ORDER NUMBER
-                    // ===========================================
+
+                    // =========================================== GENERATE ORDER NUMBER
                     int NewOrderNo = 1;
                     var LastOrderNo = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
                         .Select(s => s.OrderNo).FirstOrDefaultAsync();
@@ -355,14 +274,10 @@ namespace ApiProject.Service.Parents
                             NewOrderNo = last + 1;
                     }
 
-                    // ===========================================
-                    // GENERATE PRIMARY KEY FDId
-                    // ===========================================
+                    // =========================================== GENERATE PRIMARY KEY FDId
                     int FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(s => s == null ? 0 : s.FDId) + 1;
 
-                    // ===========================================
-                    // SAVE INSTALLMENT RECORD
-                    // ===========================================
+                    // =========================================== SAVE INSTALLMENT RECORD
                     var fee = new M_FeeDetail
                     {
                         FDId = FDId,
@@ -399,9 +314,13 @@ namespace ApiProject.Service.Parents
 
                     string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
 
-                    string client_id = "SHYAWAYUAT_2510101108212";
+                    //string client_id = "SHYAWAYUAT_2510101108212";
+                    //string client_version = "1";
+                    //string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+                    string client_id = "TSPVIRTUALUAT_2512051124";
                     string client_version = "1";
-                    string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+                    string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
 
                     string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
 
@@ -429,9 +348,10 @@ namespace ApiProject.Service.Parents
                         return ApiResponse<StudentFeePaymentResult>.ErrorResponse("Failed to fetch authorization token");
                     }
 
-                    // =========================================== STEP 2 → PAYMENT REQUEST
 
-                    string apiUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay";
+                    // =========================================== STEP 2 → PAYMENT REQUEST
+                    string apiUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/sdk/order";
+                    //  string apiUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay";
 
                     double amount = Convert.ToDouble(req.PaidFee);
 
@@ -480,10 +400,8 @@ namespace ApiProject.Service.Parents
                     using (var reader = new StreamReader(response.GetResponseStream()))
                         paymentResponseStr = reader.ReadToEnd();
 
-
                     dynamic paymentResponse = JsonConvert.DeserializeObject(paymentResponseStr);
                     string redirectUrl = paymentResponse.redirectUrl;
-
 
                     await transaction.CommitAsync();
                     return ApiResponse<StudentFeePaymentResult>.SuccessResponse(
@@ -491,16 +409,14 @@ namespace ApiProject.Service.Parents
                         {
                             FDId = fee.FDId,
                             ReceiptNo = ReceiptCode,
+                            merchantOrderId = fee.OrderNo,
                             OrderId = paymentResponse.orderId,
                             State = paymentResponse.state,
                             ExpireAt = paymentResponse.expireAt,
-                            Token = token
+                            Token = paymentResponse.token
                         },
                         "Installment fee saved successfully"
                         );
-
-                                                       
-
                 }
                 catch (Exception ex)
                 {
@@ -510,109 +426,147 @@ namespace ApiProject.Service.Parents
             }
         }
 
-        public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId)
+
+        public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId, string orderno)
         {
             try
             {
-                int CompanyId = _loginUser.SchoolId;
+                int companyId = _loginUser.SchoolId;
                 int UserId = _loginUser.UserId;
-                int SessionId = _loginUser.SessionId;
+                int sessionId = _loginUser.SessionId;
 
-                // =========================================== GET FEE RECORD
-
-                var fee = await _context.M_FeeDetail
-                    .FirstOrDefaultAsync(p => p.FDId == ReceiptId && p.SessionId == SessionId);
+                // ===================== GET FEE RECORD
+                var fee = await _context.M_FeeDetail.FirstOrDefaultAsync(f => f.FDId == ReceiptId && f.SessionId == sessionId && f.OrderNo == orderno);
 
                 if (fee == null)
-                    return ApiResponse<bool>.ErrorResponse("Invalid request!");
+                    return ApiResponse<bool>.ErrorResponse("Fee record not found");
 
-                // =========================================== GET TOKEN FROM COOKIE
+                // =========================================== STEP 1 → GET OAUTH TOKEN FROM PHONEPE
 
-                string token = _httpContextAccessor.HttpContext.Request.Cookies["paytoken"];
+                string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
+
+
+                //      clientId: TSPVIRTUALUAT_2512051124
+                //      clientVersion: 1
+                //      clientSecret: ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2
+                //      UAT credentials(End Merchant's TEST MID):
+                //      MID - TSPVIRTUALUAT
+
+
+                string client_id = "SHYAWAYUAT_2510101108212";
+                string client_version = "1";
+                string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+
+                //string client_id = "TSPVIRTUALUAT_2512051124";
+                //string client_version = "1";
+                //string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
+
+                string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
+
+                byte[] authBytes = Encoding.UTF8.GetBytes(postData);
+
+                HttpWebRequest authRequest = (HttpWebRequest)WebRequest.Create(authUrl);
+                authRequest.Method = "POST";
+                authRequest.ContentType = "application/x-www-form-urlencoded";
+                authRequest.ContentLength = authBytes.Length;
+
+                using (var stream = authRequest.GetRequestStream())
+                    stream.Write(authBytes, 0, authBytes.Length);
+
+                string authResponseStr;
+                using (var responses = (HttpWebResponse)authRequest.GetResponse())
+                using (var reader = new StreamReader(responses.GetResponseStream()))
+                    authResponseStr = reader.ReadToEnd();
+
+                dynamic authResponse = JsonConvert.DeserializeObject(authResponseStr);
+                string token = authResponse.access_token;
 
                 if (string.IsNullOrEmpty(token))
-                    return ApiResponse<bool>.ErrorResponse("Token missing!");
+                {
+                    await _context.SaveChangesAsync();
+                    return ApiResponse<bool>.ErrorResponse("Failed to fetch authorization token");
+                }
 
-                // =========================================== PREPARE STATUS CHECK URL
-
+                // ===================== PHONEPE STATUS API
                 string merchantOrderId = fee.OrderNo;
+
+                //      string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=true";
+
                 string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
 
-                // =========================================== CALL PHONEPE STATUS API (Using HttpClient)
-
                 using var client = new HttpClient();
-
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "O-Bearer " + token);
 
                 var response = await client.GetAsync(url);
-
                 if (!response.IsSuccessStatusCode)
-                {
-                    return ApiResponse<bool>.ErrorResponse("Failed to check status!");
-                }
+                    return ApiResponse<bool>.ErrorResponse("Unable to fetch payment status");
 
                 string result = await response.Content.ReadAsStringAsync();
-
                 dynamic json = JsonConvert.DeserializeObject(result);
 
-                string status = json.state; // COMPLETED / FAILED / PENDING
-                var payment = json.paymentDetails?[0];
+                string orderState = json?.state;
 
-                string paymentState = payment?.state;
-                string txnId = payment?.transactionId;
+                var payment = (json?.paymentDetails != null && json.paymentDetails.Count > 0)
+                    ? json.paymentDetails[0]
+                    : null;
 
-                // =========================================== UPDATE DATABASE
-                if (status == "COMPLETED")
+                string txnId = payment?.transactionId ?? "";
+
+                // ===================== PAYMENT STATUS HANDLING
+                if (orderState == "COMPLETED")
                 {
-                    // Update M_FeeDetail
+                    // -------- Update Fee Detail
                     fee.OrderStatus = "Success";
                     fee.Status = "Success";
                     fee.Active = true;
-                    fee.TransactionId = txnId ?? "";
+                    fee.TransactionId = txnId;
+
                     await _context.SaveChangesAsync();
 
-                    // Update Student Renew table
-                    var studentrenewtbl = await _context.Student_Renew.FirstOrDefaultAsync(s => s.StuId == fee.stu_id && s.CompanyId == CompanyId &&
-                    s.SessionId == SessionId && s.ClassId == fee.ClassId);
+                    // -------- Update Student Renew
+                    var renew = await _context.Student_Renew.FirstOrDefaultAsync(r => r.StuId == fee.stu_id && r.ClassId == fee.ClassId && r.CompanyId == companyId &&
+                        r.SessionId == sessionId);
 
-                    if (studentrenewtbl != null)
+                    if (renew != null)
                     {
-                        studentrenewtbl.due_fee -= fee.PayFees;
-                        studentrenewtbl.stu_fee += fee.PayFees;
+                        renew.due_fee -= fee.PayFees;
+                        renew.stu_fee += fee.PayFees;
                         await _context.SaveChangesAsync();
                     }
 
-                    // Installments Adjustment
-                    var installments = await _context.fee_installment.Where(u => u.stu_id == fee.stu_id && u.university_id == fee.ClassId && u.CompanyId == CompanyId &&
-                            u.SessionId == SessionId).ToListAsync();
+                    // -------- INSTALLMENT ADJUSTMENT (FOR LOOP)
+                    var installments = await _context.fee_installment.Where(u => u.stu_id == fee.stu_id && u.university_id == fee.ClassId && u.CompanyId == companyId &&
+                                     u.SessionId == sessionId).ToListAsync();
 
                     double remaining = Convert.ToDouble(fee.PayFees);
 
-                    foreach (var insta in installments)
+                    for (int i = 0; i < installments.Count; i++)
                     {
-                        if (remaining <= 0) break;
+                        if (remaining <= 0)
+                            break;
 
-                        if (insta.due_fee > 0)
+                        if (installments[i].due_fee > 0)
                         {
-                            if (remaining >= insta.due_fee)
+                            if (remaining >= installments[i].due_fee)
                             {
-                                remaining -= (double)insta.due_fee;
-                                insta.due_fee = 0;
+                                remaining -= (double)installments[i].due_fee;
+                                installments[i].due_fee = 0;
                             }
                             else
                             {
-                                insta.due_fee -= remaining;
+                                installments[i].due_fee -= remaining;
                                 remaining = 0;
                             }
-
-                            await _context.SaveChangesAsync();
                         }
                     }
 
+                    await _context.SaveChangesAsync();
+
                     return ApiResponse<bool>.SuccessResponse(true, "Payment successful");
                 }
-                else if (status == "FAILED")
+                else if (orderState == "FAILED")
                 {
                     fee.OrderStatus = "Failed";
                     fee.Status = "Failed";
@@ -626,249 +580,18 @@ namespace ApiProject.Service.Parents
                     fee.OrderStatus = "Pending";
                     fee.Status = "Pending";
                     fee.Active = false;
-                    await _context.SaveChangesAsync();
 
+                    await _context.SaveChangesAsync();
                     return ApiResponse<bool>.SuccessResponse(false, "Payment pending");
                 }
             }
             catch (Exception ex)
             {
-                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+                return ApiResponse<bool>.ErrorResponse("Exception: " + ex.Message);
             }
         }
 
-
-        //public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId)
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int UserId = _loginUser.UserId;
-        //        int SessionId = _loginUser.SessionId;
-
-
-        //        // ===================================
-        //        // GET FEE RECORD BY RECEIPT ID
-        //        // ===================================
-        //        var fee = db.M_FeeDetail.FirstOrDefault(p => p.FDId == Receiptid && p.SessionId == SessionId);
-
-        //        if (fee == null)
-        //            return Content("Invalid Request!");
-
-        //        // ===================================
-        //        // PHONEPE STATUS CHECK URL
-        //        // ===================================
-        //        string merchantOrderId = fee.OrderNo;
-        //        string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
-
-        //        // ===================================
-        //        // GET TOKEN FROM COOKIE
-        //        // ===================================
-        //        string token = Request.Cookies["paytoken"]?.Value;
-
-        //        if (string.IsNullOrEmpty(token))
-        //            return Content("Token Missing!");
-
-        //        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-        //        req.Method = "GET";
-        //        req.ContentType = "application/json";
-        //        req.Headers.Add("Authorization", "O-Bearer " + token);
-
-        //        // ===================================
-        //        // GET RESPONSE
-        //        // ===================================
-        //        string result;
-        //        using (var response = (HttpWebResponse)req.GetResponse())
-        //        using (var reader = new StreamReader(response.GetResponseStream()))
-        //        {
-        //            result = reader.ReadToEnd();
-        //        }
-
-        //        dynamic json = JsonConvert.DeserializeObject(result);
-
-        //        // =============================================
-        //        // CORRECTED: PHONEPE RESPONSE PARSING
-        //        // =============================================
-        //        string status = json.state; // "COMPLETED", "PENDING", "FAILED"
-        //                                    // PAYMENT DETAILS (FIRST ENTRY)
-        //        var payment = json.paymentDetails?[0];
-
-        //        // PAYMENT STATE
-        //        string paymentState = payment?.state;   // COMPLETED / FAILED
-
-        //        // TRANSACTION ID
-        //        string txnId = payment?.transactionId;
-
-        //        // =============================================
-        //        // UPDATE DB BASED ON PAYMENT STATUS
-        //        // =============================================
-        //        if (status == "COMPLETED")
-        //        {
-        //            fee.OrderStatus = "Success";
-        //            fee.Status = "Success";
-        //            fee.Active = true;
-        //            fee.TransactionId = txnId ?? "";
-        //            db.SaveChanges();
-
-        //            var studentrenewtbl = db.Student_Renew.Where(s => s.StuId == fee.stu_id && s.CompanyId == CompanyId && s.SessionId == SessionId && s.ClassId == fee.ClassId).FirstOrDefault();
-
-        //            studentrenewtbl.due_fee = studentrenewtbl.due_fee - fee.PayFees;
-        //            studentrenewtbl.stu_fee += fee.PayFees;
-
-        //            db.SaveChanges();
-
-        //            var installments = db.fee_installment.Where(u => u.stu_id == fee.stu_id && u.university_id == fee.ClassId && u.CompanyId == CompanyId && u.SessionId == SessionId).Select(a => new
-        //            {
-        //                a.university_id,
-        //                a.IntallmentID,
-        //                a.total_fee,
-        //                a.Installment,
-        //                a.FAmount,
-
-        //            }).ToList();
-
-        //            double subfee = 0;
-        //            double subfee2 = Convert.ToDouble(fee.PayFees);
-
-        //            for (int i = 0; i < installments.Count && fee.PayFees > 0; i++)
-        //            {
-        //                int? installmentid = installments[i].IntallmentID;
-
-        //                fee_installment insta = db.fee_installment.FirstOrDefault(f => f.stu_id == fee.stu_id && f.university_id == fee.ClassId && f.CompanyId == CompanyId && f.SessionId == SessionId && f.IntallmentID == installmentid);
-
-        //                if (insta != null)
-        //                {
-        //                    if (insta.due_fee != 0)
-        //                    {
-
-        //                        if (subfee2 >= insta.due_fee)
-        //                        {
-        //                            subfee2 = Convert.ToDouble(subfee2) - Convert.ToDouble(insta.due_fee);
-        //                            insta.due_fee = 0;
-        //                            db.SaveChanges();
-        //                        }
-        //                        else if (subfee2 != 0)
-        //                        {
-        //                            insta.due_fee = insta.due_fee - subfee2;
-        //                            subfee2 = 0;
-        //                            db.SaveChanges();
-        //                            break;
-
-        //                        }
-        //                        else
-        //                        {
-        //                            insta.due_fee = insta.due_fee - subfee2;
-        //                            subfee2 = 0;
-        //                            db.SaveChanges();
-        //                            break;
-
-        //                        }
-        //                    }
-        //                }
-        //            }
-
-        //            ViewBag.msg = "Payment Successful";
-        //        }
-        //        else if (status == "FAILED")
-        //        {
-        //            fee.OrderStatus = "Failed";
-        //            fee.Status = "Failed";
-        //            fee.Active = false;
-        //            db.SaveChanges();
-
-        //            ViewBag.msg = "Payment Failed";
-        //        }
-        //        else
-        //        {
-        //            fee.OrderStatus = "Pending";
-        //            fee.Status = "Pending";
-        //            fee.Active = false;
-        //            db.SaveChanges();
-
-        //            ViewBag.msg = "Payment Pending";
-        //        }
-
-
-        //        return ApiResponse<bool>.SuccessResponse(true, "Student installment fee data fetched successfully");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
-        //    }
-        //}
-
-        //var fee = _context.M_FeeDetail.FirstOrDefault(a => a.FDId == ReceiptId && a.SessionId == SessionId && a.CompanyId == SchoolId);
-
-        //fee.OrderStatus = "Success";
-        //fee.Status = "Success";
-        //fee.Active = true;
-        //await _context.SaveChangesAsync();
-
-        //var StudentInstall = _context.Student_Renew.Where(c => c.StuId == fee.stu_id && c.CompanyId == SchoolId && c.SessionId == SessionId && c.ClassId == fee.ClassId).FirstOrDefault();
-        //StudentInstall.due_fee = StudentInstall.due_fee - fee.PayFees;
-        //StudentInstall.stu_fee += fee.PayFees;
-        //await _context.SaveChangesAsync();
-
-        //var Installment = _context.fee_installment.Where(c => c.stu_id == fee.stu_id && c.university_id == fee.ClassId && c.CompanyId == SchoolId && c.SessionId == SessionId)
-        //    .Select(c => new GetStuInstallmentModel
-        //    {
-        //        university_id = c.university_id,
-        //        IntallmentID = c.IntallmentID,
-        //        total_fee = c.total_fee,
-        //        Installment = c.Installment,
-        //        FAmount = c.FAmount,
-        //    }).ToList();
-
-        //double subfee = 0;
-        //double subfee2 = Convert.ToDouble(fee.PayFees);
-
-        //for (int i = 0; i < Installment.Count && fee.PayFees > 0; i++)
-        //{
-        //    int? installmentid = Installment[i].IntallmentID;
-
-        //    fee_installment insta = _context.fee_installment.FirstOrDefault(f => f.stu_id == fee.stu_id && f.university_id == fee.ClassId && f.CompanyId == SchoolId && f.SessionId == SessionId && f.IntallmentID == installmentid);
-
-        //    if (insta != null)
-        //    {
-        //        if (insta.due_fee != 0)
-        //        {
-
-        //            if (subfee2 >= insta.due_fee)
-        //            {
-        //                subfee2 = Convert.ToDouble(subfee2) - Convert.ToDouble(insta.due_fee);
-        //                insta.due_fee = 0;
-        //                await _context.SaveChangesAsync();
-        //            }
-        //            else if (subfee2 != 0)
-        //            {
-        //                insta.due_fee = insta.due_fee - subfee2;
-        //                subfee2 = 0;
-        //                await _context.SaveChangesAsync();
-        //                break;
-
-        //            }
-        //            else
-        //            {
-        //                insta.due_fee = insta.due_fee - subfee2;
-        //                subfee2 = 0;
-        //                await _context.SaveChangesAsync();
-        //                break;
-
-        //            }
-        //        }
-        //    }
-        //}
-
-
-        //var res = new StudentClassExamData
-        //{
-        //    ExamDatas = ExamData,
-        //    // SectionDatas = SectionData,
-        //};
-
-
         // Transport Fee 
-
         public async Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee()
         {
             try
@@ -954,7 +677,7 @@ namespace ApiProject.Service.Parents
             }
         }
 
-        public async Task<ApiResponse<bool>> AddStudentTransportFee(AddTransportMonthFeeReq req)
+        public async Task<ApiResponse<StudentTransportPaymentResult>> AddStudentTransportFee(AddTransportMonthFeeReq req)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -967,41 +690,37 @@ namespace ApiProject.Service.Parents
                     var TransFee = await _context.NewTransportFeeTbl.Where(p => p.MonthName != req.MonthName && p.stu_id == req.StudentId && p.university_id == req.ClassId).FirstOrDefaultAsync();
                     if (TransFee == null)
                     {
-                        return ApiResponse<bool>.ErrorResponse("month name akready avaliale");
+                        return ApiResponse<StudentTransportPaymentResult>.ErrorResponse("month name akready avaliale");
                     }
                     if (req.PayFee < 0)
                     {
-                        return ApiResponse<bool>.ErrorResponse("Invalid Amount");
+                        return ApiResponse<StudentTransportPaymentResult>.ErrorResponse("Invalid Amount");
                     }
 
+                    // receipt no generate
                     var GetInstituteCodeName = await _context.institute.FirstOrDefaultAsync(i => i.institute_id == SchoolId);
                     var LastCode = await _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.NewPaymentId).FirstOrDefaultAsync();
 
                     string instCode = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
 
                     int newId = (LastCode != null) ? int.Parse(LastCode.ReceiptNo.Split('/')[1]) + 1 : 1;
-
                     string ReceiptCode = $"{instCode}/{newId}";
+
+                    // order no generate
                     int NewOrderNo = 1;
-                    var LastOrderNo = await _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
-                        .Select(s => s.OrderNo).FirstOrDefaultAsync();
+                    var LastOrderNo = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).Select(s => s.OrderNo).ToList()
+                        .Where(x => !string.IsNullOrEmpty(x)).Select(x => int.Parse(x)).OrderByDescending(x => x).FirstOrDefault();
 
-                    if (LastOrderNo != null && LastOrderNo != "")
-
-                        if (!string.IsNullOrEmpty(LastOrderNo))
-                        {
-                            int lastNum;
-                            if (int.TryParse(LastOrderNo, out lastNum))
-                            {
-                                NewOrderNo = lastNum + 1;
-                            }
-                        }
+                    if (LastOrderNo > 0)
+                        NewOrderNo = LastOrderNo + 1;
 
                     int NewPaymentId = _context.NewTransportFeeTbl.DefaultIfEmpty().Max(s => s == null ? 0 : s.NewPaymentId) + 1;
 
                     var StuInstall = new NewTransportFeeTbl
                     {
                         NewPaymentId = NewPaymentId,
+                        ReceiptNo = ReceiptCode,
+                        StuRouteAssignId = req.StuRouteAssignId,
                         stu_id = req.StudentId,
                         university_id = req.ClassId,
                         SectionId = req.sectionId,
@@ -1013,9 +732,6 @@ namespace ApiProject.Service.Parents
                         MonthName = req.MonthName,
                         NetTransFee = req.PayFee ?? 0,
                         PayFee = req.PayFee ?? 0,
-                      //  Discount = req.Discount ?? 0,
-                     //   SpclDiscount = req.SpclDiscount ?? 0,
-                     //   Paydiscount = req.PayDiscount ?? 0,
                         FeeType = "TransportFee",
                         OrderNo = NewOrderNo.ToString(),
                         OrderStatus = "Pending",
@@ -1026,9 +742,12 @@ namespace ApiProject.Service.Parents
                         SessionId = SessionId,
                         Userid = UserId,
                         PaymentMode = "UPI",
-                       // Remark = req.Remark,
                         CreateDate = DateTime.Now,
                         UpdateDate = DateTime.Now,
+                        //  Discount = req.Discount ?? 0,
+                        //   SpclDiscount = req.SpclDiscount ?? 0,
+                        //   Paydiscount = req.PayDiscount ?? 0,
+                        // Remark = req.Remark,
                     };
                     _context.NewTransportFeeTbl.Add(StuInstall);
                     await _context.SaveChangesAsync();
@@ -1065,12 +784,14 @@ namespace ApiProject.Service.Parents
                     if (string.IsNullOrEmpty(token))
                     {
                         await transaction.RollbackAsync();
-                        return ApiResponse<bool>.ErrorResponse("Failed to fetch authorization token");
+                        return ApiResponse<StudentTransportPaymentResult>.ErrorResponse("Failed to fetch authorization token");
                     }
 
                     // =========================================== STEP 2 → PAYMENT REQUEST
 
                     string apiUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/sdk/order";
+
+                    //   string apiUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay";
 
                     double amount = Convert.ToDouble(req.PayFee);
 
@@ -1096,9 +817,7 @@ namespace ApiProject.Service.Parents
                             message = "Transport Fee payment",
                             //merchantUrls = new
                             //{
-                            //    redirectUrl = Url.Action("PaymentSuccessfully", "Home",
-                            //        new { StudentId = req.StudentId, Receiptid = fee.FDId },
-                            //        Request.Url.Scheme)
+                            //    redirectUrl = Url.Action("PaymentSuccessfully", "Home", new { StudentId = req.StudentId, Receiptid = fee.FDId }, Request.Url.Scheme)
                             //}
                         }
                     };
@@ -1122,15 +841,27 @@ namespace ApiProject.Service.Parents
                     dynamic paymentResponse = JsonConvert.DeserializeObject(paymentResponseStr);
                     string redirectUrl = paymentResponse.redirectUrl;
 
+                    await transaction.CommitAsync();
+                    return ApiResponse<StudentTransportPaymentResult>.SuccessResponse(
+                        new StudentTransportPaymentResult
+                        {
+                            NewPaymentId = StuInstall.NewPaymentId,
+                            ReceiptNo = ReceiptCode,
+                            merchantOrderId = StuInstall.OrderNo,
+                            OrderId = paymentResponse.orderId,
+                            State = paymentResponse.state,
+                            ExpireAt = paymentResponse.expireAt,
+                            Token = paymentResponse.token
 
-                 //   await transaction.CommitAsync();
-
-                    return ApiResponse<bool>.SuccessResponse(true, "Student transport fee saved successfully");
+                        },
+                        "Installment fee saved successfully"
+                        );
+                    //   return ApiResponse<bool>.SuccessResponse(true, "Student transport fee saved successfully");
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+                    return ApiResponse<StudentTransportPaymentResult>.ErrorResponse("Error: " + ex.Message);
                 }
             }
         }
@@ -1147,6 +878,7 @@ namespace ApiProject.Service.Parents
 
                 if (Tfee == null)
                     return ApiResponse<bool>.ErrorResponse("Invalid request!");
+
                 //Tfee.OrderStatus = "Success";
                 //// Tfee.Status = "Success";
                 ////   Tfee.TransactionId = txnId ?? "";
@@ -1155,18 +887,46 @@ namespace ApiProject.Service.Parents
 
                 // =========================================== GET TOKEN FROM COOKIE
 
-                string token = _httpContextAccessor.HttpContext.Request.Cookies["paytoken"];
+                string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
+
+                string client_id = "SHYAWAYUAT_2510101108212";
+                string client_version = "1";
+                string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+                string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
+
+                byte[] authBytes = Encoding.UTF8.GetBytes(postData);
+
+                HttpWebRequest authRequest = (HttpWebRequest)WebRequest.Create(authUrl);
+                authRequest.Method = "POST";
+                authRequest.ContentType = "application/x-www-form-urlencoded";
+                authRequest.ContentLength = authBytes.Length;
+
+                using (var stream = authRequest.GetRequestStream())
+                    stream.Write(authBytes, 0, authBytes.Length);
+
+                string authResponseStr;
+                using (var responses = (HttpWebResponse)authRequest.GetResponse())
+                using (var reader = new StreamReader(responses.GetResponseStream()))
+                    authResponseStr = reader.ReadToEnd();
+
+                dynamic authResponse = JsonConvert.DeserializeObject(authResponseStr);
+                string token = authResponse.access_token;
 
                 if (string.IsNullOrEmpty(token))
-                    return ApiResponse<bool>.ErrorResponse("Token missing!");
+                {
+                    // await transaction.RollbackAsync();
+                    await _context.SaveChangesAsync();
+                    return ApiResponse<bool>.ErrorResponse("Failed to fetch authorization token");
+                }
+
 
                 // =========================================== PREPARE STATUS CHECK URL
-
                 string merchantOrderId = Tfee.OrderNo;
                 string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
 
-                // =========================================== CALL PHONEPE STATUS API (Using HttpClient)
 
+                // =========================================== CALL PHONEPE STATUS API (Using HttpClient)
                 using var client = new HttpClient();
 
                 client.DefaultRequestHeaders.Clear();
@@ -1187,6 +947,7 @@ namespace ApiProject.Service.Parents
                 var payment = json.paymentDetails?[0];
 
                 string paymentState = payment?.state;
+
                 string txnId = payment?.transactionId;
 
                 if (status == "COMPLETED")
@@ -1206,10 +967,10 @@ namespace ApiProject.Service.Parents
                     await _context.SaveChangesAsync();
 
 
-                    // ev.MonthName को ',' से विभाजित करके महीनों की सूची प्राप्त करें
+                    // Month name Seperate   ',' 
                     var month = Tfee.MonthName.Split(',').Select(m => m.Trim()).ToList();
 
-                    // प्रत्येक महीने के लिए संबंधित TransInstallmentTbl प्रविष्टियों को प्राप्त करें
+                    // every month for TransInstallmentTbl 
                     var transInstallments = _context.TransInstallmentTbl.Where(u => u.StuId == Tfee.stu_id && u.ClassId == Tfee.university_id && u.SessionId == SessionId &&
                      u.CompanyId == SchoolId && month.Contains(u.MonthName)).ToList();
 
@@ -1219,10 +980,10 @@ namespace ApiProject.Service.Parents
                     }
                     await _context.SaveChangesAsync();
 
-                    // ev.PayFee को double में कन्वर्ट करें, यदि null है तो 0.0 मान लें
+                    // ev.PayFee convert in   double and azume in null  ;; and 0.0 
                     double remainingPay = (Tfee.PayFee ?? 0.0) + (Tfee.Paydiscount ?? 0.0);
 
-                    // सभी सक्रिय इंस्टॉलमेंट्स को प्राप्त करें, जिन्हें पहले सक्रिय किया गया है
+                    // get all installment  सभी सक्रिय इंस्टॉलमेंट्स को प्राप्त करें, जिन्हें पहले सक्रिय किया गया है
                     var activeInstallments = _context.TransInstallmentTbl.Where(u => u.StuId == Tfee.stu_id && u.ClassId == Tfee.university_id && u.SessionId == SessionId &&
                     u.CompanyId == SchoolId && u.ReActive == true).OrderBy(u => u.MonthName).ToList();
 
@@ -1452,6 +1213,439 @@ namespace ApiProject.Service.Parents
             }
         }
 
+
+        //public async Task<ApiResponse<bool>> AddStudentInstallmentFee(AddStudentinstallReq req)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var student = await _context.Student_Renew.Where(a => a.ClassId == req.ClassId && a.StuId == req.StudentId && a.due_fee == 0).FirstOrDefaultAsync();
+        //        if (student != null)
+        //        {
+        //            return ApiResponse<bool>.ErrorResponse("duefee already availble");
+        //        }
+
+        //        var GetInstituteCodeName = await _context.institute.FirstOrDefaultAsync(i => i.institute_id == SchoolId);
+        //        var LastCode = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
+
+        //        string instCode = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+
+        //        int newId = (LastCode != null) ? int.Parse(LastCode.ReceiptNo.Split('/')[1]) + 1 : 1;
+
+        //        string ReceiptCode = $"{instCode}/{newId}";
+        //        int NewOrderNo = 1;
+        //        var LastOrderNo = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
+        //            .Select(s => s.OrderNo).FirstOrDefaultAsync();
+
+        //        if (LastOrderNo != null && LastOrderNo != "")
+
+        //            if (!string.IsNullOrEmpty(LastOrderNo))
+        //            {
+        //                int lastNum;
+        //                if (int.TryParse(LastOrderNo, out lastNum))
+        //                {
+        //                    NewOrderNo = lastNum + 1;
+        //                }
+        //            }
+
+        //        int FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(s => s == null ? 0 : s.FDId) + 1;
+
+        //        var StuInstall = new M_FeeDetail
+        //        {
+        //            FDId = FDId,
+        //            stu_id = req.StudentId,
+        //            ClassId = req.ClassId,
+        //            OrderNo = NewOrderNo.ToString(),
+        //            OrderStatus = "Pending",
+        //            TransactionId = "",
+        //            ReceiptType = "Online",
+        //            DueFees = req.Duefee,
+        //            PayFees = req.PaidFee,
+        //            Cash = 0,
+        //            Upi = 0,
+        //            AdmissionPayfee = 0,
+        //            AFeeDiscount = 0,
+        //            PramoteFees = 0,
+        //            Date = DateTime.Now,
+        //            Status = "Pending",
+        //            Active = false,
+        //            CompanyId = SchoolId,
+        //            SessionId = SessionId,
+        //            NetDueFees = req.Duefee,
+        //            PaymentMode = "UPI",
+        //            PaymentDate = req.PaymentDate,
+        //            Remark = req.Remark,
+        //            RTS = DateTime.Now,
+        //        };
+        //        _context.M_FeeDetail.Add(StuInstall);
+        //        await _context.SaveChangesAsync();
+
+        //        return ApiResponse<bool>.SuccessResponse(true, "Student installment fee saved successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
+
+
+        // public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId)
+        //{
+        //    try
+        //    {
+        //        int CompanyId = _loginUser.SchoolId;
+        //        int UserId = _loginUser.UserId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        // =========================================== GET FEE RECORD
+
+        //        var fee = await _context.M_FeeDetail
+        //            .FirstOrDefaultAsync(p => p.FDId == ReceiptId && p.SessionId == SessionId);
+
+        //        if (fee == null)
+        //            return ApiResponse<bool>.ErrorResponse("Invalid request!");
+
+        //        // =========================================== GET TOKEN FROM COOKIE
+
+        //        string token = _httpContextAccessor.HttpContext.Request.Cookies["paytoken"];
+
+        //        if (string.IsNullOrEmpty(token))
+        //            return ApiResponse<bool>.ErrorResponse("Token missing!");
+
+        //        // =========================================== PREPARE STATUS CHECK URL
+
+        //        string merchantOrderId = fee.OrderNo;
+        //        string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
+
+        //        // =========================================== CALL PHONEPE STATUS API (Using HttpClient)
+
+        //        using var client = new HttpClient();
+
+        //        client.DefaultRequestHeaders.Clear();
+        //        client.DefaultRequestHeaders.Add("Authorization", "O-Bearer " + token);
+
+        //        var response = await client.GetAsync(url);
+
+        //        if (!response.IsSuccessStatusCode)
+        //        {
+        //            return ApiResponse<bool>.ErrorResponse("Failed to check status!");
+        //        }
+
+        //        string result = await response.Content.ReadAsStringAsync();
+
+        //        dynamic json = JsonConvert.DeserializeObject(result);
+
+        //        string status = json.state; // COMPLETED / FAILED / PENDING
+        //        var payment = json.paymentDetails?[0];
+
+        //        string paymentState = payment?.state;
+        //        string txnId = payment?.transactionId;
+
+        //        // =========================================== UPDATE DATABASE
+        //        if (status == "COMPLETED")
+        //        {
+        //            // Update M_FeeDetail
+        //            fee.OrderStatus = "Success";
+        //            fee.Status = "Success";
+        //            fee.Active = true;
+        //            fee.TransactionId = txnId ?? "";
+        //            await _context.SaveChangesAsync();
+
+        //            // Update Student Renew table
+        //            var studentrenewtbl = await _context.Student_Renew.FirstOrDefaultAsync(s => s.StuId == fee.stu_id && s.CompanyId == CompanyId &&
+        //            s.SessionId == SessionId && s.ClassId == fee.ClassId);
+
+        //            if (studentrenewtbl != null)
+        //            {
+        //                studentrenewtbl.due_fee -= fee.PayFees;
+        //                studentrenewtbl.stu_fee += fee.PayFees;
+        //                await _context.SaveChangesAsync();
+        //            }
+
+        //            // Installments Adjustment
+        //            var installments = await _context.fee_installment.Where(u => u.stu_id == fee.stu_id && u.university_id == fee.ClassId && u.CompanyId == CompanyId &&
+        //                    u.SessionId == SessionId).ToListAsync();
+
+        //            double remaining = Convert.ToDouble(fee.PayFees);
+
+        //            foreach (var insta in installments)
+        //            {
+        //                if (remaining <= 0) break;
+
+        //                if (insta.due_fee > 0)
+        //                {
+        //                    if (remaining >= insta.due_fee)
+        //                    {
+        //                        remaining -= (double)insta.due_fee;
+        //                        insta.due_fee = 0;
+        //                    }
+        //                    else
+        //                    {
+        //                        insta.due_fee -= remaining;
+        //                        remaining = 0;
+        //                    }
+
+        //                    await _context.SaveChangesAsync();
+        //                }
+        //            }
+
+        //            return ApiResponse<bool>.SuccessResponse(true, "Payment successful");
+        //        }
+        //        else if (status == "FAILED")
+        //        {
+        //            fee.OrderStatus = "Failed";
+        //            fee.Status = "Failed";
+        //            fee.Active = false;
+
+        //            await _context.SaveChangesAsync();
+        //            return ApiResponse<bool>.SuccessResponse(false, "Payment failed");
+        //        }
+        //        else
+        //        {
+        //            fee.OrderStatus = "Pending";
+        //            fee.Status = "Pending";
+        //            fee.Active = false;
+        //            await _context.SaveChangesAsync();
+
+        //            return ApiResponse<bool>.SuccessResponse(false, "Payment pending");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
+
+
+        //public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int UserId = _loginUser.UserId;
+        //        int SessionId = _loginUser.SessionId;
+
+
+        //        // ===================================
+        //        // GET FEE RECORD BY RECEIPT ID
+        //        // ===================================
+        //        var fee = db.M_FeeDetail.FirstOrDefault(p => p.FDId == Receiptid && p.SessionId == SessionId);
+
+        //        if (fee == null)
+        //            return Content("Invalid Request!");
+
+        //        // ===================================
+        //        // PHONEPE STATUS CHECK URL
+        //        // ===================================
+        //        string merchantOrderId = fee.OrderNo;
+        //        string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
+
+        //        // ===================================
+        //        // GET TOKEN FROM COOKIE
+        //        // ===================================
+        //        string token = Request.Cookies["paytoken"]?.Value;
+
+        //        if (string.IsNullOrEmpty(token))
+        //            return Content("Token Missing!");
+
+        //        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+        //        req.Method = "GET";
+        //        req.ContentType = "application/json";
+        //        req.Headers.Add("Authorization", "O-Bearer " + token);
+
+        //        // ===================================
+        //        // GET RESPONSE
+        //        // ===================================
+        //        string result;
+        //        using (var response = (HttpWebResponse)req.GetResponse())
+        //        using (var reader = new StreamReader(response.GetResponseStream()))
+        //        {
+        //            result = reader.ReadToEnd();
+        //        }
+
+        //        dynamic json = JsonConvert.DeserializeObject(result);
+
+        //        // =============================================
+        //        // CORRECTED: PHONEPE RESPONSE PARSING
+        //        // =============================================
+        //        string status = json.state; // "COMPLETED", "PENDING", "FAILED"
+        //                                    // PAYMENT DETAILS (FIRST ENTRY)
+        //        var payment = json.paymentDetails?[0];
+
+        //        // PAYMENT STATE
+        //        string paymentState = payment?.state;   // COMPLETED / FAILED
+
+        //        // TRANSACTION ID
+        //        string txnId = payment?.transactionId;
+
+        //        // =============================================
+        //        // UPDATE DB BASED ON PAYMENT STATUS
+        //        // =============================================
+        //        if (status == "COMPLETED")
+        //        {
+        //            fee.OrderStatus = "Success";
+        //            fee.Status = "Success";
+        //            fee.Active = true;
+        //            fee.TransactionId = txnId ?? "";
+        //            db.SaveChanges();
+
+        //            var studentrenewtbl = db.Student_Renew.Where(s => s.StuId == fee.stu_id && s.CompanyId == CompanyId && s.SessionId == SessionId && s.ClassId == fee.ClassId).FirstOrDefault();
+
+        //            studentrenewtbl.due_fee = studentrenewtbl.due_fee - fee.PayFees;
+        //            studentrenewtbl.stu_fee += fee.PayFees;
+
+        //            db.SaveChanges();
+
+        //            var installments = db.fee_installment.Where(u => u.stu_id == fee.stu_id && u.university_id == fee.ClassId && u.CompanyId == CompanyId && u.SessionId == SessionId).Select(a => new
+        //            {
+        //                a.university_id,
+        //                a.IntallmentID,
+        //                a.total_fee,
+        //                a.Installment,
+        //                a.FAmount,
+
+        //            }).ToList();
+
+        //            double subfee = 0;
+        //            double subfee2 = Convert.ToDouble(fee.PayFees);
+
+        //            for (int i = 0; i < installments.Count && fee.PayFees > 0; i++)
+        //            {
+        //                int? installmentid = installments[i].IntallmentID;
+
+        //                fee_installment insta = db.fee_installment.FirstOrDefault(f => f.stu_id == fee.stu_id && f.university_id == fee.ClassId && f.CompanyId == CompanyId && f.SessionId == SessionId && f.IntallmentID == installmentid);
+
+        //                if (insta != null)
+        //                {
+        //                    if (insta.due_fee != 0)
+        //                    {
+
+        //                        if (subfee2 >= insta.due_fee)
+        //                        {
+        //                            subfee2 = Convert.ToDouble(subfee2) - Convert.ToDouble(insta.due_fee);
+        //                            insta.due_fee = 0;
+        //                            db.SaveChanges();
+        //                        }
+        //                        else if (subfee2 != 0)
+        //                        {
+        //                            insta.due_fee = insta.due_fee - subfee2;
+        //                            subfee2 = 0;
+        //                            db.SaveChanges();
+        //                            break;
+
+        //                        }
+        //                        else
+        //                        {
+        //                            insta.due_fee = insta.due_fee - subfee2;
+        //                            subfee2 = 0;
+        //                            db.SaveChanges();
+        //                            break;
+
+        //                        }
+        //                    }
+        //                }
+        //            }
+
+        //            ViewBag.msg = "Payment Successful";
+        //        }
+        //        else if (status == "FAILED")
+        //        {
+        //            fee.OrderStatus = "Failed";
+        //            fee.Status = "Failed";
+        //            fee.Active = false;
+        //            db.SaveChanges();
+
+        //            ViewBag.msg = "Payment Failed";
+        //        }
+        //        else
+        //        {
+        //            fee.OrderStatus = "Pending";
+        //            fee.Status = "Pending";
+        //            fee.Active = false;
+        //            db.SaveChanges();
+
+        //            ViewBag.msg = "Payment Pending";
+        //        }
+
+
+        //        return ApiResponse<bool>.SuccessResponse(true, "Student installment fee data fetched successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
+        //    }
+        //}
+
+        //var fee = _context.M_FeeDetail.FirstOrDefault(a => a.FDId == ReceiptId && a.SessionId == SessionId && a.CompanyId == SchoolId);
+
+        //fee.OrderStatus = "Success";
+        //fee.Status = "Success";
+        //fee.Active = true;
+        //await _context.SaveChangesAsync();
+
+        //var StudentInstall = _context.Student_Renew.Where(c => c.StuId == fee.stu_id && c.CompanyId == SchoolId && c.SessionId == SessionId && c.ClassId == fee.ClassId).FirstOrDefault();
+        //StudentInstall.due_fee = StudentInstall.due_fee - fee.PayFees;
+        //StudentInstall.stu_fee += fee.PayFees;
+        //await _context.SaveChangesAsync();
+
+        //var Installment = _context.fee_installment.Where(c => c.stu_id == fee.stu_id && c.university_id == fee.ClassId && c.CompanyId == SchoolId && c.SessionId == SessionId)
+        //    .Select(c => new GetStuInstallmentModel
+        //    {
+        //        university_id = c.university_id,
+        //        IntallmentID = c.IntallmentID,
+        //        total_fee = c.total_fee,
+        //        Installment = c.Installment,
+        //        FAmount = c.FAmount,
+        //    }).ToList();
+
+        //double subfee = 0;
+        //double subfee2 = Convert.ToDouble(fee.PayFees);
+
+        //for (int i = 0; i < Installment.Count && fee.PayFees > 0; i++)
+        //{
+        //    int? installmentid = Installment[i].IntallmentID;
+
+        //    fee_installment insta = _context.fee_installment.FirstOrDefault(f => f.stu_id == fee.stu_id && f.university_id == fee.ClassId && f.CompanyId == SchoolId && f.SessionId == SessionId && f.IntallmentID == installmentid);
+
+        //    if (insta != null)
+        //    {
+        //        if (insta.due_fee != 0)
+        //        {
+
+        //            if (subfee2 >= insta.due_fee)
+        //            {
+        //                subfee2 = Convert.ToDouble(subfee2) - Convert.ToDouble(insta.due_fee);
+        //                insta.due_fee = 0;
+        //                await _context.SaveChangesAsync();
+        //            }
+        //            else if (subfee2 != 0)
+        //            {
+        //                insta.due_fee = insta.due_fee - subfee2;
+        //                subfee2 = 0;
+        //                await _context.SaveChangesAsync();
+        //                break;
+
+        //            }
+        //            else
+        //            {
+        //                insta.due_fee = insta.due_fee - subfee2;
+        //                subfee2 = 0;
+        //                await _context.SaveChangesAsync();
+        //                break;
+
+        //            }
+        //        }
+        //    }
+        //}
+
+
+        //var res = new StudentClassExamData
+        //{
+        //    ExamDatas = ExamData,
+        //    // SectionDatas = SectionData,
+        //};
 
 
     }

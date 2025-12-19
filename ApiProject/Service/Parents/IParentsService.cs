@@ -16,9 +16,11 @@ namespace ApiProject.Service.Parents
         Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee();
         Task<ApiResponse<StudentFeePaymentResult>> AddStudentInstallmentFee(AddStudentinstallReq Req);
 
+       // Task<ApiResponse<bool>> StudentFeePaymentStstus(PaymentStatusModel req);
 
-        Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId);
-        Task<ApiResponse<bool>> AddStudentTransportFee(AddTransportMonthFeeReq req);
+
+        Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId,string orderno);
+        Task<ApiResponse<StudentTransportPaymentResult>> AddStudentTransportFee(AddTransportMonthFeeReq req);
         Task<ApiResponse<bool>> UpdateTransportPaymentSuccessfully(int StudentId, int ReceiptId);
         Task<ApiResponse<GetStudentFeeModel>> GetStudentFee();
         Task<ApiResponse<GetStuFeeInstallmentModel>> GetStudentFeeInstallment();

@@ -2,34 +2,36 @@
 {
     public class SchoolUpdate
     {
-        //public string schoolname { get; set; }
-        public string ownername { get; set; }
-        public string? rgtno { get; set; }
-        //public Nullable<System.DateTime> rgstdate { get; set; }
+        //   public string schoolname { get; set; }
+        //   public string ownername { get; set; }
+        //   public Nullable<System.DateTime> rgstdate { get; set; }
+        public string? Registrationno { get; set; }
+        public string? InstituteCode { get; set; }
         public string? rgstdate { get; set; }
-
-        public string? address { get; set; }
+        public string? email { get; set; }
         public string? landlinenum { get; set; }
         public string? mobileno1 { get; set; }
         public string? mobileno2 { get; set; }
+        public string? weburl { get; set; }
+        public string? ServiceTaxNo { get; set; }
+        public string? TINno { get; set; }
+        public string? PANno { get; set; }
         public string? statename { get; set; }
         public string? districtname { get; set; }
         public string? cityname { get; set; }
         public string? pincode { get; set; }
-        public string? email { get; set; }
-        public string? weburl { get; set; }
-        public string? logoimg { get; set; }
-        public string? rlogo { get; set; }
-
-        //public Nullable<bool> companyactive { get; set; }
-        //public Nullable<System.DateTime> joiningdate { get; set; }
-        //public Nullable<System.DateTime> expiredate { get; set; }
-        //public Nullable<bool> active { get; set; }
+        public string? address { get; set; }
         public IFormFile? logo { get; set; }
-
         public IFormFile? RLogo { get; set; }
 
+        //    public string? logoimg { get; set; }
+        //    public string? rlogo { get; set; }
+        //    public Nullable<bool> companyactive { get; set; }
+        //    public Nullable<System.DateTime> joiningdate { get; set; }
+        //    public Nullable<System.DateTime> expiredate { get; set; }
+        //    public Nullable<bool> active { get; set; }
     }
+
 
     public class GetUserReqmodel
     {
