@@ -91,6 +91,13 @@ namespace ApiProject.Models.Response
         public string? Remark { get; set; }
     }
 
+    public class DailyCollectionReportModel
+    {
+        //   public PagedResult<StudentFeesCollectionListRes> FeeCollection { get; set; }
+        public PagedResult<StudentFeesCollectionListRes> StudentFee { get; set; }
+        public PagedResult<StudentFeesCollectionListRes> TransportFee { get; set; }
+    }
+
 
     public class StudentFeesCollectionListRes
     {
@@ -103,12 +110,12 @@ namespace ApiProject.Models.Response
         public string? fathername { get; set; }
         public string? fathermobileno { get; set; }
         public double? PayFees { get; set; }
+        public string? FeeType { get; set; }
         public string? PaymentMode { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? Remark { get; set; }
 
     }
-
 
     public class ClassFeesListSummary
     {

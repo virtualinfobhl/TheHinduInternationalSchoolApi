@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
@@ -226,7 +227,6 @@ namespace ApiProject.Service.SchoolFees
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-
                 var existing = await _context.InstallmentTbl.FirstOrDefaultAsync(p => p.university_id == req[0].ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId);
 
                 if (existing != null)
@@ -258,7 +258,6 @@ namespace ApiProject.Service.SchoolFees
                     }
                 }
 
-
                 return ApiResponse<bool>.SuccessResponse(true, "Fees Installment inserted successfully.");
             }
             catch (Exception ex)
@@ -266,6 +265,7 @@ namespace ApiProject.Service.SchoolFees
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
         public async Task<ApiResponse<bool>> updatefeesinstallment(List<AddFeesInstallmentReq> req)
         {
             try
@@ -274,14 +274,12 @@ namespace ApiProject.Service.SchoolFees
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-
                 var existingInstallments = _context.InstallmentTbl.Where(s => s.university_id == req[0].ClassId && s.SessionId == SessionId && s.CompanyId == SchoolId).ToList();
                 for (int i = 0; i < existingInstallments.Count; i++)
                 {
                     _context.InstallmentTbl.Remove(existingInstallments[i]);
                 }
                 await _context.SaveChangesAsync();
-
 
                 if (req != null && req.Count > 0)
                 {
@@ -315,7 +313,6 @@ namespace ApiProject.Service.SchoolFees
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
 
 
@@ -497,153 +494,191 @@ namespace ApiProject.Service.SchoolFees
         }
 
 
-        public async Task<ApiResponse<PagedResult<StudentFeesCollectionListRes>>> GetDailyFeeCollection(FeesCollectionReq req)
+        //public async Task<ApiResponse<PagedResult<StudentFeesCollectionListRes>>> GetDailyFeeCollection(FeesCollectionReq req)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        // 1. Query banate hain
+        //        var query = from fee in _context.M_FeeDetail
+        //                    join student in _context.StudentRenewView
+        //                        on fee.stu_id equals student.StuId
+        //                    where fee.CompanyId == SchoolId
+        //                          && fee.SessionId == SessionId
+        //                          && student.CompanyId == SchoolId
+        //                          && student.SessionId == SessionId
+        //                          && fee.Active == true
+        //                          && (req.FromDate == null || fee.PaymentDate >= req.FromDate)
+        //                          && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
+        //                    select new StudentFeesCollectionListRes
+        //                    {
+        //                        ReceiptNo = fee.ReceiptNo,
+        //                        ReceiptId = fee.FDId,
+        //                        stu_name = student.stu_name,
+        //                        srno = student.registration_no,
+        //                        ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+        //                        SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+        //                        //  ClassName = student.ClassName,
+        //                        // SectionName = student.SectionName,
+        //                        fathername = student.father_name,
+        //                        fathermobileno = student.father_mobile,
+        //                        PayFees = fee.PayFees,
+        //                        Remark = fee.Remark,
+        //                        PaymentDate = fee.PaymentDate,
+        //                        PaymentMode = fee.PaymentMode
+        //                    };
+
+        //        // 2. Total records count
+        //        int totalRecords = await query.CountAsync();
+
+        //        // 3. Pagination setup
+        //        int pageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+        //        int pageSize = req.PageSize > 0 ? req.PageSize : 10;
+
+        //        // 4. Apply pagination
+        //        var data = await query.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+        //        // 5. Prepare response
+        //        var pagedResult = new PagedResult<StudentFeesCollectionListRes>
+        //        {
+        //            Data = data,
+        //            TotalRecords = totalRecords,
+        //            PageNumber = pageNumber,
+        //            PageSize = pageSize,
+        //            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+        //        };
+
+        //        if (data == null || !data.Any())
+        //            return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.ErrorResponse("No record found");
+
+        //        return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.SuccessResponse(pagedResult, "Receipt fetched successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.ErrorResponse("Something went wrong: " + ex.Message);
+        //    }
+        //}
+
+        // 1 code 
+        public async Task<ApiResponse<DailyCollectionReportModel>> GetDailyFeeCollection(FeesCollectionReq req)
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
-                // 1. Query banate hain
-                var query = from fee in _context.M_FeeDetail
-                            join student in _context.StudentRenewView
-                                on fee.stu_id equals student.StuId
-                            where fee.CompanyId == SchoolId
-                                  && fee.SessionId == SessionId
-                                  && student.CompanyId == SchoolId
-                                  && student.SessionId == SessionId
-                                  && fee.Active == true
-                                  && (req.FromDate == null || fee.PaymentDate >= req.FromDate)
-                                  && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
-                            select new StudentFeesCollectionListRes
-                            {
-                                ReceiptNo = fee.ReceiptNo,
-                                ReceiptId = fee.FDId,
-                                stu_name = student.stu_name,
-                                srno = student.registration_no,
-                                ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                                SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
-                                //  ClassName = student.ClassName,
-                                // SectionName = student.SectionName,
-                                fathername = student.father_name,
-                                fathermobileno = student.father_mobile,
-                                PayFees = fee.PayFees,
-                                Remark = fee.Remark,
-                                PaymentDate = fee.PaymentDate,
-                                PaymentMode = fee.PaymentMode
-                            };
-
-                // 2. Total records count
-                int totalRecords = await query.CountAsync();
-
-                // 3. Pagination setup
                 int pageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
                 int pageSize = req.PageSize > 0 ? req.PageSize : 10;
 
-                // 4. Apply pagination
-                var data = await query.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+                /* ===================== STUDENT FEE ===================== */
 
-                // 5. Prepare response
-                var pagedResult = new PagedResult<StudentFeesCollectionListRes>
+                var studentQuery =
+                    from fee in _context.M_FeeDetail
+                    join student in _context.StudentRenewView
+                        on fee.stu_id equals student.StuId
+                    where student.SessionId == fee.SessionId
+                    join cls in _context.University
+                         on student.ClassId equals cls.university_id
+                    join sec in _context.collegeinfo
+                        on student.SectionId equals sec.collegeid
+                    where fee.CompanyId == SchoolId && fee.SessionId == SessionId && fee.Active == true
+                          && (req.FromDate == null || fee.PaymentDate >= req.FromDate) && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
+                    select new StudentFeesCollectionListRes
+                    {
+                        ReceiptNo = fee.ReceiptNo,
+                        ReceiptId = fee.FDId,
+                        stu_name = student.stu_name,
+                        srno = student.registration_no,
+                        ClassName = cls.university_name,
+                        SectionName = sec.collegename,
+
+                        //ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                        //SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                        fathername = student.father_name,
+                        fathermobileno = student.father_mobile,
+                        PayFees = fee.PayFees,
+                        FeeType = "Tution Fee",
+                        Remark = fee.Remark,
+                        PaymentDate = fee.PaymentDate,
+                        PaymentMode = fee.PaymentMode
+                    };
+
+                int studentTotal = await studentQuery.CountAsync();
+                var studentData = await studentQuery.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+                /* ===================== TRANSPORT FEE ===================== */
+
+                var transportQuery =
+                    from fee in _context.NewTransportFeeTbl
+                    join student in _context.StudentRenewView
+                        on fee.stu_id equals student.StuId
+                    where student.SessionId == fee.SessionId
+                    join cls in _context.University
+                    on student.ClassId equals cls.university_id
+                    join sec in _context.collegeinfo
+                        on student.SectionId equals sec.collegeid
+                    where fee.CompanyId == SchoolId && fee.SessionId == SessionId && fee.Active == true
+                          && (req.FromDate == null || fee.Date >= req.FromDate) && (req.ToDate == null || fee.Date <= req.ToDate)
+                    select new StudentFeesCollectionListRes
+                    {
+                        ReceiptNo = fee.ReceiptNo,
+                        ReceiptId = fee.NewPaymentId,
+                        stu_name = student.stu_name,
+                        srno = student.registration_no,
+                        ClassName = cls.university_name,
+                        SectionName = sec.collegename,
+
+                        //ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                        //SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                        fathername = student.father_name,
+                        fathermobileno = student.father_mobile,
+                        FeeType = "Transport Fee",
+                        PayFees = fee.PayFee,
+                        Remark = fee.Remark,
+                        PaymentDate = fee.Date,
+                        PaymentMode = fee.PaymentMode
+                    };
+
+                int transportTotal = await transportQuery.CountAsync();
+
+                var transportData = await transportQuery.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+                /* ===================== FINAL RESPONSE ===================== */
+
+                var response = new DailyCollectionReportModel
                 {
-                    Data = data,
-                    TotalRecords = totalRecords,
-                    PageNumber = pageNumber,
-                    PageSize = pageSize,
-                    TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+                    StudentFee = new PagedResult<StudentFeesCollectionListRes>
+                    {
+                        Data = studentData,
+                        TotalRecords = studentTotal,
+                        PageNumber = pageNumber,
+                        PageSize = pageSize,
+                        TotalPages = (int)Math.Ceiling((double)studentTotal / pageSize)
+                    },
+
+                    TransportFee = new PagedResult<StudentFeesCollectionListRes>
+                    {
+                        Data = transportData,
+                        TotalRecords = transportTotal,
+                        PageNumber = pageNumber,
+                        PageSize = pageSize,
+                        TotalPages = (int)Math.Ceiling((double)transportTotal / pageSize)
+                    }
+
                 };
-
-                if (data == null || !data.Any())
-                    return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.ErrorResponse("No record found");
-
-                return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.SuccessResponse(pagedResult, "Receipt fetched successfully.");
+                return ApiResponse<DailyCollectionReportModel>.SuccessResponse(response, "Fee collection fetched successfully");
             }
             catch (Exception ex)
             {
-                return ApiResponse<PagedResult<StudentFeesCollectionListRes>>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<DailyCollectionReportModel>.ErrorResponse("Something went wrong : " + ex.Message);
             }
         }
 
 
-        public async Task<ApiResponse<PagedResult<ClassFeesListRes>>> getclassfees(ClassFeesFilterReq req)
-        {
-            try
-            {
-                int SchoolId = _loginUser.SchoolId;
-                int SessionId = _loginUser.SessionId;
-
-                int pageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
-                int pageSize = req.PageSize > 0 ? req.PageSize : 10;
-
-                // Filtered base query
-                var baseQuery = from student in _context.StudentRenewView
-                                where student.StuId == SchoolId && student.SessionId == SessionId
-                                    && (!req.ClassId.HasValue || student.ClassId == req.ClassId)
-                                join fee in _context.M_FeeDetail
-                                    .Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
-                                                f.Status == "1" && f.Active == true)
-                                    on student.StuId equals fee.stu_id into feeGroup
-                                from fg in feeGroup.DefaultIfEmpty()
-                                group fg by student into g
-                                select new ClassFeesListRes
-                                {
-                                    stu_name = g.Key.stu_name,
-                                    srno = g.Key.registration_no,
-                                    //     ClassName = g.Key.ClassName,
-                                    //     SectionName = g.Key.SectionName,
-                                    fathername = g.Key.father_name,
-                                    fathermobileno = g.Key.father_mobile,
-                                    RTE = g.Key.RTE,
-
-                                    admission_fee = g.Key.admission_fee,
-                                    PramoteFees = g.Key.PramoteFees,
-                                    AFeeDiscount = g.Key.AFeeDiscount,
-                                    AdmissionPayfee = g.Key.AdmissionPayfee,
-                                    exam_fee = g.Key.exam_fee,
-                                    Tution_fee = g.Key.tution_fee,
-                                    Develoment_fee = g.Key.Develoment_fee,
-                                    Games_fees = g.Key.Games_fees,
-                                    total = g.Key.total,
-                                    discount = g.Key.discount,
-                                    OldDuefees = g.Key.OldDuefees,
-                                    total_fee = g.Key.total_fee,
-
-                                    TotalPaid = (decimal)g.Sum(x => x != null ? x.PayFees : 0)
-                                };
-
-                var allData = await baseQuery.ToListAsync();
-                int totalRecords = allData.Count;
-
-                var pagedData = allData.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-                // Grand Totals
-                var totals = new ClassFeesTotals
-                {
-                    TotalAdmissionFee = allData.Sum(x => (decimal?)x.admission_fee ?? 0),
-                    TotalDiscount = allData.Sum(x => (decimal?)x.discount ?? 0),
-                    TotalPaid = allData.Sum(x => x.TotalPaid),
-                    TotalFee = allData.Sum(x => (decimal?)x.total_fee ?? 0)
-                };
-
-                var result = new PagedResult<ClassFeesListRes>
-                {
-                    Data = pagedData,
-                    PageNumber = pageNumber,
-                    Total = totals,
-                    PageSize = pageSize,
-                    TotalRecords = totalRecords,
-                    TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
-                };
-
-                var response = ApiResponse<PagedResult<ClassFeesListRes>>.SuccessResponse(result, "Fee data fetched.");
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<PagedResult<ClassFeesListRes>>.ErrorResponse("Something went wrong: " + ex.Message);
-            }
-        }
 
         public async Task<ApiResponse<ClassWiseTotalFeeModel>> GetClasswiseTotalFee(int ClassId)
         {
@@ -788,6 +823,85 @@ namespace ApiProject.Service.SchoolFees
         }
 
 
+        //public async Task<ApiResponse<PagedResult<ClassFeesListRes>>> getclassfees(ClassFeesFilterReq req)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        int pageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+        //        int pageSize = req.PageSize > 0 ? req.PageSize : 10;
+
+        //        // Filtered base query
+        //        var baseQuery = from student in _context.StudentRenewView
+        //                        where student.StuId == SchoolId && student.SessionId == SessionId
+        //                            && (!req.ClassId.HasValue || student.ClassId == req.ClassId)
+        //                        join fee in _context.M_FeeDetail
+        //                            .Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
+        //                                        f.Status == "1" && f.Active == true)
+        //                            on student.StuId equals fee.stu_id into feeGroup
+        //                        from fg in feeGroup.DefaultIfEmpty()
+        //                        group fg by student into g
+        //                        select new ClassFeesListRes
+        //                        {
+        //                            stu_name = g.Key.stu_name,
+        //                            srno = g.Key.registration_no,
+        //                            //     ClassName = g.Key.ClassName,
+        //                            //     SectionName = g.Key.SectionName,
+        //                            fathername = g.Key.father_name,
+        //                            fathermobileno = g.Key.father_mobile,
+        //                            RTE = g.Key.RTE,
+
+        //                            admission_fee = g.Key.admission_fee,
+        //                            PramoteFees = g.Key.PramoteFees,
+        //                            AFeeDiscount = g.Key.AFeeDiscount,
+        //                            AdmissionPayfee = g.Key.AdmissionPayfee,
+        //                            exam_fee = g.Key.exam_fee,
+        //                            Tution_fee = g.Key.tution_fee,
+        //                            Develoment_fee = g.Key.Develoment_fee,
+        //                            Games_fees = g.Key.Games_fees,
+        //                            total = g.Key.total,
+        //                            discount = g.Key.discount,
+        //                            OldDuefees = g.Key.OldDuefees,
+        //                            total_fee = g.Key.total_fee,
+
+        //                            TotalPaid = (decimal)g.Sum(x => x != null ? x.PayFees : 0)
+        //                        };
+
+        //        var allData = await baseQuery.ToListAsync();
+        //        int totalRecords = allData.Count;
+
+        //        var pagedData = allData.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+        //        // Grand Totals
+        //        var totals = new ClassFeesTotals
+        //        {
+        //            TotalAdmissionFee = allData.Sum(x => (decimal?)x.admission_fee ?? 0),
+        //            TotalDiscount = allData.Sum(x => (decimal?)x.discount ?? 0),
+        //            TotalPaid = allData.Sum(x => x.TotalPaid),
+        //            TotalFee = allData.Sum(x => (decimal?)x.total_fee ?? 0)
+        //        };
+
+        //        var result = new PagedResult<ClassFeesListRes>
+        //        {
+        //            Data = pagedData,
+        //            PageNumber = pageNumber,
+        //            Total = totals,
+        //            PageSize = pageSize,
+        //            TotalRecords = totalRecords,
+        //            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+        //        };
+
+        //        var response = ApiResponse<PagedResult<ClassFeesListRes>>.SuccessResponse(result, "Fee data fetched.");
+
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<PagedResult<ClassFeesListRes>>.ErrorResponse("Something went wrong: " + ex.Message);
+        //    }
+        //}
 
     }
 }

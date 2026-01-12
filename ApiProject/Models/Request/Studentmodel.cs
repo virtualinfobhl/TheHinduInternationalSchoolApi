@@ -9,7 +9,7 @@ namespace ApiProject.Models.Request
 
         [Required(ErrorMessage = "SR No is required.")]
         public string SRNo { get; set; }
-        public string? stu_code { get; set; }
+        //    public string? stu_code { get; set; }
 
         [Required(ErrorMessage = "Student name is required.")]
         public string stu_name { get; set; }
@@ -95,34 +95,37 @@ namespace ApiProject.Models.Request
         public Nullable<System.DateTime> admission_date { get; set; }
         public string? SRNo { get; set; }
         public string? stu_name { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public string? gender { get; set; }
         public Nullable<int> ClassId { get; set; }
         public Nullable<int> SectionId { get; set; }
         public string? RTE { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
-        public string? gender { get; set; }
-        public string? cast_category { get; set; }
+        public string? Nationality { get; set; }
         public string? Religion { get; set; }
         public string? Caste { get; set; }
-        public string? email { get; set; }
+        // public string? email { get; set; }
         public string? blood_group { get; set; }
+        public string? JanAadharNo { get; set; }
         public IFormFile? stuphoto { get; set; }
         public IFormFile? stuaadhar { get; set; }
         public IFormFile? stubirth { get; set; }
+        public IFormFile? studentTcfile { get; set; }
 
-
-        public string? FatherName { get; set; }
         public string? FatherMobileNo { get; set; }
+        public string? FatherName { get; set; }
         public string? FatherOccupation { get; set; }
         public Nullable<double> FatherIncome { get; set; }
+        public IFormFile? fatheraadhar { get; set; }
         public string? MotherName { get; set; }
         public string? MotherMobileNo { get; set; }
         public string? MotherOccupation { get; set; }
         public Nullable<double> MotherIncome { get; set; }
+        public IFormFile? motheraadhar { get; set; }
         public string? GuardianName { get; set; }
         public string? GuardianMobileNo { get; set; }
 
-        public IFormFile? fatheraadhar { get; set; }
-        public IFormFile? motheraadhar { get; set; }
+        public IFormFile? CasteCertificate { get; set; }
+        public IFormFile? ResidentialCertificat { get; set; }
         public IFormFile? IncomeCertificate { get; set; }
         public IFormFile? JanAadhar { get; set; }
 
@@ -145,7 +148,6 @@ namespace ApiProject.Models.Request
         public string? LastParecentage { get; set; }
         public string? LastRemarks { get; set; }
         public IFormFile? LastMarkSheetPhotos { get; set; }
-        public IFormFile? studentTcfile { get; set; }
 
         public List<FeeInstallmentReqDto> feeInstallments { get; set; }
         // Admission Fee Receipts
@@ -169,6 +171,7 @@ namespace ApiProject.Models.Request
         public string? caste { get; set; }
         public string? email { get; set; }
         public string? blood_group { get; set; }
+        public string? JanAadharNo { get; set; }
 
         public int? parentid { get; set; }
         public string? fathername { get; set; }
@@ -207,22 +210,21 @@ namespace ApiProject.Models.Request
         public IFormFile? stubirth { get; set; }
         public IFormFile? fatheraadhar { get; set; }
         public IFormFile? motheraadhar { get; set; }
+        public IFormFile? CasteCertificate { get; set; }
+        public IFormFile? ResidentialCertificat { get; set; }
         public IFormFile? IncomeCertificate { get; set; }
         public IFormFile? JanAadhar { get; set; }
         public IFormFile? lastMarkSheetPhoto { get; set; }
         public IFormFile? LastMarkSheetPhotos { get; set; }
         public IFormFile? studentTcfile { get; set; }
 
-        public AdmissionFeeReceiptReqDto admissionReceipt { get; set; }
+        public UpadateAdmissionFeeReceiptReqDto admissionReceipt { get; set; }
         public List<FeeInstallmentReqMOdel> feeInstallmentlist { get; set; }
 
     }
 
     public class FeeInstallmentReqMOdel
     {
-        //public int? StudentId { get; set; }
-        //public int? ClassId { get; set; }
-        //public int? SectionId { get; set; }
         public int? IntallmentID { get; set; }
         public Nullable<double> total_fee { get; set; }
         public string? Installment { get; set; }
@@ -233,13 +235,23 @@ namespace ApiProject.Models.Request
     {
         //public double? SInsAmount { get; set; }
         public Nullable<int> IntallmentID { get; set; }
-        public Nullable<double> total_fee { get; set; }
+        //  public Nullable<double> total_fee { get; set; }
         //   public Nullable<double> due_fee { get; set; }
         public string? Installment { get; set; }
         public Nullable<double> FAmount { get; set; }
     }
 
     public class AdmissionFeeReceiptReqDto
+    {
+        public double? AdmissionPayFees { get; set; }
+        public double? AdmissionFeeDiscount { get; set; }
+        //   public double? pramoteFees { get; set; }
+        public string? PaymentMode { get; set; }
+        public double? FeeDiscount { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        //    public double? oldDuefees { get; set; }
+    }
+    public class UpadateAdmissionFeeReceiptReqDto
     {
         public double? AdmissionPayFees { get; set; }
         public double? AdmissionFeeDiscount { get; set; }

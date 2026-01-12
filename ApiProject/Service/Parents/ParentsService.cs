@@ -252,8 +252,7 @@ namespace ApiProject.Service.Parents
                     // =========================================== INSTITUTE CODE & RECEIPT NUMBER
                     var GetInstituteCodeName = await _context.institute.FirstOrDefaultAsync(i => i.institute_id == SchoolId);
 
-                    var LastCode = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId)
-                        .OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
+                    var LastCode = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
 
                     string instCode = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
                     int newId = (LastCode != null)
@@ -757,9 +756,15 @@ namespace ApiProject.Service.Parents
 
                     string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
 
-                    string client_id = "SHYAWAYUAT_2510101108212";
+                    //string client_id = "SHYAWAYUAT_2510101108212";
+                    //string client_version = "1";
+                    //string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+
+                    string client_id = "TSPVIRTUALUAT_2512051124";
                     string client_version = "1";
-                    string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+                    string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
+
 
                     string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
 
@@ -889,9 +894,13 @@ namespace ApiProject.Service.Parents
 
                 string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
 
+
                 string client_id = "SHYAWAYUAT_2510101108212";
                 string client_version = "1";
                 string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+
+
 
                 string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
 

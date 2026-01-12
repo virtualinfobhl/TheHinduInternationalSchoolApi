@@ -359,8 +359,10 @@ namespace ApiProject.Models.Response
     public class SubjectResModel
     {
         public int? subject_id { get; set; }
-        public int? university_id { get; set; }
         public string? subject_name { get; set; }
+        public int? university_id { get; set; }
+        public string? Classname { get; set; }
+
         public Nullable<int> Priority { get; set; }
         public string? Marks_Type { get; set; }
         public int? Quarterly { get; set; }

@@ -22,11 +22,12 @@
     {
         public int? StudentId { get; set; }
         public string? StuName { get; set; }
+        public string? SRNo { get; set; }
         public int? classid { get; set; }
         public int? sectionid { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
-        public string? SRNo { get; set; }
+     //  public string? monthname { get; set; }
 
         public Dictionary<int, string> AttendanceByDate { get; set; } = new();
 

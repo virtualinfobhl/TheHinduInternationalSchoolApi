@@ -294,29 +294,29 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("getclassfees")]
-        public async Task<IActionResult> getclassfees([FromBody] ClassFeesFilterReq req)
-        {
-            if (!ModelState.IsValid)
-            {
-                var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+        //[HttpPost("getclassfees")]
+        //public async Task<IActionResult> getclassfees([FromBody] ClassFeesFilterReq req)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
 
-                var response = ApiResponse<string>.ErrorResponse("Validation failed: " + string.Join(" | ", errorMessages));
+        //        var response = ApiResponse<string>.ErrorResponse("Validation failed: " + string.Join(" | ", errorMessages));
 
-                return Ok(response);
-            }
+        //        return Ok(response);
+        //    }
 
-            try
-            {
-                var res = await _schoolFees.getclassfees(req);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return Ok(response);
-            }
-        }
+        //    try
+        //    {
+        //        var res = await _schoolFees.getclassfees(req);
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return Ok(response);
+        //    }
+        //}
 
         [HttpPost("GetClasswiseTotalFee")]
         public async Task<IActionResult> GetClasswiseTotalFee(int ClassId)

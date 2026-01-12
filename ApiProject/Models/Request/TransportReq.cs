@@ -75,6 +75,14 @@ namespace ApiProject.Models.Request
         // public List<getTransportinstallment> TInstallment { get; set; }
     }
 
+    public class TransCheckMonth
+    {
+        public int? StudentId { get; set; }
+        public int? ClassId { get; set; }
+        public string? Month { get; set; }
+
+
+    }
 
     public class getTransportinstallment
     {

@@ -154,6 +154,7 @@ namespace ApiProject.Service.StudentAttendance
                         ClassName = _context.University.Where(a => a.university_id == student.ClassId).Select(a => a.university_name).FirstOrDefault(),
                         SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId).Select(a => a.collegename).FirstOrDefault(),
                         SRNo = student.registration_no,
+                     //   monthname = req.Month,
 
                         AttendanceByDate = dailyAttendance,
                         TotalP = dailyAttendance.Values.Count(x => x == "P"),

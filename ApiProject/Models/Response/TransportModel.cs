@@ -111,6 +111,7 @@ namespace ApiProject.Models.Response
         public int TSRAId { get; set; }
         public int? StudentId { get; set; }
         public string? Studentname { get; set; }
+        public string? Srno { get; set; }
         public int? ClassId { get; set; }
         public string? Class { get; set; }
         public int? SectionId { get; set; }
@@ -209,11 +210,16 @@ namespace ApiProject.Models.Response
         public int? StudentId { get; set; }
         public string? StudentName { get; set; }
         public string? SRNo { get; set; }
+        public int? ClassId { get; set; }
         public string? Classname { get; set; }
+        public int? sectionId { get; set; }
         public string? Sectionname { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public int? VehicleId { get; set; }
         public string? Vehicleno { get; set; }
+        public int? RouteId { get; set; }
         public string? Routename { get; set; }
+        public int? StoppageId { get; set; }
         public string? Stoppagename { get; set; }
         public Nullable<double> TransportFee { get; set; }
         public Nullable<double> Discount { get; set; }

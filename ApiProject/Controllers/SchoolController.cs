@@ -195,9 +195,9 @@ namespace ApiProject.Controllers
             }
         }
 
-
-
         #endregion
+
+
 
 
         // ********************************** section Code ************************ //
@@ -365,6 +365,20 @@ namespace ApiProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("changestatusgrade")]
+        public async Task<IActionResult> changestatusgrade(int gradeid)
+        {
+            try
+            {
+                var res = await _schoolService.changestatusgrade(gradeid);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return ErrorRepsponse(ex.Message);
+            }
+        }
         #endregion
 
 
@@ -528,3 +542,6 @@ namespace ApiProject.Controllers
 
     }
 }
+
+
+

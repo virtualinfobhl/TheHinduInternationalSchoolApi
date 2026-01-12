@@ -51,8 +51,8 @@ namespace ApiProject.Service.Student
                 CActive = c.Active,
             }).ToListAsync();
             return ClassResModel;
-
         }
+
         public async Task<ApiResponse<FeendSectionByClasssModel>> GetClassByFeendSection(int ClassId)
         {
             try
@@ -87,6 +87,7 @@ namespace ApiProject.Service.Student
                 var installment = await _context.InstallmentTbl.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId && a.SessionId == SessionId)
                     .Select(a => new InstallmentDetail
                     {
+                        InstallmentId = a.InstallmentId,
                         Installment = a.Installment,
                         Installmentno = a.Installmentno,
                         FeeAmount = a.FeeAmount,
@@ -270,6 +271,7 @@ namespace ApiProject.Service.Student
                         ParentsId = parentid,
                         //    ParentsId = parentdata.ParentsId,
                         ClassId = request.ClassId,
+                        SectionId = request.SectionId,
                         RollNo = "",
                         RTE = request.RTE != "0",
                         Status = "AdmissionPayfee",
@@ -396,6 +398,7 @@ namespace ApiProject.Service.Student
                             var receipt = new M_FeeDetail
                             {
                                 // ReceiptNo = lastReceipt == null ? "1" : (Convert.ToInt32(lastReceipt.ReceiptNo) + 1).ToString(),
+                                FDId = FDId,
                                 ReceiptNo = ReceiptCode,
                                 OrderNo = NewOrderNo.ToString(),
                                 OrderStatus = "Succcessfully",
@@ -577,6 +580,16 @@ namespace ApiProject.Service.Student
                         string photoFolder = Path.Combine(schoolFolderPath, "mother_aadhar");
                         student.mother_aadhar = await SaveStudentFileAsync(request.motheraadhar, photoFolder, student.stu_id, SchoolId.ToString(), "mother_aadhar");
                     }
+                    if (request.CasteCertificate != null)
+                    {
+                        string photoFolder = Path.Combine(schoolFolderPath, "CasteCertificate");
+                        student.Caste_Certificate = await SaveStudentFileAsync(request.CasteCertificate, photoFolder, student.stu_id, SchoolId.ToString(), "CasteCertificate");
+                    }
+                    if (request.ResidentialCertificat != null)
+                    {
+                        string photoFolder = Path.Combine(schoolFolderPath, "BonafideCertificat");
+                        student.Bonafide_Certificat = await SaveStudentFileAsync(request.ResidentialCertificat, photoFolder, student.stu_id, SchoolId.ToString(), "BonafideCertificat");
+                    }
                     if (request.IncomeCertificate != null)
                     {
                         string photoFolder = Path.Combine(schoolFolderPath, "IncomeCertificate");
@@ -610,12 +623,12 @@ namespace ApiProject.Service.Student
                     student.DOB = request.DOB;
                     student.gender = request.gender;
                     student.stu_mobile = "";
-                    student.email = request.email;
+                    // student.email = request.email;
                     student.Religion = request.Religion;
-                    student.cast_category = request.cast_category;
+                    student.cast_category = request.Nationality;
                     student.blood_group = request.blood_group;
                     student.Caste = request.Caste;
-                    student.AdharCard = "";
+                    student.AdharCard = request.JanAadharNo;
 
                     student.father_name = request.FatherName;
                     student.father_occupation = request.FatherOccupation;
@@ -884,7 +897,6 @@ namespace ApiProject.Service.Student
             }
         }
 
-
         public async Task<ApiResponse<quickadmissionres>> updatestudentdata(StudentUpdateReqModel request)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -998,6 +1010,16 @@ namespace ApiProject.Service.Student
                         string photoFolder = Path.Combine(schoolFolderPath, "mother_aadhar");
                         student.mother_aadhar = await SaveStudentFileAsync(request.motheraadhar, photoFolder, student.stu_id, SchoolId.ToString(), "mother_aadhar");
                     }
+                    if (request.CasteCertificate != null)
+                    {
+                        string photoFolder = Path.Combine(schoolFolderPath, "CasteCertificate");
+                        student.Caste_Certificate = await SaveStudentFileAsync(request.CasteCertificate, photoFolder, student.stu_id, SchoolId.ToString(), "CasteCertificate");
+                    }
+                    if (request.ResidentialCertificat != null)
+                    {
+                        string photoFolder = Path.Combine(schoolFolderPath, "BonafideCertificat");
+                        student.Bonafide_Certificat = await SaveStudentFileAsync(request.ResidentialCertificat, photoFolder, student.stu_id, SchoolId.ToString(), "BonafideCertificat");
+                    }
                     if (request.IncomeCertificate != null)
                     {
                         string photoFolder = Path.Combine(schoolFolderPath, "IncomeCertificate");
@@ -1029,10 +1051,10 @@ namespace ApiProject.Service.Student
                     student.cast_category = request.cast_category;
                     student.blood_group = request.blood_group;
                     student.Caste = request.caste;
+                    student.AdharCard = request.JanAadharNo;
 
                     student.university_id = request.classId;
                     student.college_id = request.sectionId;
-                    //   student.ParentsId = parentid;
 
                     student.father_name = request.fathername == null ? " " : request.fathername;
                     student.father_mobile = request.fathermobileno == null ? " " : request.fathermobileno;
@@ -1142,7 +1164,6 @@ namespace ApiProject.Service.Student
 
 
                         M_FeeDetail RStudentFeesU = await _context.M_FeeDetail.Where(r => r.stu_id == studentrenew.StuId && r.CompanyId == SchoolId && r.ClassId == studentrenew.ClassId && r.SessionId == SessionId && r.Status == "AdmissionPayFee").FirstOrDefaultAsync();
-
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
                         {
                             if (RStudentFeesU != null)
@@ -1401,8 +1422,6 @@ namespace ApiProject.Service.Student
                 var feeInstallments = await _context.InstallmentTbl
                     .Where(x => x.university_id == classid && x.CompanyId == SchoolId && x.SessionId == SessionId)
                     .ToListAsync();
-                //if (!feeInstallments.Any())
-                //    continue;
 
                 // Parent
                 int parentid;
@@ -1528,10 +1547,7 @@ namespace ApiProject.Service.Student
 
                     if (renew.AdmissionPayfee > 0)
                     {
-                        var lastReceipt = await _context.M_FeeDetail
-                            .Where(s => s.CompanyId == SchoolId)
-                            .OrderByDescending(s => s.FDId)
-                            .FirstOrDefaultAsync();
+                        var lastReceipt = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
                         int frid = (_context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId));
                         receiptsToInsert.Add(new M_FeeDetail
                         {
@@ -2128,13 +2144,11 @@ namespace ApiProject.Service.Student
                                 SubjectId = _context.Subject.Where(a => a.subject_id == request.SubjectId && a.university_id == request.ClassId).Select(a => a.subject_id).FirstOrDefault(),
                                 SubjectName = _context.Subject.Where(a => a.subject_id == request.SubjectId && a.university_id == request.ClassId).Select(a => a.subject_name).FirstOrDefault(),
 
-
                                 MaxTotal = _context.Subject.Where(a => a.university_id == c.ClassId && a.subject_id == request.SubjectId && a.Marks_Type == request.MatksType &&
                                      a.SessionId == SessionId && a.CompanyId == SchoolId).Select(a =>
                                      request.TestType == "Quarterly" ? a.Quarterly : request.TestType == "first_test" ? a.first_test : request.TestType == "second_test" ? a.second_test :
                                       request.TestType == "half_yearly" ? a.half_yearly : request.TestType == "third_test" ? a.third_test : request.TestType == "fourth_test" ? a.fourth_test :
-                                      request.TestType == "yearly" ? a.yearly : 0)
-                                     .FirstOrDefault(),
+                                      request.TestType == "yearly" ? a.yearly : 0).FirstOrDefault(),
 
                                 Grade = _context.TestExamTbl.Where(q => q.university_id == c.ClassId && q.subject_id == request.SubjectId && q.stu_id == c.StuId
                                 && q.TestType == request.TestType && q.SessionId == SessionId && q.CompanyId == SchoolId && q.MarksType == request.MatksType).Select(p => p.Grade).FirstOrDefault(),
@@ -2413,9 +2427,9 @@ namespace ApiProject.Service.Student
             catch (Exception ex)
             {
                 return ApiResponse<List<UpdateEventReqModel>>.ErrorResponse("Error: " + ex.Message);
-
             }
         }
+
         public async Task<ApiResponse<List<StudentEventCertificate>>> GetEventDataByIdAsync(int EventId)
         {
             try

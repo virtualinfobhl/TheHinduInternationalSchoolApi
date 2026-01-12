@@ -544,26 +544,54 @@ namespace ApiProject.Service.School
 
         // ************** Subject  Code  
         #region  Subject Details
+
         public async Task<ApiResponse<List<SubjectResModel>>> getsubject()
         {
-            try
+            int SchoolId = _loginUser.SchoolId;
+            int SessionId = _loginUser.SessionId;
+            int UserId = _loginUser.UserId;
+
+            var Subjectmodel = await _context.Subject.Where(c => c.CompanyId == SchoolId).Select(c => new SubjectResModel
             {
-                int SchoolId = _loginUser.SchoolId;
-                int SessionId = _loginUser.SessionId;
-                int UserId = _loginUser.UserId;
+                subject_id = c.subject_id,
+                subject_name = c.subject_name,
+                university_id = c.university_id,
+                Priority = c.Priority,
+                Marks_Type = c.Marks_Type,
+                Quarterly = c.Quarterly.HasValue ? (int)c.Quarterly.Value : 0,
+                first_test = c.first_test.HasValue ? (int)c.first_test.Value : 0,
+                second_test = c.second_test.HasValue ? (int)c.second_test.Value : 0,
+                half_yearly = c.half_yearly.HasValue ? (int)c.half_yearly.Value : 0,
+                third_test = c.third_test.HasValue ? (int)c.third_test.Value : 0,
+                fourth_test = c.fourth_test.HasValue ? (int)c.fourth_test.Value : 0,
+                yearly = c.yearly.HasValue ? (int)c.yearly.Value : 0,
+                Classname = _context.University.Where(a => a.university_id == c.university_id && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                active = c.active,
+            }).ToListAsync();
 
-                var subjectEntities = await _context.Subject.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
+            return ApiResponse<List<SubjectResModel>>.SuccessResponse(Subjectmodel, "Subject list fetched successfully");
 
-                var subjectlist = _mapper.Map<List<SubjectResModel>>(subjectEntities);
-
-                return ApiResponse<List<SubjectResModel>>.SuccessResponse(subjectlist, "Subject list fetched successfully");
-
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<List<SubjectResModel>>.ErrorResponse("Error: " + ex.Message);
-            }
         }
+        //public async Task<ApiResponse<List<SubjectResModel>>> getsubject()
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+        //        int UserId = _loginUser.UserId;
+
+        //        var subjectEntities = await _context.Subject.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
+
+        //        var subjectlist = _mapper.Map<List<SubjectResModel>>(subjectEntities);
+
+        //        return ApiResponse<List<SubjectResModel>>.SuccessResponse(subjectlist, "Subject list fetched successfully");
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<List<SubjectResModel>>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
         public async Task<ApiResponse<bool>> insertsubject(AddSubjectReq request)
         {
             try
@@ -690,7 +718,7 @@ namespace ApiProject.Service.School
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
-                var gradeEntities = await _context.GradeInfo.Where(cs => cs.CompanyId == SchoolId && cs.Active == true).ToListAsync();
+                var gradeEntities = await _context.GradeInfo.Where(cs => cs.CompanyId == SchoolId).ToListAsync();
 
                 var gradelist = _mapper.Map<List<GradeReqModel>>(gradeEntities);
 
@@ -790,9 +818,36 @@ namespace ApiProject.Service.School
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
+        //public async Task<ApiResponse<bool>> changestatusgrade(int gradeid)
+        //{
+        //    throw new NotImplementedException();
+        //}
         public async Task<ApiResponse<bool>> changestatusgrade(int gradeid)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+
+
+                var GradeEntity = await _context.GradeInfo.FirstOrDefaultAsync(c => c.grade_id == gradeid && c.CompanyId == SchoolId);
+
+                if (GradeEntity == null)
+                    return ApiResponse<bool>.ErrorResponse("Grade not found");
+
+
+                // Status toggle karo
+                GradeEntity.Active = GradeEntity.Active == null ? true : !GradeEntity.Active;
+
+                // Changes save karo
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Status updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+
         }
         #endregion
 

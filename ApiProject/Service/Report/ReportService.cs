@@ -146,6 +146,7 @@ namespace ApiProject.Service.Report
                     stu_code = c.stu_code,
                     Address = c.address,
                     DOB = c.DOB,
+                    RTE = c.RTE,
                     admission_date = c.admission_date,
                     FatherName = c.FatherName,
                     FatherMobileNo = c.FatherMobileNo,
@@ -184,6 +185,7 @@ namespace ApiProject.Service.Report
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentFeeDetailsModel
                 {
                     stu_id = c.StuId,
+                    RTE = c.RTE,
                     ClassId = c.ClassId,
                     SectionId = c.SectionId,
                     stu_name = c.stu_name,
@@ -393,6 +395,7 @@ namespace ApiProject.Service.Report
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
                 {
                     stu_id = c.StuId,
+                    RTE = c.RTE,
                     stu_photo = c.stu_photo,
                     ClassId = c.ClassId,
                     SectionId = c.SectionId,
@@ -437,6 +440,7 @@ namespace ApiProject.Service.Report
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
                 {
                     stu_id = c.StuId,
+                    RTE = c.RTE,
                     stu_photo = c.stu_photo,
                     ClassId = c.ClassId,
                     SectionId = c.SectionId,

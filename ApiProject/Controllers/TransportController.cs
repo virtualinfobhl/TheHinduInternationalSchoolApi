@@ -505,6 +505,21 @@ namespace ApiProject.Controllers
             }
         }
 
+        [HttpPost("CheckMonth")]
+        public async Task<IActionResult> CheckMonth(TransCheckMonth req)
+        {
+            try
+            {
+                var res = await _transportService.CheckMonth(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpPost("GetStudentByTransportData")]
         public async Task<IActionResult> GetStudentByTransportData(int StudentId)
         {

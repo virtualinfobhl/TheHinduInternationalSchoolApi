@@ -183,7 +183,7 @@ namespace ApiProject.Service.Transport
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var existing = await _context.TransBusTbl.FirstOrDefaultAsync(p => p.VihecleNo == req.VehicleNo && p.CompanyId == SchoolId);
+                var existing = await _context.TransBusTbl.FirstOrDefaultAsync(p => p.DriverId == req.DriverId && p.CompanyId == SchoolId);
                 if (existing != null)
                 {
                     return ApiResponse<bool>.ErrorResponse("This Vehicle  is already insert");
@@ -878,6 +878,7 @@ namespace ApiProject.Service.Transport
                         RouteId = c.RouteId,
                         StoppageId = c.StoppageId,
                         Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+                        Srno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
                         Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
                         Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
 
@@ -1170,6 +1171,31 @@ namespace ApiProject.Service.Transport
 
             }
         }
+
+        public async Task<ApiResponse<bool>> CheckMonth(TransCheckMonth req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                // 🔹 Pehle check karo student already assigned hai ya nahi
+                var sroute = await _context.NewTransportFeeTbl.FirstOrDefaultAsync(p => p.stu_id == req.StudentId && p.university_id == req.ClassId &&
+                 p.MonthName.ToLower().Contains(req.Month.ToLower()) && p.SessionId == SessionId && p.CompanyId == SchoolId);
+
+                if (sroute != null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("Month already assigned for this student");
+                }
+                return ApiResponse<bool>.SuccessResponse(true);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
+            }
+        }
+
         public async Task<ApiResponse<List<TransStudentDetailModel>>> GetStudentByTransportData(int StudentId)
         {
             try
@@ -1198,8 +1224,11 @@ namespace ApiProject.Service.Transport
                         TransportFee = c.TransportFee,
                         Discount = c.Discount,
                         NetTransFee = c.NetTranSFee,
-                        //  TOldDueFee = c.TOldDueFee,
-                        //   LastDueFee = c.LastDueFee,
+                        ClassId = c.university_id,
+                        sectionId = c.SectionId,
+                        VehicleId = c.BusId,
+                        RouteId = c.RouteId,
+                        StoppageId = c.StoppageId,
                         Date = c.Date,
                         StudentName = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
                         SRNo = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
@@ -1247,7 +1276,6 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<List<TransStudentDetailModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
 
         // *************************** Transport Fee Report Start *********************** //
@@ -1351,15 +1379,15 @@ namespace ApiProject.Service.Transport
                             FeeType = a.FeeType,
                         }).ToList(),
 
-                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId
-                       /* && validMonths.Contains(a.MonthName)*/).Select(a => new TInstallmentList
-                                                                {
-                                                                    InstallmentFee = a.InstallFee,
-                                                                    InstallmentNo = a.InstallmentNo,
-                                                                    DueFee = a.DueFee,
-                                                                    MonthName = a.MonthName,
+                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId /* && validMonths.Contains(a.MonthName)*/
+                       ).Select(a => new TInstallmentList
+                       {
+                           InstallmentFee = a.InstallFee,
+                           InstallmentNo = a.InstallmentNo,
+                           DueFee = a.DueFee,
+                           MonthName = a.MonthName,
 
-                                                                }).ToList(),
+                       }).ToList(),
 
                     }).ToListAsync();
 
@@ -1412,7 +1440,7 @@ namespace ApiProject.Service.Transport
                             Id = 1;
                         }
                         ReceiptCode = threeLetters + "/" + Id;
-                       
+
                         int NewOrderNo = 1;
 
                         var LastOrderNo = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).Select(s => s.OrderNo).ToList()

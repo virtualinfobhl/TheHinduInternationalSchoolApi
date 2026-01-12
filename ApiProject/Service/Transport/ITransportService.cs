@@ -63,6 +63,7 @@ namespace ApiProject.Service.Transport
 
         Task<ApiResponse<GetTClassbySectionNdStudent>> GetTransClassBySectionNdStudent(int ClassId);
         Task<ApiResponse<List<TStudentDataList>>> GetTransSectionByStudentDetail(int ClassId, int SectionId);
+        Task<ApiResponse<bool>> CheckMonth(TransCheckMonth req);
         Task<ApiResponse<List<TransStudentDetailModel>>> GetStudentByTransportData(int StudentId);
 
         Task<ApiResponse<bool>> AddStudentTransportFee(StudentTransportFeeReq req);

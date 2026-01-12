@@ -3036,6 +3036,28 @@
         }
       }
     },
+    "/api/School/changestatusgrade": {
+      "get": {
+        "tags": [
+          "School"
+        ],
+        "parameters": [
+          {
+            "name": "gradeid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/School/GetEvent": {
       "get": {
         "tags": [
@@ -3457,37 +3479,6 @@
         }
       }
     },
-    "/api/SchoolFees/getclassfees": {
-      "post": {
-        "tags": [
-          "SchoolFees"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClassFeesFilterReq"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClassFeesFilterReq"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClassFeesFilterReq"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/SchoolFees/GetClasswiseTotalFee": {
       "post": {
         "tags": [
@@ -3656,6 +3647,21 @@
             }
           },
           {
+            "name": "DOB",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "ClassId",
             "in": "query",
             "schema": {
@@ -3679,22 +3685,7 @@
             }
           },
           {
-            "name": "DOB",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cast_category",
+            "name": "Nationality",
             "in": "query",
             "schema": {
               "type": "string"
@@ -3715,13 +3706,6 @@
             }
           },
           {
-            "name": "email",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "blood_group",
             "in": "query",
             "schema": {
@@ -3729,7 +3713,7 @@
             }
           },
           {
-            "name": "FatherName",
+            "name": "JanAadharNo",
             "in": "query",
             "schema": {
               "type": "string"
@@ -3737,6 +3721,13 @@
           },
           {
             "name": "FatherMobileNo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FatherName",
             "in": "query",
             "schema": {
               "type": "string"
@@ -3940,14 +3931,6 @@
             }
           },
           {
-            "name": "admissionReceipt.pramoteFees",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
             "name": "admissionReceipt.PaymentMode",
             "in": "query",
             "schema": {
@@ -3989,11 +3972,23 @@
                     "type": "string",
                     "format": "binary"
                   },
+                  "studentTcfile": {
+                    "type": "string",
+                    "format": "binary"
+                  },
                   "fatheraadhar": {
                     "type": "string",
                     "format": "binary"
                   },
                   "motheraadhar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "CasteCertificate": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ResidentialCertificat": {
                     "type": "string",
                     "format": "binary"
                   },
@@ -4006,10 +4001,6 @@
                     "format": "binary"
                   },
                   "LastMarkSheetPhotos": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "studentTcfile": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -4025,10 +4016,19 @@
                 "stubirth": {
                   "style": "form"
                 },
+                "studentTcfile": {
+                  "style": "form"
+                },
                 "fatheraadhar": {
                   "style": "form"
                 },
                 "motheraadhar": {
+                  "style": "form"
+                },
+                "CasteCertificate": {
+                  "style": "form"
+                },
+                "ResidentialCertificat": {
                   "style": "form"
                 },
                 "IncomeCertificate": {
@@ -4038,9 +4038,6 @@
                   "style": "form"
                 },
                 "LastMarkSheetPhotos": {
-                  "style": "form"
-                },
-                "studentTcfile": {
                   "style": "form"
                 }
               }
@@ -5854,6 +5851,37 @@
         }
       }
     },
+    "/api/Transport/CheckMonth": {
+      "post": {
+        "tags": [
+          "Transport"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransCheckMonth"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransCheckMonth"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransCheckMonth"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Transport/GetStudentByTransportData": {
       "post": {
         "tags": [
@@ -6564,41 +6592,6 @@
         },
         "additionalProperties": false
       },
-      "AdmissionFeeReceiptReqDto": {
-        "type": "object",
-        "properties": {
-          "admissionPayFees": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "admissionFeeDiscount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "pramoteFees": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "paymentMode": {
-            "type": "string",
-            "nullable": true
-          },
-          "feeDiscount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "paymentDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "BulkStudentReq": {
         "type": "object",
         "properties": {
@@ -6743,11 +6736,6 @@
           "intallmentID": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          },
-          "total_fee": {
-            "type": "number",
-            "format": "double",
             "nullable": true
           },
           "installment": {
@@ -7452,6 +7440,10 @@
             "type": "string",
             "nullable": true
           },
+          "janAadharNo": {
+            "type": "string",
+            "nullable": true
+          },
           "parentid": {
             "type": "integer",
             "format": "int32",
@@ -7593,6 +7585,16 @@
             "format": "binary",
             "nullable": true
           },
+          "casteCertificate": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "residentialCertificat": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
           "incomeCertificate": {
             "type": "string",
             "format": "binary",
@@ -7619,7 +7621,7 @@
             "nullable": true
           },
           "admissionReceipt": {
-            "$ref": "#/components/schemas/AdmissionFeeReceiptReqDto"
+            "$ref": "#/components/schemas/UpadateAdmissionFeeReceiptReqDto"
           },
           "feeInstallmentlist": {
             "type": "array",
@@ -7686,6 +7688,26 @@
         },
         "additionalProperties": false
       },
+      "TransCheckMonth": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "classId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "month": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TransportDetailReportReq": {
         "type": "object",
         "properties": {
@@ -7728,6 +7750,41 @@
           "vehicleId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpadateAdmissionFeeReceiptReqDto": {
+        "type": "object",
+        "properties": {
+          "admissionPayFees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "admissionFeeDiscount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "pramoteFees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "feeDiscount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -8452,10 +8509,6 @@
           "srNo": {
             "minLength": 1,
             "type": "string"
-          },
-          "stu_code": {
-            "type": "string",
-            "nullable": true
           },
           "stu_name": {
             "minLength": 1,

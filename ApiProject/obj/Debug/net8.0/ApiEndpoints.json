@@ -1529,6 +1529,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.SchoolController",
+    "Method": "changestatusgrade",
+    "RelativePath": "api/School/changestatusgrade",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gradeid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolController",
     "Method": "changestatussection",
     "RelativePath": "api/School/changestatussection",
     "HttpMethod": "GET",
@@ -1992,22 +2008,6 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.SchoolFeesController",
-    "Method": "getclassfees",
-    "RelativePath": "api/SchoolFees/getclassfees",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "req",
-        "Type": "ApiProject.Models.Request.ClassFeesFilterReq",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.SchoolFeesController",
     "Method": "GetClassFees",
     "RelativePath": "api/SchoolFees/GetClassFees",
     "HttpMethod": "GET",
@@ -2210,6 +2210,16 @@
         "IsRequired": false
       },
       {
+        "Name": "DOB",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "gender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "ClassId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -2225,17 +2235,7 @@
         "IsRequired": false
       },
       {
-        "Name": "DOB",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "gender",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "cast_category",
+        "Name": "Nationality",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -2250,12 +2250,12 @@
         "IsRequired": false
       },
       {
-        "Name": "email",
+        "Name": "blood_group",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "blood_group",
+        "Name": "JanAadharNo",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -2275,12 +2275,17 @@
         "IsRequired": false
       },
       {
-        "Name": "FatherName",
-        "Type": "System.String",
+        "Name": "studentTcfile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
         "Name": "FatherMobileNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FatherName",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -2292,6 +2297,11 @@
       {
         "Name": "FatherIncome",
         "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "fatheraadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
@@ -2315,6 +2325,11 @@
         "IsRequired": false
       },
       {
+        "Name": "motheraadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
         "Name": "GuardianName",
         "Type": "System.String",
         "IsRequired": false
@@ -2325,12 +2340,12 @@
         "IsRequired": false
       },
       {
-        "Name": "fatheraadhar",
+        "Name": "CasteCertificate",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
-        "Name": "motheraadhar",
+        "Name": "ResidentialCertificat",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
@@ -2430,11 +2445,6 @@
         "IsRequired": false
       },
       {
-        "Name": "studentTcfile",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
         "Name": "feeInstallments",
         "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Request.FeeInstallmentReqDto, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
@@ -2446,11 +2456,6 @@
       },
       {
         "Name": "admissionReceipt.AdmissionFeeDiscount",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "admissionReceipt.pramoteFees",
         "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
@@ -3322,6 +3327,22 @@
         "Name": "VehicleId",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "CheckMonth",
+    "RelativePath": "api/Transport/CheckMonth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.TransCheckMonth",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
