@@ -18,7 +18,6 @@ namespace ApiProject.Controllers
     public class SchoolController : BaseController
     {
 
-
         private readonly ISchoolService _schoolService;
 
         public SchoolController(ISchoolService schoolService)

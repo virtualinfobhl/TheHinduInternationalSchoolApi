@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
 using System.Linq;
+using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ApiProject.Service.SchoolFees
@@ -345,38 +346,87 @@ namespace ApiProject.Service.SchoolFees
             try
             {
                 int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var query = _context.StudentRenewView.Where(s => s.StuId == req.StudentId && s.SessionId == SessionId);
+                var res = await _context.StudentRenewView.Where(c =>
+                            (req.ClassId == -1 ? false : c.ClassId == req.ClassId) &&  (req.StudentId == -1 ? true : c.stu_id == req.StudentId) &&
+                            c.RActive == true && c.StuDetail == true && c.StuFees == true && c.Dropout == false && c.SessionId == SessionId &&
+                            c.CompanyId == SchoolId).Select(c => new StudentFeesDetailRes
+                            {
+                                StuId = c.StuId,
+                                stu_name = c.stu_name,
+                                ClassId = c.ClassId,
+                                SectionId = c.SectionId,
+                                SrNo = c.registration_no,
+                               fathername = c.father_name,
+                               fathermobileno = c.FatherMobileNo,
+                               RTE = c.RTE,
+                               admission_fee = c.admission_fee,
+                               PramoteFees = c.PramoteFees,
+                               AFeeDiscount = c.AFeeDiscount,
+                               AdmissionPayfee = c.RAdmissionPayfee,
+                                exam_fee = c.Rexam_fee,
+                                Tution_fee = c.RTution_fee,
+                                Develoment_fee = c.RDeveloment_fee,
+                                Games_fees = c.RGames_fees,
+                                total = c.Rtotal,
+                                OldDuefees = c.OldDuefees,
+                               discount  = c.Rdiscount,
+                                total_fee = c.Rtotal_fee,
 
-                //if (!string.IsNullOrEmpty(req.srno))
-                //    query = query.Where(s => s.SRNo == req.srno);
+                            }).OrderBy(c => c.stu_name).FirstOrDefaultAsync();
 
-
-                query = query.Where(s => s.StuId == req.StudentId.Value);
-                query = query.Where(s => s.ClassId == req.ClassId.Value);
-
-                var studentEntity = await query.FirstOrDefaultAsync();
-
-                if (studentEntity == null)
+                if (res == null || !res.Any())
                 {
-                    return ApiResponse<StudentFeesDetailRes>.ErrorResponse("Student not found.");
+                    return ApiResponse<List<StudentFeesDetailRes>>.ErrorResponse("No students found matching the criteria");
                 }
 
-                var studentDetail = _mapper.Map<StudentFeesDetailRes>(studentEntity);
-
-                var totalPaid = await _context.M_FeeDetail.Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
-                f.ClassId == req.ClassId && f.stu_id == req.StudentId && f.Status == "1" && f.Active == true).SumAsync(f => (decimal?)f.PayFees) ?? 0;
-
-                studentDetail.TotalPaid = totalPaid;
-
-                return ApiResponse<StudentFeesDetailRes>.SuccessResponse(studentDetail, "Student details fetched successfully.");
+                return ApiResponse<List<StudentFeesDetailRes>>.SuccessResponse(res, "Fetched Student Marks List successfully");
             }
             catch (Exception ex)
             {
-                return ApiResponse<StudentFeesDetailRes>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<List<StudentFeesDetailRes>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+        //public async Task<ApiResponse<StudentFeesDetailRes>> getstudentfeesdetail(StudentFeesDetailReq req)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var query = _context.StudentRenewView.Where(s => s.StuId == req.StudentId && s.SessionId == SessionId);
+
+        //        //if (!string.IsNullOrEmpty(req.srno))
+        //        //    query = query.Where(s => s.SRNo == req.srno);
+
+
+        //        query = query.Where(s => s.StuId == req.StudentId.Value);
+        //        query = query.Where(s => s.ClassId == req.ClassId.Value);
+
+        //        var studentEntity = await query.FirstOrDefaultAsync();
+
+        //        if (studentEntity == null)
+        //        {
+        //            return ApiResponse<StudentFeesDetailRes>.ErrorResponse("Student not found.");
+        //        }
+
+        //        var studentDetail = _mapper.Map<StudentFeesDetailRes>(studentEntity);
+
+        //        var totalPaid = await _context.M_FeeDetail.Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
+        //        f.ClassId == req.ClassId && f.stu_id == req.StudentId && f.Status == "1" && f.Active == true).SumAsync(f => (decimal?)f.PayFees) ?? 0;
+
+        //        studentDetail.TotalPaid = totalPaid;
+
+        //        return ApiResponse<StudentFeesDetailRes>.SuccessResponse(studentDetail, "Student details fetched successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<StudentFeesDetailRes>.ErrorResponse("Something went wrong: " + ex.Message);
+        //    }
+        //}
 
         public async Task<ApiResponse<StudentFeesRes>> insertstudentfees(StudentFeesReq req)
         {

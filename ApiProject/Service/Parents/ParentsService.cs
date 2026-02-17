@@ -241,7 +241,7 @@ namespace ApiProject.Service.Parents
                     int SchoolId = _loginUser.SchoolId;
                     int SessionId = _loginUser.SessionId;
 
-                    // =========================================== CHECK — Student has no pending due already
+                    // ===========================================  CHECK — Student has no pending due already
                     var student = await _context.Student_Renew.FirstOrDefaultAsync(a => a.ClassId == req.ClassId && a.StuId == req.StudentId && a.due_fee != 0);
 
                     if (student == null)
@@ -313,13 +313,13 @@ namespace ApiProject.Service.Parents
 
                     string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
 
-                    //string client_id = "SHYAWAYUAT_2510101108212";
-                    //string client_version = "1";
-                    //string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
-
-                    string client_id = "TSPVIRTUALUAT_2512051124";
+                    string client_id = "SHYAWAYUAT_2510101108212";
                     string client_version = "1";
-                    string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
+                    string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+
+                    //string client_id = "TSPVIRTUALUAT_2512051124";
+                    //string client_version = "1";
+                    //string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
 
                     string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
 
@@ -423,7 +423,9 @@ namespace ApiProject.Service.Parents
                     return ApiResponse<StudentFeePaymentResult>.ErrorResponse("Error: " + ex.Message);
                 }
             }
+
         }
+
 
 
         public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId, string orderno)
@@ -490,7 +492,7 @@ namespace ApiProject.Service.Parents
                 // ===================== PHONEPE STATUS API
                 string merchantOrderId = fee.OrderNo;
 
-                //      string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=true";
+                //  string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=true";
 
                 string url = $"https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/order/{merchantOrderId}/status?details=false";
 
@@ -589,6 +591,7 @@ namespace ApiProject.Service.Parents
                 return ApiResponse<bool>.ErrorResponse("Exception: " + ex.Message);
             }
         }
+
 
         // Transport Fee 
         public async Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee()

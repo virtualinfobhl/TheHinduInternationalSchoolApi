@@ -14,14 +14,16 @@ namespace ApiProject.Service.Parents
         Task<ApiResponse<Getparentsreq>> GetStudentToken(int StudentId);
         Task<ApiResponse<getStudentInstallmentModel>> GetStudentInstallmentFee();
         Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee();
+        // student installment fee for api
         Task<ApiResponse<StudentFeePaymentResult>> AddStudentInstallmentFee(AddStudentinstallReq Req);
+        Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId,string orderno);
 
        // Task<ApiResponse<bool>> StudentFeePaymentStstus(PaymentStatusModel req);
 
-
-        Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId,string orderno);
+        // transport fee for api 
         Task<ApiResponse<StudentTransportPaymentResult>> AddStudentTransportFee(AddTransportMonthFeeReq req);
         Task<ApiResponse<bool>> UpdateTransportPaymentSuccessfully(int StudentId, int ReceiptId);
+
         Task<ApiResponse<GetStudentFeeModel>> GetStudentFee();
         Task<ApiResponse<GetStuFeeInstallmentModel>> GetStudentFeeInstallment();
         Task<ApiResponse<GetStuDueInstallmentModel>> GetStudentDueInstallment();
