@@ -369,13 +369,13 @@ namespace ApiProject.Service.Employee
 
                     _context.SaveChanges();
 
-                    TrnBankDetails Bank = await _context.TrnBankDetails.Where(p => p.AID == request.BankDetail.BankId).FirstOrDefaultAsync();
+                    TrnBankDetails Bank = await _context.TrnBankDetails.Where(p => p.Emp_Id == request.Emp_Id && p.CompanyId == SchoolId).FirstOrDefaultAsync();
 
-                    Bank.Emp_Id = request.Emp_Id;
-                    Bank.AccountHolder = request.BankDetail.AHName;
+                 //   Bank.Emp_Id = request.Emp_Id;
                     Bank.IFSCCode = request.BankDetail.IFSCCode;
                     Bank.BankName = request.BankDetail.BankName;
                     Bank.BranchName = request.BankDetail.BranchName;
+                    Bank.AccountHolder = request.BankDetail.AHName;
                     Bank.AccountNumber = request.BankDetail.AccountNumber;
                     Bank.ActiveStatus = true;
                     _context.SaveChanges();

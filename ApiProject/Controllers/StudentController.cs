@@ -78,7 +78,7 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("addstuquickadmission")]
+        [HttpPost("addstuquickadmission")]  
         public async Task<IActionResult> addstuquickadmission(quickadmissionmodel request)
         {
             try
@@ -109,7 +109,7 @@ namespace ApiProject.Controllers
         }
 
         [HttpPost("updatestudentdata")]
-        public async Task<IActionResult> updatestudentdata([FromBody] StudentUpdateReqModel request)
+        public async Task<IActionResult> updatestudentdata([FromForm] StudentUpdateReqModel request)
         {
             try
             {

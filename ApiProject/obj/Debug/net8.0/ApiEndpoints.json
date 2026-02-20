@@ -3036,9 +3036,314 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "ApiProject.Models.Request.StudentUpdateReqModel",
-        "IsRequired": true
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "admission_date",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "srNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "stu_name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "classId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "sectionId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "rte",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "dob",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "gender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cast_category",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "religion",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "caste",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "blood_group",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "JanAadharNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "parentid",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "fathername",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "fathermobileno",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "fatherOP",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "fatherIncome",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "mothername",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "mothermobileno",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "motherOP",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "motherIncome",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "guardianName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guardianMobileNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "address",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "state",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "district",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "city",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pincode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "p_address",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "p_state",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "p_district",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "p_city",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "p_pincode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastSchlName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastClass",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastExanTotalMarks",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastDivision",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastParecentage",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "studentTc",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastRemarks",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "stuphoto",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "stuaadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "stubirth",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "fatheraadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "motheraadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "CasteCertificate",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "ResidentialCertificat",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "IncomeCertificate",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "JanAadhar",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "lastMarkSheetPhoto",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "LastMarkSheetPhotos",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "studentTcfile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.AdmissionPayFees",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.AdmissionFeeDiscount",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.pramoteFees",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.PaymentMode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.FeeDiscount",
+        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "admissionReceipt.PaymentDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "feeInstallmentlists",
+        "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Request.FeeInstallmentModel, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

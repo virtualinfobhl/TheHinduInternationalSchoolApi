@@ -204,7 +204,6 @@ namespace ApiProject.Models.Request
         public bool? studentTc { get; set; }
         public string? lastRemarks { get; set; }
 
-
         public IFormFile? stuphoto { get; set; }
         public IFormFile? stuaadhar { get; set; }
         public IFormFile? stubirth { get; set; }
@@ -219,13 +218,13 @@ namespace ApiProject.Models.Request
         public IFormFile? studentTcfile { get; set; }
 
         public UpadateAdmissionFeeReceiptReqDto admissionReceipt { get; set; }
-        public List<FeeInstallmentReqMOdel> feeInstallmentlist { get; set; }
+        public List<FeeInstallmentModel> feeInstallmentlists { get; set; }
 
     }
 
-    public class FeeInstallmentReqMOdel
+    public class FeeInstallmentModel
     {
-        public int? IntallmentID { get; set; }
+        public Nullable<int> IntallmentID { get; set; }
         public Nullable<double> total_fee { get; set; }
         public string? Installment { get; set; }
         public Nullable<double> FAmount { get; set; }

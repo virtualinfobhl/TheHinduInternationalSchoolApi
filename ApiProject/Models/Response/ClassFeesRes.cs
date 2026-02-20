@@ -47,9 +47,9 @@ namespace ApiProject.Models.Response
     {
         public int? StuId { get; set; }
         public string? stu_name { get; set; }
-        public string? registration_no { get; set; }
-        public int ClassId { get; set; }
-        public int SectionId { get; set; }
+        public string? SrNo { get; set; }
+        public int? ClassId { get; set; }
+        public int? SectionId { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
         public string? fathername { get; set; }
@@ -67,7 +67,7 @@ namespace ApiProject.Models.Response
         public Nullable<double> discount { get; set; }
         public Nullable<double> OldDuefees { get; set; }
         public Nullable<double> total_fee { get; set; }
-        public decimal TotalPaid { get; set; }
+        public Nullable<double> TotalPaid { get; set; }
 
         public List<StufeeinstallmentModel> Installment { get; set; }
 

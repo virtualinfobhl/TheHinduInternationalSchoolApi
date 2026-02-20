@@ -70,6 +70,8 @@
         public string? RollNo { get; set; }
         public string? ClassName { get; set; }
         public string? Sectionname { get; set; }
+        public string? TotalGrade { get; set; }
+
     }
     public class SectionResponse
     {
