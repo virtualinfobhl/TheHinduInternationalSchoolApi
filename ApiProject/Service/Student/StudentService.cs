@@ -9,6 +9,7 @@ using Azure.Core;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Table.PivotTable;
 using System.Collections.Immutable;
@@ -903,6 +904,13 @@ namespace ApiProject.Service.Student
             {
                 try
                 {
+
+                    // Deserialize fee installment list from JSON if provided
+                    //if (!string.IsNullOrEmpty(request.FeeInstallmentlistsJson))
+                    //{
+                    //    request.feeInstallmentlists = JsonConvert.DeserializeObject<List<FeeInstallmentModel>>(request.FeeInstallmentlistsJson);
+                    //}
+
                     int SchoolId = _loginUser.SchoolId;
                     int UserId = _loginUser.UserId;
                     int SessionId = _loginUser.SessionId;
@@ -944,37 +952,6 @@ namespace ApiProject.Service.Student
                         await _context.SaveChangesAsync();
 
                     }
-
-                    //else
-                    //{
-                    //    var parentdata = await _context.ParentsTbl.Where(p => p.FatherMobileNo == request.fathermobileno && p.CompanyId == SchoolId).FirstOrDefaultAsync();
-                    //    if (parentdata == null)
-                    //    {
-                    //        var parentmodel = new ParentsTbl
-                    //        {
-                    //        //    ParentsId = (_context.ParentsTbl.DefaultIfEmpty().Max(r => r == null ? 0 : r.ParentsId) + 1),
-                    //            FatherName = request.fathername,
-                    //            Username = request.fathermobileno,
-                    //            Password = request.dob.Value.ToString("yyyyMMdd"),
-                    //            FatherMobileNo = request.fathermobileno,
-                    //            MotherName = request.mothername,
-                    //            CreateDate = DateTime.Now,
-                    //            UpdateDate = DateTime.Now,
-                    //            SessionId = SessionId,
-                    //            CompanyId = SchoolId,
-                    //            UserId = UserId
-                    //        };
-                    //        parentid = parentmodel.ParentsId;
-                    //        _context.ParentsTbl.Add(parentmodel);
-                    //        await _context.SaveChangesAsync();
-
-                    //    }
-                    //    else
-                    //    {
-                    //        parentid = parentdata.ParentsId;
-                    //    }
-
-                    //}
 
                     var allSchoolDataRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image", "ALLSchoolData");
 
@@ -1129,8 +1106,6 @@ namespace ApiProject.Service.Student
                         studentrenew.Games_fees = studentfee.Games_fees;
                         studentrenew.total = studentfee.total;
 
-
-
                         studentrenew.discount = request.admissionReceipt.FeeDiscount ?? 0;
                         //   studentrenew.OldDuefees = request.admissionReceipt.oldDuefees ?? 0;
                         studentrenew.total_fee = (studentrenew.total ?? 0) - (studentrenew.discount ?? 0) /*+ (studentrenew.OldDuefees ?? 0)*/;
@@ -1146,8 +1121,8 @@ namespace ApiProject.Service.Student
                     {
                         _context.fee_installment.RemoveRange(fee_installmenttbl);
                         await _context.SaveChangesAsync();
-
                     }
+
 
                     if ((bool)!studentrenew.RTE)
                     {
@@ -1163,6 +1138,8 @@ namespace ApiProject.Service.Student
                                 feeInstall.Installment = request.feeInstallmentlists[i].Installment;
                                 feeInstall.FAmount = request.feeInstallmentlists[i].FAmount;
                                 feeInstall.due_fee = request.feeInstallmentlists[i].FAmount;
+                                feeInstall.active = true;
+                                feeInstall.Date = DateTime.Now;
                                 feeInstall.SessionId = SessionId;
                                 feeInstall.CompanyId = SchoolId;
                                 feeInstall.Userid = UserId;
@@ -1172,6 +1149,8 @@ namespace ApiProject.Service.Student
                             }
 
                         }
+
+
                         M_FeeDetail RStudentFeesU = await _context.M_FeeDetail.Where(r => r.stu_id == studentrenew.StuId && r.CompanyId == SchoolId && r.ClassId == studentrenew.ClassId && r.SessionId == SessionId && r.Status == "AdmissionPayFee").FirstOrDefaultAsync();
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
                         {
@@ -1634,7 +1613,7 @@ namespace ApiProject.Service.Student
                                     StudentName = c.stu_name,
                                     //  StudentPhoto = c.stu_photo,
                                     TotalGrade = c.TotalGrade,
-                                    DateOfBirth = c.DOB,
+                                    //   DateOfBirth = c.DOB,
                                     Attendance = c.Attendance,
                                     SRNo = c.registration_no,
                                     RollNo = c.RollNo,
@@ -2658,38 +2637,84 @@ namespace ApiProject.Service.Student
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId
-               && c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
+                var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
 
-                int startMonthNo = startDate?.Month ?? 1;           // route date ka month number (int)
-                string startMonth = new DateTime(DateTime.Now.Year, startMonthNo, 1).ToString("MMMM");
+                var validMonths = new List<string>();
 
-                int currentMonthNo = DateTime.Now.Month;           // current month number (int)
-                string currentMonth = new DateTime(DateTime.Now.Year, currentMonthNo, 1).ToString("MMMM");
+                if (startDate != null)
+                {
+                    DateTime fromDate = startDate.Value;
+                    DateTime toDate = DateTime.Now;
 
-                var validMonths = Enumerable.Range(startMonthNo, currentMonthNo - startMonthNo + 1).Select(m => new DateTime(DateTime.Now.Year, m, 1).ToString("MMMM")).ToList();
-
-                var res = await _context.StudentRenewView.Where(a => a.StuId == StudentId && a.CompanyId == SchoolId && a.SessionId == SessionId)
-                    .Select(a => new StudentFeeTCModel
+                    while (fromDate <= toDate)
                     {
-                        Srno = a.registration_no,
-                        RTE = a.RTE,
-                        TotalFee = a.Rtotal_fee,
-                        ToPaidFee = a.Rstu_fee,
-                        ToDueFee = a.Rdue_fee,
-                        TransportDueFee = _context.TransInstallmentTbl.Where(c => c.StuId == a.StuId && c.CompanyId == SchoolId && validMonths.Contains(c.MonthName)).Sum(c => c.DueFee),
-                    }).FirstOrDefaultAsync();
+                        validMonths.Add(fromDate.ToString("MMMM"));
+                        fromDate = fromDate.AddMonths(1);
+                    }
+                }
 
-                return ApiResponse<StudentFeeTCModel>.SuccessResponse(res, "Fetch successfully student dueFee for TC ");
+                var res = await _context.StudentRenewView.Where(a => a.StuId == StudentId && a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new StudentFeeTCModel
+                {
+                    Srno = a.registration_no,
+                    RTE = a.RTE,
+                    TotalFee = a.Rtotal_fee,
+                    ToPaidFee = a.Rstu_fee,
+                    ToDueFee = a.Rdue_fee,
+
+                    //   TransportDueFee = _context.TransInstallmentTbl.Where(c => c.StuId == a.StuId && c.CompanyId == SchoolId && validMonths.Contains(c.MonthName)).Sum(c => c.DueFee),
+
+                    TransportDueFee = _context.TransInstallmentTbl.Where(c => c.StuId == a.StuId && c.CompanyId == SchoolId && validMonths.Contains(c.MonthName)).Sum(c => c.DueFee) ?? 0
+                })
+                    .FirstOrDefaultAsync();
+
+                return ApiResponse<StudentFeeTCModel>
+                    .SuccessResponse(res, "Fetch successfully student dueFee for TC");
             }
             catch (Exception ex)
             {
-                return ApiResponse<StudentFeeTCModel>.ErrorResponse("Error: " + ex.Message);
+                return ApiResponse<StudentFeeTCModel>
+                    .ErrorResponse("Error: " + ex.Message);
             }
         }
+        //public async Task<ApiResponse<StudentFeeTCModel>> GetStudentDueFeeTC(int StudentId)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int UserId = _loginUser.UserId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId
+        //            && c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
+
+        //        int startMonthNo = startDate?.Month ?? 1;           // route date ka month number (int)
+        //        string startMonth = new DateTime(DateTime.Now.Year, startMonthNo, 1).ToString("MMMM");
+
+        //        int currentMonthNo = DateTime.Now.Month;           // current month number (int)
+        //        string currentMonth = new DateTime(DateTime.Now.Year, currentMonthNo, 1).ToString("MMMM");
+
+        //        var validMonths = Enumerable.Range(startMonthNo, currentMonthNo - startMonthNo + 1).Select(m => new DateTime(DateTime.Now.Year, m, 1).ToString("MMMM")).ToList();
+
+        //        var res = await _context.StudentRenewView.Where(a => a.StuId == StudentId && a.CompanyId == SchoolId && a.SessionId == SessionId)
+        //            .Select(a => new StudentFeeTCModel
+        //            {
+        //                Srno = a.registration_no,
+        //                RTE = a.RTE,
+        //                TotalFee = a.Rtotal_fee,
+        //                ToPaidFee = a.Rstu_fee,
+        //                ToDueFee = a.Rdue_fee,
+        //                TransportDueFee = _context.TransInstallmentTbl.Where(c => c.StuId == a.StuId && c.CompanyId == SchoolId && validMonths.Contains(c.MonthName)).Sum(c => c.DueFee),
+        //            }).FirstOrDefaultAsync();
+
+        //        return ApiResponse<StudentFeeTCModel>.SuccessResponse(res, "Fetch successfully student dueFee for TC ");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<StudentFeeTCModel>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
 
         public async Task<ApiResponse<bool>> GenerateTC(GetStudentTCDropoutReq req)
         {
@@ -3138,9 +3163,6 @@ namespace ApiProject.Service.Student
 
 
 
-
-
-
         //public async Task<ApiResponse<bool>> studentexcelupload(List<StudentExcelUploadListReq> request)
         //{
         //    using var transaction = await _context.Database.BeginTransactionAsync();
@@ -3161,6 +3183,7 @@ namespace ApiProject.Service.Student
         //        }
         //    }
         //}
+
 
 
     }

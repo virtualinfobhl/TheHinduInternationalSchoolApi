@@ -4194,9 +4194,6 @@
                   "lastParecentage": {
                     "type": "string"
                   },
-                  "studentTc": {
-                    "type": "boolean"
-                  },
                   "lastRemarks": {
                     "type": "string"
                   },
@@ -4276,6 +4273,9 @@
                     "items": {
                       "$ref": "#/components/schemas/FeeInstallmentModel"
                     }
+                  },
+                  "FeeInstallmentlistsJson": {
+                    "type": "string"
                   }
                 }
               },
@@ -4403,9 +4403,6 @@
                 "lastParecentage": {
                   "style": "form"
                 },
-                "studentTc": {
-                  "style": "form"
-                },
                 "lastRemarks": {
                   "style": "form"
                 },
@@ -4464,6 +4461,9 @@
                   "style": "form"
                 },
                 "feeInstallmentlists": {
+                  "style": "form"
+                },
+                "FeeInstallmentlistsJson": {
                   "style": "form"
                 }
               }
@@ -6999,6 +6999,14 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -7291,6 +7299,14 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -7326,6 +7342,14 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -8559,6 +8583,14 @@
           "srno": {
             "type": "string",
             "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

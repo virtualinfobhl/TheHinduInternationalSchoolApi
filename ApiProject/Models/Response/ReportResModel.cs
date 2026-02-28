@@ -35,7 +35,7 @@ namespace ApiProject.Models.Response
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
         public string? stu_code { get; set; }
-        public string? Srno { get; set; }
+        public string? registration_no { get; set; }
         public Nullable<bool> RTE { get; set; }
         public string? FatherName { get; set; }
         public string? MotherName { get; set; }
@@ -44,7 +44,9 @@ namespace ApiProject.Models.Response
         public Nullable<int> SectionId { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
+        public string? Rollno { get; set; }
         public Nullable<double> PayAdmissionFee { get; set; }
+        public Nullable<double> PramoteFees { get; set; }
         public Nullable<double> TotalFee { get; set; }
         public Nullable<double> FeeDiscount { get; set; }
         public Nullable<double> DueOldFee { get; set; }
@@ -60,7 +62,7 @@ namespace ApiProject.Models.Response
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
         public string? stu_code { get; set; }
-        public string? Srno { get; set; }
+        public string? registration_no { get; set; }
         public Nullable<bool> RTE { get; set; }
         public string? FatherName { get; set; }
         public string? MotherName { get; set; }
@@ -110,6 +112,8 @@ namespace ApiProject.Models.Response
         public string? ReceiptNo { get; set; }
         public string? FeeType { get; set; }
         public Nullable<double> PayFees { get; set; }
+        public Nullable<double> AdmissionPayfee { get; set; }
+        public Nullable<double> PramoteFees { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
         public string? PaymentMode { get; set; }
         public string? Remark { get; set; }
@@ -220,7 +224,7 @@ namespace ApiProject.Models.Response
         public string? stu_photo { get; set; }
         public string? stu_name { get; set; }
         public string? stu_code { get; set; }
-        public string? Srno { get; set; }
+        public string? registration_no { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<System.DateTime> admission_date { get; set; }
         public Nullable<bool> RTE { get; set; }

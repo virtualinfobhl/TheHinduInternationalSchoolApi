@@ -63,6 +63,8 @@ namespace ApiProject.Models.Request
         public int? SectionId { get; set; }
         public int? studentId { get; set; }
         public string? srno { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
 
     }
 
@@ -74,12 +76,16 @@ namespace ApiProject.Models.Request
         public string? srno { get; set; }
         public System.DateTime? Fromdate { get; set; }
         public System.DateTime? Todate { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
 
     }
     public class GetStudentIDCardReq
     {
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
 
     }
 
@@ -201,7 +207,7 @@ namespace ApiProject.Models.Request
         public double? lastExanTotalMarks { get; set; }
         public string? lastDivision { get; set; }
         public string? lastParecentage { get; set; }
-        public bool? studentTc { get; set; }
+       // public bool? studentTc { get; set; }
         public string? lastRemarks { get; set; }
 
         public IFormFile? stuphoto { get; set; }
@@ -219,6 +225,7 @@ namespace ApiProject.Models.Request
 
         public UpadateAdmissionFeeReceiptReqDto admissionReceipt { get; set; }
         public List<FeeInstallmentModel> feeInstallmentlists { get; set; }
+        public string FeeInstallmentlistsJson { get; set; }
 
     }
 
@@ -299,6 +306,8 @@ namespace ApiProject.Models.Request
     {
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class studentRollNoAttendaceReq

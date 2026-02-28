@@ -14,6 +14,9 @@ namespace ApiProject.Helper.Mapper
             CreateMap<StudentRenewView, GetStudentQuickListModel>();
             CreateMap<StudentRenewView, GetStudentFeeListModel>();
             CreateMap<student_admission, getStudentListModel>();
+            CreateMap<StudentRenewView, GetStudentDetailsLisModel>();
+            CreateMap<StudentRenewView, GetStudentFeeDetailsModel>();
+            CreateMap<StudentRenewView, ClasswiseInstallModel>();
             CreateMap<fee_installment, FeeInstallmentDto>();
             CreateMap<M_FeeDetail, AdmissionFeeReceiptDto>();
             CreateMap<University, ClassALLReqModel>();

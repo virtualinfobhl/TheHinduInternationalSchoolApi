@@ -60,16 +60,16 @@
     public class StudentRollNoResponse
     {
         public int? StudentId { get; set; }
+        public string? StudentName { get; set; }
+        public string? SRNo { get; set; }
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
-        public string? StudentName { get; set; }
      //   public string? StudentPhoto { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public string? Attendance { get; set; }
-        public string? SRNo { get; set; }
-        public string? RollNo { get; set; }
         public string? ClassName { get; set; }
         public string? Sectionname { get; set; }
+     //   public DateTime? DateOfBirth { get; set; }
+        public string? RollNo { get; set; }
+        public string? Attendance { get; set; }
         public string? TotalGrade { get; set; }
 
     }

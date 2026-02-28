@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using System.Text.Json;
 
@@ -113,6 +114,12 @@ namespace ApiProject.Controllers
         {
             try
             {
+
+                if (!string.IsNullOrEmpty(request.FeeInstallmentlistsJson))
+                {
+                    request.feeInstallmentlists = JsonConvert.DeserializeObject<List<FeeInstallmentModel>>(request.FeeInstallmentlistsJson);
+                }
+
                 var res = await _studentService.updatestudentdata(request);
                 return Ok(res);
 
