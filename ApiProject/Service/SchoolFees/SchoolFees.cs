@@ -9,8 +9,10 @@ using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -314,8 +316,6 @@ namespace ApiProject.Service.SchoolFees
             }
         }
 
-
-
         // fees collection
         public async Task<ApiResponse<List<ClassIdByStudentRes>>> getclassbystudent(int classid)
         {
@@ -402,7 +402,6 @@ namespace ApiProject.Service.SchoolFees
             }
         }
 
-
         public async Task<ApiResponse<StudentFeesRes>> insertstudentfees(StudentFeesReq req)
         {
             try
@@ -411,57 +410,146 @@ namespace ApiProject.Service.SchoolFees
                 int SessionId = _loginUser.SessionId;
                 int UserId = _loginUser.UserId;
 
-                // Generate new FRId
-                int newFRId = _context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1;
-
-                var RStudentFees = new M_FeeDetail
+                Student_Renew Section = _context.Student_Renew.Where(p => p.ClassId == req.ClassId && p.StuId == req.StudentId && p.due_fee == 0).FirstOrDefault();
+                if (Section != null)
                 {
-                    FDId = newFRId,
-                    ClassId = req.ClassId,
-                    stu_id = req.StudentId,
-                    Status = "",
-                    Remark = req.Remark,
-                    Active = true,
-                    OrderStatus = "1",
-                    CompanyId = SchoolId,
-                    Userid = UserId,
-                    SessionId = SessionId,
-                    Date = DateTime.Now.Date,
-                    //  CreateDate = DateTime.Now,
-                    //   UpdateDate = DateTime.Now,
-                    PaymentDate = DateTime.Now.Date,
-                    PaymentMode = req.PaymentMode,
-                    PayFees = req.PayFees,
-                    Cash = req.Cash,
-                    Upi = req.Upi
-                };
-
-                // Generate ReceiptNo
-                var existingReceipt = _context.M_FeeDetail
-                    .Where(s => s.CompanyId == SchoolId)
-                    .OrderByDescending(s => s.FDId)
-                    .FirstOrDefault();
-
-                if (existingReceipt == null)
-                {
-                    RStudentFees.ReceiptNo = "1";
+                    return ApiResponse<StudentFeesRes>.ErrorResponse("duefee Already available");
                 }
                 else
                 {
-                    int rno = Convert.ToInt32(existingReceipt.ReceiptNo) + 1;
-                    RStudentFees.ReceiptNo = rno.ToString();
+                    string ReceiptCode = "";
+                    institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+                    M_FeeDetail LastCode = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.FDId).Take(1).FirstOrDefault();
+                    string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+
+                    int NewOrderNo = 1;
+                    var LastOrderNo = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
+                        .Select(s => s.OrderNo).FirstOrDefault();
+
+                    if (LastOrderNo != null && LastOrderNo != "")
+
+                        if (!string.IsNullOrEmpty(LastOrderNo))
+                        {
+                            int lastNum;
+                            if (int.TryParse(LastOrderNo, out lastNum))
+                            {
+                                NewOrderNo = lastNum + 1;
+                            }
+                        }
+
+                    var Id = 0;
+                    if (LastCode != null)
+                    {
+                        var Receipt = LastCode.ReceiptNo.Split('/');
+                        ReceiptCode = Receipt[1];
+
+                        Id = int.Parse(ReceiptCode);
+                        Id++;
+                    }
+                    else
+                    {
+                        Id = 1;
+                    }
+                    ReceiptCode = threeLetters + "/" + Id;
+
+                    int newFRId = _context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1;
+
+                    var RStudentFees = new M_FeeDetail
+                    {
+                        FDId = newFRId,
+                        ReceiptNo = ReceiptCode,
+                        ClassId = req.ClassId,
+                        stu_id = req.StudentId,
+                        Status = "1",
+                        Active = true,
+                        CompanyId = SchoolId,
+                        Userid = UserId,
+                        SessionId = SessionId,
+                        Date = DateTime.Now.Date,
+                        PaymentDate = DateTime.Now.Date,
+                        PaymentMode = req.PaymentMode,
+                        PayFees = req.PayFees,
+                        Cash = req.Cash,
+                        Upi = req.Upi,
+                        OrderStatus = "Success",
+                        OrderNo = NewOrderNo.ToString(),
+                        TransactionId = "",
+                        ReceiptType = "Offline",
+                        Remark = req.Remark,
+                        RTS = DateTime.Now,
+
+                    };
+
+                    _context.M_FeeDetail.Add(RStudentFees);
+                    await _context.SaveChangesAsync();
+
+                    var studentrenewtbl = _context.Student_Renew.Where(s => s.StuId == req.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId
+                                && s.ClassId == req.ClassId).FirstOrDefault();
+                    studentrenewtbl.due_fee = studentrenewtbl.due_fee - req.PayFees;
+                    studentrenewtbl.stu_fee += req.PayFees;
+                    await _context.SaveChangesAsync();
+
+
+                    var installments = _context.fee_installment.Where(u => u.stu_id == req.StudentId && u.university_id == req.ClassId && u.CompanyId == SchoolId
+                            && u.SessionId == SessionId).Select(a => new
+                            {
+                                a.university_id,
+                                a.IntallmentID,
+                                a.total_fee,
+                                a.Installment,
+                                a.FAmount,
+
+                            }).ToList();
+
+                    double subfee = 0;
+                    double subfee2 = Convert.ToDouble(req.PayFees);
+
+                    for (int i = 0; i < installments.Count && req.PayFees > 0; i++)
+                    {
+                        int? installmentid = installments[i].IntallmentID;
+
+                        fee_installment result = _context.fee_installment.FirstOrDefault(f => f.stu_id == req.PayFees && f.university_id == req.ClassId && f.CompanyId == SchoolId
+                                && f.SessionId == SessionId && f.IntallmentID == installmentid);
+
+                        if (result != null)
+                        {
+                            if (result.due_fee != 0)
+                            {
+
+                                if (subfee2 >= result.due_fee)
+                                {
+                                    subfee2 = Convert.ToDouble(subfee2) - Convert.ToDouble(result.due_fee);
+                                    result.due_fee = 0;
+                                    await _context.SaveChangesAsync();
+                                }
+                                else if (subfee2 != 0)
+                                {
+                                    result.due_fee = result.due_fee - subfee2;
+                                    subfee2 = 0;
+                                    await _context.SaveChangesAsync();
+                                    break;
+
+                                }
+                                else
+                                {
+                                    result.due_fee = result.due_fee - subfee2;
+                                    subfee2 = 0;
+                                    await _context.SaveChangesAsync();
+                                    break;
+
+                                }
+                            }
+                        }
+                    }
+
+
+                    var studentDetail = new StudentFeesRes
+                    {
+                        receiptId = newFRId,
+                    };
+
+                    return ApiResponse<StudentFeesRes>.SuccessResponse(studentDetail, "Student fees inserted successfully.");
                 }
-
-                _context.M_FeeDetail.Add(RStudentFees);
-                await _context.SaveChangesAsync();
-
-                var studentDetail = new StudentFeesRes
-                {
-                    receiptId = newFRId,
-
-                };
-
-                return ApiResponse<StudentFeesRes>.SuccessResponse(studentDetail, "Student fees inserted successfully.");
             }
             catch (Exception ex)
             {
@@ -699,7 +787,6 @@ namespace ApiProject.Service.SchoolFees
                 return ApiResponse<DailyCollectionReportModel>.ErrorResponse("Something went wrong : " + ex.Message);
             }
         }
-
 
         public async Task<ApiResponse<ClassWiseTotalFeeModel>> GetClasswiseTotalFee(int ClassId)
         {

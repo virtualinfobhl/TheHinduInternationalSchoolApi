@@ -551,7 +551,7 @@ namespace ApiProject.Service.School
             int SessionId = _loginUser.SessionId;
             int UserId = _loginUser.UserId;
 
-            var Subjectmodel = await _context.Subject.Where(c => c.CompanyId == SchoolId).Select(c => new SubjectResModel
+            var Subjectmodel = await _context.Subject.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId).Select(c => new SubjectResModel
             {
                 subject_id = c.subject_id,
                 subject_name = c.subject_name,
@@ -753,7 +753,7 @@ namespace ApiProject.Service.School
                 );
 
                 if (eve != null)
-                    return ApiResponse<bool>.ErrorResponse("Grade is Already available");
+                    return ApiResponse<bool>.ErrorResponse("This Grade Name or Percent Range overlaps with an existing grade.");
 
                 var newGrade = new GradeInfo
                 {

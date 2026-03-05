@@ -10,13 +10,13 @@ namespace ApiProject.Service.Report
     {
 
         Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req);
-        Task<PagedResult<GetStudentDetailsLisModel>> GetStudentDetailReport(GetStudentReq req);
+        Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req);
         //   Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req);
-        Task<PagedResult<GetStudentDetailsLisModel>> GetStudentIDCardReport(GetStudentIDCardReq req);
+        Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req);
         //    Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req);
-        Task<PagedResult<GetStudentFeeDetailsModel>> GetStudentFeeReport(getstudentDellistReq req);
+        Task<ApiResponse<PagedResult<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req);
         //   Task<ApiResponse<List<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req);
-        Task<PagedResult<ClasswiseInstallModel>> GetClassWiseInstallmentReport(BulkStudentReq req);
+        Task<ApiResponse<PagedResult<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req);
 
         //   Task<ApiResponse<List<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req);
         Task<ApiResponse<List<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req);

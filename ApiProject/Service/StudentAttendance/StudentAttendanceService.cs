@@ -75,18 +75,28 @@ namespace ApiProject.Service.StudentAttendance
 
                 if (req != null && req.Count > 0)
                 {
+                    int? stuid = req[0].StudentId;
                     int? classid = req[0].ClassId;
                     DateTime? date = req[0].Date;
+                    List<Student_Attendance> attendancedelete = _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date 
+                    && k.CompanyId == SchoolId).ToList();
 
-                    // Delete existing attendance
-                    var attendancedelete = await _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date
-                      && k.CompanyId == SchoolId).ToListAsync();
-
-
-                    if (attendancedelete.Any())
+                    if (attendancedelete != null)
                     {
                         _context.Student_Attendance.RemoveRange(attendancedelete);
                     }
+                    //int? classid = req[0].ClassId;
+                    //DateTime? date = req[0].Date;
+
+                    // Delete existing attendance
+                    //var attendancedelete = await _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date
+                    //  && k.CompanyId == SchoolId).ToListAsync();
+
+
+                    //if (attendancedelete.Any())
+                    //{
+                    //    _context.Student_Attendance.RemoveRange(attendancedelete);
+                    //}
 
                     List<Student_Attendance> attendanceList = req.Select(item => new Student_Attendance
                     {

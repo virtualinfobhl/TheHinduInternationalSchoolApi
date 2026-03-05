@@ -306,8 +306,8 @@ namespace ApiProject.Models.Request
     {
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
+        //public int PageNumber { get; set; }
+        //public int PageSize { get; set; }
     }
 
     public class studentRollNoAttendaceReq

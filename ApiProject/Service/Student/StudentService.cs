@@ -172,10 +172,10 @@ namespace ApiProject.Service.Student
 
                         var parent = new ParentsTbl
                         {
-                            FatherName = request.father_name,
+                            FatherName = request.father_name == null ? " " : request.father_name.ToUpper(),
                             FatherMobileNo = request.father_mobile,
-                            MotherName = request.mother_name,
-                            GuardianName = request.GuardianName,
+                            MotherName = request.mother_name == null ? " " : request.mother_name.ToUpper(),
+                            GuardianName = request.GuardianName == null ? " " : request.GuardianName.ToUpper(),
                             GuardianMobileNo = request.GuardianMobileNo,
                             Username = request.father_mobile,
                             Password = request.father_mobile,
@@ -226,15 +226,15 @@ namespace ApiProject.Service.Student
                         //  ParentsId = parentdata.ParentsId,
 
                         stu_code = StudentCode,
-                        registration_no = request.SRNo,
-                        stu_name = request.stu_name,
+                        registration_no = request.SRNo == null ? " " : request.SRNo.ToUpper(),
+                        stu_name = request.stu_name == null ? " " : request.stu_name.ToUpper(),
                         DOB = request.DOB,
                         university_id = request.ClassId,
                         college_id = request.SectionId,
                         gender = request.gender,
-                        father_name = request.father_name,
+                        father_name = request.father_name == null ? " " : request.father_name.ToUpper(),
                         father_mobile = request.father_mobile,
-                        mother_name = request.mother_name,
+                        mother_name = request.mother_name == null ? " " : request.mother_name.ToUpper(),
                         admission_date = request.admission_date,
                         username = request.father_mobile,
                         password = request.father_mobile,
@@ -263,7 +263,6 @@ namespace ApiProject.Service.Student
 
                     _context.student_admission.Add(student);
                     await _context.SaveChangesAsync();
-
 
                     var studentrenew = new Student_Renew
                     {
@@ -328,7 +327,6 @@ namespace ApiProject.Service.Student
 
                     _context.Student_Renew.Add(studentrenew);
                     await _context.SaveChangesAsync();
-
 
                     if ((bool)!studentrenew.RTE)
                     {
@@ -451,7 +449,7 @@ namespace ApiProject.Service.Student
                         ReceiptId = ReceiptId
                     };
 
-                    return ApiResponse<quickadmissionres>.SuccessResponse(result, "Admission successful");
+                    return ApiResponse<quickadmissionres>.SuccessResponse(result, "Student quick admission successful");
                 }
                 catch (Exception ex)
                 {
@@ -488,18 +486,17 @@ namespace ApiProject.Service.Student
 
                     if (parentdata == null)
                     {
-
                         var parent = new ParentsTbl
                         {
-                            FatherName = request.FatherName,
+                            FatherName = request.FatherName == null ? " " : request.FatherName.ToUpper(),
                             FatherMobileNo = request.FatherMobileNo,
-                            FatherOccupation = request.FatherOccupation,
+                            FatherOccupation = request.FatherOccupation == null ? " " : request.FatherOccupation.ToUpper(),
                             FatherIncome = request.FatherIncome,
-                            MotherName = request.MotherName,
+                            MotherName = request.MotherName == null ? " " : request.MotherName.ToUpper(),
                             MotherMobileNo = request.MotherMobileNo,
                             MotherIncome = request.MotherIncome,
-                            MotherOccupation = request.MotherOccupation,
-                            GuardianName = request.GuardianName,
+                            MotherOccupation = request.MotherOccupation == null ? " " : request.MotherOccupation.ToUpper(),
+                            GuardianName = request.GuardianName == null ? " " : request.GuardianName.ToUpper(),
                             GuardianMobileNo = request.GuardianMobileNo,
                             Username = request.FatherMobileNo,
                             Password = request.FatherMobileNo,
@@ -614,13 +611,13 @@ namespace ApiProject.Service.Student
 
                     //  student.ParentsId = Stuparents.ParentsId;
                     student.ParentsId = parentid;
-                    student.registration_no = request.SRNo;
+                    student.registration_no = request.SRNo == null ? " " : request.SRNo.ToUpper();
                     student.admission_date = request.admission_date;
                     student.university_id = request.ClassId;
                     student.college_id = request.SectionId;
                     student.stu_code = StudentCode;
 
-                    student.stu_name = request.stu_name;
+                    student.stu_name = request.stu_name == null ? " " : request.stu_name.ToUpper();
                     student.DOB = request.DOB;
                     student.gender = request.gender;
                     student.stu_mobile = "";
@@ -631,31 +628,31 @@ namespace ApiProject.Service.Student
                     student.Caste = request.Caste;
                     student.AdharCard = request.JanAadharNo;
 
-                    student.father_name = request.FatherName;
-                    student.father_occupation = request.FatherOccupation;
+                    student.father_name = request.FatherName == null ? " " : request.FatherName.ToUpper();
+                    student.father_occupation = request.FatherOccupation == null ? " " : request.FatherOccupation.ToUpper();
                     student.father_mobile = request.FatherMobileNo;
                     student.Fatherlncome = request.FatherIncome;
-                    student.mother_name = request.MotherName;
+                    student.mother_name = request.MotherName == null ? " " : request.MotherName.ToUpper();
                     student.mother_mobile = request.MotherMobileNo;
-                    student.mother_occupation = request.MotherOccupation;
+                    student.mother_occupation = request.MotherOccupation == null ? " " : request.MotherOccupation.ToUpper();
                     student.MotherIncome = request.MotherIncome;
 
                     student.address = request.address;
                     student.state = request.state;
                     student.district = request.district;
-                    student.city = request.city;
+                    student.city = request.city == null ? " " : request.city.ToUpper();
                     student.pincode = request.pincode;
 
                     student.p_address = request.p_address;
                     student.p_state = request.p_state;
                     student.p_district = request.p_district;
-                    student.p_city = request.p_city;
+                    student.p_city = request.p_city == null ? " " : request.p_city.ToUpper();
                     student.p_pincode = request.p_pincode;
 
                     student.username = request.FatherMobileNo;
                     student.password = request.FatherMobileNo;
 
-                    student.LastSchlName = request.LastSchlName;
+                    student.LastSchlName = request.LastSchlName == null ? " " : request.LastSchlName.ToUpper();
                     student.LastClass = request.LastClass;
                     student.LastExanTotalMarks = request.LastExanTotalMarks;
                     student.LastDivision = request.LastDivision;
@@ -758,9 +755,8 @@ namespace ApiProject.Service.Student
                     // installment
                     if ((bool)!studentrenew.RTE)
                     {
-                        var installments = await _context.InstallmentTbl
-                            .Where(p => p.university_id == studentrenew.ClassId && p.CompanyId == SchoolId && p.SessionId == SessionId)
-                            .ToListAsync();
+                        var installments = await _context.InstallmentTbl.Where(p => p.university_id == studentrenew.ClassId && p.CompanyId == SchoolId
+                        && p.SessionId == SessionId).ToListAsync();
 
                         // पहला max id एक बार निकालो
                         int maxId = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
@@ -795,8 +791,6 @@ namespace ApiProject.Service.Student
 
                         // एक बार में save
                         await _context.SaveChangesAsync();
-
-
 
                         // fee Receipt
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
@@ -838,7 +832,7 @@ namespace ApiProject.Service.Student
                             int FDId = (_context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1);
                             var receipt = new M_FeeDetail
                             {
-
+                                FDId = FDId,
                                 ReceiptNo = ReceiptCode,
                                 OrderNo = NewOrderNo.ToString(),
                                 OrderStatus = "Succcessfully",
@@ -874,6 +868,8 @@ namespace ApiProject.Service.Student
                                 Userid = UserId,
                                 SessionId = SessionId,
                             };
+
+                            //   ReceiptId1 = receipt.FDId;
 
                             ReceiptId = FDId;
 
@@ -1402,6 +1398,7 @@ namespace ApiProject.Service.Student
                 int sectionid = await _context.collegeinfo.Where(c => c.CompanyId == SchoolId && c.collegename == req.SectionName && c.active == true).Select(c => c.collegeid).FirstOrDefaultAsync();
                 if (sectionid == null || sectionid == 0)
                     continue;
+
                 //// Get fees
                 var studentfee = await _context.fees.FirstOrDefaultAsync(x =>
                     x.university_id == classid && x.CompanyId == SchoolId && x.SessionId == SessionId && x.active == true);

@@ -84,7 +84,6 @@ namespace ApiProject.Controllers
 
 
         // *************************** Vehicle start *********************** //
-
         [HttpGet("GetVehicle")]
         public async Task<IActionResult> GetVehicle()
         {
