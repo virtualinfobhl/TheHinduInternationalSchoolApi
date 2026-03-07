@@ -9,7 +9,7 @@ namespace ApiProject.Service.Report
     public interface IReportService
     {
 
-        Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req);
+        Task<ApiResponse<PagedResult<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req);
         Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req);
         //   Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req);
         Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req);
@@ -19,10 +19,10 @@ namespace ApiProject.Service.Report
         Task<ApiResponse<PagedResult<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req);
 
         //   Task<ApiResponse<List<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req);
-        Task<ApiResponse<List<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req);
+        Task<ApiResponse<PagedResult<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req);
         Task<ApiResponse<List<AllClasswiseDueeFeeModel>>> GetAllClasswiseDueFeeReport(BulkStudentReq req);
-        Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentTCReport(GetStudentIDCardReq req);
-        Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDropoutReport(GetStudentIDCardReq req);
+        Task<ApiResponse<PagedResult<GetStudentTCLisModel>>> GetStudentTCReport(GetStudentIDCardReq req);
+        Task<ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>> GetStudentDropoutReport(GetStudentIDCardReq req);
 
         Task<ApiResponse<List<TestExamMarksmOdel>>> GetTestExamMarks(GetTestExamReq req);
         Task<ApiResponse<List<TestExamMarksmOdel>>> GetTotalTestExamReport(GetTestExamReq req);

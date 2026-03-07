@@ -124,6 +124,7 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
         public async Task<ApiResponse<bool>> ChangestatusDriver(int DriverId)
         {
             try
@@ -147,7 +148,6 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
 
         // *************************** Vehicle Start *********************** //
@@ -1335,20 +1335,6 @@ namespace ApiProject.Service.Transport
                 int SchoolId = _loginUser.SchoolId;
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
-
-                //// ==== 1. GET Start Month FROM StuRouteAssignTbl ====
-                //var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == req.StudentId && c.CompanyId == SchoolId
-                //&& c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
-
-                //int startMonthNo = startDate?.Month ?? 1;           // route date ka month number (int)
-                //string startMonth = new DateTime(DateTime.Now.Year, startMonthNo, 1).ToString("MMMM");
-
-                //int currentMonthNo = DateTime.Now.Month;           // current month number (int)
-                //string currentMonth = new DateTime(DateTime.Now.Year, currentMonthNo, 1).ToString("MMMM");
-
-                //var validMonths = Enumerable.Range(startMonthNo, currentMonthNo - startMonthNo + 1).Select(m => new DateTime(DateTime.Now.Year, m, 1).ToString("MMMM")).ToList();
-
-
 
                 var res = await _context.StuRouteAssignTbl.Where(c => (req.ClassId == -1 ? true : c.university_id == req.ClassId)
                  && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && (req.StudentId == -1 ? true : c.stu_id == req.StudentId)

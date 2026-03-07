@@ -1143,9 +1143,7 @@ namespace ApiProject.Service.Student
                                 _context.fee_installment.Add(feeInstall);
                                 await _context.SaveChangesAsync();
                             }
-
                         }
-
 
                         M_FeeDetail RStudentFeesU = await _context.M_FeeDetail.Where(r => r.stu_id == studentrenew.StuId && r.CompanyId == SchoolId && r.ClassId == studentrenew.ClassId && r.SessionId == SessionId && r.Status == "AdmissionPayFee").FirstOrDefaultAsync();
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)

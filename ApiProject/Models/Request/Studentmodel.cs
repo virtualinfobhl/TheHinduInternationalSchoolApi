@@ -207,7 +207,7 @@ namespace ApiProject.Models.Request
         public double? lastExanTotalMarks { get; set; }
         public string? lastDivision { get; set; }
         public string? lastParecentage { get; set; }
-       // public bool? studentTc { get; set; }
+        // public bool? studentTc { get; set; }
         public string? lastRemarks { get; set; }
 
         public IFormFile? stuphoto { get; set; }
@@ -306,8 +306,8 @@ namespace ApiProject.Models.Request
     {
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
-        //public int PageNumber { get; set; }
-        //public int PageSize { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class studentRollNoAttendaceReq

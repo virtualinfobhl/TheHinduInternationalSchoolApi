@@ -61,7 +61,7 @@ namespace ApiProject.Models.Response
     {
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
-        public string? stu_code { get; set; }
+     //   public string? stu_code { get; set; }
         public string? registration_no { get; set; }
         public Nullable<bool> RTE { get; set; }
         public string? FatherName { get; set; }
@@ -86,6 +86,8 @@ namespace ApiProject.Models.Response
         public string? FatherName { get; set; }
         public string? MotherName { get; set; }
         public string? FatherMobileNo { get; set; }
+        public int? classid { get; set; }
+        public int? sectionid { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
         public Nullable<double> DueFee { get; set; }
@@ -154,6 +156,7 @@ namespace ApiProject.Models.Response
         public List<GetTestMarksModel> TestMarks { get; set; }
         public Nullable<double> TotalMatks { get; set; }
         public Nullable<double> MaxTotal { get; set; }
+      //  public Nullable<double> Percentage { get; set; }
         public string? Grade { get; set; }
 
     }
@@ -235,7 +238,48 @@ namespace ApiProject.Models.Response
         public Nullable<int> SectionId { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
+        public string? Rollno { get; set; }
         public string? Address { get; set; }
+    }
+
+    public class GetStudentTCLisModel
+    {
+        public int stu_id { get; set; }
+        public string? stu_photo { get; set; }
+        public string? stu_name { get; set; }
+        public string? registration_no { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public Nullable<bool> RTE { get; set; }
+        public string? FatherName { get; set; }
+        public string? MotherName { get; set; }
+        public string? FatherMobileNo { get; set; }
+        public Nullable<int> ClassId { get; set; }
+        public Nullable<int> SectionId { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
+        public string? Address { get; set; }
+    }
+
+    public class GetStudentDROPOUTLisModel
+    {
+        public int stu_id { get; set; }
+        public string? stu_photo { get; set; }
+        public string? stu_name { get; set; }
+        public string? registration_no { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public Nullable<bool> RTE { get; set; }
+        public string? FatherName { get; set; }
+        public string? MotherName { get; set; }
+        public string? FatherMobileNo { get; set; }
+        public Nullable<int> ClassId { get; set; }
+        public Nullable<int> SectionId { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
+        public string? Address { get; set; }
+        public Nullable<double> admiossionduefee { get; set; }
+        public Nullable<double> transportduefee { get; set; }
+        public Nullable<double> totalduefee { get; set; }
+
     }
 
     public class ClasswiseStudentListModel

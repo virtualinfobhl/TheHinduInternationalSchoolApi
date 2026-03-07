@@ -6,6 +6,7 @@ using ApiProject.Service.Current;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
+using Microsoft.OpenApi.Any;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Writers;
@@ -31,55 +32,11 @@ namespace ApiProject.Service.Report
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req)
+
+        public async Task<ApiResponse<PagedResult<GetStudentQuickListModel>>> GetQuickStudentReport(getstudentDellistReq req)
         {
             try
             {
-                int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
-                int SessionId = _loginUser.SessionId;
-
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
-                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && (req.studentId == -1 ? true : c.StuId == req.studentId)
-                && (string.IsNullOrEmpty(req.srno) || c.registration_no == req.srno)
-                && c.RActive == true && c.StuDetail == false && c.StuFees == false && c.SessionId == SessionId && c.CompanyId == SchoolId)
-                    .OrderBy(c => c.stu_name).Select(c => new GetStudentQuickListModel
-                    {
-                        stu_id = c.StuId,
-                        ClassId = c.ClassId,
-                        SectionId = c.SectionId,
-                        stu_name = c.stu_name,
-                        Srno = c.registration_no,
-                        stu_code = c.stu_code,
-                        DOB = c.DOB,
-                        RTE = c.RTE,
-                        admission_date = c.admission_date,
-                        FatherName = c.FatherName,
-                        FatherMobileNo = c.FatherMobileNo,
-                        MotherName = c.mother_name,
-
-                        ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                        SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
-
-                    }).ToListAsync();
-
-                if (res == null || !res.Any())
-                {
-                    return ApiResponse<List<GetStudentQuickListModel>>.ErrorResponse("No student fee found data");
-                }
-
-                return ApiResponse<List<GetStudentQuickListModel>>.SuccessResponse(res, "Fetch student fee data successfully");
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<List<GetStudentQuickListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
-            }
-        }
-        public async Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req)
-        {
-            try
-            {
-
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
@@ -93,6 +50,98 @@ namespace ApiProject.Service.Report
                             from sec in secJoin.DefaultIfEmpty()
 
                             where student.SessionId == SessionId
+                                  //   && student.stu_id == req.StudentId
+                                  && student.CompanyId == SchoolId
+                                  && student.RActive == true
+                                  && (student.StuDetail == false || student.StuFees == false)
+
+                            select new GetStudentQuickListModel
+                            {
+                                stu_id = student.stu_id,
+
+                                stu_name = student.stu_name,
+                                stu_code = student.stu_code,
+                                Srno = student.registration_no,
+                                DOB = student.DOB,
+                                admission_date = student.admission_date,
+                                RTE = student.RTE,
+                                FatherName = student.FatherName,
+                                MotherName = student.MotherName,
+                                FatherMobileNo = student.FatherMobileNo,
+                                ClassId = student.ClassId,
+                                SectionId = student.SectionId,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+                            };
+
+                // 🔎 Filters
+                if (!string.IsNullOrEmpty(req.srno))
+                    query = query.Where(p => p.Srno == req.srno);
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
+                {
+                    query = query.Where(p => p.ClassId == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
+                {
+                    query = query.Where(p => p.SectionId == req.SectionId.Value);
+                }
+                if (req.studentId.HasValue && req.studentId.Value > 0)
+                {
+                    query = query.Where(p => p.stu_id == req.studentId.Value);
+                }
+
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query
+                    .OrderByDescending(p => p.stu_id)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+                var pagedResult = new PagedResult<GetStudentQuickListModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<GetStudentQuickListModel>>.SuccessResponse(pagedResult, "Fetch student details data successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResult<GetStudentQuickListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+
+        }
+        public async Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentDetailReport(GetStudentReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  //   && student.stu_id == req.StudentId
                                   && student.CompanyId == SchoolId
                                   && student.RActive == true
                                   && student.StuDetail == true
@@ -109,6 +158,7 @@ namespace ApiProject.Service.Report
                                 DOB = student.DOB,
                                 admission_date = student.admission_date,
                                 RTE = student.RTE,
+                                Rollno = student.RollNo,
                                 FatherName = student.FatherName,
                                 MotherName = student.MotherName,
                                 FatherMobileNo = student.FatherMobileNo,
@@ -132,6 +182,10 @@ namespace ApiProject.Service.Report
                 if (req.SectionId.HasValue && req.SectionId.Value > 0)
                 {
                     query = query.Where(p => p.SectionId == req.SectionId.Value);
+                }
+                if (req.StudentId.HasValue && req.StudentId.Value > 0)
+                {
+                    query = query.Where(p => p.stu_id == req.StudentId.Value);
                 }
 
                 if (req.Fromdate.HasValue)
@@ -254,19 +308,6 @@ namespace ApiProject.Service.Report
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
-                //return new ApiResponse<PagedResult<GetStudentDetailsLisModel>>
-                //{
-                //    Success = true,
-                //    Message = "Fetch student ID card report data successfully",
-                //    Data = new PagedResult<GetStudentDetailsLisModel>
-                //    {
-                //        Data = data,
-                //        TotalRecords = totalrecords,
-                //        PageNumber = PageNumber,
-                //        PageSize = PageSize,
-                //        TotalPages = totalpages
-                //    }
-                //};
                 var pagedResult = new PagedResult<GetStudentDetailsLisModel>
                 {
                     Data = data,
@@ -287,8 +328,6 @@ namespace ApiProject.Service.Report
         {
             try
             {
-
-
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
@@ -302,11 +341,12 @@ namespace ApiProject.Service.Report
                             from sec in secJoin.DefaultIfEmpty()
 
                             where student.SessionId == SessionId
+                                  // && student.stu_id == req.studentId
                                   && student.CompanyId == SchoolId
                                   && student.RActive == true
                                   && student.StuDetail == true
                                   && student.StuFees == true
-                            //&& student.Dropout == false
+                                  && student.Dropout == false
 
                             select new GetStudentFeeDetailsModel
                             {
@@ -357,6 +397,10 @@ namespace ApiProject.Service.Report
                 if (req.SectionId.HasValue && req.SectionId.Value > 0)
                 {
                     query = query.Where(p => p.SectionId == req.SectionId.Value);
+                }
+                if (req.studentId.HasValue && req.studentId.Value > 0)
+                {
+                    query = query.Where(p => p.stu_id == req.studentId.Value);
                 }
 
                 //if (req.SectionId.HasValue)
@@ -436,7 +480,7 @@ namespace ApiProject.Service.Report
                                 stu_name = student.stu_name,
                                 registration_no = student.registration_no,
                                 RTE = student.RTE,
-                                stu_code = student.stu_code,
+                                // stu_code = student.stu_code,
                                 FatherName = student.FatherName,
                                 FatherMobileNo = student.FatherMobileNo,
                                 MotherName = student.mother_name,
@@ -523,47 +567,88 @@ namespace ApiProject.Service.Report
             }
 
         }
-
-
-        public async Task<ApiResponse<List<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req)
+        public async Task<ApiResponse<PagedResult<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req)
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
-                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true
-                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new ClasswiseDueeFeeModel
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  && student.CompanyId == SchoolId
+                                  && student.RActive == true
+                                  && student.StuDetail == true
+                                  && student.StuFees == true
+                                 && student.Dropout == false
+
+                            select new ClasswiseDueeFeeModel
+                            {
+                                stu_id = student.StuId,
+                                classid = student.ClassId,
+                                sectionid = student.SectionId,
+                                stu_name = student.stu_name,
+                                Srno = student.registration_no,
+                                FatherName = student.FatherName,
+                                FatherMobileNo = student.FatherMobileNo,
+                                MotherName = student.mother_name,
+                                DueFee = student.Rdue_fee,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+
+                            };
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
                 {
-                    stu_id = c.StuId,
-                    stu_name = c.stu_name,
-                    Srno = c.registration_no,
-                    FatherName = c.FatherName,
-                    FatherMobileNo = c.FatherMobileNo,
-                    MotherName = c.mother_name,
-                    DueFee = c.Rdue_fee,
-
-
-                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
-
-
-
-                }).ToListAsync();
-
-                if (res == null || !res.Any())
+                    query = query.Where(p => p.classid == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
                 {
-                    return ApiResponse<List<ClasswiseDueeFeeModel>>.ErrorResponse("No student fee found data");
+                    query = query.Where(p => p.sectionid == req.SectionId.Value);
                 }
 
-                return ApiResponse<List<ClasswiseDueeFeeModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+                //if (req.SectionId.HasValue)
+                //    query = query.Where(p => p.SectionId == req.SectionId);
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query
+                    .OrderByDescending(p => p.stu_id)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+                var pagedResult = new PagedResult<ClasswiseDueeFeeModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<ClasswiseDueeFeeModel>>.SuccessResponse(pagedResult, "Fetch student Class Wise Installment data successfully.");
+
             }
             catch (Exception ex)
             {
-                return ApiResponse<List<ClasswiseDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<PagedResult<ClasswiseDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
+
         }
         public async Task<ApiResponse<List<AllClasswiseDueeFeeModel>>> GetAllClasswiseDueFeeReport(BulkStudentReq req)
         {
@@ -604,7 +689,6 @@ namespace ApiProject.Service.Report
                     TransportDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.StuId && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName)).Sum(a => a.DueFee) +
                           _context.StuRouteAssignTbl.Where(a => a.stu_id == c.StuId && a.CompanyId == SchoolId && a.SessionId == SessionId).Sum(a => a.OldDueFee),
 
-
                 }).ToListAsync();
 
                 if (res == null || !res.Any())
@@ -619,94 +703,191 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<AllClasswiseDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-        public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentTCReport(GetStudentIDCardReq req)
+
+        public async Task<ApiResponse<PagedResult<GetStudentTCLisModel>>> GetStudentTCReport(GetStudentIDCardReq req)
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
-                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == false && c.StuDetail == true && c.StuFees == true
-                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  && student.CompanyId == SchoolId
+                                  && student.RActive == false
+                                  && student.StuDetail == true
+                                  && student.StuFees == true
+
+                            select new GetStudentTCLisModel
+                            {
+                                stu_id = student.StuId,
+                                stu_photo = student.stu_photo,
+                                RTE = student.RTE,
+                                DOB = student.DOB,
+                                Address = student.address,
+                                ClassId = student.ClassId,
+                                SectionId = student.SectionId,
+                                stu_name = student.stu_name,
+                                registration_no = student.registration_no,
+                                FatherName = student.FatherName,
+                                FatherMobileNo = student.FatherMobileNo,
+                                MotherName = student.mother_name,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+
+                            };
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
                 {
-                    stu_id = c.StuId,
-                    RTE = c.RTE,
-                    stu_photo = c.stu_photo,
-                    ClassId = c.ClassId,
-                    SectionId = c.SectionId,
-                    stu_name = c.stu_name,
-                    registration_no = c.registration_no,
-                    stu_code = c.stu_code,
-                    Address = c.address,
-                    DOB = c.DOB,
-                    admission_date = c.admission_date,
-                    FatherName = c.FatherName,
-                    FatherMobileNo = c.FatherMobileNo,
-                    MotherName = c.mother_name,
-
-                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
-
-                }).ToListAsync();
-
-                if (res == null || !res.Any())
+                    query = query.Where(p => p.ClassId == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
                 {
-                    return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("No student fee found data");
+                    query = query.Where(p => p.SectionId == req.SectionId.Value);
                 }
 
-                return ApiResponse<List<GetStudentDetailsLisModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+                //if (req.SectionId.HasValue)
+                //    query = query.Where(p => p.SectionId == req.SectionId);
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query
+                    .OrderByDescending(p => p.stu_id)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+                var pagedResult = new PagedResult<GetStudentTCLisModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+
+                if (!data.Any())
+                {
+                    return ApiResponse<PagedResult<GetStudentTCLisModel>>.ErrorResponse("Student TC data not found");
+                }
+
+                return ApiResponse<PagedResult<GetStudentTCLisModel>>.SuccessResponse(pagedResult, "Fetch student Class Wise Installment data successfully.");
+
             }
             catch (Exception ex)
             {
-                return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<PagedResult<GetStudentTCLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-        public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDropoutReport(GetStudentIDCardReq req)
+        public async Task<ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>> GetStudentDropoutReport(GetStudentIDCardReq req)
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
-                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.Dropout == true && c.StuDetail == true && c.StuFees == true
-                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  && student.CompanyId == SchoolId
+                                  && student.StuDetail == true
+                                  && student.StuFees == true
+                                 && student.Dropout == true
+
+                            select new GetStudentDROPOUTLisModel
+                            {
+                                stu_id = student.StuId,
+                                stu_photo = student.stu_photo,
+                                RTE = student.RTE,
+                                DOB = student.DOB,
+                                Address = student.address,
+                                ClassId = student.ClassId,
+                                SectionId = student.SectionId,
+                                stu_name = student.stu_name,
+                                registration_no = student.registration_no,
+                                FatherName = student.FatherName,
+                                FatherMobileNo = student.FatherMobileNo,
+                                MotherName = student.mother_name,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+
+                            };
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
                 {
-                    stu_id = c.StuId,
-                    RTE = c.RTE,
-                    stu_photo = c.stu_photo,
-                    ClassId = c.ClassId,
-                    SectionId = c.SectionId,
-                    stu_name = c.stu_name,
-                    registration_no = c.registration_no,
-                    stu_code = c.stu_code,
-                    Address = c.address,
-                    DOB = c.DOB,
-                    admission_date = c.admission_date,
-                    FatherName = c.FatherName,
-                    FatherMobileNo = c.FatherMobileNo,
-                    MotherName = c.mother_name,
-
-                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
-
-                }).ToListAsync();
-
-                if (res == null || !res.Any())
+                    query = query.Where(p => p.ClassId == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
                 {
-                    return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("No student fee found data");
+                    query = query.Where(p => p.SectionId == req.SectionId.Value);
                 }
 
-                return ApiResponse<List<GetStudentDetailsLisModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+                //if (req.SectionId.HasValue)
+                //    query = query.Where(p => p.SectionId == req.SectionId);
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query
+                    .OrderByDescending(p => p.stu_id)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+                var pagedResult = new PagedResult<GetStudentDROPOUTLisModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+
+                //if (pagedResult.Data == null)
+                //{
+                //    return ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>.ErrorResponse("Not found data");
+                //}
+                if (!data.Any())
+                {
+                    return ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>.ErrorResponse("Student dropout data not found");
+                }
+
+                return ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>.SuccessResponse(pagedResult, "Fetch student dropout data successfully.");
             }
             catch (Exception ex)
             {
-                return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+                return ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
 
         // exam section
         public async Task<ApiResponse<List<TestExamMarksmOdel>>> GetTestExamMarks(GetTestExamReq req)
@@ -723,6 +904,7 @@ namespace ApiProject.Service.Report
                 {
                     stu_id = c.StuId,
                     stu_name = c.stu_name,
+                    RollNo = c.RollNo,
 
                     ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
                     SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
@@ -911,16 +1093,24 @@ namespace ApiProject.Service.Report
 
 
                     // MaxMarks पहले ले आओ, फिर बाद में Sum करो
-                    MaxTotal = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType) &&
-                    a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new
-                    {
-                        Marks = _context.Subject.Where(p => p.university_id == a.university_id && p.subject_id == a.subject_id && p.Marks_Type == a.MarksType &&
-                        p.SessionId == SessionId && p.CompanyId == SchoolId)
-                        .Select(p => a.TestType == "Quarterly" ? p.Quarterly : a.TestType == "first_test" ? p.first_test : a.TestType == "second_test" ? p.second_test :
-                        a.TestType == "half_yearly" ? p.half_yearly : a.TestType == "third_test" ? p.third_test : a.TestType == "fourth_test" ? p.fourth_test :
-                    a.TestType == "yearly" ? p.yearly : 0).FirstOrDefault()
-                    }).Sum(x => x.Marks),
+                    //MaxTotal = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType) &&
+                    //a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new
+                    //{
+                    //    Marks = _context.Subject.Where(p => p.university_id == a.university_id && p.subject_id == a.subject_id && p.Marks_Type == a.MarksType &&
+                    //    p.SessionId == SessionId && p.CompanyId == SchoolId).Select(p => a.TestType == "Quarterly" ? p.Quarterly : a.TestType == "first_test" ? p.first_test :
+                    //    a.TestType == "second_test" ? p.second_test : a.TestType == "half_yearly" ? p.half_yearly : a.TestType == "third_test" ? p.third_test :
+                    //    a.TestType == "fourth_test" ? p.fourth_test : a.TestType == "yearly" ? p.yearly : 0).FirstOrDefault()
+                    //}).Sum(x => x.Marks),
 
+
+                    MaxTotal = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType)
+                    && a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new
+                    {
+                        Marks = _context.Subject.Where(p => p.university_id == a.university_id && p.subject_id == a.subject_id && p.Marks_Type == a.MarksType
+                        && p.SessionId == SessionId && p.CompanyId == SchoolId).Select(p => a.TestType == "Quarterly" ? p.Quarterly :
+                        a.TestType == "first_test" ? p.first_test : a.TestType == "second_test" ? p.second_test : a.TestType == "half_yearly" ? p.half_yearly :
+                        a.TestType == "third_test" ? p.third_test : a.TestType == "fourth_test" ? p.fourth_test : a.TestType == "yearly" ? p.yearly : 0).FirstOrDefault()
+                    }).Sum(x => x.Marks),
 
                 }).ToListAsync();
 
@@ -975,6 +1165,12 @@ namespace ApiProject.Service.Report
 
             return pagedResult;
         }
+
+
+
+
+
+
 
         //public async Task<ApiResponse<List<GetStudentFeeListModel>>> GetStudentFeeListDetail(GetStudentReq req)
         //{
@@ -1095,6 +1291,51 @@ namespace ApiProject.Service.Report
         //        return ApiResponse<List<ClasswiseStudentListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
         //    }
         //}
+
+        public async Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport1(getstudentDellistReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
+                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && (req.studentId == -1 ? true : c.StuId == req.studentId)
+                && (string.IsNullOrEmpty(req.srno) || c.registration_no == req.srno)
+                && c.RActive == true && c.StuDetail == false && c.StuFees == false && c.SessionId == SessionId && c.CompanyId == SchoolId)
+                    .OrderBy(c => c.stu_name).Select(c => new GetStudentQuickListModel
+                    {
+                        stu_id = c.StuId,
+                        ClassId = c.ClassId,
+                        SectionId = c.SectionId,
+                        stu_name = c.stu_name,
+                        Srno = c.registration_no,
+                        stu_code = c.stu_code,
+                        DOB = c.DOB,
+                        RTE = c.RTE,
+                        admission_date = c.admission_date,
+                        FatherName = c.FatherName,
+                        FatherMobileNo = c.FatherMobileNo,
+                        MotherName = c.mother_name,
+
+                        ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                        SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                    }).ToListAsync();
+
+                if (res == null || !res.Any())
+                {
+                    return ApiResponse<List<GetStudentQuickListModel>>.ErrorResponse("No student fee found data");
+                }
+
+                return ApiResponse<List<GetStudentQuickListModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<GetStudentQuickListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
 
         public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDetailReport1(GetStudentReq req)
         {
@@ -1270,7 +1511,7 @@ namespace ApiProject.Service.Report
                     stu_name = c.stu_name,
                     registration_no = c.registration_no,
                     RTE = c.RTE,
-                    stu_code = c.stu_code,
+                    //   stu_code = c.stu_code,
                     FatherName = c.FatherName,
                     FatherMobileNo = c.FatherMobileNo,
                     MotherName = c.mother_name,
@@ -1304,7 +1545,132 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<ClasswiseInstallModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+        public async Task<ApiResponse<List<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport1(BulkStudentReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
 
+                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
+                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true
+                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new ClasswiseDueeFeeModel
+                {
+                    stu_id = c.StuId,
+                    stu_name = c.stu_name,
+                    Srno = c.registration_no,
+                    FatherName = c.FatherName,
+                    FatherMobileNo = c.FatherMobileNo,
+                    MotherName = c.mother_name,
+                    DueFee = c.Rdue_fee,
+
+                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                }).ToListAsync();
+
+                if (res == null || !res.Any())
+                {
+                    return ApiResponse<List<ClasswiseDueeFeeModel>>.ErrorResponse("No student fee found data");
+                }
+
+                return ApiResponse<List<ClasswiseDueeFeeModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<ClasswiseDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentTCReport1(GetStudentIDCardReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
+                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == false && c.StuDetail == true && c.StuFees == true
+                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
+                {
+                    stu_id = c.StuId,
+                    RTE = c.RTE,
+                    stu_photo = c.stu_photo,
+                    ClassId = c.ClassId,
+                    SectionId = c.SectionId,
+                    stu_name = c.stu_name,
+                    registration_no = c.registration_no,
+                    stu_code = c.stu_code,
+                    Address = c.address,
+                    DOB = c.DOB,
+                    admission_date = c.admission_date,
+                    FatherName = c.FatherName,
+                    FatherMobileNo = c.FatherMobileNo,
+                    MotherName = c.mother_name,
+
+                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                }).ToListAsync();
+
+                if (res == null || !res.Any())
+                {
+                    return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("No student fee found data");
+                }
+
+                return ApiResponse<List<GetStudentDetailsLisModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
+        public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDropoutReport1(GetStudentIDCardReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.StudentRenewView.Where(c => (req.ClassId == -1 ? true : c.ClassId == req.ClassId)
+                && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.Dropout == true && c.StuDetail == true && c.StuFees == true
+                && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new GetStudentDetailsLisModel
+                {
+                    stu_id = c.StuId,
+                    RTE = c.RTE,
+                    stu_photo = c.stu_photo,
+                    ClassId = c.ClassId,
+                    SectionId = c.SectionId,
+                    stu_name = c.stu_name,
+                    registration_no = c.registration_no,
+                    stu_code = c.stu_code,
+                    Address = c.address,
+                    DOB = c.DOB,
+                    admission_date = c.admission_date,
+                    FatherName = c.FatherName,
+                    FatherMobileNo = c.FatherMobileNo,
+                    MotherName = c.mother_name,
+
+                    ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
+                    SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
+
+                }).ToListAsync();
+
+                if (res == null || !res.Any())
+                {
+                    return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("No student fee found data");
+                }
+
+                return ApiResponse<List<GetStudentDetailsLisModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
 
     }
 }
