@@ -12,6 +12,7 @@ namespace ApiProject.Models.Response
         public string? Mobileno { get; set; }
         public string? Address { get; set; }
         public bool? Active { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 
     public class GetDriver
@@ -80,6 +81,7 @@ namespace ApiProject.Models.Response
         public string? StoppageName { get; set; }
         public Nullable<double> MonthFee { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 
     public class UpdateTransportFee
@@ -88,13 +90,14 @@ namespace ApiProject.Models.Response
         public Nullable<int> StoppageId { get; set; }
         public string? StoppageName { get; set; }
         public Nullable<double> MonthFee { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 
     public class GetRouteAssignModel
     {
         public int? RAId { get; set; }
+         public int? VehicleId { get; set; }
         public string? Vehicleno { get; set; }
-        // public int? RouteId { get; set; }
         public Nullable<bool> Active { get; set; }
         public List<UpdateRouteModel> Route { get; set; }
     }
@@ -139,12 +142,18 @@ namespace ApiProject.Models.Response
     public class GetTransportDetailModel
     {
         public int? TSRAId { get; set; }
+        public int? studentid { get; set; }
         public string? Studentname { get; set; }
+        public string? Fathername { get; set; }
+        public string? Mobileno { get; set; }
         public string? SRNo { get; set; }
-        public string? Class { get; set; }
+        public int? classid { get; set; }
+        public string? Classname { get; set; }
+        public int? sectionid { get; set; }
         public string? Sectionname { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string? Vehiclename { get; set; }
+        public int? RouteId { get; set; }
         public string? Routename { get; set; }
         public string? Stoppagename { get; set; }
 
@@ -172,7 +181,7 @@ namespace ApiProject.Models.Response
     {
         public int? StudentId { get; set; }
         public string? StudentName { get; set; }
-    //    public string? SRNo { get; set; }
+        //    public string? SRNo { get; set; }
     }
 
     public class GetTClassbySectionNdStudent
@@ -203,6 +212,14 @@ namespace ApiProject.Models.Response
         public string? PaymentMode { get; set; }
         public string? Remark { get; set; }
     }
+    
+    public class GetFilteredStoppageTransFeeModel
+    {
+        public int? TransFeeId { get; set; }
+        public int? StoppageId { get; set; }
+        public Nullable<double> MonthFee { get; set; }
+    }
+
 
     public class TransStudentDetailModel
     {
@@ -228,8 +245,8 @@ namespace ApiProject.Models.Response
         public Nullable<double> LastDueFee { get; set; }
         public Nullable<double> DueFee { get; set; }
 
-        public List<TInstallmentList> TransInatallment { get; set; }
         public List<TransReceiptList> TransReceiptList { get; set; }
+        public List<TInstallmentList> TransInatallment { get; set; }
 
     }
 

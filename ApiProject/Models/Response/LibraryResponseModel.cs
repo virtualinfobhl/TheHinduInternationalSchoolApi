@@ -30,6 +30,9 @@ namespace ApiProject.Models.Response
         public string? father_name { get; set; }
         public string? mother_name { get; set; }
         public string? father_mobile { get; set; }
+        public Nullable<System.DateTime> dob { get; set; }
+        public string? Rollno { get; set; }
+        public string? gender { get; set; }
         public int? ClassId { get; set; }
         public string? ClassName { get; set; }
         public int? SectionId { get; set; }
@@ -67,15 +70,18 @@ namespace ApiProject.Models.Response
     {
         public int? StudentId { get; set; }
         public string? SRNo { get; set; }
+        public string? stu_photo { get; set; }
         public string? stu_name { get; set; }
         public string? Fatername { get; set; }
         public string? StuMobileno { get; set; }
         public string? Gender { get; set; }
+
     }
 
     public class GetempDetails
     {
         public int? Emp_Id { get; set; }
+        public string? emp_photo { get; set; }
         public string? Emp_Name { get; set; }
         public string? Fatername { get; set; }
         public string? EmpMobileno { get; set; }
@@ -97,6 +103,7 @@ namespace ApiProject.Models.Response
 
     public class LibraryIssudatemodel
     {
+        public int? IssueId { get; set; }
         public string? BookTitle { get; set; }
         public string? BookNumber { get; set; }
         public Nullable<long> Quantity { get; set; }

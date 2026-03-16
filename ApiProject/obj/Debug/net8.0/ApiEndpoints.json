@@ -1058,7 +1058,7 @@
     "Parameters": [
       {
         "Name": "req",
-        "Type": "ApiProject.Models.Request.BulkStudentReq",
+        "Type": "ApiProject.Models.Request.gertlibraryclassreq",
         "IsRequired": true
       }
     ],
@@ -1084,6 +1084,27 @@
     "Parameters": [
       {
         "Name": "LibraryId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.LibraryController",
+    "Method": "RemoveStudentlibrary",
+    "RelativePath": "api/Library/RemoveStudentlibrary",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ClassId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "studentid",
         "Type": "System.Int32",
         "IsRequired": false
       }
@@ -1595,6 +1616,16 @@
     "ContainingType": "ApiProject.Controllers.SchoolController",
     "Method": "getclassList",
     "RelativePath": "api/School/getclassList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolController",
+    "Method": "GetDashboard",
+    "RelativePath": "api/School/GetDashboard",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2171,6 +2202,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ApiProject.Controllers.SchoolFeesController",
+    "Method": "UpdateStudentReceipt",
+    "RelativePath": "api/SchoolFees/UpdateStudentReceipt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.ReceiptupdateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ApiProject.Controllers.StudentController",
     "Method": "AddEventCertificate",
     "RelativePath": "api/Student/AddEventCertificate",
@@ -2527,6 +2574,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.StudentController",
+    "Method": "EventCertificateRemove",
+    "RelativePath": "api/Student/EventCertificateRemove",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.StudentController",
     "Method": "GenerateTC",
     "RelativePath": "api/Student/GenerateTC",
     "HttpMethod": "POST",
@@ -2659,22 +2722,6 @@
         "Name": "request",
         "Type": "ApiProject.Models.Response.ClassExamMarksModelreq",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ApiProject.Controllers.StudentController",
-    "Method": "GetClassSubject",
-    "RelativePath": "api/Student/GetClassSubject",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ClassId",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -3664,6 +3711,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "GetFilteredStoppageTransFee",
+    "RelativePath": "api/Transport/GetFilteredStoppageTransFee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StoppageId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "GetRoute",
     "RelativePath": "api/Transport/GetRoute",
     "HttpMethod": "GET",
@@ -3744,10 +3807,16 @@
     "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "GetStudentRouteAssignByFee",
     "RelativePath": "api/Transport/GetStudentRouteAssignByFee",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.GetStuRouteAssignReq",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

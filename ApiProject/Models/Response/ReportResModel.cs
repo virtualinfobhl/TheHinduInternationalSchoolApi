@@ -156,7 +156,12 @@ namespace ApiProject.Models.Response
         public List<GetTestMarksModel> TestMarks { get; set; }
         public Nullable<double> TotalMatks { get; set; }
         public Nullable<double> MaxTotal { get; set; }
-      //  public Nullable<double> Percentage { get; set; }
+        public Nullable<double> MaxTotalfirst { get; set; }
+        public Nullable<double> MaxTotalsecond { get; set; }
+        public Nullable<double> MaxTotalhalf { get; set; }
+        public Nullable<double> MaxTotalyearly { get; set; }
+        public Nullable<double> MaxTotalquatrialy { get; set; }
+        //  public Nullable<double> Percentage { get; set; }
         public string? Grade { get; set; }
 
     }

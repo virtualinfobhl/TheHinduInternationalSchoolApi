@@ -371,7 +371,7 @@ namespace ApiProject.Service.Employee
 
                     TrnBankDetails Bank = await _context.TrnBankDetails.Where(p => p.Emp_Id == request.Emp_Id && p.CompanyId == SchoolId).FirstOrDefaultAsync();
 
-                 //   Bank.Emp_Id = request.Emp_Id;
+                    //   Bank.Emp_Id = request.Emp_Id;
                     Bank.IFSCCode = request.BankDetail.IFSCCode;
                     Bank.BankName = request.BankDetail.BankName;
                     Bank.BranchName = request.BankDetail.BranchName;
@@ -399,8 +399,8 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EmployeeRegister.Where(c => (req.EmpId == -1 ? true : c.Emp_Id == req.EmpId)
-                 && c.CompanyId == SchoolId).Select(c => new GetEmployeeListModel
+                var res = await _context.EmployeeRegister.Where(c => (req.EmpId == -1 ? true : c.Emp_Id == req.EmpId) && c.Active == true && c.CompanyId == SchoolId
+                 ).Select(c => new GetEmployeeListModel
                  {
                      Emp_Id = c.Emp_Id,
                      Emp_Name = c.Emp_Name,
@@ -706,7 +706,7 @@ namespace ApiProject.Service.Employee
                 {
                     Emp_Id = a.Emp_Id,
                     Employeename = a.Emp_Name,
-                    
+
                     TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Present").Count(),
                     TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Absent").Count(),
                     TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Holiday").Count(),

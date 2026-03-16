@@ -35,6 +35,9 @@ namespace ApiProject.Service.SchoolFees
         Task<ApiResponse<PagedResult<ClassFeesInstaListRes>>> getclassfeesInstallment(ClassFeesFilterReq req);
 
 
+        //  STUDEMNT FEE REPORT 
+
+        Task<ApiResponse<bool>> UpdateStudentReceipt(ReceiptupdateModel req);
 
 
 

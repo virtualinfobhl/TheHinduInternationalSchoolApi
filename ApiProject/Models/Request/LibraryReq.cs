@@ -66,6 +66,12 @@ namespace ApiProject.Models.Request
         public Nullable<System.DateTime> ReturnDate { get; set; }
     }
 
+    public class gertlibraryclassreq
+    {
+        public int? ClassId { get; set; }
+        public int? SectionId { get; set; }
+    }
+
 
 
 

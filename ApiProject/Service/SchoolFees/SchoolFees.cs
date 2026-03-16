@@ -810,14 +810,13 @@ namespace ApiProject.Service.SchoolFees
 
                 return ApiResponse<ClassWiseTotalFeeModel>.SuccessResponse(res, "Fetch Classwise total fee.");
 
-
             }
             catch (Exception ex)
             {
                 return ApiResponse<ClassWiseTotalFeeModel>.ErrorResponse("Error: " + ex.Message);
-
             }
         }
+
 
         public async Task<ApiResponse<PagedResult<ClassFeesInstaListRes>>> getclassfeesInstallment(ClassFeesFilterReq req)
         {
@@ -930,86 +929,70 @@ namespace ApiProject.Service.SchoolFees
             }
         }
 
+        public async Task<ApiResponse<bool>> UpdateStudentReceipt(ReceiptupdateModel req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
 
-        //public async Task<ApiResponse<PagedResult<ClassFeesListRes>>> getclassfees(ClassFeesFilterReq req)
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int SessionId = _loginUser.SessionId;
+                var result = _context.M_FeeDetail.Where(r => r.FDId == req.FeeReceiptId && r.stu_id == req.Studentid && r.CompanyId == SchoolId).FirstOrDefault();
+                result.PaymentMode = req.PaymentMode;
+                result.PaymentDate = req.PaymentDate;
+                result.Remark = req.remark;
+                result.RTS = DateTime.Now;
+                await _context.SaveChangesAsync();
 
-        //        int pageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
-        //        int pageSize = req.PageSize > 0 ? req.PageSize : 10;
+                return ApiResponse<bool>.SuccessResponse(true, "Fees update successfully.");
 
-        //        // Filtered base query
-        //        var baseQuery = from student in _context.StudentRenewView
-        //                        where student.StuId == SchoolId && student.SessionId == SessionId
-        //                            && (!req.ClassId.HasValue || student.ClassId == req.ClassId)
-        //                        join fee in _context.M_FeeDetail
-        //                            .Where(f => f.CompanyId == SchoolId && f.SessionId == SessionId &&
-        //                                        f.Status == "1" && f.Active == true)
-        //                            on student.StuId equals fee.stu_id into feeGroup
-        //                        from fg in feeGroup.DefaultIfEmpty()
-        //                        group fg by student into g
-        //                        select new ClassFeesListRes
-        //                        {
-        //                            stu_name = g.Key.stu_name,
-        //                            srno = g.Key.registration_no,
-        //                            //     ClassName = g.Key.ClassName,
-        //                            //     SectionName = g.Key.SectionName,
-        //                            fathername = g.Key.father_name,
-        //                            fathermobileno = g.Key.father_mobile,
-        //                            RTE = g.Key.RTE,
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
 
-        //                            admission_fee = g.Key.admission_fee,
-        //                            PramoteFees = g.Key.PramoteFees,
-        //                            AFeeDiscount = g.Key.AFeeDiscount,
-        //                            AdmissionPayfee = g.Key.AdmissionPayfee,
-        //                            exam_fee = g.Key.exam_fee,
-        //                            Tution_fee = g.Key.tution_fee,
-        //                            Develoment_fee = g.Key.Develoment_fee,
-        //                            Games_fees = g.Key.Games_fees,
-        //                            total = g.Key.total,
-        //                            discount = g.Key.discount,
-        //                            OldDuefees = g.Key.OldDuefees,
-        //                            total_fee = g.Key.total_fee,
 
-        //                            TotalPaid = (decimal)g.Sum(x => x != null ? x.PayFees : 0)
-        //                        };
+        public async Task<ApiResponse<ClassWiseTotalFeeModel>> GetClasswiseTotalFee1(int ClassId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
 
-        //        var allData = await baseQuery.ToListAsync();
-        //        int totalRecords = allData.Count;
 
-        //        var pagedData = allData.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                var res = await _context.fees.Where(s => s.university_id == ClassId && s.active == true && s.CompanyId == SchoolId && s.SessionId == SessionId)
+                    .Select(c => new ClassWiseTotalFeeModel
+                    {
+                        ClassId = c.university_id,
+                        TotalFee = c.total,
+                    }).FirstOrDefaultAsync();
+                if (res == null)
+                {
+                    return ApiResponse<ClassWiseTotalFeeModel>.ErrorResponse("No Fee Fount");
+                }
 
-        //        // Grand Totals
-        //        var totals = new ClassFeesTotals
-        //        {
-        //            TotalAdmissionFee = allData.Sum(x => (decimal?)x.admission_fee ?? 0),
-        //            TotalDiscount = allData.Sum(x => (decimal?)x.discount ?? 0),
-        //            TotalPaid = allData.Sum(x => x.TotalPaid),
-        //            TotalFee = allData.Sum(x => (decimal?)x.total_fee ?? 0)
-        //        };
+                return ApiResponse<ClassWiseTotalFeeModel>.SuccessResponse(res, "Fetch Classwise total fee.");
 
-        //        var result = new PagedResult<ClassFeesListRes>
-        //        {
-        //            Data = pagedData,
-        //            PageNumber = pageNumber,
-        //            Total = totals,
-        //            PageSize = pageSize,
-        //            TotalRecords = totalRecords,
-        //            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
-        //        };
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<ClassWiseTotalFeeModel>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
 
-        //        var response = ApiResponse<PagedResult<ClassFeesListRes>>.SuccessResponse(result, "Fee data fetched.");
 
-        //        return response;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<PagedResult<ClassFeesListRes>>.ErrorResponse("Something went wrong: " + ex.Message);
-        //    }
-        //}
+
+
+
+
 
     }
 }
+
+
+
+
+

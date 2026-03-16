@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Writers;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ApiProject.Service.Transport
 {
@@ -46,6 +47,8 @@ namespace ApiProject.Service.Transport
                         Mobileno = c.MobileNo,
                         Address = c.Address,
                         Active = c.Active,
+                        Date = c.Date,
+
                     }).ToListAsync();
                 return ApiResponse<List<GetDriverList>>.SuccessResponse(driverEntity, "Driver list fetched successfully");
 
@@ -512,6 +515,7 @@ namespace ApiProject.Service.Transport
                         StoppageId = c.StopageId,
                         StoppageName = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StopageId).Select(a => a.Stoppage).FirstOrDefault(),
                         Active = c.Active,
+                        Date = c.Date,
                     }).ToListAsync();
                 return ApiResponse<List<GetTransportFeeModel>>.SuccessResponse(TransportEntity, "Transport Fee list fetched successfully");
 
@@ -542,6 +546,7 @@ namespace ApiProject.Service.Transport
                     StopageId = req.StoppageId,
                     MonthFee = req.MonthFee,
                     Active = true,
+                    Date = req.Date,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
@@ -575,6 +580,7 @@ namespace ApiProject.Service.Transport
 
                 result.StopageId = req.StoppageId;
                 result.MonthFee = req.MonthFee;
+                result.Date = req.Date;
                 result.Userid = UserId;
                 result.UpdateDate = DateTime.Now;
                 await _context.SaveChangesAsync();
@@ -687,7 +693,7 @@ namespace ApiProject.Service.Transport
                     .GroupBy(c => new { c.RAId, c.BusId, c.Active })
                     .Select(g => new GetRouteAssignModel
                     {
-
+                        VehicleId = g.Key.BusId,
                         Vehicleno = _context.TransBusTbl.Where(a => a.BusId == g.Key.BusId && a.CompanyId == SchoolId && a.Active == true).Select(a => a.VihecleNo).FirstOrDefault(),
                         Active = g.Key.Active,
                         Route = g.Select(r => new UpdateRouteModel
@@ -740,10 +746,10 @@ namespace ApiProject.Service.Transport
             }
             catch (Exception ex)
             {
-
                 return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
             }
         }
+
         public async Task<ApiResponse<bool>> UpdateRouteAssign(UpdateRouteAssignRequest model)
         {
             try
@@ -860,38 +866,40 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<UpdateTransportFee>.ErrorResponse("Error: " + ex.Message);
             }
         }
-        public async Task<ApiResponse<List<GetStuRouteAssignModel>>> GetStudentRouteAssign()
+
+        public async Task<ApiResponse<List<GetStuRouteAssignModel>>> GetStudentRouteAssign2(GetStuRouteAssignReq req)
         {
             try
             {
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
-                var RouteAssignEntity = await _context.StuRouteAssignTbl.Where(c => c.CompanyId == SchoolId)
-                    .Select(c => new GetStuRouteAssignModel
-                    {
-                        TSRAId = c.StuRouteAssignId,
-                        StudentId = c.stu_id,
-                        ClassId = c.university_id,
-                        SectionId = c.SectionId,
-                        VehicleId = c.BusId,
-                        RouteId = c.RouteId,
-                        StoppageId = c.StoppageId,
-                        Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
-                        Srno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
-                        Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
-                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
+                var query = await _context.StuRouteAssignTbl.Where(c => c.CompanyId == SchoolId).Select(c => new GetStuRouteAssignModel
+                {
+                    TSRAId = c.StuRouteAssignId,
+                    StudentId = c.stu_id,
+                    ClassId = c.university_id,
+                    SectionId = c.SectionId,
+                    VehicleId = c.BusId,
+                    RouteId = c.RouteId,
+                    StoppageId = c.StoppageId,
+                    Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+                    Srno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
+                    Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+                    Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
 
-                        Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
-                        Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
-                        Stoppahename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
-                        TransportFee = c.TransportFee,
-                        TDiscount = c.Discount,
-                        NetTransportFee = c.NetTranSFee,
-                        Active = c.Active,
-                        Date = c.Date,
-                    }).ToListAsync();
-                return ApiResponse<List<GetStuRouteAssignModel>>.SuccessResponse(RouteAssignEntity, "Student Route Assign data  fetched successfully");
+                    Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+                    Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+                    Stoppahename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+                    TransportFee = c.TransportFee,
+                    TDiscount = c.Discount,
+                    NetTransportFee = c.NetTranSFee,
+                    Active = c.Active,
+                    Date = c.Date,
+                }).ToListAsync();
+
+
+                return ApiResponse<List<GetStuRouteAssignModel>>.SuccessResponse(query, "Student Route Assign data  fetched successfully");
 
             }
             catch (Exception ex)
@@ -899,6 +907,126 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<List<GetStuRouteAssignModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
+        public async Task<ApiResponse<PagedResult<GetStuRouteAssignModel>>> GetStudentRouteAssign(GetStuRouteAssignReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var query = from c in _context.StuRouteAssignTbl.DefaultIfEmpty()
+                            where c.CompanyId == SchoolId
+
+
+                            select new GetStuRouteAssignModel
+                            {
+                                TSRAId = c.StuRouteAssignId,
+                                StudentId = c.stu_id,
+                                ClassId = c.university_id,
+                                SectionId = c.SectionId,
+                                VehicleId = c.BusId,
+                                RouteId = c.RouteId,
+                                StoppageId = c.StoppageId,
+                                Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+                                Srno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
+                                Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+                                Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
+
+                                Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+                                Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+                                Stoppahename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+                                TransportFee = c.TransportFee,
+                                TDiscount = c.Discount,
+                                NetTransportFee = c.NetTranSFee,
+                                Active = c.Active,
+                                Date = c.Date,
+                            };
+
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query.OrderByDescending(p => p.StudentId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+                var pagedResult = new PagedResult<GetStuRouteAssignModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<GetStuRouteAssignModel>>.SuccessResponse(pagedResult, "Fetch Transport Student Route Assign data successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResult<GetStuRouteAssignModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
+
+        //public async Task<ApiResponse<List<GetStuRouteAssignModel>>> GetStudentRouteAssign(GetStuRouteAssignReq req)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var query = _context.StuRouteAssignTbl.Where(c => c.CompanyId == SchoolId);
+
+        //        var totalRecords = await query.CountAsync();
+
+        //        int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+        //        int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+        //        var data = await query.OrderByDescending(c => c.StuRouteAssignId).Skip((req.PageNumber - 1) * req.PageSize).Take(req.PageSize)
+        //            .Select(c => new GetStuRouteAssignModel
+        //            {
+        //                TSRAId = c.StuRouteAssignId,
+        //                StudentId = c.stu_id,
+        //                ClassId = c.university_id,
+        //                SectionId = c.SectionId,
+        //                VehicleId = c.BusId,
+        //                RouteId = c.RouteId,
+        //                StoppageId = c.StoppageId,
+
+        //                Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+
+        //                Srno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
+
+        //                Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+
+        //                Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
+
+        //                Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+
+        //                Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+
+        //                Stoppahename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+
+        //                TransportFee = c.TransportFee,
+        //                TDiscount = c.Discount,
+        //                NetTransportFee = c.NetTranSFee,
+        //                Active = c.Active,
+        //                Date = c.Date
+        //            }).ToListAsync();
+
+        //          int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+        //        return ApiResponse<List<GetStuRouteAssignModel>>.SuccessResponse(data, $"Fetched successfully. Total Records: {totalRecords}");
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<List<GetStuRouteAssignModel>>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
 
         //  [HttpPost]
         public async Task<ApiResponse<bool>> AddStudentRouteAssign([FromBody] StuRouteAssignReq req)
@@ -1195,8 +1323,103 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<List<TransStudentDetailModel>>> GetStudentByTransportData(int StudentId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                // ===== GET START DATE =====
+                var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.SessionId == SessionId).
+                    Select(c => c.Date).FirstOrDefaultAsync();
+
+                DateTime start = startDate ?? DateTime.Now;
+                DateTime current = DateTime.Now;
+
+                // ===== MONTH + YEAR RANGE =====   
+                var validMonths = new List<string>();
+
+                for (DateTime date = new DateTime(start.Year, start.Month, 1);
+                     date <= new DateTime(current.Year, current.Month, 1);
+                     date = date.AddMonths(1))
+                {
+                    validMonths.Add(date.ToString("MMMM"));
+                    //   validMonths.Add(date.ToString("MMMM yyyy"));
+                }
+
+                // ===== MAIN DATA =====
+                var res = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.Active == true)
+                    .Select(c => new TransStudentDetailModel
+                    {
+                        TSRAId = c.StuRouteAssignId,
+                        StudentId = c.stu_id,
+                        TransportFee = c.TransportFee,
+                        Discount = c.Discount,
+                        NetTransFee = c.NetTranSFee,
+                        ClassId = c.university_id,
+                        sectionId = c.SectionId,
+                        VehicleId = c.BusId,
+                        RouteId = c.RouteId,
+                        StoppageId = c.StoppageId,
+                        Date = c.Date,
+
+                        StudentName = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+
+                        SRNo = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
+
+                        Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+
+                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId).Select(a => a.collegename).FirstOrDefault(),
+
+                        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+
+                        Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+
+                        Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+
+                        // ===== TOTAL DUE =====
+                        DueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName))
+                            .Sum(a => a.DueFee) ?? 0,
+
+                        // ===== INSTALLMENT LIST =====
+                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId && a.Active == true
+                          && validMonths.Contains(a.MonthName)).Select(a => new TInstallmentList
+                          {
+                              InstallmentFee = a.InstallFee,
+                              InstallmentNo = a.InstallmentNo,
+                              MonthName = a.MonthName,
+                              DueFee = a.DueFee
+                          }).ToList(),
+
+                        // ===== RECEIPT LIST =====
+                        TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.Active == true).Select(a => new TransReceiptList
+                        {
+                            TReceiptId = a.NewPaymentId,
+                            ReceiptNo = a.ReceiptNo,
+                            MonthName = a.MonthName,
+                            FeeType = a.FeeType,
+                            TotalFee = a.NetTransFee,
+                            PayFee = a.PayFee,
+                            FeeDiscount = a.Paydiscount,
+                            Date = a.Date,
+                            PaymentMode = a.PaymentMode,
+                            Remark = a.Remark,
+
+
+                        }).ToList(),
+                    }).ToListAsync();
+
+                return ApiResponse<List<TransStudentDetailModel>>.SuccessResponse(res, "Fetch successfully Transport Student data ");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<TransStudentDetailModel>>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<List<TransStudentDetailModel>>> GetStudentByTransportData1(int StudentId)
         {
             try
             {
@@ -1206,7 +1429,7 @@ namespace ApiProject.Service.Transport
 
                 // ==== 1. GET Start Month FROM StuRouteAssignTbl ====
                 var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId
-                && c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
+                && c.SessionId == SessionId && c.Active == true).Select(c => c.Date).FirstOrDefaultAsync();
 
                 int startMonthNo = startDate?.Month ?? 1;           // route date ka month number (int)
                 string startMonth = new DateTime(DateTime.Now.Year, startMonthNo, 1).ToString("MMMM");
@@ -1233,7 +1456,7 @@ namespace ApiProject.Service.Transport
                         StudentName = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
                         SRNo = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
                         Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
-                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
+                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId).Select(a => a.collegename).FirstOrDefault(),
 
                         Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
                         Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
@@ -1244,7 +1467,7 @@ namespace ApiProject.Service.Transport
                         DueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName))
                         .Sum(a => a.DueFee),
 
-                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId
+                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && a.Active == true
                         && validMonths.Contains(a.MonthName)).Select(a => new TInstallmentList
                         {
                             InstallmentFee = a.InstallFee,
@@ -1255,7 +1478,7 @@ namespace ApiProject.Service.Transport
 
                         }).ToList(),
 
-                        TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId)
+                        TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.Active == true)
                         .Select(a => new TransReceiptList
                         {
                             TReceiptId = a.NewPaymentId,
@@ -1278,8 +1501,10 @@ namespace ApiProject.Service.Transport
         }
 
 
+
+
         // *************************** Transport Fee Report Start *********************** //
-        public async Task<ApiResponse<List<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq req)
+        public async Task<ApiResponse<List<GetTransportDetailModel>>> TransportDetailsReport1(TransportDetailReportReq req)
         {
             try
             {
@@ -1294,8 +1519,10 @@ namespace ApiProject.Service.Transport
                      TSRAId = c.StuRouteAssignId,
                      Date = c.Date,
                      Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+                     Fathername = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.father_name).FirstOrDefault(),
+                     Mobileno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.father_mobile).FirstOrDefault(),
                      SRNo = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
-                     Class = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+                     Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
                      Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId).Select(a => a.collegename).FirstOrDefault(),
 
                      Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
@@ -1326,6 +1553,86 @@ namespace ApiProject.Service.Transport
             {
 
                 return ApiResponse<List<GetTransportDetailModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<PagedResult<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var query = from c in _context.StuRouteAssignTbl
+                            join cls in _context.University
+                                on c.university_id equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on c.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where c.SessionId == SessionId
+                                  && c.CompanyId == SchoolId
+                                  && c.Active == true
+
+                            select new GetTransportDetailModel
+                            {
+                                TSRAId = c.StuRouteAssignId,
+                                studentid = c.stu_id,
+                                classid = c.university_id,
+                                sectionid = c.SectionId,
+                                Date = c.Date,
+                                Studentname = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
+                                Fathername = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.father_name).FirstOrDefault(),
+                                Mobileno = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.father_mobile).FirstOrDefault(),
+                                SRNo = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.registration_no).FirstOrDefault(),
+                                Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
+                                Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId).Select(a => a.collegename).FirstOrDefault(),
+                                RouteId = c.RouteId,
+                                Vehiclename = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+                                Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+                                Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+                            };
+
+                // 🔎 Filters
+
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
+                {
+                    query = query.Where(p => p.classid == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
+                {
+                    query = query.Where(p => p.sectionid == req.SectionId.Value);
+                }
+                if (req.RouteId.HasValue && req.RouteId.Value > 0)
+                {
+                    query = query.Where(p => p.RouteId == req.RouteId.Value);
+                }
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query.OrderByDescending(p => p.studentid).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+                var pagedResult = new PagedResult<GetTransportDetailModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<GetTransportDetailModel>>.SuccessResponse(pagedResult, "Fetch Transport Details Report data successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResult<GetTransportDetailModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
         public async Task<ApiResponse<List<TransportFeereportModel>>> TransportFeeReport(TransportFeeReportReq req)
@@ -1390,6 +1697,31 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<List<TransportFeereportModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+        public async Task<ApiResponse<GetFilteredStoppageTransFeeModel>> GetFilteredStoppageTransFee(int StoppageId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.TransportFeeTbl.Where(a => a.StopageId == StoppageId && a.CompanyId == SchoolId)
+                    .Select(a => new GetFilteredStoppageTransFeeModel
+                    {
+                        TransFeeId = a.TransFeeId,
+                        StoppageId = a.StopageId,
+                        MonthFee = a.MonthFee,
+                    }).FirstOrDefaultAsync();
+
+                return ApiResponse<GetFilteredStoppageTransFeeModel>.SuccessResponse(res, "Stoppage id by filtered monthly fee  successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<GetFilteredStoppageTransFeeModel>.ErrorResponse("Error : " + ex.Message);
+            }
+        }
+
 
         public async Task<ApiResponse<bool>> AddStudentTransportFee(StudentTransportFeeReq req)
         {
@@ -1541,6 +1873,8 @@ namespace ApiProject.Service.Transport
                 }
             }
         }
+
+
 
         public async Task<ApiResponse<List<GetTransportFeeDetailModel>>> GetTransportFeeDetails(int StudentId)
 

@@ -20,7 +20,6 @@ namespace ApiProject.Controllers
             ISchoolFees schoolFees
             )
         {
-
             _schoolFees = schoolFees;
         }
 
@@ -123,7 +122,7 @@ namespace ApiProject.Controllers
 
             }
         }
-            
+
         [HttpPost("insertfeesinstallment")]
         public async Task<IActionResult> insertfeesinstallment([FromBody] List<AddFeesInstallmentReq> req)
         {
@@ -357,6 +356,24 @@ namespace ApiProject.Controllers
                 return Ok(response);
             }
         }
+
+        // STUDEMT FEE REPORT 
+
+        [HttpPost("UpdateStudentReceipt")]
+        public async Task<IActionResult> UpdateStudentReceipt([FromBody] ReceiptupdateModel req)
+        {
+            try
+            {
+                var res = await _schoolFees.UpdateStudentReceipt(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return Ok(response);
+            }
+        }
+
 
     }
 }

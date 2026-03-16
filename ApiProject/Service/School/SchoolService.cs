@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Writers;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 
 namespace ApiProject.Service.School
@@ -29,6 +30,57 @@ namespace ApiProject.Service.School
             _mapper = mapper;
 
         }
+
+
+        // *************** school dashboard
+        //public async Task<ApiResponse<getdashboardmodel>> GetDashboard()
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var res = new getdashboardmodel
+        //        {
+        //            TotalStudent = _context.Student_Renew.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true && c.Dropout == false).Count(),
+        //            TotalClasss = _context.University.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+        //            TotolUser = _context.UserInformation.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+        //            TotalEmployee = _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).Count()
+        //        };
+        //        return ApiResponse<getdashboardmodel>.SuccessResponse(res, "Fetch user list successfully");
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<getdashboardmodel>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
+        public async Task<ApiResponse<getdashboardmodel>> GetDashboard()
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = new getdashboardmodel
+                {
+                    TotalStudent = _context.Student_Renew.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true && c.Dropout == false).Count(),
+
+                    TotalClass = _context.University.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+
+                    TotolUsers = _context.UserInformation.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+
+                    TotalEmployee = _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).Count()
+                };
+
+                return ApiResponse<getdashboardmodel>.SuccessResponse(res, "Fetch dashboard data successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<getdashboardmodel>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
 
         // *********** School Informaction 
         #region School Informaction

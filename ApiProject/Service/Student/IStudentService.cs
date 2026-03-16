@@ -50,7 +50,10 @@ namespace ApiProject.Service.Student
         Task<ApiResponse<GetClassbySectionNdStudent>> GetClassBySectionNdStudent(int ClassId);
         Task<ApiResponse<List<StudentDataList>>> GetSectionByStudentDetail(int ClassId, int SectionId);
         Task<ApiResponse<StudentDetailsById>> GetStudentDetailById(int StudentId);
+        Task<ApiResponse<bool>> EventCertificateRemove(int Id);
 
+
+        // Generate tc abd Dropout
         Task<ApiResponse<StudentFeeTCModel>> GetStudentDueFeeTC(int StudentId);
         Task<ApiResponse<bool>> GenerateTC(GetStudentTCDropoutReq req);
         Task<ApiResponse<bool>> StudentDropout(GetStudentTCDropoutReq req);
@@ -59,7 +62,7 @@ namespace ApiProject.Service.Student
 
 
 
-        Task<ApiResponse<StudentClassExamData>> GetClassSubjectAsync(int ClassId);
+      //  Task<ApiResponse<StudentClassExamData>> GetClassSubjectAsync(int ClassId);
         Task<ApiResponse<List<StudentExamData>>> GetClassExamSubjectAsync(ClassExamMarksModelreq request);
         Task<PagedResult<GetQuickStudentReqModel>> GetQuickStudentList(getstudentlistReq req);
         Task<ApiResponse<List<ClassSectionResModel>>> GetClassBySection(int classid);

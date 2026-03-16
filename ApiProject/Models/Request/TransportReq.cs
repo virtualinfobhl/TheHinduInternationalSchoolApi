@@ -31,6 +31,7 @@ namespace ApiProject.Models.Request
     {
         public Nullable<double> MonthFee { get; set; }
         public int? StoppageId { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
 
     }
     public class AddRouteAssignReq
@@ -75,6 +76,11 @@ namespace ApiProject.Models.Request
         // public List<getTransportinstallment> TInstallment { get; set; }
     }
 
+    public class GetStuRouteAssignReq
+    {
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+    }
     public class TransCheckMonth
     {
         public int? StudentId { get; set; }
@@ -121,6 +127,8 @@ namespace ApiProject.Models.Request
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public int? RouteId { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
     public class TransportFeeReportReq
     {

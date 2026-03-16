@@ -53,7 +53,7 @@ namespace ApiProject.Service.Transport
         Task<ApiResponse<List<GetRouteDataModel>>> GetRouteById(int VehicleId);
         Task<ApiResponse<List<UpdateStoppageModel>>> GetStoppageById(int RouteId);
         Task<ApiResponse<UpdateTransportFee>> GetTransportFeeById(int StoppageId);
-        Task<ApiResponse<List<GetStuRouteAssignModel>>> GetStudentRouteAssign();
+        Task<ApiResponse<PagedResult<GetStuRouteAssignModel>>> GetStudentRouteAssign(GetStuRouteAssignReq req);
         Task<ApiResponse<bool>> AddStudentRouteAssign(StuRouteAssignReq req);
         Task<ApiResponse<bool>> UpdateStudentRouteAssign(UpdateStuRouteAssignReq req);
         Task<ApiResponse<bool>> ChangeStatusStuRouteAssignFee(int TSRAId);
@@ -66,12 +66,17 @@ namespace ApiProject.Service.Transport
         Task<ApiResponse<bool>> CheckMonth(TransCheckMonth req);
         Task<ApiResponse<List<TransStudentDetailModel>>> GetStudentByTransportData(int StudentId);
 
+        Task<ApiResponse<GetFilteredStoppageTransFeeModel>> GetFilteredStoppageTransFee(int StoppageId);
+
         Task<ApiResponse<bool>> AddStudentTransportFee(StudentTransportFeeReq req);
+
+     //   Task<ApiResponse<bool>> AddStudentTransportOldFee(StudentTransportFeeReq req);
+
 
 
         #region Transport Fee Report Start
         // *************************** Transport Fee Report Start *********************** //
-        Task<ApiResponse<List<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq Req);
+        Task<ApiResponse<PagedResult<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq Req);
         Task<ApiResponse<List<TransportFeereportModel>>> TransportFeeReport(TransportFeeReportReq Req);
         Task<ApiResponse<List<GetTransportFeeDetailModel>>> GetTransportFeeDetails(int StudentId);
         Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportPaidOldFee(int StudentId);

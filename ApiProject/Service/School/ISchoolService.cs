@@ -9,6 +9,9 @@ namespace ApiProject.Service.School
     public interface ISchoolService
     {
 
+        // ******* school dashboard
+        Task<ApiResponse<getdashboardmodel>> GetDashboard();
+
         // ****** School Informaction
         #region
         Task<ApiResponse<SchoolDetail>> SchoolDetail();

@@ -33,6 +33,7 @@ namespace ApiProject.Service.Library
             _mapper = mapper;
         }
 
+        // add boods
         public async Task<ApiResponse<List<getBooks>>> GetBoodData()
         {
             try
@@ -63,7 +64,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<getBooks>>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<bool>> Addbook(AddBookReq req)
         {
             try
@@ -103,7 +103,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<bool>> Updatebook(UpdateBookReq req)
         {
             try
@@ -157,7 +156,8 @@ namespace ApiProject.Service.Library
             }
         }
 
-        public async Task<ApiResponse<List<GetLibraryStudentModel>>> GetLibraryStudent(BulkStudentReq req)
+        // add library card student and employee
+        public async Task<ApiResponse<List<GetLibraryStudentModel>>> GetLibraryStudent(gertlibraryclassreq req)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace ApiProject.Service.Library
 
                 var res = await _context.StudentRenewView.Where(a => (req.ClassId == -1 ? true : a.ClassId == req.ClassId)
                 && (req.SectionId == -1 ? true : a.SectionId == req.SectionId) && a.CompanyId == SchoolId
-                     && a.SessionId == SessionId && a.StuDetail == true && a.StuFees == true && a.RActive == true)
+                     && a.SessionId == SessionId && a.StuDetail == true && a.StuFees == true && a.RActive == true && a.Dropout == false)
                      .Select(a => new GetLibraryStudentModel
                      {
                          MemberId = _context.LibraryCardTbl.Where(c => c.stu_id == a.StuId && c.university_id == a.ClassId).Select(c => c.MemberId).FirstOrDefault(),
@@ -177,6 +177,9 @@ namespace ApiProject.Service.Library
                          father_name = a.father_name,
                          father_mobile = a.father_mobile,
                          mother_name = a.mother_name,
+                         dob = a.DOB,
+                         gender = a.gender,
+                         Rollno = a.RollNo,
                          ClassId = a.ClassId,
                          SectionId = a.SectionId,
                          ClassName = _context.University.Where(c => c.university_id == a.ClassId && c.CompanyId == SchoolId).Select(c => c.university_name).FirstOrDefault(),
@@ -196,7 +199,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<GetLibraryStudentModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<bool>> AddLibraryCardNo(AddcardNoReq req)
         {
             try
@@ -223,8 +225,6 @@ namespace ApiProject.Service.Library
                     Emp_Id = req.Emp_Id,
                     MemberType = req.MemberType,
                     Active = true,
-                    //   CreateDate = DateTime.Now,
-                    //    UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
                     SessionId = SessionId,
                     Userid = UserId,
@@ -239,7 +239,32 @@ namespace ApiProject.Service.Library
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
+        public async Task<ApiResponse<bool>> RemoveStudentlibrary(int ClassId, int studentid)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
 
+                var res = await _context.LibraryCardTbl.FirstOrDefaultAsync(c => c.university_id == ClassId && c.stu_id == studentid && c.Active == true
+                  && c.CompanyId == SchoolId && c.SessionId == SessionId);
+
+                if (res == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("No library record found for this student");
+                }
+
+                _context.LibraryCardTbl.Remove(res);
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Library record removed successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
         public async Task<ApiResponse<List<GetlibrarayEmployeeModel>>> GetLibraryEmployee()
         {
             try
@@ -247,20 +272,19 @@ namespace ApiProject.Service.Library
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
-                var EmpEntity = await _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId)
-                    .Select(c => new GetlibrarayEmployeeModel
-                    {
-                        MemberId = _context.LibraryCardTbl.Where(a => a.Emp_Id == c.Emp_Id).Select(a => a.MemberId).FirstOrDefault(),
-                        CardNo = _context.LibraryCardTbl.Where(a => a.Emp_Id == c.Emp_Id).Select(a => a.LibraryCardNo).FirstOrDefault(),
+                var EmpEntity = await _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).Select(c => new GetlibrarayEmployeeModel
+                {
+                    MemberId = _context.LibraryCardTbl.Where(a => a.Emp_Id == c.Emp_Id).Select(a => a.MemberId).FirstOrDefault(),
+                    CardNo = _context.LibraryCardTbl.Where(a => a.Emp_Id == c.Emp_Id).Select(a => a.LibraryCardNo).FirstOrDefault(),
 
-                        Emp_Id = c.Emp_Id,
-                        Emp_Name = c.Emp_Name,
-                        DOB = c.DOB,
-                        Mobileno = c.Mobileno,
-                        Gendar = c.Gendar,
-                        EmailId = c.EmailId,
+                    Emp_Id = c.Emp_Id,
+                    Emp_Name = c.Emp_Name,
+                    DOB = c.DOB,
+                    Mobileno = c.Mobileno,
+                    Gendar = c.Gendar,
+                    EmailId = c.EmailId,
 
-                    }).ToListAsync();
+                }).ToListAsync();
                 return ApiResponse<List<GetlibrarayEmployeeModel>>.SuccessResponse(EmpEntity, "Book list fetched successfully");
 
             }
@@ -269,6 +293,32 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<GetlibrarayEmployeeModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+        public async Task<ApiResponse<bool>> RemoveEmployeelibrary(int EmpId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.LibraryCardTbl.FirstOrDefaultAsync(c => c.Emp_Id == EmpId && c.Active == true && c.CompanyId == SchoolId && c.SessionId == SessionId);
+
+                if (res == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("No library record found for this student");
+                }
+
+                _context.LibraryCardTbl.Remove(res);
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Library record removed successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
 
         public async Task<ApiResponse<List<GetMemberListModel>>> GetMemberList()
         {
@@ -311,8 +361,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<GetMemberListModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
-
         public async Task<ApiResponse<GetTClassbySectionNdStudent>> GetLibraryClassBySectionNdStudent(int ClassId)
         {
             try
@@ -350,7 +398,6 @@ namespace ApiProject.Service.Library
 
             }
         }
-
         public async Task<ApiResponse<List<TStudentDataList>>> GetLibrarySectionByStudent(int ClassId, int SectionId)
         {
             try
@@ -415,7 +462,7 @@ namespace ApiProject.Service.Library
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.LibraryCardTbl.Where(a => a.LibraryId == LibraryId && a.CompanyId == SchoolId)
+                var res = await _context.LibraryCardTbl.Where(a => a.LibraryId == LibraryId && a.CompanyId == SchoolId && a.SessionId == SessionId)
                     .Select(a => new getMenmberProfileModel
                     {
                         MemberId = a.MemberId,
@@ -424,11 +471,11 @@ namespace ApiProject.Service.Library
                         ClassName = _context.University.Where(p => p.university_id == a.university_id && p.CompanyId == SchoolId).Select(p => p.university_name).FirstOrDefault(),
                         SectionName = _context.collegeinfo.Where(p => p.collegeid == a.SectionId && p.CompanyId == SchoolId).Select(p => p.collegename).FirstOrDefault(),
 
-
-                        Student = _context.StudentRenewView.Where(p => p.StuId == a.stu_id && a.CompanyId == SchoolId)
+                        Student = _context.StudentRenewView.Where(p => p.StuId == a.stu_id && a.CompanyId == SchoolId && p.SessionId == SessionId)
                       .Select(p => new GetStuDetail
                       {
                           StudentId = p.StuId,
+                          stu_photo = p.stu_photo,
                           SRNo = p.registration_no,
                           stu_name = p.stu_name,
                           Fatername = p.father_name,
@@ -441,6 +488,7 @@ namespace ApiProject.Service.Library
                       .Select(p => new GetempDetails
                       {
                           Emp_Id = p.Emp_Id,
+                          emp_photo = p.EmployrPhoto,
                           Emp_Name = p.Emp_Name,
                           EmpMobileno = p.Mobileno,
                           Fatername = p.Father_husband_Name,
@@ -449,17 +497,18 @@ namespace ApiProject.Service.Library
 
                       }).ToList(),
 
-                        Bookdata = _context.BookIssueTbl.Where(p => p.LibraryId == a.LibraryId && a.CompanyId == SchoolId)
-                      .Select(p => new LibraryIssudatemodel
-                      {
-                          BookTitle = _context.BooksTbl.Where(c => c.BookId == p.BookId && c.CompanyId == SchoolId).Select(c => c.BookTitle).FirstOrDefault(),
-                          BookNumber = _context.BooksTbl.Where(c => c.BookId == p.BookId && c.CompanyId == SchoolId).Select(c => c.BookNumber).FirstOrDefault(),
-                          Quantity = p.Quantity,
-                          IssueDate = p.IssueDate,
-                          DueReturnDate = p.DueReturnDate,
-                          ReturnDate = p.ReturnDate,
+                        Bookdata = _context.BookIssueTbl.Where(p => p.LibraryId == a.LibraryId && a.CompanyId == SchoolId && p.SessionId == SessionId)
+                        .Select(p => new LibraryIssudatemodel
+                        {
+                            IssueId = p.IssueId,
+                            BookTitle = _context.BooksTbl.Where(c => c.BookId == p.BookId && c.CompanyId == SchoolId).Select(c => c.BookTitle).FirstOrDefault(),
+                            BookNumber = _context.BooksTbl.Where(c => c.BookId == p.BookId && c.CompanyId == SchoolId).Select(c => c.BookNumber).FirstOrDefault(),
+                            Quantity = p.Quantity,
+                            IssueDate = p.IssueDate,
+                            DueReturnDate = p.DueReturnDate,
+                            ReturnDate = p.ReturnDate,
 
-                      }).ToList(),
+                        }).ToList(),
 
                     }).ToListAsync();
 
@@ -545,7 +594,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<bool>> AddReturnDate(UpdateReturndateReq req)
         {
             try
@@ -595,7 +643,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<GetBookReportReq>>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<List<GetLibraryReportModel>>> GetLibraryReport(LibrartReportReq req)
         {
             try
@@ -650,6 +697,7 @@ namespace ApiProject.Service.Library
                 return ApiResponse<List<GetLibraryReportModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
 
     }
 }

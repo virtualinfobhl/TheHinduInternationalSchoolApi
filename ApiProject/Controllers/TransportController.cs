@@ -23,7 +23,7 @@ namespace ApiProject.Controllers
             _transportService = transportService;
         }
 
-        
+
         // *************************** Driver start *********************** //
 
         [HttpGet("GetDriverList")]
@@ -454,12 +454,12 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpGet("GetStudentRouteAssignByFee")]
-        public async Task<IActionResult> GetStudentRouteAssignByFee()
+        [HttpPost("GetStudentRouteAssignByFee")]
+        public async Task<IActionResult> GetStudentRouteAssignByFee(GetStuRouteAssignReq req)
         {
             try
             {
-                var res = await _transportService.GetStudentRouteAssign();
+                var res = await _transportService.GetStudentRouteAssign(req);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -525,6 +525,22 @@ namespace ApiProject.Controllers
             try
             {
                 var res = await _transportService.GetStudentByTransportData(StudentId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var ressonce = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(ressonce);
+
+            }
+        }
+
+        [HttpPost("GetFilteredStoppageTransFee")]
+        public async Task<IActionResult> GetFilteredStoppageTransFee(int StoppageId)
+        {
+            try
+            {
+                var res = await _transportService.GetFilteredStoppageTransFee(StoppageId);
                 return Ok(res);
             }
             catch (Exception ex)

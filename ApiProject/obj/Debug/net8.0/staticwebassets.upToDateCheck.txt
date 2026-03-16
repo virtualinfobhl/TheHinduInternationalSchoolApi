@@ -63,5 +63,6 @@ wwwroot\Image\ALLSchoolData\1\StudentPhoto\811.png
 wwwroot\Image\ALLSchoolData\1\StudentPhoto\812.png
 wwwroot\Image\ALLSchoolData\1\StudentPhoto\813.png
 wwwroot\Image\ALLSchoolData\1\StudentPhoto\814.png
+wwwroot\Image\ExcelUpload\Student Test Marks (13).xlsx
 wwwroot\Image\ExcelUpload\Student Test Marks (2).xlsx
 wwwroot\Image\SchoolLogo\Logo\1.png

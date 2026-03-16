@@ -25,6 +25,22 @@ namespace ApiProject.Controllers
             _schoolService = schoolService;
         }
 
+        // ************* get dashboard
+        [HttpGet("GetDashboard")]
+        public async Task<IActionResult> GetDashboard()
+        {
+            try
+            {
+                var res = await _schoolService.GetDashboard();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return ErrorRepsponse(ex.Message);
+            }
+        }
+
+
         // *********************** School Informaction  ***************************** //
         #region School Insformaction
 

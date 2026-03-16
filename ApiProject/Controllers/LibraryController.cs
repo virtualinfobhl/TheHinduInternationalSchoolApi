@@ -88,7 +88,7 @@ namespace ApiProject.Controllers
         }
 
         [HttpPost("GetLibraryStudent")]
-        public async Task<IActionResult> GetLibraryStudent(BulkStudentReq req)
+        public async Task<IActionResult> GetLibraryStudent(gertlibraryclassreq req)
         {
             try
             {
@@ -126,6 +126,22 @@ namespace ApiProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("RemoveStudentlibrary")]
+        public async Task<IActionResult> RemoveStudentlibrary(int ClassId, int studentid)
+        {
+            try
+            {
+                var res = await _libService.RemoveStudentlibrary(ClassId, studentid);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var ressonce = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(ressonce);
+
             }
         }
 

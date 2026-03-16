@@ -79,7 +79,7 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("addstuquickadmission")]  
+        [HttpPost("addstuquickadmission")]
         public async Task<IActionResult> addstuquickadmission(quickadmissionmodel request)
         {
             try
@@ -528,6 +528,25 @@ namespace ApiProject.Controllers
             }
         }
 
+        [HttpPost("EventCertificateRemove")]
+        public async Task<IActionResult> EventCertificateRemove(int Id)
+        {
+            try
+            {
+                var res = await _studentService.EventCertificateRemove(Id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var ressonce = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(ressonce);
+
+            }
+        }
+
+
+        // Generate TC and Dropout
+
         [HttpGet("GetStudentDueFeeTC")]
         public async Task<IActionResult> GetStudentDueFeeTC(int StudentId)
         {
@@ -574,21 +593,6 @@ namespace ApiProject.Controllers
             }
         }
 
-
-        [HttpGet("GetClassSubject")]
-        public async Task<IActionResult> GetClassSubject(int ClassId)
-        {
-            try
-            {
-                var res = await _studentService.GetClassSubjectAsync(ClassId);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(response);
-            }
-        }
 
         [HttpPost("GetClassExamSubject")]
         public async Task<IActionResult> GetClassExamSubject(ClassExamMarksModelreq request)

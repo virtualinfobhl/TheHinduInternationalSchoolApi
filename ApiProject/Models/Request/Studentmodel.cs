@@ -326,7 +326,6 @@ namespace ApiProject.Models.Request
         public double? discount { get; set; }
     }
 
-
     public class studentexamMarksReq
     {
         public int? ClassId { get; set; }
@@ -335,7 +334,6 @@ namespace ApiProject.Models.Request
         public string? MatksType { get; set; }
         public string? TestType { get; set; }
     }
-
 
     public class UpdateStudentMarksRequest
     {
@@ -408,7 +406,6 @@ namespace ApiProject.Models.Request
             return errors;
         }
     }
-
 
     public class ExcelErrorRow
     {

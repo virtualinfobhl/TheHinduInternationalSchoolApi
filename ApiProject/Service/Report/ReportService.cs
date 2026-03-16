@@ -141,7 +141,6 @@ namespace ApiProject.Service.Report
                             from sec in secJoin.DefaultIfEmpty()
 
                             where student.SessionId == SessionId
-                                  //   && student.stu_id == req.StudentId
                                   && student.CompanyId == SchoolId
                                   && student.RActive == true
                                   && student.StuDetail == true
@@ -188,38 +187,36 @@ namespace ApiProject.Service.Report
                     query = query.Where(p => p.stu_id == req.StudentId.Value);
                 }
 
+                //if (req.Fromdate.HasValue)
+                //    query = query.Where(p => p.admission_date >= req.Fromdate);
+
+                //if (req.Todate.HasValue)
+                //    query = query.Where(p => p.admission_date <= req.Todate);
+
+
                 if (req.Fromdate.HasValue)
-                    query = query.Where(p => p.admission_date >= req.Fromdate);
+                {
+                    query = query.Where(c => c.admission_date.HasValue && c.admission_date.Value >= req.Fromdate.Value);
+                }
 
                 if (req.Todate.HasValue)
-                    query = query.Where(p => p.admission_date <= req.Todate);
+                {
+                    query = query.Where(c => c.admission_date.HasValue && c.admission_date.Value <= req.Todate.Value);
+                }
+
+
+                //  query = query.Where(c => (!req.Fromdate.HasValue || c.admission_date >= req.Fromdate) && (!req.Todate.HasValue || c.admission_date <= req.Todate));
 
                 int totalrecords = await query.CountAsync();
 
                 int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
                 int PageSize = req.PageSize > 0 ? req.PageSize : 50;
 
-                var data = await query
-                    .OrderByDescending(p => p.stu_id)
-                    .Skip((PageNumber - 1) * PageSize)
-                    .Take(PageSize)
-                    .ToListAsync();
+                var data = await query.OrderByDescending(p => p.stu_id).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
-                //return new ApiResponse<PagedResult<GetStudentDetailsLisModel>>
-                //{
-                //    Success = true,
-                //    Message = "Fetch student details data successfully",
-                //    Data = new PagedResult<GetStudentDetailsLisModel>
-                //    {
-                //        Data = data,
-                //        TotalRecords = totalrecords,
-                //        PageNumber = PageNumber,
-                //        PageSize = PageSize,
-                //        TotalPages = totalpages
-                //    }
-                //};
+
                 var pagedResult = new PagedResult<GetStudentDetailsLisModel>
                 {
                     Data = data,
@@ -234,8 +231,8 @@ namespace ApiProject.Service.Report
             {
                 return ApiResponse<PagedResult<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
-
         }
+
         public async Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req)
         {
             try
@@ -253,12 +250,8 @@ namespace ApiProject.Service.Report
                                 on student.SectionId equals sec.collegeid into secJoin
                             from sec in secJoin.DefaultIfEmpty()
 
-                            where student.SessionId == SessionId
-                                  && student.CompanyId == SchoolId
-                                  && student.RActive == true
-                                  && student.StuDetail == true
-                                  && student.StuFees == true
-                                   && student.Dropout == false
+                            where student.SessionId == SessionId && student.CompanyId == SchoolId && student.RActive == true && student.StuDetail == true
+                                  && student.StuFees == true && student.Dropout == false
 
                             select new GetStudentDetailsLisModel
                             {
@@ -300,11 +293,7 @@ namespace ApiProject.Service.Report
                 int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
                 int PageSize = req.PageSize > 0 ? req.PageSize : 50;
 
-                var data = await query
-                    .OrderByDescending(p => p.stu_id)
-                    .Skip((PageNumber - 1) * PageSize)
-                    .Take(PageSize)
-                    .ToListAsync();
+                var data = await query .OrderByDescending(p => p.stu_id).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
@@ -403,10 +392,6 @@ namespace ApiProject.Service.Report
                     query = query.Where(p => p.stu_id == req.studentId.Value);
                 }
 
-                //if (req.SectionId.HasValue)
-                //    query = query.Where(p => p.SectionId == req.SectionId);
-
-
                 int totalrecords = await query.CountAsync();
 
                 int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
@@ -420,19 +405,7 @@ namespace ApiProject.Service.Report
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
-                //return new ApiResponse<PagedResult<GetStudentFeeDetailsModel>>
-                //{
-                //    Success = true,
-                //    Message = "Fetch student fee data successfully",
-                //    Data = new PagedResult<GetStudentFeeDetailsModel>
-                //    {
-                //        Data = data,
-                //        TotalRecords = totalrecords,
-                //        PageNumber = PageNumber,
-                //        PageSize = PageSize,
-                //        TotalPages = totalpages
-                //    }
-                //};
+
                 var pagedResult = new PagedResult<GetStudentFeeDetailsModel>
                 {
                     Data = data,
@@ -984,12 +957,14 @@ namespace ApiProject.Service.Report
                 // select all test types up to that index  
                 var allowedTestTypes = testOrder.Take(maxIndex + 1).ToList();
 
-                var res = await _context.StudentRenewView.Where(c => (req.ClassId == req.ClassId)
+
+                var res = await _context.StudentRenewView.Where(c => (c.ClassId == req.ClassId)
                 && (req.SectionId == -1 ? true : c.SectionId == req.SectionId) && c.RActive == true && c.StuDetail == true && c.StuFees == true && c.Dropout == false
                 && c.SessionId == SessionId && c.CompanyId == SchoolId).OrderBy(c => c.stu_name).Select(c => new TestExamMarksmOdel
                 {
                     stu_id = c.StuId,
                     stu_name = c.stu_name,
+                    RollNo = c.RollNo,
 
                     ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
                     SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
@@ -1029,6 +1004,7 @@ namespace ApiProject.Service.Report
 
 
                     // MaxMarks पहले ले आओ, फिर बाद में Sum करो
+
                     MaxTotal = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType) &&
                     a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new
                     {
@@ -1038,6 +1014,7 @@ namespace ApiProject.Service.Report
                         a.TestType == "half_yearly" ? p.half_yearly : a.TestType == "third_test" ? p.third_test : a.TestType == "fourth_test" ? p.fourth_test :
                     a.TestType == "yearly" ? p.yearly : 0).FirstOrDefault()
                     }).Sum(x => x.Marks),
+
 
                 }).ToListAsync();
 
@@ -1053,6 +1030,8 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<TestExamMarksmOdel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+
         public async Task<ApiResponse<List<StudentMarksheetModel>>> GetStudentMarksheet(GetTestExamReq req)
         {
             try

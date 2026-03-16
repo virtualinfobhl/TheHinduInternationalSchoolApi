@@ -118,6 +118,14 @@ namespace ApiProject.Models.Request
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
 
+    }
 
+    public class ReceiptupdateModel
+    {
+        public int? Studentid { get; set; }
+        public int? FeeReceiptId { get; set; }
+        public string? PaymentMode { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? remark { get; set; }
     }
 }

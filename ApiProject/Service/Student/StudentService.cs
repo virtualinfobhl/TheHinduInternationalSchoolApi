@@ -1146,6 +1146,7 @@ namespace ApiProject.Service.Student
                         }
 
                         M_FeeDetail RStudentFeesU = await _context.M_FeeDetail.Where(r => r.stu_id == studentrenew.StuId && r.CompanyId == SchoolId && r.ClassId == studentrenew.ClassId && r.SessionId == SessionId && r.Status == "AdmissionPayFee").FirstOrDefaultAsync();
+
                         if (studentrenew.AdmissionPayfee + studentrenew.PramoteFees > 0)
                         {
                             if (RStudentFeesU != null)
@@ -1177,60 +1178,154 @@ namespace ApiProject.Service.Student
                             }
                             else
                             {
-                                M_FeeDetail RStudentFees = new M_FeeDetail();
+                                string StudentCode = "";
+                                institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
 
-                                RStudentFees.FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1;
-                                var existingReceiptNos = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).Take(1).FirstOrDefault();
+                                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == SchoolId && p.Active == true);
+                                var startYearY = Convert.ToDateTime(sessioninfo.StartSession).ToString("yy");
 
-                                if (existingReceiptNos == null)
+                                student_admission LastCode = _context.student_admission.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId)
+                                    .OrderByDescending(s => s.stu_id).FirstOrDefault();
+
+                                string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+                                // int year = startYear;
+
+
+                                string ReceiptCode = "";
+
+                                var lastReceipt = await _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).FirstOrDefaultAsync();
+
+                                int NewOrderNo = 1;
+                                var LastOrderNo = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.OrderNo)
+                                    .Select(s => s.OrderNo).FirstOrDefault();
+
+                                if (LastOrderNo != null && LastOrderNo != "")
+
+                                    if (!string.IsNullOrEmpty(LastOrderNo))
+                                    {
+                                        int lastNum;
+                                        if (int.TryParse(LastOrderNo, out lastNum))
+                                        {
+                                            NewOrderNo = lastNum + 1;
+                                        }
+                                    }
+
+                                var Id = 0;
+                                if (lastReceipt != null)
                                 {
-                                    RStudentFees.ReceiptNo = "1";
+                                    var Receipt = lastReceipt.ReceiptNo.Split('/');
+                                    ReceiptCode = Receipt[1];
+
+                                    Id = int.Parse(ReceiptCode);
+                                    Id++;
                                 }
                                 else
                                 {
-                                    int rno = Convert.ToInt32(existingReceiptNos.ReceiptNo) + 1;
-                                    RStudentFees.ReceiptNo = rno.ToString();
+                                    Id = 1;
                                 }
-                                ReceiptId = RStudentFees.FDId;
+                                ReceiptCode = threeLetters + "/" + Id;
 
-                                RStudentFees.ClassId = studentrenew.ClassId;
-                                RStudentFees.stu_id = studentrenew.StuId;
-                                RStudentFees.Status = "";
-                                RStudentFees.Remark = "";
-                                RStudentFees.Active = true;
-                                RStudentFees.Status = "AdmissionPayFee";
-                                RStudentFees.CompanyId = SchoolId;
-                                RStudentFees.Userid = UserId;
-                                RStudentFees.SessionId = SessionId;
-                                RStudentFees.Date = DateTime.Now.Date;
+                                int FDId = (_context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1);
+                                var receipt = new M_FeeDetail
+                                {
+                                    // ReceiptNo = lastReceipt == null ? "1" : (Convert.ToInt32(lastReceipt.ReceiptNo) + 1).ToString(),
+                                    FDId = FDId,
+                                    ReceiptNo = ReceiptCode,
+                                    OrderNo = NewOrderNo.ToString(),
+                                    OrderStatus = "Succcessfully",
+                                    TransactionId = "",
+                                    ReceiptType = "Offline",
+                                    ClassId = studentrenew.ClassId,
+                                    stu_id = studentrenew.StuId,
+                                    Status = "AdmissionPayfee",
+                                    PayFees = 0,
+                                    AdmissionFees = studentfee.admission_fee,
+                                    ExamFees = studentfee.exam_fee,
+                                    Tutionfee = studentfee.tution_fee,
+                                    Develoment_fee = studentfee.Develoment_fee,
+                                    Games_fees = studentfee.Games_fees,
+                                    FeeTotal = studentfee.total,
+                                    Discount = 0,
+                                    OldDuefees = 0,
+                                    TotalFees = studentfee.total,
+                                    NetDueFees = studentfee.total,
+                                    DueFees = studentfee.total,
+                                    Date = DateTime.Now.Date,
+                                    RTS = DateTime.Now.Date,
+                                    PaymentDate = DateTime.Now.Date,
+                                    //  PaymentDate = request.pay
 
-                                RStudentFees.AdmissionFees = studentfee.admission_fee;
-                                RStudentFees.ExamFees = studentfee.exam_fee;
-                                RStudentFees.Tutionfee = studentfee.tution_fee;
-                                RStudentFees.Develoment_fee = studentfee.Develoment_fee;
-                                RStudentFees.Games_fees = studentfee.Games_fees;
-                                RStudentFees.FeeTotal = studentfee.total;
-                                RStudentFees.Discount = 0;
-                                RStudentFees.OldDuefees = 0;
-                                RStudentFees.TotalFees = studentfee.total - request.admissionReceipt.FeeDiscount;
-                                RStudentFees.NetDueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
-                                RStudentFees.DueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                    PaymentMode = request.admissionReceipt.PaymentMode,
+                                    AdmissionPayfee = studentrenew.AdmissionPayfee,
+                                    AFeeDiscount = studentrenew.AFeeDiscount,
+                                    Cash = 0,
+                                    Upi = 0,
+                                    Remark = "",
+                                    Active = true,
+                                    CompanyId = SchoolId,
+                                    Userid = UserId,
+                                    SessionId = SessionId,
+                                };
 
-                                RStudentFees.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
-                                RStudentFees.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
-                                RStudentFees.PramoteFees = request.admissionReceipt.pramoteFees;
+                                ReceiptId = FDId;
 
-                                RStudentFees.PaymentDate = request.admissionReceipt.PaymentDate;
-                                RStudentFees.PaymentMode = request.admissionReceipt.PaymentMode;
-                                RStudentFees.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
-                                RStudentFees.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
-                                RStudentFees.PramoteFees = request.admissionReceipt.pramoteFees;
-                                //  RStudentFees.PayFees = (studentrenew.AdmissionPayfee ?? 0) + (studentrenew.PramoteFees ?? 0);
-                                RStudentFees.Cash = 0;
-                                RStudentFees.Upi = 0;
-
-                                _context.M_FeeDetail.Add(RStudentFees);
+                                _context.M_FeeDetail.Add(receipt);
                                 await _context.SaveChangesAsync();
+
+                                //M_FeeDetail RStudentFees = new M_FeeDetail();
+
+                                //RStudentFees.FDId = _context.M_FeeDetail.DefaultIfEmpty().Max(r => r == null ? 0 : r.FDId) + 1;
+                                //var existingReceiptNos = _context.M_FeeDetail.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.FDId).Take(1).FirstOrDefault();
+
+                                //if (existingReceiptNos == null)
+                                //{
+                                //    RStudentFees.ReceiptNo = "1";
+                                //}
+                                //else
+                                //{
+                                //    int rno = Convert.ToInt32(existingReceiptNos.ReceiptNo) + 1;
+                                //    RStudentFees.ReceiptNo = rno.ToString();
+                                //}
+                                //ReceiptId = RStudentFees.FDId;
+
+                                //RStudentFees.ClassId = studentrenew.ClassId;
+                                //RStudentFees.stu_id = studentrenew.StuId;
+                                //RStudentFees.Status = "";
+                                //RStudentFees.Remark = "";
+                                //RStudentFees.Active = true;
+                                //RStudentFees.Status = "AdmissionPayFee";
+                                //RStudentFees.CompanyId = SchoolId;
+                                //RStudentFees.Userid = UserId;
+                                //RStudentFees.SessionId = SessionId;
+                                //RStudentFees.Date = DateTime.Now.Date;
+
+                                //RStudentFees.AdmissionFees = studentfee.admission_fee;
+                                //RStudentFees.ExamFees = studentfee.exam_fee;
+                                //RStudentFees.Tutionfee = studentfee.tution_fee;
+                                //RStudentFees.Develoment_fee = studentfee.Develoment_fee;
+                                //RStudentFees.Games_fees = studentfee.Games_fees;
+                                //RStudentFees.FeeTotal = studentfee.total;
+                                //RStudentFees.Discount = 0;
+                                //RStudentFees.OldDuefees = 0;
+                                //RStudentFees.TotalFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                //RStudentFees.NetDueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+                                //RStudentFees.DueFees = studentfee.total - request.admissionReceipt.FeeDiscount;
+
+                                //RStudentFees.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
+                                //RStudentFees.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
+                                //RStudentFees.PramoteFees = request.admissionReceipt.pramoteFees;
+
+                                //RStudentFees.PaymentDate = request.admissionReceipt.PaymentDate;
+                                //RStudentFees.PaymentMode = request.admissionReceipt.PaymentMode;
+                                //RStudentFees.AdmissionPayfee = request.admissionReceipt.AdmissionPayFees;
+                                //RStudentFees.AFeeDiscount = request.admissionReceipt.AdmissionFeeDiscount;
+                                //RStudentFees.PramoteFees = request.admissionReceipt.pramoteFees;
+                                ////  RStudentFees.PayFees = (studentrenew.AdmissionPayfee ?? 0) + (studentrenew.PramoteFees ?? 0);
+                                //RStudentFees.Cash = 0;
+                                //RStudentFees.Upi = 0;
+
+                                //_context.M_FeeDetail.Add(RStudentFees);
+                                //await _context.SaveChangesAsync();
 
                             }
                         }
@@ -1954,6 +2049,170 @@ namespace ApiProject.Service.Student
                 return ApiResponse<List<StudentPersonalResponse>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
+        //public async Task<ApiResponse<bool>> AddStudentPersonalAsync(List<stuPersonalModelReq> req)
+        //{
+        //    using (var transaction = await _context.Database.BeginTransactionAsync())
+        //    {
+        //        try
+        //        {
+        //            int SchoolId = _loginUser.SchoolId;
+        //            int UserId = _loginUser.UserId;
+        //            int SessionId = _loginUser.SessionId;
+
+        //            if (req != null && req.Count > 0)
+        //            {
+        //                for (int i = 0; i < req.Count; i++)
+        //                {
+        //                    var currentStuPersonal = req[i];
+
+        //                    var Personal = await _context.StuPersonalty
+        //                        .FirstOrDefaultAsync(p =>
+        //                            p.StuId == currentStuPersonal.StudentId &&
+        //                            p.ClassId == currentStuPersonal.ClassId &&
+        //                            p.SectionId == currentStuPersonal.SectionId &&
+        //                            p.CompanyId == SchoolId &&
+        //                            p.SessionId == SessionId);
+
+        //                    if (Personal == null)
+        //                    {
+        //                        Personal = new StuPersonalty
+        //                        {
+        //                            StuId = currentStuPersonal.StudentId,
+        //                            ClassId = currentStuPersonal.ClassId,
+        //                            SectionId = currentStuPersonal.SectionId,
+
+        //                            Discipline = currentStuPersonal.Discipline,
+        //                            Concentration = currentStuPersonal.Concentration,
+        //                            Intiative = currentStuPersonal.Intiative,
+        //                            Independently = currentStuPersonal.Independently,
+        //                            Direction = currentStuPersonal.Direction,
+        //                            Cleanliness = currentStuPersonal.Cleanliness,
+        //                            Etiquette = currentStuPersonal.Etiquette,
+        //                            OtherPro = currentStuPersonal.OtherPro,
+        //                            Passionate = currentStuPersonal.Passionate,
+        //                            Confident = currentStuPersonal.Confident,
+        //                            Responsible = currentStuPersonal.Responsible,
+
+        //                            Date = DateTime.Now,
+        //                            Active = true,
+        //                            CompanyId = SchoolId,
+        //                            SessionId = SessionId,
+        //                            Userid = UserId
+        //                        };
+
+        //                        await _context.StuPersonalty.AddAsync(Personal);
+        //                    }
+        //                    else
+        //                    {
+        //                        Personal.Discipline = currentStuPersonal.Discipline;
+        //                        Personal.Concentration = currentStuPersonal.Concentration;
+        //                        Personal.Intiative = currentStuPersonal.Intiative;
+        //                        Personal.Independently = currentStuPersonal.Independently;
+        //                        Personal.Direction = currentStuPersonal.Direction;
+        //                        Personal.Cleanliness = currentStuPersonal.Cleanliness;
+        //                        Personal.Etiquette = currentStuPersonal.Etiquette;
+        //                        Personal.OtherPro = currentStuPersonal.OtherPro;
+        //                        Personal.Passionate = currentStuPersonal.Passionate;
+        //                        Personal.Confident = currentStuPersonal.Confident;
+        //                        Personal.Responsible = currentStuPersonal.Responsible;
+
+        //                        _context.StuPersonalty.Update(Personal);
+        //                    }
+        //                }
+
+        //                await _context.SaveChangesAsync();
+        //                await transaction.CommitAsync();
+        //            }
+
+        //            return ApiResponse<bool>.SuccessResponse(true, "Student Personality Added Successfully.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+        //        }
+        //    }
+        //}
+
+        //public async Task<ApiResponse<bool>> AddStudentPersonalAsync(List<stuPersonalModelReq> req)
+        //{
+        //    using (var transaction = await _context.Database.BeginTransactionAsync())
+        //    {
+        //        try
+        //        {
+        //            int SchoolId = _loginUser.SchoolId;
+        //            int UserId = _loginUser.UserId;
+        //            int SessionId = _loginUser.SessionId;
+
+        //            if (req != null && req.Count > 0)
+        //            {
+        //                for (int i = 0; i < req.Count; i++)
+        //                {
+        //                    var currentStuPersonal = req[i];
+
+        //                    var Personal = await _context.StuPersonalty.Where(p => p.StuId == currentStuPersonal.StudentId && p.ClassId == currentStuPersonal.ClassId && p.SectionId == currentStuPersonal.SectionId).FirstOrDefaultAsync();
+
+        //                    if (Personal == null)
+        //                    {
+        //                        Personal = new StuPersonalty
+        //                        {
+        //                              PersonaltyId = _context.StuPersonalty.DefaultIfEmpty().Max(r => r == null ? 0 : r.PersonaltyId) + 1,
+
+
+        //                            StuId = currentStuPersonal.StudentId,
+        //                            ClassId = currentStuPersonal.ClassId,
+        //                            SectionId = currentStuPersonal.SectionId,
+        //                            Discipline = currentStuPersonal.Discipline,
+        //                            Concentration = currentStuPersonal.Concentration,
+        //                            Intiative = currentStuPersonal.Intiative,
+        //                            Independently = currentStuPersonal.Independently,
+        //                            Direction = currentStuPersonal.Direction,
+        //                            Cleanliness = currentStuPersonal.Cleanliness,
+        //                            Etiquette = currentStuPersonal.Etiquette,
+        //                            OtherPro = currentStuPersonal.OtherPro,
+        //                            Passionate = currentStuPersonal.Passionate,
+        //                            Confident = currentStuPersonal.Confident,
+        //                            Responsible = currentStuPersonal.Responsible,
+
+        //                            Date = DateTime.Now,
+        //                            Active = true,
+        //                            CompanyId = SchoolId,
+        //                            SessionId = SessionId,
+        //                            Userid = UserId,
+        //                        };
+        //                        _context.StuPersonalty.Add(Personal);
+        //                        //await _context.SaveChangesAsync();
+        //                    }
+        //                    else
+        //                    {
+        //                        Personal.Discipline = currentStuPersonal.Discipline;
+        //                        Personal.Concentration = currentStuPersonal.Concentration;
+        //                        Personal.Intiative = currentStuPersonal.Intiative;
+        //                        Personal.Independently = currentStuPersonal.Independently;
+        //                        Personal.Direction = currentStuPersonal.Direction;
+        //                        Personal.Cleanliness = currentStuPersonal.Cleanliness;
+        //                        Personal.Etiquette = currentStuPersonal.Etiquette;
+        //                        Personal.OtherPro = currentStuPersonal.OtherPro;
+        //                        Personal.Passionate = currentStuPersonal.Passionate;
+        //                        Personal.Confident = currentStuPersonal.Confident;
+        //                        Personal.Responsible = currentStuPersonal.Responsible;
+
+        //                    }
+        //                }
+        //                await _context.SaveChangesAsync();
+        //                await transaction.CommitAsync();
+        //            }
+
+        //            return ApiResponse<bool>.SuccessResponse(true, "Student Personality Added Successfully.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+        //        }
+        //    }
+        //}
         public async Task<ApiResponse<bool>> AddStudentPersonalAsync(List<stuPersonalModelReq> req)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
@@ -1966,22 +2225,27 @@ namespace ApiProject.Service.Student
 
                     if (req != null && req.Count > 0)
                     {
+                        int maxId = await _context.StuPersonalty.Select(x => (int?)x.PersonaltyId).MaxAsync() ?? 0;
+
                         for (int i = 0; i < req.Count; i++)
                         {
                             var currentStuPersonal = req[i];
 
-                            var Personal = await _context.StuPersonalty.Where(p => p.CompanyId == currentStuPersonal.StudentId && p.ClassId == currentStuPersonal.ClassId && p.SectionId == currentStuPersonal.SectionId).FirstOrDefaultAsync();
+                            var Personal = await _context.StuPersonalty.Where(p => p.StuId == currentStuPersonal.StudentId && p.ClassId == currentStuPersonal.ClassId
+                                && p.SectionId == currentStuPersonal.SectionId && p.CompanyId == SchoolId && p.SessionId == SessionId).FirstOrDefaultAsync();
 
                             if (Personal == null)
                             {
+                                maxId++;
+
                                 Personal = new StuPersonalty
                                 {
-
-                                    PersonaltyId = (_context.StuPersonalty.Any() ? _context.StuPersonalty.Max(r => r.PersonaltyId) : 0) + 1,
+                                    PersonaltyId = maxId,
 
                                     StuId = currentStuPersonal.StudentId,
                                     ClassId = currentStuPersonal.ClassId,
                                     SectionId = currentStuPersonal.SectionId,
+
                                     Discipline = currentStuPersonal.Discipline,
                                     Concentration = currentStuPersonal.Concentration,
                                     Intiative = currentStuPersonal.Intiative,
@@ -1998,10 +2262,10 @@ namespace ApiProject.Service.Student
                                     Active = true,
                                     CompanyId = SchoolId,
                                     SessionId = SessionId,
-                                    Userid = UserId,
+                                    Userid = UserId
                                 };
+
                                 _context.StuPersonalty.Add(Personal);
-                                //await _context.SaveChangesAsync();
                             }
                             else
                             {
@@ -2017,8 +2281,10 @@ namespace ApiProject.Service.Student
                                 Personal.Confident = currentStuPersonal.Confident;
                                 Personal.Responsible = currentStuPersonal.Responsible;
 
+                                _context.StuPersonalty.Update(Personal);
                             }
                         }
+
                         await _context.SaveChangesAsync();
                         await transaction.CommitAsync();
                     }
@@ -2424,8 +2690,7 @@ namespace ApiProject.Service.Student
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EventCertificate.Where(c => c.EventId == EventId && c.Active == true
-                && c.SessionId == SessionId && c.CompanyId == SchoolId)
+                var res = await _context.EventCertificate.Where(c => c.EventId == EventId && c.Active == true && c.SessionId == SessionId && c.CompanyId == SchoolId)
                     .Select(c => new StudentEventCertificate
                     {
                         ECId = c.EvId,
@@ -2440,7 +2705,7 @@ namespace ApiProject.Service.Student
 
                         ClassName = _context.University.Where(p => p.university_id == c.ClassId && p.CompanyId == SchoolId).Select(p => p.university_name).FirstOrDefault(),
                         SectionName = _context.collegeinfo.Where(s => s.collegeid == c.SectionId && s.CompanyId == SchoolId).Select(s => s.collegename).FirstOrDefault(),
-                        EventName = _context.Event.Where(u => u.EventID == c.EventId && u.SessionId == SessionId && u.CompanyId == SchoolId).Select(r => r.EventName).FirstOrDefault(),
+                        EventName = _context.Event.Where(u => u.EventID == c.EventId && u.CompanyId == SchoolId).Select(r => r.EventName).FirstOrDefault(),
 
                         TeacherDetail = _context.EmployeeRegister.Where(a => a.Emp_Id == c.Emp_Id && a.SessionId == SessionId && a.CompanyId == SchoolId)
                         .Select(a => new GetEmployeDataModel
@@ -2627,6 +2892,34 @@ namespace ApiProject.Service.Student
             }
         }
 
+        public async Task<ApiResponse<bool>> EventCertificateRemove(int Id)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                EventCertificate ev = new EventCertificate();
+                ev = _context.EventCertificate.Find(Id);
+
+                if (ev == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("Record Not Deleted");
+                }
+
+                _context.EventCertificate.Remove(ev);
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Record Deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        // Generate TC and Dropout
         public async Task<ApiResponse<StudentFeeTCModel>> GetStudentDueFeeTC(int StudentId)
         {
             try
@@ -2673,6 +2966,7 @@ namespace ApiProject.Service.Student
                     .ErrorResponse("Error: " + ex.Message);
             }
         }
+
         //public async Task<ApiResponse<StudentFeeTCModel>> GetStudentDueFeeTC(int StudentId)
         //{
         //    try
@@ -2771,51 +3065,51 @@ namespace ApiProject.Service.Student
             }
         }
 
-        public async Task<ApiResponse<StudentClassExamData>> GetClassSubjectAsync(int ClassId)
-        {
-            try
-            {
-                int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
-                int SessionId = _loginUser.SessionId;
+        //public async Task<ApiResponse<StudentClassExamData>> GetClassSubjectAsync(int ClassId)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int UserId = _loginUser.UserId;
+        //        int SessionId = _loginUser.SessionId;
 
-                var ExamDataRaw = await (from Cls in _context.ClassSubjectExamTbl
-                                         join Exm in _context.ExamTbl on Cls.ExamId equals Exm.ExamId
-                                         where Cls.ClassId == ClassId && Cls.SessionId == SessionId && Cls.SchoolId == SchoolId
-                                         select new StudentExamData
-                                         {
-                                             ClassId = Cls.ClassId,
-                                             ExamId = Cls.ExamId,
-                                             SchoolId = Cls.SchoolId,
-                                             SubjectId = Cls.SubjectId,
-                                             ExamName = Exm.ExamName,
-                                             ExamPriority = Exm.ExamPriority,
-                                         }).OrderBy(exm => exm.ExamPriority).ToListAsync();
+        //        var ExamDataRaw = await (from Cls in _context.ClassSubjectExamTbl
+        //                                 join Exm in _context.ExamTbl on Cls.ExamId equals Exm.ExamId
+        //                                 where Cls.ClassId == ClassId && Cls.SessionId == SessionId && Cls.SchoolId == SchoolId
+        //                                 select new StudentExamData
+        //                                 {
+        //                                     ClassId = Cls.ClassId,
+        //                                     ExamId = Cls.ExamId,
+        //                                     SchoolId = Cls.SchoolId,
+        //                                     SubjectId = Cls.SubjectId,
+        //                                     ExamName = Exm.ExamName,
+        //                                     ExamPriority = Exm.ExamPriority,
+        //                                 }).OrderBy(exm => exm.ExamPriority).ToListAsync();
 
-                var ExamData = ExamDataRaw.GroupBy(x => x.ExamId).Select(g => g.FirstOrDefault()).ToList();
+        //        var ExamData = ExamDataRaw.GroupBy(x => x.ExamId).Select(g => g.FirstOrDefault()).ToList();
 
-                //var SectionData = await _context.Classcollegeinfo.Where(p => p.ClassId == ClassId && p.SchoolId == SchoolId)
-                //    .Select(p => new SectionData
-                //    {
-                //        ClassId = p.ClassId,
-                //        SectionId = p.SectionId,
-                //        SectionName = _context.collegeinfo.Where(a => a.SectionId == p.SectionId && a.SchoolId == SchoolId).Select(a => a.SectionName).FirstOrDefault(),
+        //        //var SectionData = await _context.Classcollegeinfo.Where(p => p.ClassId == ClassId && p.SchoolId == SchoolId)
+        //        //    .Select(p => new SectionData
+        //        //    {
+        //        //        ClassId = p.ClassId,
+        //        //        SectionId = p.SectionId,
+        //        //        SectionName = _context.collegeinfo.Where(a => a.SectionId == p.SectionId && a.SchoolId == SchoolId).Select(a => a.SectionName).FirstOrDefault(),
 
-                //    }).ToListAsync();
+        //        //    }).ToListAsync();
 
-                var res = new StudentClassExamData
-                {
-                    ExamDatas = ExamData,
-                    // SectionDatas = SectionData,
-                };
+        //        var res = new StudentClassExamData
+        //        {
+        //            ExamDatas = ExamData,
+        //            // SectionDatas = SectionData,
+        //        };
 
-                return ApiResponse<StudentClassExamData>.SuccessResponse(res, "Fetch Successfully Class wise Subject");
-            }
-            catch (Exception ex)
-            {
-                return ApiResponse<StudentClassExamData>.ErrorResponse("Error: " + ex.Message);
-            }
-        }
+        //        return ApiResponse<StudentClassExamData>.SuccessResponse(res, "Fetch Successfully Class wise Subject");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<StudentClassExamData>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
 
         public async Task<ApiResponse<List<StudentExamData>>> GetClassExamSubjectAsync(ClassExamMarksModelreq request)
         {
@@ -3155,7 +3449,6 @@ namespace ApiProject.Service.Student
                 return ApiResponse<ClassByFeeInResponse>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
 
 
         //public async Task<ApiResponse<bool>> studentexcelupload(List<StudentExcelUploadListReq> request)

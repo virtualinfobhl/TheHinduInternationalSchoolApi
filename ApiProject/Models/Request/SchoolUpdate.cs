@@ -33,6 +33,13 @@
     }
 
 
+    public class getdashboardmodel
+    {
+        public int TotolUsers { get; set; }
+        public int TotalClass { get; set; }
+        public int TotalStudent { get; set; }
+        public int TotalEmployee { get; set; }
+    }
     public class GetUserReqmodel
     {
         public int UserId { get; set; }
