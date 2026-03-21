@@ -122,6 +122,7 @@ namespace ApiProject.Service.School
                 return ApiResponse<SchoolDetail>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
         public async Task<SchoolDetail> schooldetailupdate(SchoolUpdate request)
         {
             int SchoolId = _loginUser.SchoolId;

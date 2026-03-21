@@ -22,7 +22,7 @@ namespace ApiProject.Service.Student
 
 
         // Show Student Bulk Edit
-        Task<ApiResponse<List<StudentRollNoResponse>>> ShowStudentBulkEdit(BulkStudentReq request);
+        Task<ApiResponse<List<StudentRollNoResponse>>> ShowStudentBulkEdit(StudentBulkEditReq request);
         Task<ApiResponse<bool>> UpdateBulkStudentAsync(List<studentRollNoAttendaceReq> request);
 
         // student fee discount

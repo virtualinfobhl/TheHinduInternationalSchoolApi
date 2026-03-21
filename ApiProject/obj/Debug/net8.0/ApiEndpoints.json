@@ -99,11 +99,6 @@
         "IsRequired": false
       },
       {
-        "Name": "PinCode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "Phoneno",
         "Type": "System.String",
         "IsRequired": false
@@ -135,11 +130,6 @@
       },
       {
         "Name": "P_City",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "P_PinCode",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -400,6 +390,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.EmolpyeeController",
+    "Method": "GetEmployeeDetailById",
+    "RelativePath": "api/Emolpyee/GetEmployeeDetailById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmpId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.EmolpyeeController",
     "Method": "GetEmployeeLit",
     "RelativePath": "api/Emolpyee/GetEmployeeLit",
     "HttpMethod": "GET",
@@ -550,11 +556,6 @@
         "IsRequired": false
       },
       {
-        "Name": "PinCode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "Phoneno",
         "Type": "System.String",
         "IsRequired": false
@@ -586,11 +587,6 @@
       },
       {
         "Name": "P_City",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "P_PinCode",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -2963,7 +2959,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "ApiProject.Models.Request.BulkStudentReq",
+        "Type": "ApiProject.Models.Request.StudentBulkEditReq",
         "IsRequired": true
       }
     ],
@@ -3385,11 +3381,6 @@
       {
         "Name": "feeInstallmentlists",
         "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Request.FeeInstallmentModel, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "FeeInstallmentlistsJson",
-        "Type": "System.String",
         "IsRequired": false
       }
     ],

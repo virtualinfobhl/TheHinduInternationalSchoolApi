@@ -4,6 +4,40 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Emolpyee/GetEmployeeLit": {
+      "get": {
+        "tags": [
+          "Emolpyee"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Emolpyee/GetEmployeeDetailById": {
+      "get": {
+        "tags": [
+          "Emolpyee"
+        ],
+        "parameters": [
+          {
+            "name": "EmpId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Emolpyee/AddEmployeeDetail": {
       "post": {
         "tags": [
@@ -117,13 +151,6 @@
             }
           },
           {
-            "name": "PinCode",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "Phoneno",
             "in": "query",
             "schema": {
@@ -167,13 +194,6 @@
           },
           {
             "name": "P_City",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "P_PinCode",
             "in": "query",
             "schema": {
               "type": "string"
@@ -506,13 +526,6 @@
             }
           },
           {
-            "name": "PinCode",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "Phoneno",
             "in": "query",
             "schema": {
@@ -556,13 +569,6 @@
           },
           {
             "name": "P_City",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "P_PinCode",
             "in": "query",
             "schema": {
               "type": "string"
@@ -783,18 +789,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Emolpyee/GetEmployeeLit": {
-      "get": {
-        "tags": [
-          "Emolpyee"
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -4346,9 +4340,6 @@
                     "items": {
                       "$ref": "#/components/schemas/FeeInstallmentModel"
                     }
-                  },
-                  "FeeInstallmentlistsJson": {
-                    "type": "string"
                   }
                 }
               },
@@ -4535,9 +4526,6 @@
                 },
                 "feeInstallmentlists": {
                   "style": "form"
-                },
-                "FeeInstallmentlistsJson": {
-                  "style": "form"
                 }
               }
             }
@@ -4627,17 +4615,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BulkStudentReq"
+                "$ref": "#/components/schemas/StudentBulkEditReq"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BulkStudentReq"
+                "$ref": "#/components/schemas/StudentBulkEditReq"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BulkStudentReq"
+                "$ref": "#/components/schemas/StudentBulkEditReq"
               }
             }
           }
@@ -7784,6 +7772,22 @@
           "date": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentBulkEditReq": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false

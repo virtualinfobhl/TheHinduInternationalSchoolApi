@@ -12,7 +12,8 @@ namespace ApiProject.Data
         public string? Father_husband_Type { get; set; }
         public string? Father_husband_Name { get; set; }
         public string? Father_husband_Occupation { get; set; }
-        public string? DOB { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+       // public string? DOB { get; set; }
         public string? Gendar { get; set; }
         public string? Marital_Status { get; set; }
         public string? Cast { get; set; }

@@ -6,8 +6,8 @@
        // public string ownername { get; set; }
         public string schoolcode { get; set; }
         public string rgtno { get; set; }
-       // public Nullable<System.DateTime> rgstdate { get; set; }
-        public string rgstdate { get; set; }
+        public Nullable<System.DateTime> rgstdate { get; set; }
+       // public string rgstdate { get; set; }
 
     //    public Nullable<bool> companyactive { get; set; }
         public string address { get; set; }

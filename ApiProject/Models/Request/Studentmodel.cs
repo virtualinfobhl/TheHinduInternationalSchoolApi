@@ -225,7 +225,7 @@ namespace ApiProject.Models.Request
 
         public UpadateAdmissionFeeReceiptReqDto admissionReceipt { get; set; }
         public List<FeeInstallmentModel> feeInstallmentlists { get; set; }
-        public string FeeInstallmentlistsJson { get; set; }
+        //  public string FeeInstallmentlistsJson { get; set; }
 
     }
 
@@ -302,6 +302,11 @@ namespace ApiProject.Models.Request
     //    public double? oldDuefees { get; set; }
     //}
 
+    public class StudentBulkEditReq
+    {
+        public int? ClassId { get; set; }
+        public int? SectionId { get; set; }
+    }
     public class BulkStudentReq
     {
         public int? ClassId { get; set; }

@@ -884,7 +884,7 @@ namespace ApiProject.Service.Student
                         StudentId = student.stu_id,
                         ReceiptId = ReceiptId
                     };
-                    return ApiResponse<quickadmissionres>.SuccessResponse(result, "Student Add successful");
+                    return ApiResponse<quickadmissionres>.SuccessResponse(result, "Student admission successful");
                 }
                 catch (Exception ex)
                 {
@@ -894,13 +894,13 @@ namespace ApiProject.Service.Student
             }
         }
 
+
         public async Task<ApiResponse<quickadmissionres>> updatestudentdata(StudentUpdateReqModel request)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             {
                 try
                 {
-
                     // Deserialize fee installment list from JSON if provided
                     //if (!string.IsNullOrEmpty(request.FeeInstallmentlistsJson))
                     //{
@@ -1358,82 +1358,6 @@ namespace ApiProject.Service.Student
             }
         }
 
-        //public async Task<ApiResponse<quickadmissionres>> UpdateStuinstallment(FeeInstallmentReqMOdel request)
-        //{
-        //    using var transaction = await _context.Database.BeginTransactionAsync();
-        //    {
-        //        try
-        //        {
-        //            int SchoolId = _loginUser.SchoolId;
-        //            int UserId = _loginUser.UserId;
-        //            int SessionId = _loginUser.SessionId;
-        //            int ReceiptId = 0;
-
-        //         //   var duplicateStudent = await _context.student_admission.FirstOrDefaultAsync(p => p.registration_no == request.srNo && p.CompanyId == SchoolId && p.stu_id != request.studentId);
-
-        //            //if (duplicateStudent != null)
-        //            //    return ApiResponse<quickadmissionres>.ErrorResponse("Student already exists");
-
-        //            var student = await _context.student_admission.FirstOrDefaultAsync(p => p.stu_id == request.StudentId && p.CompanyId == SchoolId);
-        //            if (student == null)
-        //                return ApiResponse<quickadmissionres>.ErrorResponse("Student not found");
-
-
-        //            var fee_installmenttbl = _context.fee_installment.Where(c => c.stu_id == request.StudentId && c.university_id == request.ClassId && c.CompanyId == SchoolId && c.SessionId == SessionId).ToList();
-        //            if (fee_installmenttbl != null)
-        //            {
-        //                _context.fee_installment.RemoveRange(fee_installmenttbl);
-        //                _context.SaveChanges();
-        //            }
-
-        //            fee_installment feeInstall = new fee_installment();
-        //            feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
-        //            feeInstall.stu_id = student.stu_id;
-        //            feeInstall.university_id = request.ClassId;
-        //            feeInstall.IntallmentID = request.IntallmentID;
-        //            feeInstall.Installment = request.Installment;
-        //            feeInstall.FAmount = request.FAmount;
-        //            feeInstall.due_fee = request.FAmount;
-        //            feeInstall.SessionId = SessionId;
-        //            feeInstall.CompanyId = SchoolId;
-        //            feeInstall.Userid = UserId;
-
-        //            _context.fee_installment.Add(feeInstall);
-        //            _context.SaveChanges();
-
-        //            //for (int i = 0; i < request.feeInstallmentlist.Count; i++)
-        //            //{
-        //            //    fee_installment feeInstall = new fee_installment();
-        //            //    feeInstall.Id = _context.fee_installment.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id) + 1;
-        //            //    feeInstall.stu_id = student.stu_id;
-        //            //    feeInstall.university_id = request.feeInstallmentlist[i].ClassId;
-        //            //    feeInstall.IntallmentID = request.feeInstallmentlist[i].IntallmentID;
-        //            //    feeInstall.Installment = request.feeInstallmentlist[i].Installment;
-        //            //    feeInstall.FAmount = request.feeInstallmentlist[i].FAmount;
-        //            //    feeInstall.due_fee = request.feeInstallmentlist[i].FAmount;
-        //            //    feeInstall.SessionId = SessionId;
-        //            //    feeInstall.CompanyId = SchoolId;
-        //            //    feeInstall.Userid = UserId;
-
-        //            //    _context.fee_installment.Add(feeInstall);
-        //            //    _context.SaveChanges();
-        //            //}
-
-        //            await transaction.CommitAsync();
-        //            var result = new quickadmissionres
-        //            {
-        //                StudentId = student.stu_id,
-        //                ReceiptId = ReceiptId
-        //            };
-        //            return ApiResponse<quickadmissionres>.SuccessResponse(result, "Update successful");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            await transaction.RollbackAsync();
-        //            return ApiResponse<quickadmissionres>.ErrorResponse("Error: " + ex.Message);
-        //        }
-        //    }
-        //}
 
         private async Task<string> SaveStudentFileAsync(IFormFile file, string folderPath, int studentId, string schoolId, string subFolderName)
         {
@@ -1684,7 +1608,7 @@ namespace ApiProject.Service.Student
 
 
         //  Student Bulk Edit
-        public async Task<ApiResponse<List<StudentRollNoResponse>>> ShowStudentBulkEdit(BulkStudentReq request)
+        public async Task<ApiResponse<List<StudentRollNoResponse>>> ShowStudentBulkEdit(StudentBulkEditReq request)
         {
             try
             {

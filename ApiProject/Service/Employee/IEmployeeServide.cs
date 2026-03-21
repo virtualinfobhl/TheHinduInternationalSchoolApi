@@ -11,6 +11,7 @@ namespace ApiProject.Service.Employee
     {
         // Employee detail stsrt
         Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit();
+        Task<ApiResponse<List<GetEmployeeDetailsModel>>> GetEmployeeDetailById(int EmpId);
         Task<ApiResponse<bool>> AddEmployeeDetail(AddEmployeeDetailReq req);
         Task<ApiResponse<bool>> UpdateEmoloyeeDetail(UpdatreEmployeeDetailReq req);
         Task<ApiResponse<List<GetEmployeeListModel>>> EmployeeReport(GetEmployeReq req);

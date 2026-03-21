@@ -45,7 +45,7 @@ namespace ApiProject.Models.Response
         public string? CardNo { get; set; }
         public int? Emp_Id { get; set; }
         public string? Emp_Name { get; set; }
-        public string? DOB { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
         public string? Gendar { get; set; }
         public string? Mobileno { get; set; }
         public string? EmailId { get; set; }

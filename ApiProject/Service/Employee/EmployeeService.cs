@@ -80,7 +80,9 @@ namespace ApiProject.Service.Employee
                     {
                         Emp_Id = c.Emp_Id,
                         Emp_Name = c.Emp_Name,
+                        EmpCode = c.Emp_Code,
                         Active = c.Active,
+
                     }).ToListAsync();
                 return ApiResponse<List<GetEmployeeModel>>.SuccessResponse(EmployeeEntity, "Employee list fetched successfully");
 
@@ -88,6 +90,94 @@ namespace ApiProject.Service.Employee
             catch (Exception ex)
             {
                 return ApiResponse<List<GetEmployeeModel>>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<List<GetEmployeeDetailsModel>>> GetEmployeeDetailById(int EmpId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.EmployeeRegister.Where(r => r.Emp_Id == EmpId && r.CompanyId == SchoolId).Select(r => new GetEmployeeDetailsModel
+                {
+                    Emp_Id = r.Emp_Id,
+                    Emp_Code = r.Cast,
+                    Emp_Type = r.Emp_Type,
+
+                    Emp_Name = r.Emp_Name,
+                    Father_husband_Name = r.Father_husband_Name,
+                    Father_husband_Occupation = r.Father_husband_Occupation,
+                    DOB = r.DOB,
+                    Gendar = r.Gendar,
+                    Marital_Status = r.Marital_Status,
+                    Cast = r.Cast,
+                    Bloodgroup = r.Bloodgroup,
+                    Religion = r.Religion,
+                    Nationality = r.Nationality,
+                    Address = r.Address,
+                    State = r.State,
+                    District = r.District,
+                    City = r.City,
+                    EmailId = r.EmailId,
+                    Phoneno = r.Phoneno,
+                    Mobileno = r.Mobileno,
+                    P_Address = r.P_Address,
+                    P_Mobileno = r.P_Mobileno,
+                    P_Phoneno = r.P_Phoneno,
+                    P_State = r.P_State,
+                    P_District = r.P_District,
+                    P_City = r.P_City,
+                    P_EmailId = r.P_EmailId,
+                    Qualification = r.Qualification,
+                    Experience = r.Experience,
+                    Specialization = r.Specialization,
+                    Applied_Post = r.Applied_Post,
+                    Appointed_Post = r.Appointed_Post,
+                    Basic_Salary = r.Basic_Salary,
+                    Allowances = r.Allowances,
+                    TotalSalary = r.TotalSalary,
+
+                    JoiningDate = r.Date,
+                    Specialnote = r.Specialnote,
+                    Adharcard = r.Adharcard,
+                    UserName = r.UserName,
+                    Password = r.Password,
+
+                    EmployrPhoto = r.EmployrPhoto,
+                    AadharcardPhoto = r.AadharcardPhoto,
+                    PancardPhoto = r.PancardPhoto,
+                    EducationPhoto = r.EducationPhoto,
+                    GraduationPhoto = r.GraduationPhoto,
+                    PostGraductionPhoto = r.PostGraductionPhoto,
+                    ExperiencePhoto = r.ExperiencePhoto,
+                    ResumePhoto = r.ResumePhoto,
+                    BankPssbookPhoto = r.BankPssbookPhoto,
+                    Active = r.Active,
+
+                    BankDetails = _context.TrnBankDetails.Where(a => a.Emp_Id == r.Emp_Id && a.CompanyId == SchoolId).Select(a => new GetBankDetailsList
+                    {
+                        AID = a.AID,
+                        Emp_Id = a.Emp_Id,
+                        AccountHolder = a.AccountHolder,
+                        BankName = a.BankName,
+                        BranchName = a.BranchName,
+                        AccountNumber = a.AccountNumber,
+                        IFSCCode = a.IFSCCode,
+                        ActiveStatus = a.ActiveStatus,
+                        RTS = a.RTS,
+
+                    }).FirstOrDefault(),
+
+                }).ToListAsync();
+
+                return ApiResponse<List<GetEmployeeDetailsModel>>.SuccessResponse(res, "Fetch successfully employee details");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<GetEmployeeDetailsModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
 
@@ -260,7 +350,6 @@ namespace ApiProject.Service.Employee
                 }
             }
         }
-
 
         public async Task<ApiResponse<bool>> UpdateEmoloyeeDetail(UpdatreEmployeeDetailReq request)
         {
@@ -473,8 +562,7 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var EmpWorkAllo = _context.Emp_Workallocation
-                    .FirstOrDefault(e => e.Emp_Id == EmpId);
+                var EmpWorkAllo = _context.Emp_Workallocation.FirstOrDefault(e => e.Emp_Id == EmpId);
 
                 if (EmpWorkAllo == null)
                 {
@@ -483,29 +571,30 @@ namespace ApiProject.Service.Employee
 
                 var res = new GetEmpClassbySubjectModel
                 {
-                    EmpWorkAllocation = _context.Emp_Workallocation.Where(a => a.Emp_Id == EmpId && a.UniversityId == ClassId).Select(a => new getEmpWorkAllo
+                    EmpWorkAllocation = _context.Emp_Workallocation.Where(a => a.Emp_Id == EmpId && a.UniversityId == ClassId && a.Active == true).Select(a => new getEmpWorkAllo
                     {
                         Emp_Id = a.Emp_Id,
                         SubjectId = a.SubjectId,
-                        Subject = _context.Subject.Where(c => c.subject_id == a.SubjectId && c.CompanyId == SchoolId).Select(c => c.subject_name).FirstOrDefault(),
+                        Subject = _context.Subject.Where(c => c.subject_id == a.SubjectId && c.CompanyId == SchoolId && c.active == true).Select(c => c.subject_name).FirstOrDefault(),
                     }).ToList(),
 
                     Sectiondata = _context.collegeinfo.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId).Select(a => new SectionData
                     {
+                        ClassId = a.university_id,
                         SectionId = a.collegeid,
                         SectionName = a.collegename,
 
                     }).ToList(),
 
-                    EmpsubjectData = (from cs in _context.ClassSubjectExamTbl
-                                      join s in _context.Subject
-                                      on cs.SubjectId equals s.subject_id
-                                      where cs.ClassId == ClassId && cs.SchoolId == SchoolId
-                                      select new GetEmpsubjectData
-                                      {
-                                          SubjectId = s.subject_id,
-                                          SubjectName = s.subject_name,
-                                      }).Distinct().ToList(),
+                    //EmpsubjectData = (from cs in _context.ClassSubjectExamTbl
+                    //                  join s in _context.Subject
+                    //                  on cs.SubjectId equals s.subject_id
+                    //                  where cs.ClassId == ClassId && cs.SchoolId == SchoolId
+                    //                  select new GetEmpsubjectData
+                    //                  {
+                    //                      SubjectId = s.subject_id,
+                    //                      SubjectName = s.subject_name,
+                    //                  }).Distinct().ToList(),
                 };
 
                 if (res == null || (!res.EmpWorkAllocation.Any() && !res.Sectiondata.Any()))
@@ -584,7 +673,7 @@ namespace ApiProject.Service.Employee
                     Emp_Id = c.Emp_Id,
                     Emp_Name = c.Emp_Name,
 
-                    SubjectData = _context.Emp_Workallocation.Where(p => p.Emp_Id == c.Emp_Id && p.CompanyId == SchoolId)
+                    SubjectData = _context.Emp_Workallocation.Where(p => p.Emp_Id == c.Emp_Id && p.CompanyId == SchoolId && p.SessionId == SessionId)
                            .GroupBy(p => new { p.UniversityId })
                             .Select(g => new getSubjectlist
                             {
@@ -595,7 +684,8 @@ namespace ApiProject.Service.Employee
                                 Sujbect = g.Select(r => new SubjectDto
                                 {
                                     SubjectId = r.SubjectId,
-                                    SubjectName = _context.Subject.Where(s => s.subject_id == r.SubjectId && s.CompanyId == SchoolId).Select(s => s.subject_name).FirstOrDefault(),
+                                    SubjectName = _context.Subject.Where(s => s.subject_id == r.SubjectId && s.CompanyId == SchoolId && s.SessionId == SessionId
+                                    && s.active == true).Select(s => s.subject_name).FirstOrDefault(),
 
                                 }).ToList(),
 
@@ -630,6 +720,7 @@ namespace ApiProject.Service.Employee
                 {
                     Emp_Id = a.Emp_Id,
                     Employeename = a.Emp_Name,
+                    EmpCode = a.Emp_Code,
                     Status = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date == req.Date).Select(p => p.Status).FirstOrDefault(),
                     Note = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date == req.Date).Select(p => p.Note).FirstOrDefault(),
                     Date = req.Date,

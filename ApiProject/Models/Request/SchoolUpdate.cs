@@ -7,7 +7,8 @@
         //   public Nullable<System.DateTime> rgstdate { get; set; }
         public string? Registrationno { get; set; }
         public string? InstituteCode { get; set; }
-        public string? rgstdate { get; set; }
+       // public string? rgstdate { get; set; }
+        public Nullable<System.DateTime> rgstdate { get; set; }
         public string? email { get; set; }
         public string? landlinenum { get; set; }
         public string? mobileno1 { get; set; }

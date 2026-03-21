@@ -25,6 +25,34 @@ namespace ApiProject.Controllers
         }
 
         // ********* Employee Details Start 
+        [HttpGet("GetEmployeeLit")]
+        public async Task<IActionResult> GetEmployeeLit()
+        {
+            try
+            {
+                var res = await _employeeService.GetEmployeeLit();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetEmployeeDetailById")]
+        public async Task<IActionResult> GetEmployeeDetailById(int EmpId)
+        {
+            try
+            {
+                var res = await _employeeService.GetEmployeeDetailById(EmpId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("AddEmployeeDetail")]
         public async Task<IActionResult> AddEmployeeDetail(AddEmployeeDetailReq request)
         {
@@ -39,7 +67,6 @@ namespace ApiProject.Controllers
                 return BadRequest(response);
             }
         }
-
 
         [HttpPost("UpdateEmoloyeeDetail")]
         public async Task<IActionResult> UpdateEmoloyeeDetail(UpdatreEmployeeDetailReq request)
@@ -56,22 +83,6 @@ namespace ApiProject.Controllers
             }
         }
 
-
-        [HttpGet("GetEmployeeLit")]
-        public async Task<IActionResult> GetEmployeeLit()
-        {
-            try
-            {
-                var res = await _employeeService.GetEmployeeLit();
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-
         [HttpPost("EmployeeReport")]
         public async Task<IActionResult> EmployeeReport(GetEmployeReq req)
         {
@@ -86,7 +97,6 @@ namespace ApiProject.Controllers
                 return BadRequest(res);
             }
         }
-
 
         [HttpGet("ChangeStatusEmployee")]
         public async Task<IActionResult> ChangeStatusEmployee(int EmpId)

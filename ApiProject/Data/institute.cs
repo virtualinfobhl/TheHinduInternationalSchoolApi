@@ -9,7 +9,7 @@ namespace ApiProject.Data
         public int institute_id { get; set; }
         public string institute_name { get; set; }
         public string? regist_num { get; set; }
-        public string? regist_date { get; set; }
+        public Nullable<System.DateTime> regist_date { get; set; }
         public string? address { get; set; }
         public string? landline_num { get; set; }
         public string? mob_num { get; set; }

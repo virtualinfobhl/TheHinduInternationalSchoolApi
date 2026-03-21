@@ -109,20 +109,36 @@ namespace ApiProject.Controllers
             }
         }
 
+        //[HttpPost("updatestudentdata")]
+        //public async Task<IActionResult> updatestudentdata([FromForm] StudentUpdateReqModel request)
+        //{
+        //    try
+        //    {
+
+        //        if (!string.IsNullOrEmpty(request.FeeInstallmentlistsJson))
+        //        {
+        //            request.feeInstallmentlists = JsonConvert.DeserializeObject<List<FeeInstallmentModel>>(request.FeeInstallmentlistsJson);
+        //        }
+
+        //        var res = await _studentService.updatestudentdata(request);
+        //        return Ok(res);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+        //        return BadRequest(response);
+        //    }
+        //}
+
+
         [HttpPost("updatestudentdata")]
         public async Task<IActionResult> updatestudentdata([FromForm] StudentUpdateReqModel request)
         {
             try
             {
-
-                if (!string.IsNullOrEmpty(request.FeeInstallmentlistsJson))
-                {
-                    request.feeInstallmentlists = JsonConvert.DeserializeObject<List<FeeInstallmentModel>>(request.FeeInstallmentlistsJson);
-                }
-
                 var res = await _studentService.updatestudentdata(request);
                 return Ok(res);
-
             }
             catch (Exception ex)
             {
@@ -130,41 +146,6 @@ namespace ApiProject.Controllers
                 return BadRequest(response);
             }
         }
-
-
-        //[HttpPost("UpdateStuinstallment")]
-        //public async Task<IActionResult> UpdateStuinstallment(FeeInstallmentReqMOdel request)
-        //{
-        //    try
-        //    {
-
-        //        var res = await _studentService.UpdateStuinstallment(request);
-        //        return Ok(res);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-        //        return BadRequest(response);
-        //    }
-        //}
-
-
-        // For updating student data (JSON only)
-        //[HttpPost("updatestudentdata")]
-        //public async Task<IActionResult> updatestudentdata([FromBody] StudentUpdateReqModel request)
-        //{
-        //    try
-        //    {
-        //        var res = await _studentService.updatestudentdata(request);
-        //        return Ok(res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-        //        return BadRequest(response);
-        //    }
-        //}
 
 
         [HttpPost("studentexcelupload")]
@@ -263,7 +244,7 @@ namespace ApiProject.Controllers
 
         //  Student Bulk Edit
         [HttpPost("ShowStudentBulkEdit")]
-        public async Task<IActionResult> ShowStudentBulkEdit(BulkStudentReq request)
+        public async Task<IActionResult> ShowStudentBulkEdit(StudentBulkEditReq request)
         {
             try
             {
