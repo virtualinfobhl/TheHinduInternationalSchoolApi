@@ -171,6 +171,7 @@ namespace ApiProject.Models.Response
         public int? TotalH { get; set; }
         public int? TotalHF { get; set; }
         public int? TotalL { get; set; }
+        public Dictionary<int, string> AttendanceByDate { get; set; } = new();
     }
 
     public class GetAdvsalaryModel

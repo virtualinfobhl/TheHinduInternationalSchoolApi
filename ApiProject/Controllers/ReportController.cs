@@ -86,6 +86,51 @@ namespace ApiProject.Controllers
             }
         }
 
+        [HttpPost("SaveHalfYearlyNoDueFee")]
+        public async Task<IActionResult> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res)
+        {
+            try
+            {
+                var res1 = await _reportService.SaveHalfYearlyNoDueFee(res);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res1 = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
+            }
+        }
+
+        [HttpPost("SaveYearlyNoDueFee")]
+        public async Task<IActionResult> SaveYearlyNoDueFee(List<YearlyModel> res)
+        {
+            try
+            {
+                var res1 = await _reportService.SaveYearlyNoDueFee(res);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res1 = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
+            }
+        }
+
+        [HttpPost("GetStudentNoDuesFeeReport")]
+        public async Task<IActionResult> GetStudentNoDuesFeeReport(GetStudentReq req)
+        {
+            try
+            {
+                var res = await _reportService.GetStudentNoDuesFeeReport(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
+            }
+        }
+
         [HttpPost("GetClassWiseInstallmentReport")]
         public async Task<IActionResult> GetClassWiseInstallmentReport(BulkStudentReq req)
         {

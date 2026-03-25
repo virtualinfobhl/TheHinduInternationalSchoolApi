@@ -232,6 +232,64 @@ namespace ApiProject.Service.Parents
             }
         }
 
+        // new payemnt
+        private static string _phonePeToken = "";
+        private static DateTime _tokenExpiry = DateTime.MinValue;
+
+        // ================== PHONEPE TOKEN GENERATE
+        public string GetNewAccessToken()
+        {
+            string authUrl = "hhttps://api.phonepe.com/apis/identity-manager/v1/oauth/token";
+
+            string client_id = "SYSTEM_USER_PR2511101303561945193890";
+            string client_version = "1";
+            string client_secret = "b0d19337-30c5-45fc-b028-8bc414c6237a";
+            string grant_type = "client_credentials";
+
+            //string client_id = "TSPVIRTUALUAT_2512051124";
+            //string client_version = "1";
+            //string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
+            //string grant_type = "client_credentials";
+
+            string postData =
+                $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type={grant_type}";
+
+            byte[] data = Encoding.UTF8.GetBytes(postData);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(authUrl);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            using (var stream = request.GetRequestStream())
+                stream.Write(data, 0, data.Length);
+
+            string result;
+
+            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var reader = new StreamReader(response.GetResponseStream()))
+                result = reader.ReadToEnd();
+
+            dynamic json = JsonConvert.DeserializeObject(result);
+
+            string token = json.access_token;
+            int expiresIn = json.expires_in;
+
+            // 🔐 server memory me save
+            _phonePeToken = token;
+            _tokenExpiry = DateTime.Now.AddSeconds(expiresIn - 300); // 5 min pehle refresh
+
+            return token;
+        }
+        public string GetValidToken()
+        {
+            if (string.IsNullOrEmpty(_phonePeToken) || DateTime.Now >= _tokenExpiry)
+            {
+                return GetNewAccessToken();
+            }
+
+            return _phonePeToken;
+        }
+
         public async Task<ApiResponse<StudentFeePaymentResult>> AddStudentInstallmentFee(AddStudentinstallReq req)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
@@ -309,38 +367,47 @@ namespace ApiProject.Service.Parents
                     _context.M_FeeDetail.Add(fee);
                     await _context.SaveChangesAsync();
 
+
                     // =========================================== STEP 1 → GET OAUTH TOKEN FROM PHONEPE
 
-                    string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
+                    //string authUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token";
 
-                    string client_id = "SHYAWAYUAT_2510101108212";
-                    string client_version = "1";
-                    string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
+                    //string client_id = "SYSTEM_USER_PR2511101303561945193890";
+                    //string client_version = "1";
+                    //string client_secret = "b0d19337-30c5-45fc-b028-8bc414c6237a";
+                    //string grant_type = "client_credentials";
+
+
+
+                    //string client_id = "SHYAWAYUAT_2510101108212";
+                    //string client_version = "1";
+                    //string client_secret = "NWQ2YzJlZDktODU3Yi00ZWUzLTk1MTItOTJhZDVkYjkxYmYx";
 
                     //string client_id = "TSPVIRTUALUAT_2512051124";
                     //string client_version = "1";
                     //string client_secret = "ODcxMGVlYTgtNjNkNy00Y2Q2LWE5ODctZGRiMDQ4YzYyNWM2";
 
-                    string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
+                    //string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type=client_credentials";
 
-                    byte[] authBytes = Encoding.UTF8.GetBytes(postData);
+                    //byte[] authBytes = Encoding.UTF8.GetBytes(postData);
 
-                    HttpWebRequest authRequest = (HttpWebRequest)WebRequest.Create(authUrl);
-                    authRequest.Method = "POST";
-                    authRequest.ContentType = "application/x-www-form-urlencoded";
-                    authRequest.ContentLength = authBytes.Length;
+                    //HttpWebRequest authRequest = (HttpWebRequest)WebRequest.Create(authUrl);
+                    //authRequest.Method = "POST";
+                    //authRequest.ContentType = "application/x-www-form-urlencoded";
+                    //authRequest.ContentLength = authBytes.Length;
 
-                    using (var stream = authRequest.GetRequestStream())
-                        stream.Write(authBytes, 0, authBytes.Length);
+                    //using (var stream = authRequest.GetRequestStream())
+                    //    stream.Write(authBytes, 0, authBytes.Length);
 
-                    string authResponseStr;
-                    using (var response = (HttpWebResponse)authRequest.GetResponse())
-                    using (var reader = new StreamReader(response.GetResponseStream()))
-                        authResponseStr = reader.ReadToEnd();
+                    //string authResponseStr;
+                    //using (var response = (HttpWebResponse)authRequest.GetResponse())
+                    //using (var reader = new StreamReader(response.GetResponseStream()))
+                    //    authResponseStr = reader.ReadToEnd();
 
-                    dynamic authResponse = JsonConvert.DeserializeObject(authResponseStr);
-                    string token = authResponse.access_token;
+                    //dynamic authResponse = JsonConvert.DeserializeObject(authResponseStr);
+                    //string token = authResponse.access_token;
 
+                    string token = GetValidToken();
                     if (string.IsNullOrEmpty(token))
                     {
                         await transaction.RollbackAsync();
@@ -402,6 +469,11 @@ namespace ApiProject.Service.Parents
                     dynamic paymentResponse = JsonConvert.DeserializeObject(paymentResponseStr);
                     string redirectUrl = paymentResponse.redirectUrl;
 
+                    // =================         PENDING CHECK LOOP
+                    //BackgroundJob.Schedule(
+                    // () => CheckPaymentStatusBackground(NewOrderNo.ToString()),
+                    // TimeSpan.FromSeconds(10);
+
                     await transaction.CommitAsync();
                     return ApiResponse<StudentFeePaymentResult>.SuccessResponse(
                         new StudentFeePaymentResult
@@ -426,6 +498,114 @@ namespace ApiProject.Service.Parents
 
         }
 
+        //public async Task CheckPaymentStatusBackground(string orderId)
+        //{
+        //    using (var db2 = new EntitiesVEduSoft())
+        //    {
+        //        string token = GetValidToken();
+
+        //        string url = "https://api-preprod.phonepe.com/apis/pg/checkout/v2/order/" + orderId + "/status";
+
+
+        //        var news = new News()
+        //        {
+        //            Sno = db2.News.DefaultIfEmpty().Max(r => r == null ? 0 : r.Sno) + 1,
+        //            NewsTitle = "First Call" + orderId,
+        //            NewsDate = DateTime.UtcNow,
+        //            CompanyId = 1,
+        //            SessionId = 1,
+        //            Userid = 1,
+        //            branch_id = 1,
+        //        };
+
+        //        db2.News.Add(news);
+        //        db2.SaveChanges();
+        //        int totalTime = 0;
+
+        //        while (totalTime <= 300) // 5 minute tak check
+        //        {
+        //            try
+        //            {
+        //                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+        //                req.Method = "GET";
+        //                req.ContentType = "application/json";
+        //                req.Headers.Add("Authorization", "O-Bearer " + token);
+
+        //                string result;
+
+        //                using (var response = (HttpWebResponse)req.GetResponse())
+        //                using (var reader = new StreamReader(response.GetResponseStream()))
+        //                    result = reader.ReadToEnd();
+
+        //                dynamic res = JsonConvert.DeserializeObject(result);
+
+        //                string state = res.state;
+        //                string txnId = res.paymentDetails?[0]?.transactionId;
+
+        //                if (state == "COMPLETED" || state == "FAILED")
+        //                {
+        //                    var order = db2.M_FeeDetail.FirstOrDefault(x => x.OrderNo == orderId);
+
+        //                    if (order != null)
+        //                    {
+        //                        order.OrderStatus = state;
+        //                        order.TransactionId = txnId;
+        //                        db2.SaveChanges();
+        //                    }
+
+        //                    var news2 = new News()
+        //                    {
+        //                        Sno = db2.News.DefaultIfEmpty().Max(r => r == null ? 0 : r.Sno) + 1,
+        //                        NewsTitle = "2 Call" + orderId + state,
+        //                        NewsDate = DateTime.UtcNow,
+        //                        CompanyId = 1,
+        //                        SessionId = 1,
+        //                        Userid = 1,
+        //                        branch_id = 1,
+        //                    };
+
+        //                    db2.News.Add(news2);
+        //                    db2.SaveChanges();
+
+        //                    break;
+        //                }
+        //                var news3 = new News()
+        //                {
+        //                    Sno = db2.News.DefaultIfEmpty().Max(r => r == null ? 0 : r.Sno) + 1,
+        //                    NewsTitle = "3 Call" + orderId + state,
+        //                    NewsDate = DateTime.UtcNow,
+        //                    CompanyId = 1,
+        //                    SessionId = 1,
+        //                    Userid = 1,
+        //                    branch_id = 1,
+        //                };
+
+        //                db2.News.Add(news3);
+        //                db2.SaveChanges();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                var news4 = new News()
+        //                {
+        //                    Sno = db2.News.DefaultIfEmpty().Max(r => r == null ? 0 : r.Sno) + 1,
+        //                    NewsTitle = "4 Call" + orderId + ex.InnerException,
+        //                    NewsDate = DateTime.UtcNow,
+        //                    CompanyId = 1,
+        //                    SessionId = 1,
+        //                    Userid = 1,
+        //                    branch_id = 1,
+        //                };
+
+        //                db2.News.Add(news4);
+        //                db2.SaveChanges();
+        //                return;
+        //            }
+
+        //            await Task.Delay(5000); // 5 second wait
+        //            totalTime += 5;
+        //        }
+        //    }
+        //}
 
 
         public async Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId, string orderno)

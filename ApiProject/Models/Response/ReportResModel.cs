@@ -53,15 +53,30 @@ namespace ApiProject.Models.Response
         public Nullable<double> TotalNetFee { get; set; }
         public Nullable<double> PaidFee { get; set; }
         public Nullable<double> DueFee { get; set; }
+        public Nullable<bool> NDHalfYearly { get; set; }
+        public Nullable<bool> NDYearly { get; set; }
+        public Nullable<System.DateTime> UpdateNDdate { get; set; }
 
         public List<FeeReceiptModel> FeeReceipt { get; set; }
     }
+
+    public class HalfYearlyModel
+    {
+        public int StudentId { get; set; }
+        public bool NDHalfYearly { get; set; }
+    }
+    public class YearlyModel
+    {
+        public int StudentId { get; set; }
+        public bool NDYearly { get; set; }
+    }
+
 
     public class ClasswiseInstallModel
     {
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
-     //   public string? stu_code { get; set; }
+        //   public string? stu_code { get; set; }
         public string? registration_no { get; set; }
         public Nullable<bool> RTE { get; set; }
         public string? FatherName { get; set; }
@@ -302,6 +317,28 @@ namespace ApiProject.Models.Response
         public string? SectionName { get; set; }
         public double? PaidFee { get; set; }
         public List<ClasswiseInstallmentModel> ClassInstallments { get; set; }
+    }
+
+    public class GetStudentNoDueeFeeModel
+    {
+        public int stu_id { get; set; }
+        public string? stu_name { get; set; }
+        public string? stu_code { get; set; }
+        public string? Srno { get; set; }
+        public Nullable<int> ClassId { get; set; }
+        public Nullable<int> SectionId { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
+        public Nullable<double> AdmissionPayFee { get; set; }
+        public Nullable<double> TotalFee { get; set; }
+        public Nullable<double> Discount { get; set; }
+        public Nullable<double> DueOldFee { get; set; }
+        public Nullable<double> TotalNetFee { get; set; }
+        public Nullable<double> DepositFee { get; set; }
+        public Nullable<double> DueFee { get; set; }
+        public Nullable<bool> NDHalfYearly { get; set; }
+        public Nullable<bool> NDYearly { get; set; }
+        public Nullable<System.DateTime> UpdateNDdate { get; set; }
     }
 
     public class ClasswiseInstallmentModel

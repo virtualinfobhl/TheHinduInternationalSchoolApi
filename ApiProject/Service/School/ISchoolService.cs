@@ -15,7 +15,7 @@ namespace ApiProject.Service.School
         // ****** School Informaction
         #region
         Task<ApiResponse<SchoolDetail>> SchoolDetail();
-        Task<SchoolDetail> schooldetailupdate(SchoolUpdate update);
+        Task<ApiResponse<SchoolDetail>> schooldetailupdate(SchoolUpdate update);
         Task<ApiResponse<List<State>>> GetState();
         Task<ApiResponse<List<DistrictResModel>>> GetDistrict();
         #endregion

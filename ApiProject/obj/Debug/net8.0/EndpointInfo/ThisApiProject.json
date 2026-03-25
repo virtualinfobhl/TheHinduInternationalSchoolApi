@@ -70,7 +70,8 @@
             "name": "DOB",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -445,7 +446,8 @@
             "name": "DOB",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -2165,6 +2167,117 @@
         }
       }
     },
+    "/api/Report/SaveHalfYearlyNoDueFee": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HalfYearlyModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HalfYearlyModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HalfYearlyModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Report/SaveYearlyNoDueFee": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/YearlyModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/YearlyModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/YearlyModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Report/GetStudentNoDuesCertificateReport": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudentReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudentReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudentReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Report/GetClassWiseInstallmentReport": {
       "post": {
         "tags": [
@@ -2516,7 +2629,8 @@
             "name": "rgstdate",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -7532,6 +7646,19 @@
         },
         "additionalProperties": false
       },
+      "HalfYearlyModel": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ndHalfYearly": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "IssueLibraryBookReq": {
         "type": "object",
         "properties": {
@@ -8703,6 +8830,19 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "YearlyModel": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ndYearly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

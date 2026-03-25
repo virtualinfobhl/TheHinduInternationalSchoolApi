@@ -43,6 +43,10 @@ namespace ApiProject.Data
         public string? Status { get; set; }
         public Nullable<bool> Dropout { get; set; }
         public Nullable<int> ParentsId { get; set; }
+        public string? UpdateDeviceType { get; set; }
+        public Nullable<bool> NDYearly { get; set; }
+        public Nullable<bool> NDHalfYearly { get; set; }
+        public Nullable<System.DateTime> UpdateNDdate { get; set; }
 
 
     }

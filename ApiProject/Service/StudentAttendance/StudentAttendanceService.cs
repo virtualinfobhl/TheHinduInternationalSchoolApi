@@ -78,45 +78,56 @@ namespace ApiProject.Service.StudentAttendance
                     int? stuid = req[0].StudentId;
                     int? classid = req[0].ClassId;
                     DateTime? date = req[0].Date;
-                    List<Student_Attendance> attendancedelete = _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date 
+
+                    List<Student_Attendance> attendancedelete = _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date
                     && k.CompanyId == SchoolId).ToList();
 
                     if (attendancedelete != null)
                     {
                         _context.Student_Attendance.RemoveRange(attendancedelete);
                     }
-                    //int? classid = req[0].ClassId;
-                    //DateTime? date = req[0].Date;
 
-                    // Delete existing attendance
-                    //var attendancedelete = await _context.Student_Attendance.Where(k => k.SessionId == SessionId && k.ClassId == classid && k.Date == date
-                    //  && k.CompanyId == SchoolId).ToListAsync();
-
-
-                    //if (attendancedelete.Any())
-                    //{
-                    //    _context.Student_Attendance.RemoveRange(attendancedelete);
-                    //}
-
-                    List<Student_Attendance> attendanceList = req.Select(item => new Student_Attendance
+                    for (int i = 0; i < req.Count; i++)
                     {
-                        SAId = _context.Student_Attendance.DefaultIfEmpty().Max(r => r == null ? 0 : r.SAId) + 1,
-                        StudentId = item.StudentId,
-                        ClassId = item.ClassId,
-                        Status = item.Status,
-                        Note = item.Note == null ? "" : item.Note,
-                        CompanyId = SchoolId,
-                        Userid = UserId,
-                        SessionId = SessionId,
-                        Date = item.Date,
-                        Active = true,
-                        Time = DateTime.Now.TimeOfDay,
-                        CreateDate = DateTime.Now,
-                        UpdateDate = DateTime.Now
-                    }).ToList();
+                        Student_Attendance stuatt = new Student_Attendance();
+                        stuatt.SAId = _context.Student_Attendance.DefaultIfEmpty().Max(r => r == null ? 0 : r.SAId) + 1;
 
-                    _context.Student_Attendance.AddRange(attendanceList);
-                    await _context.SaveChangesAsync();
+                        stuatt.StudentId = req[i].StudentId;
+                        stuatt.ClassId = req[i].ClassId;
+                        stuatt.Status = req[i].Status;
+                        stuatt.Note = req[i].Note;
+                        stuatt.CompanyId = SchoolId;
+                        stuatt.Userid = UserId;
+                        stuatt.SessionId = SessionId;
+                        stuatt.Date = req[i].Date;
+                        //attendance.Time = ;
+                        stuatt.CreateDate = DateTime.Now;
+                        stuatt.UpdateDate = DateTime.Now;
+                        stuatt.Active = true;
+                        _context.Student_Attendance.AddRange(stuatt);
+                        await _context.SaveChangesAsync();
+
+                    }
+
+                    //List<Student_Attendance> attendanceList = req.Select(item => new Student_Attendance
+                    //{
+                    //    SAId = _context.Student_Attendance.DefaultIfEmpty().Max(r => r == null ? 0 : r.SAId) + 1,
+                    //    StudentId = item.StudentId,
+                    //    ClassId = item.ClassId,
+                    //    Status = item.Status,
+                    //    Note = item.Note == null ? "" : item.Note,
+                    //    CompanyId = SchoolId,
+                    //    Userid = UserId,
+                    //    SessionId = SessionId,
+                    //    Date = item.Date,
+                    //    Active = true,
+                    //    Time = DateTime.Now.TimeOfDay,
+                    //    CreateDate = DateTime.Now,
+                    //    UpdateDate = DateTime.Now
+                    //}).ToList();
+
+                    //_context.Student_Attendance.AddRange(attendanceList);
+                    //await _context.SaveChangesAsync();
 
                     return ApiResponse<bool>.SuccessResponse(true, "Student attendance saved successfully");
                 }
@@ -161,10 +172,10 @@ namespace ApiProject.Service.StudentAttendance
                         StuName = student.stu_name,
                         classid = student.ClassId,
                         sectionid = student.SectionId,
-                        ClassName = _context.University.Where(a => a.university_id == student.ClassId).Select(a => a.university_name).FirstOrDefault(),
-                        SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId).Select(a => a.collegename).FirstOrDefault(),
+                        ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == schoolId).Select(a => a.university_name).FirstOrDefault(),
+                        SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == schoolId).Select(a => a.collegename).FirstOrDefault(),
                         SRNo = student.registration_no,
-                     //   monthname = req.Month,
+                        //   monthname = req.Month,
 
                         AttendanceByDate = dailyAttendance,
                         TotalP = dailyAttendance.Values.Count(x => x == "P"),

@@ -127,6 +127,10 @@ namespace ApiProject.Data
         public string? MotherMobileNo { get; set; }
         public string? PUsername { get; set; }
         public string? PPassword { get; set; }
+        public string? UpdateDeviceType { get; set; }
+        public Nullable<bool> NDYearly { get; set; }
+        public Nullable<bool> NDHalfYearly { get; set; }
+        public Nullable<System.DateTime> UpdateNDdate { get; set; }
 
 
     }

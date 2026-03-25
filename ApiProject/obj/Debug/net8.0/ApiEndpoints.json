@@ -40,7 +40,7 @@
       },
       {
         "Name": "DOB",
-        "Type": "System.String",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -497,7 +497,7 @@
       },
       {
         "Name": "DOB",
-        "Type": "System.String",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -1466,6 +1466,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ReportController",
+    "Method": "GetStudentNoDuesCertificateReport",
+    "RelativePath": "api/Report/GetStudentNoDuesCertificateReport",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.GetStudentReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ReportController",
     "Method": "GetStudentTCReport",
     "RelativePath": "api/Report/GetStudentTCReport",
     "HttpMethod": "POST",
@@ -1507,6 +1523,38 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Request.GetTestExamReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ReportController",
+    "Method": "SaveHalfYearlyNoDueFee",
+    "RelativePath": "api/Report/SaveHalfYearlyNoDueFee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "res",
+        "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Response.HalfYearlyModel, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ReportController",
+    "Method": "SaveYearlyNoDueFee",
+    "RelativePath": "api/Report/SaveYearlyNoDueFee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "res",
+        "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Response.YearlyModel, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -1808,7 +1856,7 @@
       },
       {
         "Name": "rgstdate",
-        "Type": "System.String",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {

@@ -793,18 +793,43 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).Select(a => new EmpAttendanceReportModel
-                {
-                    Emp_Id = a.Emp_Id,
-                    Employeename = a.Emp_Name,
+                // Get attendance for the full month
+                var year = DateTime.Now.Year;
+                var startDate = new DateTime(year, Month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
 
-                    TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Present").Count(),
-                    TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Absent").Count(),
-                    TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Holiday").Count(),
-                    TotalL = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "Leave").Count(),
-                    TotalHF = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Status == "HalfDay").Count(),
+                var attendance = await _context.Emp_Attendance.Where(a => a.SessionId == SessionId && a.CompanyId == SchoolId
+                      && a.Date >= startDate && a.Date <= endDate).ToListAsync();
 
-                }).ToListAsync();
+                //var dailyAttendance = Enumerable.Range(1, endDate.Day).ToDictionary(
+                //        day => day,
+                //        day => attendance.FirstOrDefault(a => a.StudentId == student.StuId && a.Date?.Day == day)?.Status ?? ""
+                //    );
+
+                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month)
+                    .Select(a => new EmpAttendanceReportModel
+                    {
+                        Emp_Id = a.Emp_Id,
+                        Employeename = a.Emp_Name,
+
+                        TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
+                        && p.Status == "Present").Count(),
+                        TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
+                        && p.Status == "Absent").Count(),
+                        TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
+                        && p.Status == "Holiday").Count(),
+                        TotalL = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
+                        && p.Status == "Leave").Count(),
+                        TotalHF = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
+                        && p.Status == "HalfDay").Count(),
+
+
+
+
+
+
+
+                    }).ToListAsync();
                 return ApiResponse<List<EmpAttendanceReportModel>>.SuccessResponse(res, "Fetch successfully Employee Attendance");
             }
             catch (Exception ex)

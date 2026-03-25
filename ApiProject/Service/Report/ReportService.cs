@@ -6,10 +6,12 @@ using ApiProject.Service.Current;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
-using Microsoft.OpenApi.Any;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Writers;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 
@@ -53,6 +55,7 @@ namespace ApiProject.Service.Report
                                   //   && student.stu_id == req.StudentId
                                   && student.CompanyId == SchoolId
                                   && student.RActive == true
+                                  //   && _context.University.Any(u => u.university_id == req.ClassId && u.CompanyId == SchoolId && u.Active == true)
                                   && (student.StuDetail == false || student.StuFees == false)
 
                             select new GetStudentQuickListModel
@@ -232,7 +235,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req)
         {
             try
@@ -293,7 +295,7 @@ namespace ApiProject.Service.Report
                 int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
                 int PageSize = req.PageSize > 0 ? req.PageSize : 50;
 
-                var data = await query .OrderByDescending(p => p.stu_id).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+                var data = await query.OrderByDescending(p => p.stu_id).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
@@ -312,7 +314,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<PagedResult<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req)
         {
             try
@@ -360,6 +361,9 @@ namespace ApiProject.Service.Report
                                 TotalNetFee = student.Rtotal_fee,
                                 PaidFee = student.Rstu_fee,
                                 DueFee = student.Rdue_fee,
+                                NDHalfYearly = student.NDHalfYearly,
+                                NDYearly = student.NDYearly,
+                                UpdateNDdate = student.UpdateNDdate,
 
                                 FeeReceipt = _context.M_FeeDetail.Where(a => a.stu_id == student.stu_id && a.ClassId == student.ClassId && a.SessionId == SessionId
                                 && a.CompanyId == SchoolId && a.Active == true).Select(a => new FeeReceiptModel
@@ -421,7 +425,188 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentFeeDetailsModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+        public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            {
+                try
+                {
+                    int SchoolId = _loginUser.SchoolId;
+                    int UserId = _loginUser.UserId;
+                    int SessionId = _loginUser.SessionId;
 
+                    if (res == null || !res.Any())
+                    {
+                        return ApiResponse<bool>.ErrorResponse("No students selected");
+                    }
+
+                    foreach (var item in res)
+                    {
+                        var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                        if (result != null)
+                        {
+                            result.NDHalfYearly = true;
+                            result.UpdateNDdate = DateTime.Now;
+                        }
+                    }
+
+
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                    return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
+
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                }
+            }
+        }
+        public async Task<ApiResponse<bool>> SaveYearlyNoDueFee(List<YearlyModel> res)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            {
+                try
+                {
+                    int SchoolId = _loginUser.SchoolId;
+                    int UserId = _loginUser.UserId;
+                    int SessionId = _loginUser.SessionId;
+
+                    if (res == null || !res.Any())
+                    {
+                        return ApiResponse<bool>.ErrorResponse("No students selected");
+                    }
+
+                    foreach (var item in res)
+                    {
+                        var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                        if (result != null)
+                        {
+                            result.NDYearly = true;
+                            result.UpdateNDdate = DateTime.Now;
+                        }
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                    return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
+
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                }
+            }
+        }
+        public async Task<ApiResponse<PagedResult<GetStudentNoDueeFeeModel>>> GetStudentNoDuesFeeReport(GetStudentReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  && student.CompanyId == SchoolId
+                                  && student.RActive == true
+                                  && student.StuDetail == true
+                                  && student.StuFees == true
+                                   && student.Dropout == false
+                                   && (student.NDHalfYearly == true || student.NDYearly == true)
+
+                            select new GetStudentNoDueeFeeModel
+                            {
+                                stu_id = student.stu_id,
+                                stu_name = student.stu_name,
+                                stu_code = student.stu_code,
+                                Srno = student.registration_no,
+                                ClassId = student.ClassId,
+                                SectionId = student.SectionId,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+                                AdmissionPayFee = student.RAdmissionPayfee,
+                                TotalFee = student.Rtotal,
+                                Discount = student.Rdiscount,
+                                TotalNetFee = student.Rtotal_fee,
+                                DepositFee = student.Rstu_fee,
+                                DueOldFee = student.OldDuefees,
+                                DueFee = student.Rdue_fee,
+                                NDHalfYearly = student.NDHalfYearly,
+                                NDYearly = student.NDYearly,
+                                UpdateNDdate = student.UpdateNDdate,
+                            };
+
+                // 🔎 Filters
+                if (!string.IsNullOrEmpty(req.srno))
+                    query = query.Where(p => p.Srno == req.srno);
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
+                {
+                    query = query.Where(p => p.ClassId == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
+                {
+                    query = query.Where(p => p.SectionId == req.SectionId.Value);
+                }
+                if (req.StudentId.HasValue && req.StudentId.Value > 0)
+                {
+                    query = query.Where(p => p.stu_id == req.StudentId.Value);
+                }
+
+                if (req.Fromdate.HasValue)
+                {
+                    query = query.Where(c => c.UpdateNDdate.HasValue && c.UpdateNDdate.Value >= req.Fromdate.Value);
+                }
+
+                if (req.Todate.HasValue)
+                {
+                    query = query.Where(c => c.UpdateNDdate.HasValue && c.UpdateNDdate.Value <= req.Todate.Value);
+                }
+
+
+                //  query = query.Where(c => (!req.Fromdate.HasValue || c.admission_date >= req.Fromdate) && (!req.Todate.HasValue || c.admission_date <= req.Todate));
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query.OrderByDescending(p => p.stu_id).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+                var pagedResult = new PagedResult<GetStudentNoDueeFeeModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<GetStudentNoDueeFeeModel>>.SuccessResponse(pagedResult, "Fetch student no duee fee data successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResult<GetStudentNoDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
         public async Task<ApiResponse<PagedResult<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req)
         {
             try
@@ -538,7 +723,6 @@ namespace ApiProject.Service.Report
             {
                 return ApiResponse<PagedResult<ClasswiseInstallModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
-
         }
         public async Task<ApiResponse<PagedResult<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req)
         {
@@ -676,7 +860,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<AllClasswiseDueeFeeModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<PagedResult<GetStudentTCLisModel>>> GetStudentTCReport(GetStudentIDCardReq req)
         {
             try
@@ -861,7 +1044,6 @@ namespace ApiProject.Service.Report
             }
         }
 
-
         // exam section
         public async Task<ApiResponse<List<TestExamMarksmOdel>>> GetTestExamMarks(GetTestExamReq req)
         {
@@ -1031,7 +1213,6 @@ namespace ApiProject.Service.Report
             }
         }
 
-
         public async Task<ApiResponse<List<StudentMarksheetModel>>> GetStudentMarksheet(GetTestExamReq req)
         {
             try
@@ -1105,7 +1286,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<StudentMarksheetModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
         public async Task<PagedResult<GetStudentFeeListModel>> GetStudentFeeDetail(GetStudentFeeListReqModel req)
         {
             int SchoolId = _loginUser.SchoolId;
@@ -1144,12 +1324,6 @@ namespace ApiProject.Service.Report
 
             return pagedResult;
         }
-
-
-
-
-
-
 
         //public async Task<ApiResponse<List<GetStudentFeeListModel>>> GetStudentFeeListDetail(GetStudentReq req)
         //{
@@ -1270,7 +1444,6 @@ namespace ApiProject.Service.Report
         //        return ApiResponse<List<ClasswiseStudentListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
         //    }
         //}
-
         public async Task<ApiResponse<List<GetStudentQuickListModel>>> GetQuickStudentReport1(getstudentDellistReq req)
         {
             try
@@ -1315,7 +1488,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<GetStudentQuickListModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-
         public async Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentDetailReport1(GetStudentReq req)
         {
             try
@@ -1653,3 +1825,8 @@ namespace ApiProject.Service.Report
 
     }
 }
+
+
+
+
+

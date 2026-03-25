@@ -123,84 +123,214 @@ namespace ApiProject.Service.School
             }
         }
 
-        public async Task<SchoolDetail> schooldetailupdate(SchoolUpdate request)
+        //public async Task<SchoolDetail> schooldetailupdate(SchoolUpdate request)
+        //{
+        //    try
+        //    {
+
+        //        int SchoolId = _loginUser.SchoolId;
+
+        //        var school = await _context.institute.FirstOrDefaultAsync(p => p.institute_id == SchoolId);
+
+        //        if (request.logo != null)
+        //        {
+        //            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "SchoolLogo", "Logo");
+        //            var extension = Path.GetExtension(request.logo.FileName);
+        //            var fileNameWithoutExtension = school.institute_id.ToString();
+
+        //            var existingFiles = Directory.GetFiles(folderPath, fileNameWithoutExtension + ".*");
+        //            foreach (var file in existingFiles)
+        //            {
+        //                if (System.IO.File.Exists(file))
+        //                {
+        //                    System.IO.File.Delete(file);
+        //                }
+        //            }
+
+        //            // Naya file save karo
+        //            var filePath = Path.Combine(folderPath, fileNameWithoutExtension + extension);
+        //            using (var stream = new FileStream(filePath, FileMode.Create))
+        //            {
+        //                await request.logo.CopyToAsync(stream);
+        //            }
+
+        //            school.logo_img = "/image/SchoolLogo/Logo/" + fileNameWithoutExtension + extension;
+        //        }
+
+        //        // school.SchoolName = request.schoolname;
+        //        // school.OwnerName = request.ownername == null ? " " : request.ownername;
+        //        school.regist_num = request.Registrationno == null ? " " : request.Registrationno;
+        //        school.instituteCode = request.InstituteCode == null ? " " : request.InstituteCode;
+        //        school.regist_date = request.rgstdate;
+        //        school.email = request.email == null ? " " : request.email;
+        //        school.landline_num = request.landlinenum == null ? " " : request.landlinenum;
+        //        school.mob_num = request.mobileno1 == null ? " " : request.mobileno1;
+        //        school.alternatemob_num = request.mobileno2 == null ? " " : request.mobileno2;
+        //        school.weburl = request.weburl == null ? " " : request.weburl;
+        //        school.servicetax_num = request.ServiceTaxNo == null ? " " : request.ServiceTaxNo;
+        //        school.tin_num = request.TINno == null ? " " : request.TINno;
+        //        school.pan_num = request.PANno == null ? " " : request.PANno;
+        //        school.state_name = request.statename == null ? " " : request.statename;
+        //        school.district_name = request.districtname == null ? " " : request.districtname;
+        //        school.city_name = request.cityname == null ? " " : request.cityname;
+        //        school.pincode = request.pincode == null ? " " : request.pincode;
+        //        school.address = request.address == null ? " " : request.address;
+        //        //  school.UpdateDate = DateTime.Now.Date;
+
+        //        await _context.SaveChangesAsync();
+        //        //    return Task<SchoolDetail>.SuccessResponse(school, "Section update successfully.");
+
+        //        var result = new SchoolDetail
+        //        {
+        //            rgtno = school.regist_num,
+        //            schoolcode = school.instituteCode,
+        //            rgstdate = school.regist_date,
+        //            email = school.email,
+        //            landlinenum = school.landline_num,
+        //            mobileno1 = school.mob_num,
+        //            mobileno2 = school.alternatemob_num,
+        //            weburl = school.weburl,
+        //            Servicetaxno = school.servicetax_num,
+        //            TINno = school.tin_num,
+        //            PANno = school.pan_num,
+        //            statename = school.state_name,
+        //            districtname = school.district_name,
+        //            cityname = school.city_name,
+        //            pincode = school.pincode,
+        //            address = school.address,
+        //            logoimg = school.institute_img,
+        //            rlogo = school.logo_img,
+        //        };
+
+        //        //return new SchoolDetail
+        //        //{
+        //        //    //   schoolname = school.SchoolName,
+        //        //    //    schoolco = school.OwnerName,
+        //        //    rgtno = school.regist_num,
+        //        //    schoolcode = school.instituteCode,
+        //        //    rgstdate = school.regist_date,
+        //        //    email = school.email,
+        //        //    landlinenum = school.landline_num,
+        //        //    mobileno1 = school.mob_num,
+        //        //    mobileno2 = school.alternatemob_num,
+        //        //    weburl = school.weburl,
+        //        //    Servicetaxno = school.servicetax_num,
+        //        //    TINno = school.tin_num,
+        //        //    PANno = school.pan_num,
+        //        //    statename = school.state_name,
+        //        //    districtname = school.district_name,
+        //        //    cityname = school.city_name,
+        //        //    pincode = school.pincode,
+        //        //    address = school.address,
+        //        //    logoimg = school.institute_img,
+        //        //    rlogo = school.logo_img,
+
+        //        return ApiResponse<SchoolDetail>.SuccessResponse(result, "School updated successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<SchoolDetail>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
+
+        public async Task<ApiResponse<SchoolDetail>> schooldetailupdate(SchoolUpdate request)
         {
-            int SchoolId = _loginUser.SchoolId;
-
-            var school = await _context.institute.FirstOrDefaultAsync(p => p.institute_id == SchoolId);
-
-            if (request.logo != null)
+            try
             {
-                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "SchoolLogo", "Logo");
-                var extension = Path.GetExtension(request.logo.FileName);
-                var fileNameWithoutExtension = school.institute_id.ToString();
+                int SchoolId = _loginUser.SchoolId;
 
-                var existingFiles = Directory.GetFiles(folderPath, fileNameWithoutExtension + ".*");
-                foreach (var file in existingFiles)
+                var school = await _context.institute
+                    .FirstOrDefaultAsync(p => p.institute_id == SchoolId);
+
+                if (school == null)
                 {
-                    if (System.IO.File.Exists(file))
+                    return ApiResponse<SchoolDetail>.ErrorResponse("School not found");
+                }
+
+                if (request.logo != null)
+                {
+                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "SchoolLogo", "Logo");
+
+                    // ensure folder exists
+                    if (!Directory.Exists(folderPath))
                     {
-                        System.IO.File.Delete(file);
+                        Directory.CreateDirectory(folderPath);
                     }
+
+                    var extension = Path.GetExtension(request.logo.FileName);
+                    var fileNameWithoutExtension = school.institute_id.ToString();
+
+                    var existingFiles = Directory.GetFiles(folderPath, fileNameWithoutExtension + ".*");
+                    foreach (var file in existingFiles)
+                    {
+                        if (System.IO.File.Exists(file))
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                    }
+
+                    var filePath = Path.Combine(folderPath, fileNameWithoutExtension + extension);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await request.logo.CopyToAsync(stream);
+                    }
+
+                    school.logo_img = "/image/SchoolLogo/Logo/" + fileNameWithoutExtension + extension;
                 }
 
-                // Naya file save karo
-                var filePath = Path.Combine(folderPath, fileNameWithoutExtension + extension);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // Update fields
+                school.regist_num = request.Registrationno ?? " ";
+                school.instituteCode = request.InstituteCode ?? " ";
+                school.regist_date = request.rgstdate;
+                school.email = request.email ?? " ";
+                school.landline_num = request.landlinenum ?? " ";
+                school.mob_num = request.mobileno1 ?? " ";
+                school.alternatemob_num = request.mobileno2 ?? " ";
+                school.weburl = request.weburl ?? " ";
+                school.servicetax_num = request.ServiceTaxNo ?? " ";
+                school.tin_num = request.TINno ?? " ";
+                school.pan_num = request.PANno ?? " ";
+                school.state_name = request.statename ?? " ";
+                school.district_name = request.districtname ?? " ";
+                school.city_name = request.cityname ?? " ";
+                school.pincode = request.pincode ?? " ";
+                school.address = request.address ?? " ";
+
+                await _context.SaveChangesAsync();
+
+                var result = new SchoolDetail
                 {
-                    await request.logo.CopyToAsync(stream);
-                }
+                    rgtno = school.regist_num,
+                    schoolcode = school.instituteCode,
+                    rgstdate = school.regist_date,
+                    email = school.email,
+                    landlinenum = school.landline_num,
+                    mobileno1 = school.mob_num,
+                    mobileno2 = school.alternatemob_num,
+                    weburl = school.weburl,
+                    Servicetaxno = school.servicetax_num,
+                    TINno = school.tin_num,
+                    PANno = school.pan_num,
+                    statename = school.state_name,
+                    districtname = school.district_name,
+                    cityname = school.city_name,
+                    pincode = school.pincode,
+                    address = school.address,
+                    logoimg = school.institute_img,
+                    rlogo = school.logo_img,
+                };
 
-                school.logo_img = "/image/SchoolLogo/Logo/" + fileNameWithoutExtension + extension;
+                return ApiResponse<SchoolDetail>.SuccessResponse(result, "School updated successfully");
             }
-
-            // school.SchoolName = request.schoolname;
-            // school.OwnerName = request.ownername == null ? " " : request.ownername;
-            school.regist_num = request.Registrationno == null ? " " : request.Registrationno;
-            school.instituteCode = request.InstituteCode == null ? " " : request.InstituteCode;
-            school.regist_date = request.rgstdate;
-            school.email = request.email == null ? " " : request.email;
-            school.landline_num = request.landlinenum == null ? " " : request.landlinenum;
-            school.mob_num = request.mobileno1 == null ? " " : request.mobileno1;
-            school.alternatemob_num = request.mobileno2 == null ? " " : request.mobileno2;
-            school.weburl = request.weburl == null ? " " : request.weburl;
-            school.servicetax_num = request.ServiceTaxNo == null ? " " : request.ServiceTaxNo;
-            school.tin_num = request.TINno == null ? " " : request.TINno;
-            school.pan_num = request.PANno == null ? " " : request.PANno;
-            school.state_name = request.statename == null ? " " : request.statename;
-            school.district_name = request.districtname == null ? " " : request.districtname;
-            school.city_name = request.cityname == null ? " " : request.cityname;
-            school.pincode = request.pincode == null ? " " : request.pincode;
-            school.address = request.address == null ? " " : request.address;
-            //  school.UpdateDate = DateTime.Now.Date;
-
-            await _context.SaveChangesAsync();
-            //    return Task<SchoolDetail>.SuccessResponse(school, "Section update successfully.");
-
-            return new SchoolDetail
+            catch (Exception ex)
             {
-                //   schoolname = school.SchoolName,
-                //    schoolco = school.OwnerName,
-                rgtno = school.regist_num,
-                schoolcode = school.instituteCode,
-                rgstdate = school.regist_date,
-                email = school.email,
-                landlinenum = school.landline_num,
-                mobileno1 = school.mob_num,
-                mobileno2 = school.alternatemob_num,
-                weburl = school.weburl,
-                Servicetaxno = school.servicetax_num,
-                TINno = school.tin_num,
-                PANno = school.pan_num,
-                statename = school.state_name,
-                districtname = school.district_name,
-                cityname = school.city_name,
-                pincode = school.pincode,
-                address = school.address,
-                logoimg = school.institute_img,
-                rlogo = school.logo_img,
-            };
+                return ApiResponse<SchoolDetail>.ErrorResponse("Error: " + ex.Message);
+            }
         }
+
+
+
         public async Task<ApiResponse<List<State>>> GetState()
         {
             try
