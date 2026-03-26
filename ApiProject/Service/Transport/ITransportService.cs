@@ -77,7 +77,7 @@ namespace ApiProject.Service.Transport
         #region Transport Fee Report Start
         // *************************** Transport Fee Report Start *********************** //
         Task<ApiResponse<PagedResult<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq Req);
-        Task<ApiResponse<List<TransportFeereportModel>>> TransportFeeReport(TransportFeeReportReq Req);
+        Task<ApiResponse<PagedResult<TransportFeereportModel>>> TransportFeeReport(TransportFeeReportReq Req);
         Task<ApiResponse<List<GetTransportFeeDetailModel>>> GetTransportFeeDetails(int StudentId);
         Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportPaidOldFee(int StudentId);
         Task<ApiResponse<bool>> UpdateTransportOldFee (UpdateOldFeeReq req);

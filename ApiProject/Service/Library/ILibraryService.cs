@@ -15,7 +15,8 @@ namespace ApiProject.Service.Library
         Task<ApiResponse<List<GetLibraryStudentModel>>> GetLibraryStudent(gertlibraryclassreq req);
         Task<ApiResponse<List<GetlibrarayEmployeeModel>>> GetLibraryEmployee();
         Task<ApiResponse<bool>> AddLibraryCardNo(AddcardNoReq req);
-        Task<ApiResponse<bool>> RemoveStudentlibrary(int ClassId, int studentid);
+        Task<ApiResponse<bool>> SurrenderMemberShipStudentlibrary(int ClassId, int studentid);
+        Task<ApiResponse<bool>> SurrenderMemberShipEmployeelibrary(int EmployeeId);
         Task<ApiResponse<List<GetMemberListModel>>> GetMemberList();
         Task<ApiResponse<GetTClassbySectionNdStudent>> GetLibraryClassBySectionNdStudent(int ClassId);
         Task<ApiResponse<List<TStudentDataList>>> GetLibrarySectionByStudent(int ClassId, int SectionId);

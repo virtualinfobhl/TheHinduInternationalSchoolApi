@@ -129,12 +129,28 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpPost("RemoveStudentlibrary")]
-        public async Task<IActionResult> RemoveStudentlibrary(int ClassId, int studentid)
+        [HttpPost("SurrenderMemberShipStudentlibrary")]
+        public async Task<IActionResult> SurrenderMemberShipStudentlibrary(int ClassId, int studentid)
         {
             try
             {
-                var res = await _libService.RemoveStudentlibrary(ClassId, studentid);
+                var res = await _libService.SurrenderMemberShipStudentlibrary(ClassId, studentid);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var ressonce = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(ressonce);
+
+            }
+        }
+
+        [HttpPost("SurrenderMemberShipEmployeelibrary")]
+        public async Task<IActionResult> SurrenderMemberShipEmployeelibrary(int EmployeeId)
+        {
+            try
+            {
+                var res = await _libService.SurrenderMemberShipEmployeelibrary(EmployeeId);
                 return Ok(res);
             }
             catch (Exception ex)

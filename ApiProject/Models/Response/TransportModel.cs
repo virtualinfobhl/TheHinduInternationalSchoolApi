@@ -130,6 +130,7 @@ namespace ApiProject.Models.Response
         public Nullable<double> NetTransportFee { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<bool> Active { get; set; }
+       
         //public int? StudentId { get; set; }
         //public int? ClassId { get; set; }
         //public int? SectionId { get; set; }
@@ -154,8 +155,10 @@ namespace ApiProject.Models.Response
         public Nullable<System.DateTime> Date { get; set; }
         public string? Vehiclename { get; set; }
         public int? RouteId { get; set; }
+        public int? VehicleId { get; set; }
         public string? Routename { get; set; }
         public string? Stoppagename { get; set; }
+        public Nullable<bool> Active { get; set; }
 
     }
     public class StudentDetailModel
@@ -263,9 +266,12 @@ namespace ApiProject.Models.Response
         public int? StudentId { get; set; }
         public string? SRNo { get; set; }
         public string? StudentName { get; set; }
+        public int? ClassId { get; set; }
+        public int? SectionId { get; set; }
         public string? Classname { get; set; }
         public string? Sectionname { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public int? VehicleId { get; set; }
         public string? Vehicleno { get; set; }
         public string? Routename { get; set; }
         public string? Stoppagename { get; set; }

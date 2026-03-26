@@ -33,6 +33,8 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public int Month { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
 }

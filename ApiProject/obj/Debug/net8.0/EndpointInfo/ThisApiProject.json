@@ -1512,7 +1512,7 @@
         }
       }
     },
-    "/api/Library/RemoveStudentlibrary": {
+    "/api/Library/SurrenderMemberShipStudentlibrary": {
       "post": {
         "tags": [
           "Library"
@@ -1528,6 +1528,28 @@
           },
           {
             "name": "studentid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Library/SurrenderMemberShipEmployeelibrary": {
+      "post": {
+        "tags": [
+          "Library"
+        ],
+        "parameters": [
+          {
+            "name": "EmployeeId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -2247,7 +2269,7 @@
         }
       }
     },
-    "/api/Report/GetStudentNoDuesCertificateReport": {
+    "/api/Report/GetStudentNoDuesFeeReport": {
       "post": {
         "tags": [
           "Report"
@@ -7998,6 +8020,14 @@
           "month": {
             "type": "integer",
             "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -8215,6 +8245,14 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

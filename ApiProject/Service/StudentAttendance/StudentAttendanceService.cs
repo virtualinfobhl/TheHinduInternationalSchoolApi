@@ -153,6 +153,7 @@ namespace ApiProject.Service.StudentAttendance
 
                 // Get attendance for the full month
                 var year = DateTime.Now.Year;
+                var monthName = new DateTime(DateTime.Now.Year, req.Month, 1).ToString("MMMM");
                 var startDate = new DateTime(year, req.Month, 1);
                 var endDate = startDate.AddMonths(1).AddDays(-1);
 
@@ -175,19 +176,18 @@ namespace ApiProject.Service.StudentAttendance
                         ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == schoolId).Select(a => a.university_name).FirstOrDefault(),
                         SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == schoolId).Select(a => a.collegename).FirstOrDefault(),
                         SRNo = student.registration_no,
-                        //   monthname = req.Month,
+                        monthname = monthName,
 
                         AttendanceByDate = dailyAttendance,
-                        TotalP = dailyAttendance.Values.Count(x => x == "P"),
-                        TotalA = dailyAttendance.Values.Count(x => x == "A"),
-                        TotalH = dailyAttendance.Values.Count(x => x == "H"),
-                        TotalHF = dailyAttendance.Values.Count(x => x == "HF"),
-                        TotalL = dailyAttendance.Values.Count(x => x == "L"),
+                        TotalP = dailyAttendance.Values.Count(x => x == "Present"),
+                        TotalA = dailyAttendance.Values.Count(x => x == "Absent"),
+                        TotalH = dailyAttendance.Values.Count(x => x == "Holiday"),
+                        TotalHF = dailyAttendance.Values.Count(x => x == "HalfDay"),
+                        TotalL = dailyAttendance.Values.Count(x => x == "Late"),
                     };
 
                     return model;
                 }).ToList();
-
 
                 return ApiResponse<List<StudentMonthlyAttendanceResModel>>.SuccessResponse(response);
             }

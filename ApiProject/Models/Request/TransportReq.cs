@@ -136,6 +136,8 @@ namespace ApiProject.Models.Request
         public int? SectionId { get; set; }
         public int? StudentId { get; set; }
         public int? VehicleId { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class StudentTransportFeeReq

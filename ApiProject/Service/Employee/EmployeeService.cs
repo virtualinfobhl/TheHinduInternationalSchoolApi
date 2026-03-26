@@ -790,47 +790,39 @@ namespace ApiProject.Service.Employee
             try
             {
                 int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                // Get attendance for the full month
                 var year = DateTime.Now.Year;
                 var startDate = new DateTime(year, Month, 1);
+                var monthName = new DateTime(DateTime.Now.Year, Month, 1).ToString("MMMM");
                 var endDate = startDate.AddMonths(1).AddDays(-1);
 
-                var attendance = await _context.Emp_Attendance.Where(a => a.SessionId == SessionId && a.CompanyId == SchoolId
-                      && a.Date >= startDate && a.Date <= endDate).ToListAsync();
+                var attendance = await _context.Emp_Attendance.Where(a => a.SessionId == SessionId && a.CompanyId == SchoolId && a.Date >= startDate && a.Date <= endDate).ToListAsync();
 
-                //var dailyAttendance = Enumerable.Range(1, endDate.Day).ToDictionary(
-                //        day => day,
-                //        day => attendance.FirstOrDefault(a => a.StudentId == student.StuId && a.Date?.Day == day)?.Status ?? ""
-                //    );
+                var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).ToListAsync();
 
-                var res = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month)
-                    .Select(a => new EmpAttendanceReportModel
+                var result = employees.Select(emp =>
+                {
+                    // 🔥 Day-wise attendance
+                    var dailyAttendance = Enumerable.Range(1, endDate.Day).ToDictionary(day => day, day => attendance
+                    .FirstOrDefault(a => a.Emp_Id == emp.Emp_Id && a.Date.Value.Day == day)?.Status ?? "");
+
+                    return new EmpAttendanceReportModel
                     {
-                        Emp_Id = a.Emp_Id,
-                        Employeename = a.Emp_Name,
+                        Emp_Id = emp.Emp_Id,
+                        Employeename = emp.Emp_Name,
+                        Monthname = monthName,
+                        AttendanceByDate = dailyAttendance,
 
-                        TotalP = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
-                        && p.Status == "Present").Count(),
-                        TotalA = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
-                        && p.Status == "Absent").Count(),
-                        TotalH = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
-                        && p.Status == "Holiday").Count(),
-                        TotalL = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
-                        && p.Status == "Leave").Count(),
-                        TotalHF = _context.Emp_Attendance.Where(p => p.Emp_Id == a.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId
-                        && p.Status == "HalfDay").Count(),
+                        TotalP = dailyAttendance.Values.Count(x => x == "Present"),
+                        TotalA = dailyAttendance.Values.Count(x => x == "Absent"),
+                        TotalH = dailyAttendance.Values.Count(x => x == "Holiday"),
+                        TotalL = dailyAttendance.Values.Count(x => x == "Leave"),   // 1/4 days hai 
+                        TotalHF = dailyAttendance.Values.Count(x => x == "HalfDay"),
+                    };
+                }).ToList();
 
-
-
-
-
-
-
-                    }).ToListAsync();
-                return ApiResponse<List<EmpAttendanceReportModel>>.SuccessResponse(res, "Fetch successfully Employee Attendance");
+                return ApiResponse<List<EmpAttendanceReportModel>>.SuccessResponse(result, "Fetch successfully Employee Attendance");
             }
             catch (Exception ex)
             {

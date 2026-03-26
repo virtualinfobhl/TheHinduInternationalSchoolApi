@@ -164,7 +164,7 @@ namespace ApiProject.Models.Response
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
         public string? RollNo { get; set; }
-        //     public string? Srno { get; set; }
+            public string? Srno { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
         public List<GetExamSubjectModel> SubjectName { get; set; }

@@ -23,7 +23,7 @@ namespace ApiProject.Service.Report
 
         //   Task<ApiResponse<List<ClasswiseInstallModel>>> GetClassWiseInstallmentReport(BulkStudentReq req);
         Task<ApiResponse<PagedResult<ClasswiseDueeFeeModel>>> GetClasswiseDueFeeReport(BulkStudentReq req);
-        Task<ApiResponse<List<AllClasswiseDueeFeeModel>>> GetAllClasswiseDueFeeReport(BulkStudentReq req);
+        Task<ApiResponse<PagedResult<AllClasswiseDueeFeeModel>>> GetAllClasswiseDueFeeReport(BulkStudentReq req);
         Task<ApiResponse<PagedResult<GetStudentTCLisModel>>> GetStudentTCReport(GetStudentIDCardReq req);
         Task<ApiResponse<PagedResult<GetStudentDROPOUTLisModel>>> GetStudentDropoutReport(GetStudentIDCardReq req);
 

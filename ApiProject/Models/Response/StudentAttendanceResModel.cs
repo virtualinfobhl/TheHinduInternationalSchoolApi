@@ -13,7 +13,7 @@
         public string? Note { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
-    //    public System.DateTime Date { get; set; }
+        //    public System.DateTime Date { get; set; }
 
 
     }
@@ -27,7 +27,8 @@
         public int? sectionid { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
-     //  public string? monthname { get; set; }
+        public string? monthname { get; set; }
+        // public string? monthname { get; set; }
 
         public Dictionary<int, string> AttendanceByDate { get; set; } = new();
 
@@ -64,10 +65,10 @@
         public string? SRNo { get; set; }
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
-     //   public string? StudentPhoto { get; set; }
+        //   public string? StudentPhoto { get; set; }
         public string? ClassName { get; set; }
         public string? Sectionname { get; set; }
-     //   public DateTime? DateOfBirth { get; set; }
+        //   public DateTime? DateOfBirth { get; set; }
         public string? RollNo { get; set; }
         public string? Attendance { get; set; }
         public string? TotalGrade { get; set; }
@@ -84,7 +85,7 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public string? StudentName { get; set; }
-   //     public string? StudentPhoto { get; set; }
+        //     public string? StudentPhoto { get; set; }
         public string? SRNo { get; set; }
         public string? RollNo { get; set; }
         public string? ClassName { get; set; }
@@ -112,7 +113,7 @@
         public string? MGrade { get; set; }
     }
 
-   
+
     public class GetTestvaluemodel
     {
         public int? SubjectId { get; set; }
@@ -189,7 +190,7 @@
         public int? ClassId { get; set; }
         public int? SectionId { get; set; }
         public string? SectionName { get; set; }
-    //    public int? SectionPriority { get; set; }
+        //    public int? SectionPriority { get; set; }
     }
     public class StudentExamData
     {

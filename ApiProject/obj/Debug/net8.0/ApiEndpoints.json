@@ -1088,8 +1088,24 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.LibraryController",
-    "Method": "RemoveStudentlibrary",
-    "RelativePath": "api/Library/RemoveStudentlibrary",
+    "Method": "SurrenderMemberShipEmployeelibrary",
+    "RelativePath": "api/Library/SurrenderMemberShipEmployeelibrary",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmployeeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.LibraryController",
+    "Method": "SurrenderMemberShipStudentlibrary",
+    "RelativePath": "api/Library/SurrenderMemberShipStudentlibrary",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1466,8 +1482,8 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ReportController",
-    "Method": "GetStudentNoDuesCertificateReport",
-    "RelativePath": "api/Report/GetStudentNoDuesCertificateReport",
+    "Method": "GetStudentNoDuesFeeReport",
+    "RelativePath": "api/Report/GetStudentNoDuesFeeReport",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

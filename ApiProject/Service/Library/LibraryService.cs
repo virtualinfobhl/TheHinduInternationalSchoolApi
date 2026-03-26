@@ -4,6 +4,7 @@ using ApiProject.Models.Request;
 using ApiProject.Models.Response;
 using ApiProject.Service.Current;
 using AutoMapper;
+using AutoMapper.Execution;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -239,7 +240,7 @@ namespace ApiProject.Service.Library
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-        public async Task<ApiResponse<bool>> RemoveStudentlibrary(int ClassId, int studentid)
+        public async Task<ApiResponse<bool>> SurrenderMemberShipStudentlibrary(int ClassId, int studentid)
         {
             try
             {
@@ -259,6 +260,32 @@ namespace ApiProject.Service.Library
                 await _context.SaveChangesAsync();
 
                 return ApiResponse<bool>.SuccessResponse(true, "Library record removed successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<bool>> SurrenderMemberShipEmployeelibrary(int EmployeeId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var res = await _context.LibraryCardTbl.FirstOrDefaultAsync(c => c.Emp_Id == EmployeeId && c.Active == true && c.CompanyId == SchoolId && c.SessionId == SessionId);
+
+                if (res == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("No library record found for this student");
+                }
+
+                _context.LibraryCardTbl.Remove(res);
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Surrender MemberShip Employee library successfully");
             }
             catch (Exception ex)
             {
@@ -318,7 +345,6 @@ namespace ApiProject.Service.Library
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
         public async Task<ApiResponse<List<GetMemberListModel>>> GetMemberList()
         {

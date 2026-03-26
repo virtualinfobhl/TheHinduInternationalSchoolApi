@@ -165,7 +165,7 @@ namespace ApiProject.Models.Response
         public Nullable<int> Emp_Id { get; set; }
         public string? Employeename { get; set; }
         //   public Nullable<System.DateTime> Date { get; set; }
-        //    public string? Monthname { get; set; }
+            public string? Monthname { get; set; }
         public int? TotalP { get; set; }
         public int? TotalA { get; set; }
         public int? TotalH { get; set; }

@@ -696,12 +696,17 @@ namespace ApiProject.Service.SchoolFees
                          on student.ClassId equals cls.university_id
                     join sec in _context.collegeinfo
                         on student.SectionId equals sec.collegeid
-                    where fee.CompanyId == SchoolId && fee.SessionId == SessionId && fee.Active == true
-                          && (req.FromDate == null || fee.PaymentDate >= req.FromDate) && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
+                    where fee.CompanyId == SchoolId
+                    && fee.SessionId == SessionId
+                    && fee.Active == true
+                    && (req.FromDate == null || fee.PaymentDate >= req.FromDate)
+                    && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
+                   // && (req.MAdmissionPayfee > 0 || c.PayFees > 0 || c.MPramoteFees > 0)
+
                     select new StudentFeesCollectionListRes
                     {
-                        ReceiptNo = fee.ReceiptNo,
                         ReceiptId = fee.FDId,
+                        ReceiptNo = fee.ReceiptNo,
                         stu_name = student.stu_name,
                         srno = student.registration_no,
                         ClassName = cls.university_name,
@@ -717,7 +722,7 @@ namespace ApiProject.Service.SchoolFees
                     };
 
                 int studentTotal = await studentQuery.CountAsync();
-                var studentData = await studentQuery.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+                var studentData = await studentQuery.OrderByDescending(x => x.ReceiptId).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
                 /* ===================== TRANSPORT FEE ===================== */
 
@@ -734,15 +739,12 @@ namespace ApiProject.Service.SchoolFees
                           && (req.FromDate == null || fee.Date >= req.FromDate) && (req.ToDate == null || fee.Date <= req.ToDate)
                     select new StudentFeesCollectionListRes
                     {
-                        ReceiptNo = fee.ReceiptNo,
                         ReceiptId = fee.NewPaymentId,
+                        ReceiptNo = fee.ReceiptNo,
                         stu_name = student.stu_name,
                         srno = student.registration_no,
                         ClassName = cls.university_name,
                         SectionName = sec.collegename,
-
-                        //ClassName = _context.University.Where(a => a.university_id == student.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
-                        //SectionName = _context.collegeinfo.Where(a => a.collegeid == student.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
 
                         fathername = student.father_name,
                         fathermobileno = student.father_mobile,
@@ -755,7 +757,7 @@ namespace ApiProject.Service.SchoolFees
 
                 int transportTotal = await transportQuery.CountAsync();
 
-                var transportData = await transportQuery.OrderByDescending(x => x.PaymentDate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+                var transportData = await transportQuery.OrderByDescending(x => x.ReceiptId).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
                 /* ===================== FINAL RESPONSE ===================== */
 
