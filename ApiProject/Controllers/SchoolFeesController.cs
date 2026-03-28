@@ -375,5 +375,20 @@ namespace ApiProject.Controllers
         }
 
 
+        [HttpPost("DeleteStudentReceipt")]
+        public async Task<IActionResult> DeleteStudentReceipt(int receiptId)
+        {
+            try
+            {
+                var res = await _schoolFees.DeleteStudentReceipt(receiptId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

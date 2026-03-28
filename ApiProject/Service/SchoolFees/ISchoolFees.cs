@@ -17,7 +17,6 @@ namespace ApiProject.Service.SchoolFees
         Task<ApiResponse<bool>> insertfeesinstallment(List<AddFeesInstallmentReq> req);
         Task<ApiResponse<bool>> updatefeesinstallment(List<AddFeesInstallmentReq> req);
 
-
         // fees collection
 
         Task<ApiResponse<List<ClassIdByStudentRes>>> getclassbystudent(int classid);
@@ -38,6 +37,8 @@ namespace ApiProject.Service.SchoolFees
         //  STUDEMNT FEE REPORT 
 
         Task<ApiResponse<bool>> UpdateStudentReceipt(ReceiptupdateModel req);
+
+        Task<ApiResponse<bool>> DeleteStudentReceipt(int receiptId);
 
 
 

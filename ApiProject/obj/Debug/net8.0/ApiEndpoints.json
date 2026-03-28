@@ -1322,6 +1322,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ReportController",
+    "Method": "CourseCompleted",
+    "RelativePath": "api/Report/CourseCompleted",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "res",
+        "Type": "System.Collections.Generic.List\u00601[[ApiProject.Models.Response.CourseCompletedmodel, ThisApiProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ReportController",
     "Method": "GetAllClasswiseDueFeeReport",
     "RelativePath": "api/Report/GetAllClasswiseDueFeeReport",
     "HttpMethod": "POST",
@@ -2075,6 +2091,22 @@
     "Parameters": [
       {
         "Name": "feesid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolFeesController",
+    "Method": "DeleteStudentReceipt",
+    "RelativePath": "api/SchoolFees/DeleteStudentReceipt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "receiptId",
         "Type": "System.Int32",
         "IsRequired": false
       }

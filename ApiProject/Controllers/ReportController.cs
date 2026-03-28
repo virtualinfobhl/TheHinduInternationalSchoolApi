@@ -24,7 +24,6 @@ namespace ApiProject.Controllers
             _reportService = reportService;
         }
 
-
         [HttpPost("GetQuickStudentReport")]
         public async Task<IActionResult> GetQuickStudentReport(getstudentDellistReq req)
         {
@@ -176,7 +175,6 @@ namespace ApiProject.Controllers
             }
         }
 
-
         // Student TC & Dropdown 
         [HttpPost("GetStudentTCReport")]
         public async Task<IActionResult> GetStudentTCReport(GetStudentIDCardReq req)
@@ -193,7 +191,6 @@ namespace ApiProject.Controllers
             }
         }
 
-
         [HttpPost("GetStudentDropoutReport")]
         public async Task<IActionResult> GetStudentDropoutReport(GetStudentIDCardReq req)
         {
@@ -208,7 +205,6 @@ namespace ApiProject.Controllers
                 return BadRequest(res);
             }
         }
-
 
         // Student Exam 
         [HttpPost("GetTestExamMarks")]
@@ -256,7 +252,20 @@ namespace ApiProject.Controllers
             }
         }
 
-
+        [HttpPost("CourseCompleted")]
+        public async Task<IActionResult> CourseCompleted(List<CourseCompletedmodel> res)
+        {
+            try
+            {
+                var res1 = await _reportService.CourseCompleted(res);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res1 = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
+            }
+        }
         // 
         [HttpPost("GetStudentFeeList")]
         public async Task<IActionResult> GetStudentFeeList(GetStudentFeeListReqModel req)
@@ -272,7 +281,6 @@ namespace ApiProject.Controllers
                 return BadRequest(res);
             }
         }
-
 
         //[HttpPost("GetStudentFeeListDetail")]
         //public async Task<IActionResult> GetStudentFeelistDetail(GetStudentFeeReqModel req)

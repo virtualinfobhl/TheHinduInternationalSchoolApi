@@ -31,14 +31,14 @@ namespace ApiProject.Service.Report
         Task<ApiResponse<List<TestExamMarksmOdel>>> GetTotalTestExamReport(GetTestExamReq req);
 
         Task<ApiResponse<List<StudentMarksheetModel>>> GetStudentMarksheet(GetTestExamReq req);
-
-
-
-
-
-
-
+        Task<ApiResponse<bool>> CourseCompleted(List<CourseCompletedmodel> res);
         Task<PagedResult<GetStudentFeeListModel>> GetStudentFeeDetail(GetStudentFeeListReqModel req);
+
+
+
+
+
+
         //    Task<ApiResponse<List<GetStudentFeeListModel>>> GetStudentFeeListDetail(GetStudentFeeReqModel req);
         //  Task<ApiResponse<List<ClasswiseStudentListModel>>> GetClassWiseInstall(GetClasswiseInstallmentListReq req);
 

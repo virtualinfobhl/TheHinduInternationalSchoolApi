@@ -701,7 +701,7 @@ namespace ApiProject.Service.SchoolFees
                     && fee.Active == true
                     && (req.FromDate == null || fee.PaymentDate >= req.FromDate)
                     && (req.ToDate == null || fee.PaymentDate <= req.ToDate)
-                   // && (req.MAdmissionPayfee > 0 || c.PayFees > 0 || c.MPramoteFees > 0)
+                    // && (req.MAdmissionPayfee > 0 || c.PayFees > 0 || c.MPramoteFees > 0)
 
                     select new StudentFeesCollectionListRes
                     {
@@ -818,7 +818,6 @@ namespace ApiProject.Service.SchoolFees
                 return ApiResponse<ClassWiseTotalFeeModel>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
         public async Task<ApiResponse<PagedResult<ClassFeesInstaListRes>>> getclassfeesInstallment(ClassFeesFilterReq req)
         {
@@ -955,7 +954,6 @@ namespace ApiProject.Service.SchoolFees
             }
         }
 
-
         public async Task<ApiResponse<ClassWiseTotalFeeModel>> GetClasswiseTotalFee1(int ClassId)
         {
             try
@@ -985,6 +983,73 @@ namespace ApiProject.Service.SchoolFees
             }
         }
 
+        public async Task<ApiResponse<bool>> DeleteStudentReceipt(int receiptId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                var StuReceipt = await _context.M_FeeDetail.FirstOrDefaultAsync(c => c.FDId == receiptId && c.CompanyId == SchoolId);
+
+                if (StuReceipt == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("User not found");
+                }
+
+                StuReceipt.Active = StuReceipt.Active == null ? true : !StuReceipt.Active;
+                await _context.SaveChangesAsync();
+
+                var sturenew = _context.Student_Renew.Where(c => c.StuId == StuReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).FirstOrDefault();
+
+                if (sturenew != null)
+                {
+                    sturenew.stu_fee -= StuReceipt.PayFees;
+                    sturenew.due_fee += StuReceipt.PayFees;
+                    await _context.SaveChangesAsync();
+                }
+
+                var installments = _context.fee_installment.Where(c => c.stu_id == StuReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).ToList();
+
+                if (installments != null && installments.Count > 0)
+                {
+                    decimal remainingFee = (decimal)sturenew.stu_fee;
+
+                    for (int i = 0; i < installments.Count; i++)
+                    {
+                        var installmentId = installments[i].Id;
+
+                        fee_installment feeInstall = _context.fee_installment.Where(p => p.stu_id == StuReceipt.stu_id && p.Id == installmentId).FirstOrDefault();
+
+                        if (feeInstall != null)
+                        {
+                            decimal deduction = Math.Min(remainingFee, Convert.ToDecimal((double)installments[i].FAmount));
+                            feeInstall.AdmissionPayfee = StuReceipt.AdmissionPayfee;
+                            feeInstall.AFeeDiscount = StuReceipt.AFeeDiscount;
+                            // feeInstall.total_fee = result.total_fee;
+                            feeInstall.due_fee = Convert.ToDouble((installments[i].FAmount ?? 0) - (double)deduction);
+                            feeInstall.FAmount = installments[i].FAmount;
+                            feeInstall.Installment = installments[i].Installment;
+                            feeInstall.IntallmentID = installments[i].IntallmentID;
+
+                            feeInstall.paid_date = DateTime.Now;
+                            feeInstall.Date = DateTime.Now;
+
+                            remainingFee -= deduction;
+
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                }
+
+                return ApiResponse<bool>.SuccessResponse(true, "Delete Student Fee Receipt successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
 
 
     }

@@ -329,8 +329,6 @@ namespace ApiProject.Service.School
             }
         }
 
-
-
         public async Task<ApiResponse<List<State>>> GetState()
         {
             try

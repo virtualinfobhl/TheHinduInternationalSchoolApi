@@ -2548,6 +2548,46 @@
         }
       }
     },
+    "/api/Report/CourseCompleted": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CourseCompletedmodel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CourseCompletedmodel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CourseCompletedmodel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Report/GetStudentFeeList": {
       "post": {
         "tags": [
@@ -3728,6 +3768,28 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/SchoolFees/DeleteStudentReceipt": {
+      "post": {
+        "tags": [
+          "SchoolFees"
+        ],
+        "parameters": [
+          {
+            "name": "receiptId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -7304,6 +7366,19 @@
           "pageSize": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CourseCompletedmodel": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "completed": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

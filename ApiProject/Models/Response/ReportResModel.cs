@@ -71,6 +71,12 @@ namespace ApiProject.Models.Response
         public bool NDYearly { get; set; }
     }
 
+    public class CourseCompletedmodel
+    {
+        public int StudentId { get; set; }
+        public bool completed { get; set; }
+    }
+
 
     public class ClasswiseInstallModel
     {

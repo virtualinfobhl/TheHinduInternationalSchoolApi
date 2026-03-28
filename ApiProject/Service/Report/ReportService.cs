@@ -1286,6 +1286,44 @@ namespace ApiProject.Service.Report
                 return ApiResponse<List<StudentMarksheetModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+        public async Task<ApiResponse<bool>> CourseCompleted(List<CourseCompletedmodel> res)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            {
+                try
+                {
+                    int SchoolId = _loginUser.SchoolId;
+                    int UserId = _loginUser.UserId;
+                    int SessionId = _loginUser.SessionId;
+
+                    if (res == null || !res.Any())
+                    {
+                        return ApiResponse<bool>.ErrorResponse("No students selected");
+                    }
+
+                    foreach (var item in res)
+                    {
+                        var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                        if (result != null)
+                        {
+                            result.completed = true;
+                        }
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                    return ApiResponse<bool>.SuccessResponse(true, "Student Course Completed saved successfully");
+
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                }
+            }
+        }
         public async Task<PagedResult<GetStudentFeeListModel>> GetStudentFeeDetail(GetStudentFeeListReqModel req)
         {
             int SchoolId = _loginUser.SchoolId;
