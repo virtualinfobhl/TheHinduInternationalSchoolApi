@@ -91,12 +91,12 @@ namespace ApiProject.Controllers
             try
             {
                 var res1 = await _reportService.SaveHalfYearlyNoDueFee(res);
-                return Ok(res);
+                return Ok(res1);
             }
             catch (Exception ex)
             {
                 var res1 = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(res);
+                return BadRequest(res1);
             }
         }
 
@@ -106,12 +106,12 @@ namespace ApiProject.Controllers
             try
             {
                 var res1 = await _reportService.SaveYearlyNoDueFee(res);
-                return Ok(res);
+                return Ok(res1);
             }
             catch (Exception ex)
             {
                 var res1 = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
-                return BadRequest(res);
+                return BadRequest(res1);
             }
         }
 

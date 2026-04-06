@@ -4,21 +4,8 @@ using ApiProject.Models.Request;
 using ApiProject.Models.Response;
 using ApiProject.Service.Current;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Writers;
-using OfficeOpenXml.Table.PivotTable;
-using System.Collections.Immutable;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Linq;
 using ThisApiProject.Data;
-using static ApiProject.Models.Response.ClassByFeeInResponse;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ApiProject.Service.Employee
 {
@@ -785,6 +772,47 @@ namespace ApiProject.Service.Employee
             }
         }
 
+        //public async Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(int Month)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var currentyear = DateTime.UtcNow.Year;
+        //        var selectedDate = new DateTime(currentyear, Month, 1);
+
+        //        var result = _context.EmployeeRegister.Where(c => c.Active == true && c.CompanyId == SchoolId && c.JoiningDate.Value <= selectedDate)
+        //            .Select(c => new EmpAttendanceReportModel
+        //        {
+        //                Emp_Id = c.Emp_Id,
+        //                Employeename = c.Emp_Name,
+        //                //Monthname = monthName,
+        //                //AttendanceByDate = dailyAttendance,
+
+        //                c.Emp_Id,
+        //            c.Emp_Name,
+        //            c.Emp_Code,
+        //            c.Active,
+
+        //            Monthname = Month,
+
+        //            Studstatus = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true),
+        //            totalPresent = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true && p.Status == "Present").Count(),
+        //            totalAbsent = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true && p.Status == "Absent").Count(),
+        //            totalHoliday = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true && p.Status == "Holiday").Count(),
+        //            totalLeave = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true && p.Status == "Leave").Count(),
+        //            totalHalfDay = _context.Emp_Attendance.Where(p => p.Emp_Id == c.Emp_Id && p.Date.Value.Month == Month && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true && p.Status == "HalfDay").Count(),
+
+        //        }).ToList();
+
+        //        return ApiResponse<List<EmpAttendanceReportModel>>.SuccessResponse(result, "Fetch successfully Employee Attendance");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<List<EmpAttendanceReportModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+        //    }
+        //}
         public async Task<ApiResponse<List<EmpAttendanceReportModel>>> EmployeeAttendanceReport(int Month)
         {
             try
@@ -932,7 +960,7 @@ namespace ApiProject.Service.Employee
                     decimal ohfdays = OneDtotal / 4M;   // Leave = 0.25
                     decimal totaldays = Ptotal + Htotal + hfdays + ohfdays;
 
-                    decimal perDaySalary = (decimal)emp.TotalSalary / daysInCurrentMonth;
+                    decimal perDaySalary = (decimal)(emp.TotalSalary??0) / daysInCurrentMonth;
                     decimal salaryamount = Math.Round(totaldays * perDaySalary);
 
                     var empAdv = AdvanceList.Where(a => a.EmpId == emp.Emp_Id && a.Date >= emp.JoiningDate && month >= a.Date.Value.Month).Sum(a => a.AdvanceAmt) ?? 0;

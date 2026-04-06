@@ -64,13 +64,13 @@ namespace ApiProject.Service.School
 
                 var res = new getdashboardmodel
                 {
-                    TotalStudent = _context.Student_Renew.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true && c.Dropout == false).Count(),
+                    TotalStudent = await _context.Student_Renew.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true && c.Dropout == false).CountAsync(),
 
-                    TotalClass = _context.University.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+                    TotalClass = await _context.University.Where(c => c.CompanyId == SchoolId && c.Active == true).CountAsync(),
 
-                    TotolUsers = _context.UserInformation.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
+                    TotolUsers = await _context.UserInformation.Where(c => c.CompanyId == SchoolId && c.Active == true).CountAsync(),
 
-                    TotalEmployee = _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).Count()
+                    TotalEmployee = await _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).CountAsync()
                 };
 
                 return ApiResponse<getdashboardmodel>.SuccessResponse(res, "Fetch dashboard data successfully");

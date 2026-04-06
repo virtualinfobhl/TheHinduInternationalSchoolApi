@@ -2668,6 +2668,8 @@ namespace ApiProject.Service.Student
                 return ApiResponse<List<StudentEventCertificate>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
+        //Updated 04-04-2025
         public async Task<ApiResponse<bool>> AddEventCertificateAsync(EventCartificateModelReq req)
         {
             try
@@ -2685,6 +2687,8 @@ namespace ApiProject.Service.Student
                 }
 
                 int EcId = _context.EventCertificate.DefaultIfEmpty().Max(s => s == null ? 0 : s.EvId) + 1;
+
+                String name = req.StudentId != -1 ? "Student" : "Teacher";
 
                 var evententity = new EventCertificate
                 {
@@ -2707,8 +2711,7 @@ namespace ApiProject.Service.Student
                 _context.EventCertificate.Add(evententity);
                 await _context.SaveChangesAsync();
 
-                return ApiResponse<bool>.SuccessResponse(true, "Student Event Cartificate Careated Successfully");
-
+                return ApiResponse<bool>.SuccessResponse(true, $"{name} Event Certificate Created Successfully");
             }
             catch (Exception ex)
             {
@@ -2891,6 +2894,7 @@ namespace ApiProject.Service.Student
             }
         }
 
+
         //public async Task<ApiResponse<StudentFeeTCModel>> GetStudentDueFeeTC(int StudentId)
         //{
         //    try
@@ -2929,35 +2933,89 @@ namespace ApiProject.Service.Student
         //    }
         //}
 
+        /*  public async Task<ApiResponse<bool>> GenerateTC(GetStudentTCDropoutReq req)
+          {
+              try
+              {
+                  int SchoolId = _loginUser.SchoolId;
+                  int UserId = _loginUser.UserId;
+                  int SessionId = _loginUser.SessionId;
+
+                  var studentdata = await _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.due_fee == 0 && c.CompanyId == SchoolId
+                 && c.SessionId == SessionId).FirstOrDefaultAsync();
+
+                  if (studentdata == null)
+                      return ApiResponse<bool>.ErrorResponse("Student fee record not found or due exists.");
+
+                  studentdata.Active = false;
+
+                  var TransFee = _context.StuRouteAssignTbl.Where(c => c.stu_id == req.StudentId && c.university_id == req.ClassId && c.CompanyId == SchoolId
+                 && c.SessionId == SessionId).FirstOrDefault();
+                  if (TransFee == null)
+                  {
+                      if (TransFee.TDueFee > 0 || TransFee.OldTransDueFee > 0)
+                      {
+                          return ApiResponse<bool>.ErrorResponse("Student fee record not found or due exists.");
+                      }
+                      TransFee.Active = false;
+
+                  }
+
+                  return ApiResponse<bool>.SuccessResponse(true, "Fetch successfully student TC data ");
+              }
+              catch (Exception ex)
+              {
+                  return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+              }
+          }
+        */
+
+
+
+
+        //Updated 04-04-2026
+
         public async Task<ApiResponse<bool>> GenerateTC(GetStudentTCDropoutReq req)
         {
             try
             {
-                int SchoolId = _loginUser.SchoolId;
-                int UserId = _loginUser.UserId;
-                int SessionId = _loginUser.SessionId;
+                int schoolId = _loginUser.SchoolId;
+                int sessionId = _loginUser.SessionId;
 
-                var studentdata = _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.due_fee == 0 && c.CompanyId == SchoolId
-               && c.SessionId == SessionId).FirstOrDefault();
+                var studentdata = await _context.Student_Renew
+                    .Where(c => c.StuId == req.StudentId &&
+                                c.ClassId == req.ClassId &&
+                                c.due_fee == 0 &&
+                                c.CompanyId == schoolId &&
+                                c.SessionId == sessionId)
+                    .FirstOrDefaultAsync();
 
                 if (studentdata == null)
                     return ApiResponse<bool>.ErrorResponse("Student fee record not found or due exists.");
 
                 studentdata.Active = false;
 
-                var TransFee = _context.StuRouteAssignTbl.Where(c => c.stu_id == req.StudentId && c.university_id == req.ClassId && c.CompanyId == SchoolId
-               && c.SessionId == SessionId).FirstOrDefault();
-                if (TransFee == null)
-                {
-                    if (TransFee.TDueFee > 0 || TransFee.OldTransDueFee > 0)
-                    {
-                        return ApiResponse<bool>.ErrorResponse("Student fee record not found or due exists.");
-                    }
-                    TransFee.Active = false;
+                var TransFee = await _context.StuRouteAssignTbl
+                    .Where(c => c.stu_id == req.StudentId &&
+                                c.university_id == req.ClassId &&
+                                c.CompanyId == schoolId &&
+                                c.SessionId == sessionId)
+                    .FirstOrDefaultAsync();
 
+
+                if (TransFee != null)
+                {
+                    if ((TransFee.TDueFee ?? 0) > 0 || (TransFee.OldTransDueFee ?? 0) > 0)
+                    {
+                        return ApiResponse<bool>.ErrorResponse("Transport due exists.");
+                    }
+
+                    TransFee.Active = false;
                 }
 
-                return ApiResponse<bool>.SuccessResponse(true, "Fetch successfully student TC data ");
+                await _context.SaveChangesAsync();
+
+                return ApiResponse<bool>.SuccessResponse(true, "Student TC generated successfully");
             }
             catch (Exception ex)
             {
@@ -2973,8 +3031,8 @@ namespace ApiProject.Service.Student
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var studentdata = _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.CompanyId == SchoolId
-               && c.SessionId == SessionId).FirstOrDefault();
+                var studentdata = await  _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.CompanyId == SchoolId
+               && c.SessionId == SessionId).FirstOrDefaultAsync();
 
                 if (studentdata == null)
                     return ApiResponse<bool>.ErrorResponse("Student fee record not found or due exists.");

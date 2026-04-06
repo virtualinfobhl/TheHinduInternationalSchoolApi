@@ -425,85 +425,259 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentFeeDetailsModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+        /*  public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee1(List<HalfYearlyModel> res)
+          {
+              using var transaction = await _context.Database.BeginTransactionAsync();
+              {
+                  try
+                  {
+                      int SchoolId = _loginUser.SchoolId;
+                      int UserId = _loginUser.UserId;
+                      int SessionId = _loginUser.SessionId;
+
+                      if (res == null || !res.Any())
+                      {
+                          return ApiResponse<bool>.ErrorResponse("No students selected");
+                      }
+
+                      foreach (var item in res)
+                      {
+                          var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                          if (result != null)
+                          {
+                              result.NDHalfYearly = true;
+                              result.UpdateNDdate = DateTime.Now;
+                          }
+                      }
+
+
+                      await _context.SaveChangesAsync();
+
+                      await transaction.CommitAsync();
+                      return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
+
+                  }
+                  catch (Exception ex)
+                  {
+                      await transaction.RollbackAsync();
+                      return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                  }
+              }
+          }
+  */
+
+
+
+
+        //Updated 04-04-2025
+
         public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
+                int schoolId = _loginUser.SchoolId;
+                int sessionId = _loginUser.SessionId;
+
+                if (res == null || !res.Any())
                 {
-                    int SchoolId = _loginUser.SchoolId;
-                    int UserId = _loginUser.UserId;
-                    int SessionId = _loginUser.SessionId;
-
-                    if (res == null || !res.Any())
-                    {
-                        return ApiResponse<bool>.ErrorResponse("No students selected");
-                    }
-
-                    foreach (var item in res)
-                    {
-                        var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
-
-                        if (result != null)
-                        {
-                            result.NDHalfYearly = true;
-                            result.UpdateNDdate = DateTime.Now;
-                        }
-                    }
-
-
-                    await _context.SaveChangesAsync();
-
-                    await transaction.CommitAsync();
-                    return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
-
+                    return ApiResponse<bool>.ErrorResponse("No students selected");
                 }
-                catch (Exception ex)
+
+                var studentIds = res.Select(x => x.StudentId).ToList();
+
+                // Fetch renew records
+                var renewList = await _context.Student_Renew
+                    .Where(s => s.StuId.HasValue &&
+                                studentIds.Contains(s.StuId.Value) &&
+                                s.CompanyId == schoolId &&
+                                s.SessionId == sessionId)
+                    .ToListAsync();
+
+                // Fetch names from StudentRenewView
+                var studentViewList = await _context.StudentRenewView
+                    .Where(s => studentIds.Contains(s.StuId) &&
+                                s.CompanyId == schoolId &&
+                                s.SessionId == sessionId)
+                    .Select(s => new
+                    {
+                        s.StuId,
+                        s.stu_name
+                    })
+                    .ToListAsync();
+
+                List<string> failedStudents = new List<string>();
+
+                foreach (var item in res)
                 {
-                    await transaction.RollbackAsync();
-                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                    var renew = renewList.FirstOrDefault(s => s.StuId == item.StudentId);
+
+                    if (renew != null)
+                    {
+                        renew.NDHalfYearly = true;
+                        renew.UpdateNDdate = DateTime.Now;
+                    }
+                    else
+                    {
+                        var studentName = studentViewList
+                            .FirstOrDefault(s => s.StuId == item.StudentId)?.stu_name
+                            ?? $"ID: {item.StudentId}";
+
+                        failedStudents.Add(studentName);
+                    }
                 }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                if (failedStudents.Any())
+                {
+                    return ApiResponse<bool>.SuccessResponse(
+                        false,
+                        $"Half Yearly No Due Fee failed for: {string.Join(", ", failedStudents)}"
+                    );
+                }
+
+                return ApiResponse<bool>.SuccessResponse(
+                    true,
+                    "Half Yearly No Due Fee saved successfully"
+                );
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+
+
+        /*        public async Task<ApiResponse<bool>> SaveYearlyNoDueFee1(List<YearlyModel> res)
+                {
+                    using var transaction = await _context.Database.BeginTransactionAsync();
+                    {
+                        try
+                        {
+                            int SchoolId = _loginUser.SchoolId;
+                            int UserId = _loginUser.UserId;
+                            int SessionId = _loginUser.SessionId;
+
+                            if (res == null || !res.Any())
+                            {
+                                return ApiResponse<bool>.ErrorResponse("No students selected");
+                            }
+
+                            foreach (var item in res)
+                            {
+                                var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                                if (result != null)
+                                {
+                                    result.NDYearly = true;
+                                    result.UpdateNDdate = DateTime.Now;
+                                }
+                            }
+
+                            await _context.SaveChangesAsync();
+
+                            await transaction.CommitAsync();
+                            return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            await transaction.RollbackAsync();
+                            return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                        }
+                    }
+                }
+        */
+
+
+        //Updated 04-04-2025
+
         public async Task<ApiResponse<bool>> SaveYearlyNoDueFee(List<YearlyModel> res)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
+                int schoolId = _loginUser.SchoolId;
+                int sessionId = _loginUser.SessionId;
+
+                if (res == null || !res.Any())
                 {
-                    int SchoolId = _loginUser.SchoolId;
-                    int UserId = _loginUser.UserId;
-                    int SessionId = _loginUser.SessionId;
-
-                    if (res == null || !res.Any())
-                    {
-                        return ApiResponse<bool>.ErrorResponse("No students selected");
-                    }
-
-                    foreach (var item in res)
-                    {
-                        var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
-
-                        if (result != null)
-                        {
-                            result.NDYearly = true;
-                            result.UpdateNDdate = DateTime.Now;
-                        }
-                    }
-
-                    await _context.SaveChangesAsync();
-
-                    await transaction.CommitAsync();
-                    return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
-
+                    return ApiResponse<bool>.ErrorResponse("No students selected");
                 }
-                catch (Exception ex)
+
+                var studentIds = res.Select(x => x.StudentId).ToList();
+
+                // Fetch Student_Renew records
+                var renewList = await _context.Student_Renew
+                    .Where(s => s.StuId.HasValue &&
+                                studentIds.Contains(s.StuId.Value) &&
+                                s.CompanyId == schoolId &&
+                                s.SessionId == sessionId)
+                    .ToListAsync();
+
+                // Fetch student names from view
+                var studentViewList = await _context.StudentRenewView
+                    .Where(s => studentIds.Contains(s.StuId) &&
+                                s.CompanyId == schoolId &&
+                                s.SessionId == sessionId)
+                    .Select(s => new
+                    {
+                        s.StuId,
+                        s.stu_name
+                    })
+                    .ToListAsync();
+
+                List<string> failedStudents = new List<string>();
+
+                foreach (var item in res)
                 {
-                    await transaction.RollbackAsync();
-                    return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                    var renew = renewList.FirstOrDefault(s => s.StuId == item.StudentId);
+
+                    if (renew != null)
+                    {
+                        renew.NDYearly = true; 
+                        renew.UpdateNDdate = DateTime.Now;
+                    }
+                    else
+                    {
+                        var studentName = studentViewList
+                            .FirstOrDefault(s => s.StuId == item.StudentId)?.stu_name
+                            ?? $"ID: {item.StudentId}";
+
+                        failedStudents.Add(studentName);
+                    }
                 }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                // If any failed
+                if (failedStudents.Any())
+                {
+                    return ApiResponse<bool>.SuccessResponse(
+                         false,
+                        $"Yearly No Due Fee failed for: {string.Join(", ", failedStudents)}"
+                    );
+                }
+
+                // All success
+                return ApiResponse<bool>.SuccessResponse(
+                    true,
+                    "Yearly No Due Fee saved successfully"
+                );
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
         public async Task<ApiResponse<PagedResult<GetStudentNoDueeFeeModel>>> GetStudentNoDuesFeeReport(GetStudentReq req)
         {
             try

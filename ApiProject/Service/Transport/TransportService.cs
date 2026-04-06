@@ -1540,6 +1540,8 @@ namespace ApiProject.Service.Transport
                                 on c.SectionId equals sec.collegeid into secJoin
                             from sec in secJoin.DefaultIfEmpty()
 
+
+                           // vehicleId , routeId, stoppageId
                             where c.SessionId == SessionId
                                   && c.CompanyId == SchoolId
                                   && c.Active == true
@@ -1556,8 +1558,13 @@ namespace ApiProject.Service.Transport
                                 Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
 
                                 Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
+                                VehicleId = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.BusId).FirstOrDefault(),
+
                                 Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
+                                RouteId = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.RouteId).FirstOrDefault(),
+
                                 Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+                                StoppageId = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.StoppageId).FirstOrDefault(),
                                 TransportFee = c.TransportFee,
                                 Discount = c.Discount,
                                 NetTransFee = c.NetTranSFee,

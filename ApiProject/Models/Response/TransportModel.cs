@@ -272,6 +272,8 @@ namespace ApiProject.Models.Response
         public string? Sectionname { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public int? VehicleId { get; set; }
+        public int? RouteId { get; set; }
+        public int? StoppageId { get; set; }
         public string? Vehicleno { get; set; }
         public string? Routename { get; set; }
         public string? Stoppagename { get; set; }
