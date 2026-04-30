@@ -13,6 +13,10 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Azure.Ide
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\EPPlus.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\EPPlus.Interfaces.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\EPPlus.System.Drawing.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Hangfire.AspNetCore.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Hangfire.Core.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Hangfire.NetCore.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Hangfire.SqlServer.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Humanizer.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -54,6 +58,7 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Microsoft
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Mono.TextTemplating.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Newtonsoft.Json.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -78,6 +83,20 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\System.Se
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\System.Text.Encodings.Web.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\System.Text.Json.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\System.Windows.Extensions.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\ca\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\de\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\es\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\fa\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\fr\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\nb\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\nl\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\pt-BR\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\pt-PT\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\pt\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\sv\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\tr-TR\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\zh-TW\Hangfire.Core.resources.dll
+F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\zh\Hangfire.Core.resources.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\de\Microsoft.CodeAnalysis.resources.dll
 F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -179,4 +198,3 @@ F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\refint\Th
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ThisApiProject.pdb
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ThisApiProject.genruntimeconfig.cache
 F:\github\TheHinduInternationalSchoolApi\ApiProject\obj\Release\net8.0\ref\ThisApiProject.dll
-F:\github\TheHinduInternationalSchoolApi\ApiProject\bin\Release\net8.0\Newtonsoft.Json.dll

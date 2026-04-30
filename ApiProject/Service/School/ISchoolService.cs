@@ -12,6 +12,10 @@ namespace ApiProject.Service.School
         // ******* school dashboard
         Task<ApiResponse<getdashboardmodel>> GetDashboard();
 
+        // GetSession
+        Task<ApiResponse<List<SessionInfo>>> GetSession();
+        Task<ApiResponse<SessionResponseModel>> ChangeSession(int SessionId);
+
         // ****** School Informaction
         #region
         Task<ApiResponse<SchoolDetail>> SchoolDetail();

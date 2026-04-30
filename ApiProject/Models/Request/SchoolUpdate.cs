@@ -25,14 +25,18 @@
         public IFormFile? logo { get; set; }
         public IFormFile? RLogo { get; set; }
 
-        //    public string? logoimg { get; set; }
-        //    public string? rlogo { get; set; }
-        //    public Nullable<bool> companyactive { get; set; }
-        //    public Nullable<System.DateTime> joiningdate { get; set; }
-        //    public Nullable<System.DateTime> expiredate { get; set; }
-        //    public Nullable<bool> active { get; set; }
     }
 
+    public class SessionResponseModel
+    {
+        public int? startyear { get; set; }
+        public int? endyear { get; set; }
+        public string? startdate { get; set; }
+        public string? enddate { get; set; }
+        public string? startdatey { get; set; }
+        public string? enddatey { get; set; }
+        public int? sessionId { get; set; }
+    }
 
     public class getdashboardmodel
     {

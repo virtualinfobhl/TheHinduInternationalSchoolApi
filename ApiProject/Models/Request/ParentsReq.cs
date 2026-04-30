@@ -35,13 +35,9 @@ namespace ApiProject.Models.Request
         public int? RouteId { get; set; }
         public int? StoppageId { get; set; }
         public string? MonthName { get; set; }
+        public string? MonthType { get; set; }
         public Nullable<double> PayFee { get; set; }
-        //     public Nullable<System.DateTime> Date { get; set; }
-        //public Nullable<double> Discount { get; set; }
-        //public Nullable<double> SpclDiscount { get; set; }
-        //    public Nullable<double> PayDiscount { get; set; }
-        //  public Nullable<double> Duefee { get; set; }
-        //    public Nullable<System.DateTime> PaymentDate { get; set; }
-        //    public string? Remark { get; set; }
+        public string? Remark { get; set; }
+
     }
 }

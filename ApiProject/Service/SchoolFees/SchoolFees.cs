@@ -854,46 +854,28 @@ namespace ApiProject.Service.SchoolFees
 
                 var totalRecords = await query.CountAsync();
 
-                var resultQuery = await query
-                    .OrderBy(x => x.stu_name)
-                    .Skip((req.PageNumber - 1) * req.PageSize)
-                    .Take(req.PageSize)
-                    .ToListAsync();
+                var resultQuery = await query.OrderBy(x => x.stu_name).Skip((req.PageNumber - 1) * req.PageSize).Take(req.PageSize).ToListAsync();
 
                 var studentIds = resultQuery.Select(x => x.StuId).Distinct().ToList();
                 var classIds = resultQuery.Select(x => x.ClassId).Distinct().ToList(); // ✅ fixed this line
 
                 // Batch fetch FeeReceipts
-                var feeReceipts = await _context.M_FeeDetail
-                    .Where(f => studentIds.Contains((int)f.stu_id) &&
-                                classIds.Contains((int)f.ClassId) &&
-                                f.SessionId == sessionId &&
-                                f.CompanyId == schoolId &&
-                                f.Active == true)
-                    .ToListAsync();
+                var feeReceipts = await _context.M_FeeDetail.Where(f => studentIds.Contains((int)f.stu_id) && classIds.Contains((int)f.ClassId)
+                && f.SessionId == sessionId && f.CompanyId == schoolId && f.Active == true).ToListAsync();
 
                 // Batch fetch Installments
-                var feeInstallments = await _context.fee_installment
-                    .Where(i => studentIds.Contains((int)i.stu_id) &&
-                                classIds.Contains((int)i.university_id) &&
-                                i.SessionId == sessionId &&
-                                i.CompanyId == schoolId)
-                    .ToListAsync();
+                var feeInstallments = await _context.fee_installment.Where(i => studentIds.Contains((int)i.stu_id) && classIds.Contains((int)i.university_id) &&
+                                i.SessionId == sessionId && i.CompanyId == schoolId).ToListAsync();
 
                 var responseList = resultQuery.Select(x =>
                 {
-                    var totalPaid = feeReceipts
-                        .Where(f => f.stu_id == x.StuId && f.ClassId == x.ClassId && f.Status == "1")
-                        .Sum(f => f.PayFees ?? 0); // ✅ fixed to per-student basis
+                    var totalPaid = feeReceipts.Where(f => f.stu_id == x.StuId && f.ClassId == x.ClassId && f.Status == "1").Sum(f => f.PayFees ?? 0);
 
-                    var installments = feeInstallments
-          .Where(i => i.stu_id == x.StuId && i.university_id == x.ClassId)
-          .Select(i => new FeeInstallment
-          {
-              StudentId = i.stu_id,
-              SInsAmount = i.FAmount
-          })
-          .ToList();
+                    var installments = feeInstallments.Where(i => i.stu_id == x.StuId && i.university_id == x.ClassId).Select(i => new FeeInstallment
+                    {
+                        StudentId = i.stu_id,
+                        SInsAmount = i.FAmount
+                    }).ToList();
 
 
                     return new ClassFeesInstaListRes
@@ -1050,7 +1032,6 @@ namespace ApiProject.Service.SchoolFees
                 return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
             }
         }
-
 
     }
 }

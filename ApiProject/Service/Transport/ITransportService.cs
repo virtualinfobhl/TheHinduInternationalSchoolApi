@@ -68,9 +68,12 @@ namespace ApiProject.Service.Transport
 
         Task<ApiResponse<GetFilteredStoppageTransFeeModel>> GetFilteredStoppageTransFee(int StoppageId);
 
-        Task<ApiResponse<bool>> AddStudentTransportFee(StudentTransportFeeReq req);
+        Task<ApiResponse<StudentFeesRes>> AddStudentTransportFee(StudentTransportFeeReq req);
 
-     //   Task<ApiResponse<bool>> AddStudentTransportOldFee(StudentTransportFeeReq req);
+        //   Task<ApiResponse<bool>> DeleteStudentTransportReceipt(int receiptId);
+
+
+        //   Task<ApiResponse<bool>> AddStudentTransportOldFee(StudentTransportFeeReq req);
 
 
 
@@ -79,8 +82,12 @@ namespace ApiProject.Service.Transport
         Task<ApiResponse<PagedResult<GetTransportDetailModel>>> TransportDetailsReport(TransportDetailReportReq Req);
         Task<ApiResponse<PagedResult<TransportFeereportModel>>> TransportFeeReport(TransportFeeReportReq Req);
         Task<ApiResponse<List<GetTransportFeeDetailModel>>> GetTransportFeeDetails(int StudentId);
-        Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportPaidOldFee(int StudentId);
-        Task<ApiResponse<bool>> UpdateTransportOldFee (UpdateOldFeeReq req);
+        Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportOldFee(int StudentId);
+        Task<ApiResponse<StudentFeesRes>> UpdateTransportOldFee(UpdateOldFeeReq req);
+        Task<ApiResponse<StudentFeesRes>> TransportLastOldFee(LastOldFeeReq req);
+
+        Task<ApiResponse<bool>> DeleteTransportReceipt(int receiptId);
+
 
         #endregion Transport Fee Report Start
 

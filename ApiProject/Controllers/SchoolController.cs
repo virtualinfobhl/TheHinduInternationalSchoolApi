@@ -40,6 +40,75 @@ namespace ApiProject.Controllers
             }
         }
 
+        // GetSession
+        [HttpGet("GetSession")]
+        public async Task<IActionResult> GetSession()
+        {
+            try
+            {
+                var res = await _schoolService.GetSession();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(response);
+            }
+        }
+
+        //[HttpGet("ChangeSession")]
+        //public async Task<IActionResult> ChangeSession(int SessionId)
+        //{
+        //    try
+        //    {
+        //        var res = await _schoolService.ChangeSession(SessionId);
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ErrorRepsponse(ex.Message);
+        //    }
+        //}
+
+        [HttpGet("ChangeSession")]
+        public async Task<IActionResult> ChangeSession(int SessionId)
+        {
+            try
+            {
+                var res = await _schoolService.ChangeSession(SessionId);
+
+                if (!res.Success)
+                    return Ok(res);
+
+                var data = res.Data;
+
+                var options = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(30),
+                    HttpOnly = true,
+                    IsEssential = true
+                    // Secure = true // enable if HTTPS
+                };
+
+                // 🔥 SAME AS OLD MVC (CORE VERSION)
+                Response.Cookies.Append("Startsessionyear", data.startyear.ToString(), options);
+                Response.Cookies.Append("Endsessionyear", data.endyear.ToString(), options);
+
+                Response.Cookies.Append("StartsessionyearY", data.startdatey, options);
+                Response.Cookies.Append("EndsessionyearY", data.enddatey, options);
+
+                Response.Cookies.Append("Startsession", data.startdate, options);
+                Response.Cookies.Append("Endsession", data.enddate, options);
+
+                Response.Cookies.Append("SessionId", data.sessionId.ToString(), options);
+
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return ErrorRepsponse(ex.Message);
+            }
+        }
 
         // *********************** School Informaction  ***************************** //
         #region School Insformaction
@@ -458,7 +527,7 @@ namespace ApiProject.Controllers
 
         #endregion
 
-       
+
 
         // *************************** Exam Code Start ****************** //
         #region exam code 

@@ -59,6 +59,21 @@ namespace ApiProject.Models.Response
         public string stuphoto { get; set; }
         public string? Studentname { get; set; }
     }
+
+    public class GetPasswordModel
+    {
+        public int? StudentId { get; set; }
+        public int? ParentsId { get; set; }
+        public string? Studentname { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+    }
+
+    public class GetChangepasswordReq
+    {
+        public int? ParentsId { get; set; }
+        public string? password { get; set; }
+    }
     public class GetStudentFeeModel
     {
         public Nullable<double> TotalFee { get; set; }
@@ -74,7 +89,7 @@ namespace ApiProject.Models.Response
         public string merchantOrderId { get; set; }
         public string State { get; set; }
         public long? ExpireAt { get; set; }
-       public string Token { get; set; }
+        public string Token { get; set; }
     }
 
     public class StudentTransportPaymentResult
@@ -82,7 +97,7 @@ namespace ApiProject.Models.Response
         public int NewPaymentId { get; set; }
         public string ReceiptNo { get; set; }
         public string OrderId { get; set; }
-         public string merchantOrderId { get; set; }
+        public string merchantOrderId { get; set; }
         public string State { get; set; }
         public long? ExpireAt { get; set; }
         public string Token { get; set; }
@@ -104,7 +119,19 @@ namespace ApiProject.Models.Response
         public Nullable<double> Dueinstallment { get; set; }
     }
 
+    public class GetFeereceiptModel
+    {
+        public int FDId { get; set; }
+        public int? StudentId { get; set; }
+        public string? StudentName { get; set; }
+        public string? ReceiptNo { get; set; }
+        public Nullable<double> PayFee { get; set; }
+        public string? FeeType { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string? PaymentMode { get; set; }
+        public string? Remark { get; set; }
 
+    }
     public class getStudentInstallmentModel
     {
         public int StudentId { get; set; }
@@ -119,6 +146,7 @@ namespace ApiProject.Models.Response
         public Nullable<double> PaidFee { get; set; }
         public Nullable<double> Duefee { get; set; }
         public List<GetInstallmentModel> DueInstallment { get; set; }
+        public List<GetFeereceiptModel> FeeReceipt { get; set; }
 
     }
 
@@ -156,6 +184,39 @@ namespace ApiProject.Models.Response
         public Nullable<double> total_fee { get; set; }
         public string? Installment { get; set; }
         public Nullable<double> FAmount { get; set; }
+    }
+
+    // student  attendance 
+
+    public class GetAttendanceModel
+    {
+        public string? monthname { get; set; }
+        public Dictionary<int, string> AttendanceByDate { get; set; } = new();
+        public int? TotalP { get; set; }
+        public int? TotalA { get; set; }
+        public int? TotalH { get; set; }
+        public int? TotalHF { get; set; }
+        public int? TotalL { get; set; }
+    }
+
+    public class GetTestTypeModel
+    {
+        public int? studentid { get; set; }
+        public List<typelist> testtype { get; set; }
+
+    }
+    public class typelist
+    {
+        public string? testexamtype { get; set; }
+    }
+
+    public class GetTestwiseExamModel
+    {
+        public List<GetExamSubjectModel> SubjectName { get; set; }
+        public List<GetTestMarksModel> TestMarks { get; set; }
+        public Nullable<double> TotalMatks { get; set; }
+        public Nullable<double> MaxTotal { get; set; }
+
     }
 
 }

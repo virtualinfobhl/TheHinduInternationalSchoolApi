@@ -549,12 +549,12 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var EmpWorkAllo = _context.Emp_Workallocation.FirstOrDefault(e => e.Emp_Id == EmpId);
+                //var EmpWorkAllo = _context.Emp_Workallocation.FirstOrDefault(e => e.Emp_Id == EmpId);
 
-                if (EmpWorkAllo == null)
-                {
-                    return ApiResponse<GetEmpClassbySubjectModel>.ErrorResponse("No work allocation found for this employee.");
-                }
+                //if (EmpWorkAllo == null)
+                //{
+                //    return ApiResponse<GetEmpClassbySubjectModel>.ErrorResponse("No work allocation found for this employee.");
+                //}
 
                 var res = new GetEmpClassbySubjectModel
                 {
@@ -573,15 +573,14 @@ namespace ApiProject.Service.Employee
 
                     }).ToList(),
 
-                    //EmpsubjectData = (from cs in _context.ClassSubjectExamTbl
-                    //                  join s in _context.Subject
-                    //                  on cs.SubjectId equals s.subject_id
-                    //                  where cs.ClassId == ClassId && cs.SchoolId == SchoolId
-                    //                  select new GetEmpsubjectData
-                    //                  {
-                    //                      SubjectId = s.subject_id,
-                    //                      SubjectName = s.subject_name,
-                    //                  }).Distinct().ToList(),
+                    EmpsubjectData = _context.Subject.Where(q => q.university_id == ClassId && q.CompanyId == SchoolId && q.active == true && q.SessionId == SessionId)
+                    .Select(q => new GetEmpsubjectData
+                    {
+                        SubjectId = q.subject_id,
+                        SubjectName = q.subject_name,
+                        SubjectPriority = q.Priority,
+                    }).ToList(),
+
                 };
 
                 if (res == null || (!res.EmpWorkAllocation.Any() && !res.Sectiondata.Any()))
@@ -827,7 +826,8 @@ namespace ApiProject.Service.Employee
 
                 var attendance = await _context.Emp_Attendance.Where(a => a.SessionId == SessionId && a.CompanyId == SchoolId && a.Date >= startDate && a.Date <= endDate).ToListAsync();
 
-                var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).ToListAsync();
+                //  var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).ToListAsync();
+                var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value <= startDate).ToListAsync();
 
                 var result = employees.Select(emp =>
                 {
@@ -912,13 +912,13 @@ namespace ApiProject.Service.Employee
 
 
                 return ApiResponse<bool>.SuccessResponse(true, "Employee advance salary saved successfully");
-
             }
             catch (Exception ex)
             {
                 return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
 
         public async Task<ApiResponse<List<EmployeeSalaryModel>>> GetEmployeeSalary(int month)
         {
@@ -960,7 +960,7 @@ namespace ApiProject.Service.Employee
                     decimal ohfdays = OneDtotal / 4M;   // Leave = 0.25
                     decimal totaldays = Ptotal + Htotal + hfdays + ohfdays;
 
-                    decimal perDaySalary = (decimal)(emp.TotalSalary??0) / daysInCurrentMonth;
+                    decimal perDaySalary = (decimal)(emp.TotalSalary ?? 0) / daysInCurrentMonth;
                     decimal salaryamount = Math.Round(totaldays * perDaySalary);
 
                     var empAdv = AdvanceList.Where(a => a.EmpId == emp.Emp_Id && a.Date >= emp.JoiningDate && month >= a.Date.Value.Month).Sum(a => a.AdvanceAmt) ?? 0;
@@ -993,6 +993,7 @@ namespace ApiProject.Service.Employee
                 return ApiResponse<List<EmployeeSalaryModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
 
         public async Task<ApiResponse<bool>> AddEmployeeSalary(List<AddEmployeeSalaryModel> model)
         {
@@ -1069,6 +1070,147 @@ namespace ApiProject.Service.Employee
                 return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+
+        //public async Task<ApiResponse<PhonePePaymentResult>> CreatePhonePePaymentWithTokenAsync(int orderId, string orderNumber, double amount, string merchantTransactionId, string DeviceType)
+        //{
+        //    try
+        //    {
+        //        string tokenUrl = _configuration["PhonePe:TokenUrl"];
+        //        string client_id = _configuration["PhonePe:ClientId"];
+        //        string client_secret = _configuration["PhonePe:ClientSecret"];
+        //        string grant_type = _configuration["PhonePe:GrantType"] ?? "client_credentials";
+        //        string client_version = _configuration["PhonePe:ClientVersion"] ?? "1";
+
+        //        if (string.IsNullOrEmpty(tokenUrl) || string.IsNullOrEmpty(client_id) || string.IsNullOrEmpty(client_secret))
+        //        {
+        //            return ApiResponse<PhonePePaymentResult>.ErrorResponse("PhonePe configuration is missing.");
+        //        }
+
+        //        string postData = $"client_id={client_id}&client_version={client_version}&client_secret={client_secret}&grant_type={grant_type}";
+        //        byte[] tokenData = Encoding.UTF8.GetBytes(postData);
+
+        //        HttpWebRequest tokenRequest = (HttpWebRequest)System.Net.WebRequest.Create(tokenUrl);
+        //        tokenRequest.Method = "POST";
+        //        tokenRequest.ContentType = "application/x-www-form-urlencoded";
+        //        tokenRequest.ContentLength = tokenData.Length;
+
+        //        using (var stream = tokenRequest.GetRequestStream())
+        //        {
+        //            await stream.WriteAsync(tokenData, 0, tokenData.Length);
+        //        }
+
+        //        using var tokenResponse = (HttpWebResponse)await tokenRequest.GetResponseAsync();
+        //        string tokenResult;
+
+        //        using (var reader = new StreamReader(tokenResponse.GetResponseStream()))
+        //        {
+        //            tokenResult = await reader.ReadToEndAsync();
+        //        }
+
+        //        dynamic tokenObj = JsonConvert.DeserializeObject(tokenResult);
+        //        string accessToken = tokenObj?.access_token;
+
+
+        //        if (string.IsNullOrEmpty(accessToken))
+        //        {
+        //            throw new Exception("Token generation failed. Please verify credentials.");
+        //        }
+
+        //        string payUrl;
+        //        if (DeviceType == "WebApp")
+        //        {
+        //            //payUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay";
+        //            payUrl = "https://api.phonepe.com/apis/pg/checkout/v2/pay";
+        //        }
+        //        else if (DeviceType == "MobileApp")
+        //        {
+        //            payUrl = "https://api.phonepe.com/apis/pg/checkout/v2/sdk/order";
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("Invalid DeviceType");
+        //        }
+
+        //        if (string.IsNullOrEmpty(payUrl))
+        //        {
+        //            throw new Exception("PhonePe PayUrl is not configured.");
+        //        }
+
+        //        string frontendBaseUrl = _configuration["Frontend:BaseUrl"];
+        //        string redirectUrl = $"{frontendBaseUrl}/payment-status?merchantOrderId={orderNumber}";
+
+        //        var requestData = new
+        //        {
+        //            merchantTransactionId = merchantTransactionId,
+        //            merchantOrderId = orderNumber,
+        //            amount = (int)(amount * 100), // ₹ → Paisa
+        //            expireAfter = 1200,
+        //            metaInfo = new
+        //            {
+        //                udf1 = "test1",
+        //                udf2 = "param2",
+        //                udf3 = "test3",
+        //                udf4 = "value 4",
+        //                udf5 = "ref1"
+        //            },
+        //            paymentFlow = new
+        //            {
+        //                type = "PG_CHECKOUT",
+        //                message = "Payment request message",
+        //                merchantUrls = new
+        //                {
+        //                    redirectUrl = redirectUrl
+        //                }
+        //            }
+        //        };
+
+        //        string json = JsonConvert.SerializeObject(requestData);
+        //        byte[] payData = Encoding.UTF8.GetBytes(json);
+
+        //        HttpWebRequest payRequest = (HttpWebRequest)System.Net.WebRequest.Create(payUrl);
+        //        payRequest.Method = "POST";
+        //        payRequest.ContentType = "application/json";
+        //        payRequest.Headers.Add("Authorization", "O-Bearer " + accessToken);
+
+        //        using (var stream = payRequest.GetRequestStream())
+        //            stream.Write(payData, 0, payData.Length);
+
+        //        var payResponse = (HttpWebResponse)payRequest.GetResponse();
+        //        string payResponseString;
+
+        //        using (var reader = new StreamReader(payResponse.GetResponseStream()))
+        //            payResponseString = reader.ReadToEnd();
+
+        //        dynamic responseObj = JsonConvert.DeserializeObject(payResponseString);
+        //        var paymentResult = new PhonePePaymentResult
+        //        {
+        //            MerchantTransactionId = merchantTransactionId,
+        //            MerchantOrderNumber = orderNumber,
+        //            State = responseObj?.state,
+        //            RedirectUrl = responseObj.redirectUrl,
+        //            Token = accessToken,
+        //            AToken = responseObj.token
+        //        };
+
+        //        return ApiResponse<PhonePePaymentResult>.SuccessResponse(paymentResult, "PhonePe payment initiated successfully");
+        //    }
+        //    catch (WebException webEx)
+        //    {
+        //        // ✅ Read the actual error body from PhonePe's response for better diagnostics
+        //        string errorBody = string.Empty;
+        //        if (webEx.Response != null)
+        //        {
+        //            using var errStream = new StreamReader(webEx.Response.GetResponseStream());
+        //            errorBody = await errStream.ReadToEndAsync();
+        //        }
+        //        return ApiResponse<PhonePePaymentResult>.ErrorResponse($"PhonePe API error ({webEx.Status}): {errorBody}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<PhonePePaymentResult>.ErrorResponse($"PhonePe payment failed: {ex.Message}");
+        //    }
+        //}
 
 
     }

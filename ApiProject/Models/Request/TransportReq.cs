@@ -165,7 +165,7 @@ namespace ApiProject.Models.Request
         public string? Remark { get; set; }
         //  public Nullable<System.DateTime> Date { get; set; }
         //  public Nullable<bool> Active { get; set; }
-      //  public Nullable<double> DueFee { get; set; }
+        //  public Nullable<double> DueFee { get; set; }
     }
 
     public class UpdateOldFeeReq
@@ -177,11 +177,24 @@ namespace ApiProject.Models.Request
         public Nullable<int> VehicleId { get; set; }
         public Nullable<int> RouteId { get; set; }
         public Nullable<int> StoppageId { get; set; }
+        public Nullable<double> PayFee { get; set; }
         public Nullable<double> FeeDiscount { get; set; }
+        public Nullable<double> Cash { get; set; }
+        public Nullable<double> UPI { get; set; }
+        public Nullable<System.DateTime> PaymentDate { get; set; }
+        public string? PaymentMode { get; set; }
+        public string? Remark { get; set; }
+    }
+
+    public class LastOldFeeReq
+    {
+        public Nullable<int> TSRAId { get; set; }
+        public Nullable<int> StudentId { get; set; }
+        public Nullable<int> ClassId { get; set; }
+        public Nullable<int> SectionId { get; set; }
         public Nullable<double> PayFee { get; set; }
         public Nullable<double> Cash { get; set; }
         public Nullable<double> UPI { get; set; }
-      //  public string? FeeType { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
         public string? PaymentMode { get; set; }
         public string? Remark { get; set; }

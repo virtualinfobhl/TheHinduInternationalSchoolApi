@@ -1,30 +1,41 @@
 ﻿using ApiProject.Data;
 using ApiProject.Helper.Mapper;
 using ApiProject.Service.Current;
+using ApiProject.Service.Employee;
+using ApiProject.Service.Library;
 using ApiProject.Service.Login;
-using ApiProject.Service.School;
-using ApiProject.Service.Student;
+using ApiProject.Service.Parent_Login;
+using ApiProject.Service.Parents;
 using ApiProject.Service.Report;
-using ApiProject.Service.Transport;
+using ApiProject.Service.School;
 using ApiProject.Service.SchoolExpenses;
+using ApiProject.Service.SchoolFees;
+using ApiProject.Service.Student;
+using ApiProject.Service.StudentAttendance;
+using ApiProject.Service.Transport;
+using AutoMapper;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
 using System.Text;
-using ApiProject.Service.SchoolFees;
-using ApiProject.Service.Parent_Login;
-using ApiProject.Service.StudentAttendance;
-using ApiProject.Service.Employee;
-using ApiProject.Service.Library;
-using ApiProject.Service.Parents;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHangfire(config =>
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHangfireServer();
+
+builder.Services.AddHangfireServer();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ParentsService>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddAuthentication(options =>
@@ -54,6 +65,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.EnableSensitiveDataLogging();
     options.EnableDetailedErrors();
 });
+
+
 
 builder.Services.AddHttpContextAccessor();
 #region Service Resgister
@@ -128,9 +141,11 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseRouting();
 
 app.UseCors("AllowAngularApp");
 app.UseHttpsRedirection();
+app.UseHangfireDashboard();
 
 app.UseAuthorization();
 

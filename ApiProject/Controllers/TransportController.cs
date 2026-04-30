@@ -610,12 +610,12 @@ namespace ApiProject.Controllers
             }
         }
 
-        [HttpGet("GetTransportPaidOldFee")]
-        public async Task<IActionResult> GetTransportPaidOldFee(int StudentId)
+        [HttpGet("GetTransportOldFee")]
+        public async Task<IActionResult> GetTransportOldFee(int StudentId)
         {
             try
             {
-                var res = await _transportService.GetTransportPaidOldFee(StudentId);
+                var res = await _transportService.GetTransportOldFee(StudentId);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -638,6 +638,34 @@ namespace ApiProject.Controllers
             }
         }
 
+        [HttpPost("TransportLastOldFee")]
+        public async Task<IActionResult> TransportLastOldFee(LastOldFeeReq req)
+        {
+            try
+            {
+                var res = await _transportService.TransportLastOldFee(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("DeleteTransportReceipt")]
+        public async Task<IActionResult> DeleteTransportReceipt(int receiptId)
+        {
+            try
+            {
+                var res = await _transportService.DeleteTransportReceipt(receiptId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 

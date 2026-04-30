@@ -1876,6 +1876,87 @@
         }
       }
     },
+    "/api/Parent/GetAttendanceByMonth": {
+      "get": {
+        "tags": [
+          "Parent"
+        ],
+        "parameters": [
+          {
+            "name": "StudentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Parent/GetTestType": {
+      "get": {
+        "tags": [
+          "Parent"
+        ],
+        "parameters": [
+          {
+            "name": "StudentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Parent/GetTestwiseExamMarks": {
+      "get": {
+        "tags": [
+          "Parent"
+        ],
+        "parameters": [
+          {
+            "name": "StudentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "testtype",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Parent/GetStudentInstallmentFee": {
       "get": {
         "tags": [
@@ -1912,43 +1993,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Parent/UpdateStudentPaymentSuccessfully": {
-      "get": {
-        "tags": [
-          "Parent"
-        ],
-        "parameters": [
-          {
-            "name": "StudentId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "ReceiptId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "orderno",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -2058,6 +2102,59 @@
         "tags": [
           "Parent"
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Parent/GetPassword": {
+      "get": {
+        "tags": [
+          "Parent"
+        ],
+        "parameters": [
+          {
+            "name": "StudentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Parent/Changepassword": {
+      "post": {
+        "tags": [
+          "Parent"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetChangepasswordReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetChangepasswordReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetChangepasswordReq"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -2623,6 +2720,40 @@
       "get": {
         "tags": [
           "School"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/School/GetSession": {
+      "get": {
+        "tags": [
+          "School"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/School/ChangeSession": {
+      "get": {
+        "tags": [
+          "School"
+        ],
+        "parameters": [
+          {
+            "name": "SessionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -6714,7 +6845,7 @@
         }
       }
     },
-    "/api/Transport/GetTransportPaidOldFee": {
+    "/api/Transport/GetTransportOldFee": {
       "get": {
         "tags": [
           "Transport"
@@ -6760,6 +6891,59 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transport/TransportLastOldFee": {
+      "post": {
+        "tags": [
+          "Transport"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastOldFeeReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastOldFeeReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastOldFeeReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transport/DeleteTransportReceipt": {
+      "get": {
+        "tags": [
+          "Transport"
+        ],
+        "parameters": [
+          {
+            "name": "receiptId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -7219,9 +7403,17 @@
             "type": "string",
             "nullable": true
           },
+          "monthType": {
+            "type": "string",
+            "nullable": true
+          },
           "payFee": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -7520,6 +7712,21 @@
         },
         "additionalProperties": false
       },
+      "GetChangepasswordReq": {
+        "type": "object",
+        "properties": {
+          "parentsId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetEmployeReq": {
         "type": "object",
         "properties": {
@@ -7787,6 +7994,60 @@
           "dueReturnDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LastOldFeeReq": {
+        "type": "object",
+        "properties": {
+          "tsraId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "classId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "payFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cash": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "upi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "paymentMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -8556,12 +8817,12 @@
             "format": "int32",
             "nullable": true
           },
-          "feeDiscount": {
+          "payFee": {
             "type": "number",
             "format": "double",
             "nullable": true
           },
-          "payFee": {
+          "feeDiscount": {
             "type": "number",
             "format": "double",
             "nullable": true

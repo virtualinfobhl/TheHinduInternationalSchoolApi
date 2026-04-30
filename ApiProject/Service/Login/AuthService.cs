@@ -22,74 +22,6 @@ namespace ApiProject.Service.Login
             _configuration = configuration;
         }
 
-
-        //public async Task<int?> CheckSchoolCodeAsync(string schoolcode)
-        //{
-        //    return await _context.SchoolTbl.Where(p => p.SchoolCode == schoolcode.ToUpper() && p.Active == true).Select(p => (int?)p.SchoolId).FirstOrDefaultAsync();
-        //}
-
-
-        //public async Task<ApiResponse<LoginRes>> LoginAsync(RequestLogin request)
-        //{
-        //    try
-        //    {
-        //        var user = await _context.UserInformation.FirstOrDefaultAsync(p => p.Username == request.username && p.Active == true);
-
-        //        if (user.UserRole != "Admin")
-        //        {
-        //            return ApiResponse<LoginRes>.ErrorResponse("Access denied. Only Admin can login");
-        //        }
-
-        //        if (user == null)
-        //        {
-        //            return ApiResponse<LoginRes>.ErrorResponse("User Does Not Exist");
-        //        }
-        //        else if (user.Active == false)
-        //        {
-        //            return ApiResponse<LoginRes>.ErrorResponse("User Deactive By Super Admin");
-        //        }
-        //        else if (user.Password != request.password)
-        //        {
-        //            return ApiResponse<LoginRes>.ErrorResponse("User Password Incorrect");
-        //        }
-
-        //        var SchoolInfo = await _context.institute.FirstOrDefaultAsync(a => a.institute_id == user.CompanyId);
-        //        var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == user.CompanyId && p.Active == true);
-
-        //        var startdate = Convert.ToDateTime(sessioninfo.StartSession).ToString("dd-MMM-yyyy");
-        //        var enddate = Convert.ToDateTime(sessioninfo.EndSession).ToString("dd-MMM-yyyy");
-
-        //        var startYear = Convert.ToDateTime(sessioninfo.StartSession).Year.ToString();
-        //        var endYear = Convert.ToDateTime(sessioninfo.EndSession).Year.ToString();
-
-        //        var token = GenerateJwtToken(user, sessioninfo.Id);
-
-        //        var data = new LoginRes
-        //        {
-        //            Token = token,
-        //            SchoolName = SchoolInfo.institute_name,
-        //            SchoolAddress = SchoolInfo.address,
-        //            Pincode = SchoolInfo.pincode,
-        //            MobileNo1 = SchoolInfo.mob_num,
-        //            UserName = user.Username,
-        //            Name = user.Name,
-        //            Status = user.Status,
-        //            UserType = user.Status,
-        //            StartSession = startdate,
-        //            EndSession = enddate,
-        //            StartSessionYear = startYear,
-        //            EndSessionYear = endYear
-        //        };
-        //        return ApiResponse<LoginRes>.SuccessResponse(data, "successfully");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<LoginRes>.ErrorResponse("Something went wrong: " + ex.Message);
-        //    }
-        //}
-
-
-
         public async Task<ApiResponse<LoginRes>> LoginAsync(RequestLogin request)
         {
             try
@@ -163,7 +95,6 @@ namespace ApiProject.Service.Login
             }
         }
 
-
         private string GenerateJwtToken(UserInformation user, int sessionid)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -189,6 +120,70 @@ namespace ApiProject.Service.Login
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        //public async Task<int?> CheckSchoolCodeAsync(string schoolcode)
+        //{
+        //    return await _context.SchoolTbl.Where(p => p.SchoolCode == schoolcode.ToUpper() && p.Active == true).Select(p => (int?)p.SchoolId).FirstOrDefaultAsync();
+        //}
+
+
+        //public async Task<ApiResponse<LoginRes>> LoginAsync(RequestLogin request)
+        //{
+        //    try
+        //    {
+        //        var user = await _context.UserInformation.FirstOrDefaultAsync(p => p.Username == request.username && p.Active == true);
+
+        //        if (user.UserRole != "Admin")
+        //        {
+        //            return ApiResponse<LoginRes>.ErrorResponse("Access denied. Only Admin can login");
+        //        }
+
+        //        if (user == null)
+        //        {
+        //            return ApiResponse<LoginRes>.ErrorResponse("User Does Not Exist");
+        //        }
+        //        else if (user.Active == false)
+        //        {
+        //            return ApiResponse<LoginRes>.ErrorResponse("User Deactive By Super Admin");
+        //        }
+        //        else if (user.Password != request.password)
+        //        {
+        //            return ApiResponse<LoginRes>.ErrorResponse("User Password Incorrect");
+        //        }
+
+        //        var SchoolInfo = await _context.institute.FirstOrDefaultAsync(a => a.institute_id == user.CompanyId);
+        //        var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.CompanyId == user.CompanyId && p.Active == true);
+
+        //        var startdate = Convert.ToDateTime(sessioninfo.StartSession).ToString("dd-MMM-yyyy");
+        //        var enddate = Convert.ToDateTime(sessioninfo.EndSession).ToString("dd-MMM-yyyy");
+
+        //        var startYear = Convert.ToDateTime(sessioninfo.StartSession).Year.ToString();
+        //        var endYear = Convert.ToDateTime(sessioninfo.EndSession).Year.ToString();
+
+        //        var token = GenerateJwtToken(user, sessioninfo.Id);
+
+        //        var data = new LoginRes
+        //        {
+        //            Token = token,
+        //            SchoolName = SchoolInfo.institute_name,
+        //            SchoolAddress = SchoolInfo.address,
+        //            Pincode = SchoolInfo.pincode,
+        //            MobileNo1 = SchoolInfo.mob_num,
+        //            UserName = user.Username,
+        //            Name = user.Name,
+        //            Status = user.Status,
+        //            UserType = user.Status,
+        //            StartSession = startdate,
+        //            EndSession = enddate,
+        //            StartSessionYear = startYear,
+        //            EndSessionYear = endYear
+        //        };
+        //        return ApiResponse<LoginRes>.SuccessResponse(data, "successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<LoginRes>.ErrorResponse("Something went wrong: " + ex.Message);
+        //    }
+        //}
     }
 }
 

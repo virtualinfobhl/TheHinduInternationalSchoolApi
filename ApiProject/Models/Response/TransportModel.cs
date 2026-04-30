@@ -96,7 +96,7 @@ namespace ApiProject.Models.Response
     public class GetRouteAssignModel
     {
         public int? RAId { get; set; }
-         public int? VehicleId { get; set; }
+        public int? VehicleId { get; set; }
         public string? Vehicleno { get; set; }
         public Nullable<bool> Active { get; set; }
         public List<UpdateRouteModel> Route { get; set; }
@@ -130,7 +130,7 @@ namespace ApiProject.Models.Response
         public Nullable<double> NetTransportFee { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<bool> Active { get; set; }
-       
+
         //public int? StudentId { get; set; }
         //public int? ClassId { get; set; }
         //public int? SectionId { get; set; }
@@ -215,7 +215,7 @@ namespace ApiProject.Models.Response
         public string? PaymentMode { get; set; }
         public string? Remark { get; set; }
     }
-    
+
     public class GetFilteredStoppageTransFeeModel
     {
         public int? TransFeeId { get; set; }
@@ -281,6 +281,8 @@ namespace ApiProject.Models.Response
         public Nullable<double> Discount { get; set; }
         public Nullable<double> NetTransFee { get; set; }
         public Nullable<double> TOldDueFee { get; set; }
+        public Nullable<double> TotalPayFee { get; set; }
+        public Nullable<double> TotalDueFee { get; set; }
         public List<TraansportReceiptList> TransportReceipt { get; set; }
         public List<TInstallmentList> TransInatallment { get; set; }
 
@@ -295,6 +297,7 @@ namespace ApiProject.Models.Response
         public Nullable<double> TotalFee { get; set; }
         public Nullable<double> FeeDiscount { get; set; }
         public Nullable<double> PayFee { get; set; }
+        public Nullable<double> DueFee { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
         public string? Remark { get; set; }
 
@@ -313,8 +316,10 @@ namespace ApiProject.Models.Response
         public Nullable<double> Discount { get; set; }
         public List<TInstallmentList> TransInatallment { get; set; }
         public List<TraansportReceiptListMoldel> TransportReceiptlist { get; set; }
-        public Nullable<double> NetTransFee { get; set; }
-        public Nullable<double> TOldDueFee { get; set; }
+        public Nullable<double> TotalPaidFee { get; set; }
+        public Nullable<double> TotalPayDiscountFee { get; set; }
+        public Nullable<double> TotalDueFee { get; set; }
+        public Nullable<double> OldDueFee { get; set; }
     }
 
     public class GetTransPaidoldFeeModel
@@ -333,12 +338,11 @@ namespace ApiProject.Models.Response
         public string? Routename { get; set; }
         public int? StoppageId { get; set; }
         public string? Stoppagename { get; set; }
-        public Nullable<double> TransportFee { get; set; }
-        public Nullable<double> Discount { get; set; }
-        public Nullable<double> NetTransFee { get; set; }
-        public Nullable<double> TOldDueFee { get; set; }
-        //  public Nullable<double> PaidOldfee { get; set; }
-        public List<TraansportReceiptList> PaidOldfee { get; set; }
+        public Nullable<double> TOldDueeFee { get; set; }
+        public Nullable<double> PaidOldfee { get; set; }
+        public Nullable<double> OldDueFee { get; set; }
+
+        // public List<TraansportReceiptList> PaidOldfee { get; set; }
     }
 
 

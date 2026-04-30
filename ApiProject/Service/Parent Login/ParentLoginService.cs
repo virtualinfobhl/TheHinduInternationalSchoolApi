@@ -78,6 +78,7 @@ namespace ApiProject.Service.Parent_Login
                     ParentMobile = user.FatherMobileNo,
                     StudentId = studentDetail?.StuId,
                     StudentName = studentDetail?.stu_name,
+                    UserType = "Parent",
                    // Class = studentDetail?.ClassName,
                     SrNo = studentDetail?.registration_no,
                     StartSession = startdate,

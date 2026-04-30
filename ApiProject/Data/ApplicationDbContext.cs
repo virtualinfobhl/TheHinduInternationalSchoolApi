@@ -27,6 +27,7 @@ namespace ApiProject.Data
         public DbSet<SchlExpenseTbl> SchlExpenseTbl { get; set; }
         public DbSet<VStudentRenew> VStudentRenew { get; set; }
         public DbSet<StudentRenewView> StudentRenewView { get; set; }
+        public DbSet<ExamView> ExamView { get; set; }
         public DbSet<TestExamTbl> TestExamTbl { get; set; }
         public DbSet<ParentsTbl> ParentsTbl { get; set; }
         public DbSet<ClassSubjectExamTbl> ClassSubjectExamTbl { get; set; }

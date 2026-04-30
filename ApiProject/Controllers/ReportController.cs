@@ -258,7 +258,7 @@ namespace ApiProject.Controllers
             try
             {
                 var res1 = await _reportService.CourseCompleted(res);
-                return Ok(res);
+                return Ok(res1);
             }
             catch (Exception ex)
             {

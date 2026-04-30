@@ -16,9 +16,18 @@ namespace ApiProject.Service.Parents
         Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee();
         // student installment fee for api
         Task<ApiResponse<StudentFeePaymentResult>> AddStudentInstallmentFee(AddStudentinstallReq Req);
-        Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId,string orderno);
+       Task<ApiResponse<bool>> UpdateStudentPaymentSuccessfully(int StudentId, int ReceiptId);
 
-       // Task<ApiResponse<bool>> StudentFeePaymentStstus(PaymentStatusModel req);
+        // Task<ApiResponse<bool>> StudentFeePaymentStstus(PaymentStatusModel req);
+
+
+        // STUDENT ATTENDNCE   details start 
+        Task<ApiResponse<List<GetAttendanceModel>>> GetAttendanceByMonth(int studentid, int month);
+
+        // STUDENT test wise exam details   section start 
+        Task<ApiResponse<List<GetTestTypeModel>>> GetTestType(int studentid);
+        Task<ApiResponse<List<GetTestwiseExamModel>>> GetTestwiseExamMarks(int studentid, string testtype);
+
 
         // transport fee for api 
         Task<ApiResponse<StudentTransportPaymentResult>> AddStudentTransportFee(AddTransportMonthFeeReq req);
@@ -27,5 +36,11 @@ namespace ApiProject.Service.Parents
         Task<ApiResponse<GetStudentFeeModel>> GetStudentFee();
         Task<ApiResponse<GetStuFeeInstallmentModel>> GetStudentFeeInstallment();
         Task<ApiResponse<GetStuDueInstallmentModel>> GetStudentDueInstallment();
+
+        // change password 
+        Task<ApiResponse<GetPasswordModel>> GetPassword(int Studentid);
+
+        Task<ApiResponse<bool>> Changepassword(GetChangepasswordReq Req);
+
     }
 }

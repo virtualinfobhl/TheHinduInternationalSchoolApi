@@ -314,6 +314,49 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentDetailsLisModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
+
+        /*  public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee1(List<HalfYearlyModel> res)
+          {
+              using var transaction = await _context.Database.BeginTransactionAsync();
+              {
+                  try
+                  {
+                      int SchoolId = _loginUser.SchoolId;
+                      int UserId = _loginUser.UserId;
+                      int SessionId = _loginUser.SessionId;
+
+                      if (res == null || !res.Any())
+                      {
+                          return ApiResponse<bool>.ErrorResponse("No students selected");
+                      }
+
+                      foreach (var item in res)
+                      {
+                          var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
+
+                          if (result != null)
+                          {
+                              result.NDHalfYearly = true;
+                              result.UpdateNDdate = DateTime.Now;
+                          }
+                      }
+
+
+                      await _context.SaveChangesAsync();
+
+                      await transaction.CommitAsync();
+                      return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
+
+                  }
+                  catch (Exception ex)
+                  {
+                      await transaction.RollbackAsync();
+                      return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
+                  }
+              }
+          }
+  */
+
         public async Task<ApiResponse<PagedResult<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req)
         {
             try
@@ -425,50 +468,6 @@ namespace ApiProject.Service.Report
                 return ApiResponse<PagedResult<GetStudentFeeDetailsModel>>.ErrorResponse("Something went wrong: " + ex.Message);
             }
         }
-        /*  public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee1(List<HalfYearlyModel> res)
-          {
-              using var transaction = await _context.Database.BeginTransactionAsync();
-              {
-                  try
-                  {
-                      int SchoolId = _loginUser.SchoolId;
-                      int UserId = _loginUser.UserId;
-                      int SessionId = _loginUser.SessionId;
-
-                      if (res == null || !res.Any())
-                      {
-                          return ApiResponse<bool>.ErrorResponse("No students selected");
-                      }
-
-                      foreach (var item in res)
-                      {
-                          var result = _context.Student_Renew.FirstOrDefault(s => s.StuId == item.StudentId && s.CompanyId == SchoolId && s.SessionId == SessionId);
-
-                          if (result != null)
-                          {
-                              result.NDHalfYearly = true;
-                              result.UpdateNDdate = DateTime.Now;
-                          }
-                      }
-
-
-                      await _context.SaveChangesAsync();
-
-                      await transaction.CommitAsync();
-                      return ApiResponse<bool>.SuccessResponse(true, "Half Yearly No Duee Fee saved successfully");
-
-                  }
-                  catch (Exception ex)
-                  {
-                      await transaction.RollbackAsync();
-                      return ApiResponse<bool>.ErrorResponse("Something went wrong: " + ex.Message);
-                  }
-              }
-          }
-  */
-
-
-
 
         //Updated 04-04-2025
 
@@ -551,8 +550,6 @@ namespace ApiProject.Service.Report
             }
         }
 
-
-
         /*        public async Task<ApiResponse<bool>> SaveYearlyNoDueFee1(List<YearlyModel> res)
                 {
                     using var transaction = await _context.Database.BeginTransactionAsync();
@@ -593,7 +590,6 @@ namespace ApiProject.Service.Report
                     }
                 }
         */
-
 
         //Updated 04-04-2025
 
@@ -1032,7 +1028,6 @@ namespace ApiProject.Service.Report
             }
         }
 
-       
         public async Task<ApiResponse<PagedResult<GetStudentTCLisModel>>> GetStudentTCReport(GetStudentIDCardReq req)
         {
             try
@@ -1418,6 +1413,9 @@ namespace ApiProject.Service.Report
                     FatherName = c.father_name,
                     FatherMobileNo = c.father_mobile,
                     MotherName = c.mother_name,
+                    Completed = c.completed,
+                    ClassId = c.ClassId,
+                    SectionId = c.SectionId,
 
                     ClassName = _context.University.Where(a => a.university_id == c.ClassId && a.CompanyId == SchoolId).Select(a => a.university_name).FirstOrDefault(),
                     SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
@@ -1450,10 +1448,10 @@ namespace ApiProject.Service.Report
 
                 if (res == null || !res.Any())
                 {
-                    return ApiResponse<List<StudentMarksheetModel>>.ErrorResponse("No student fee found data");
+                    return ApiResponse<List<StudentMarksheetModel>>.ErrorResponse("No student marksheet data found data");
                 }
 
-                return ApiResponse<List<StudentMarksheetModel>>.SuccessResponse(res, "Fetch student fee data successfully");
+                return ApiResponse<List<StudentMarksheetModel>>.SuccessResponse(res, "Fetch student marksheet data successfully");
             }
             catch (Exception ex)
             {
@@ -1918,6 +1916,19 @@ namespace ApiProject.Service.Report
 
     }
 }
+    
+
+
+
+
+
+
+
+
+
+
+       
+
 
 
 //public async Task<ApiResponse<List<GetStudentFeeListModel>>> GetStudentFeeListDetail(GetStudentReq req)

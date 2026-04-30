@@ -197,10 +197,13 @@ namespace ApiProject.Models.Response
         public string? FatherName { get; set; }
         public string? MotherName { get; set; }
         public string? FatherMobileNo { get; set; }
+        public int? ClassId { get; set; }
+        public int? SectionId { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
         public Nullable<double> TotalMatks { get; set; }
         public Nullable<double> MaxTotal { get; set; }
+        public Nullable<bool> Completed { get; set; }
     }
 
 

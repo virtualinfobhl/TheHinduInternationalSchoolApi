@@ -33,28 +33,6 @@ namespace ApiProject.Service.School
 
 
         // *************** school dashboard
-        //public async Task<ApiResponse<getdashboardmodel>> GetDashboard()
-        //{
-        //    try
-        //    {
-        //        int SchoolId = _loginUser.SchoolId;
-        //        int SessionId = _loginUser.SessionId;
-
-        //        var res = new getdashboardmodel
-        //        {
-        //            TotalStudent = _context.Student_Renew.Where(c => c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true && c.Dropout == false).Count(),
-        //            TotalClasss = _context.University.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
-        //            TotolUser = _context.UserInformation.Where(c => c.CompanyId == SchoolId && c.Active == true).Count(),
-        //            TotalEmployee = _context.EmployeeRegister.Where(c => c.CompanyId == SchoolId && c.Active == true).Count()
-        //        };
-        //        return ApiResponse<getdashboardmodel>.SuccessResponse(res, "Fetch user list successfully");
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ApiResponse<getdashboardmodel>.ErrorResponse("Error: " + ex.Message);
-        //    }
-        //}
         public async Task<ApiResponse<getdashboardmodel>> GetDashboard()
         {
             try
@@ -78,6 +56,54 @@ namespace ApiProject.Service.School
             catch (Exception ex)
             {
                 return ApiResponse<getdashboardmodel>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        // GetSession
+        public async Task<ApiResponse<List<SessionInfo>>> GetSession()
+        {
+            try
+            {
+                var Entities = await _context.SessionInfo.OrderBy(c => c.StartSession).ToListAsync();
+                var data = _mapper.Map<List<SessionInfo>>(Entities);
+                return ApiResponse<List<SessionInfo>>.SuccessResponse(data, "Session list fetched");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<SessionInfo>>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse<SessionResponseModel>> ChangeSession(int SessionId)
+        {
+            try
+            {
+                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(s => s.Id == SessionId);
+
+                if (sessioninfo == null)
+                {
+                    return ApiResponse<SessionResponseModel>.ErrorResponse("Session not found");
+                }
+
+                DateTime start = Convert.ToDateTime(sessioninfo.StartSession);
+                DateTime end = Convert.ToDateTime(sessioninfo.EndSession);
+
+                var result = new SessionResponseModel
+                {
+                    startyear = start.Year,
+                    endyear = end.Year,
+                    startdate = start.ToString("dd-MMM-yyyy"),
+                    enddate = end.ToString("dd-MMM-yyyy"),
+                    startdatey = start.ToString("yy"),
+                    enddatey = end.ToString("yy"),
+                    sessionId = sessioninfo.Id
+                };
+
+                return ApiResponse<SessionResponseModel>.SuccessResponse(result, "Session changed successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<SessionResponseModel>.ErrorResponse("Error: " + ex.Message);
             }
         }
 

@@ -1189,6 +1189,59 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ParentController",
+    "Method": "Changepassword",
+    "RelativePath": "api/Parent/Changepassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Response.GetChangepasswordReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ParentController",
+    "Method": "GetAttendanceByMonth",
+    "RelativePath": "api/Parent/GetAttendanceByMonth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ParentController",
+    "Method": "GetPassword",
+    "RelativePath": "api/Parent/GetPassword",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ParentController",
     "Method": "GetStudentDueInstallment",
     "RelativePath": "api/Parent/GetStudentDueInstallment",
     "HttpMethod": "GET",
@@ -1265,18 +1318,24 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ParentController",
-    "Method": "GetTransportInstallFee",
-    "RelativePath": "api/Parent/GetTransportInstallFee",
+    "Method": "GetTestType",
+    "RelativePath": "api/Parent/GetTestType",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "ApiProject.Controllers.ParentController",
-    "Method": "UpdateStudentPaymentSuccessfully",
-    "RelativePath": "api/Parent/UpdateStudentPaymentSuccessfully",
+    "Method": "GetTestwiseExamMarks",
+    "RelativePath": "api/Parent/GetTestwiseExamMarks",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1287,16 +1346,21 @@
         "IsRequired": false
       },
       {
-        "Name": "ReceiptId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "orderno",
+        "Name": "testtype",
         "Type": "System.String",
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ParentController",
+    "Method": "GetTransportInstallFee",
+    "RelativePath": "api/Parent/GetTransportInstallFee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -1610,6 +1674,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.SchoolController",
+    "Method": "ChangeSession",
+    "RelativePath": "api/School/ChangeSession",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "SessionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolController",
     "Method": "changestatusclass",
     "RelativePath": "api/School/changestatusclass",
     "HttpMethod": "GET",
@@ -1752,6 +1832,16 @@
     "ContainingType": "ApiProject.Controllers.SchoolController",
     "Method": "getsection",
     "RelativePath": "api/School/getsection",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolController",
+    "Method": "GetSession",
+    "RelativePath": "api/School/GetSession",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -3788,6 +3878,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "DeleteTransportReceipt",
+    "RelativePath": "api/Transport/DeleteTransportReceipt",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "receiptId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
     "Method": "GetDriverList",
     "RelativePath": "api/Transport/GetDriverList",
     "HttpMethod": "GET",
@@ -3956,8 +4062,8 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.TransportController",
-    "Method": "GetTransportPaidOldFee",
-    "RelativePath": "api/Transport/GetTransportPaidOldFee",
+    "Method": "GetTransportOldFee",
+    "RelativePath": "api/Transport/GetTransportOldFee",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -4038,6 +4144,22 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Request.TransportFeeReportReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.TransportController",
+    "Method": "TransportLastOldFee",
+    "RelativePath": "api/Transport/TransportLastOldFee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.LastOldFeeReq",
         "IsRequired": true
       }
     ],

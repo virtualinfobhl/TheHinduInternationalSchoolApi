@@ -81,6 +81,7 @@ namespace ApiProject.Service.Transport
                     MobileNo = req.Mobileno,
                     Address = req.Address,
                     Active = true,
+                    Date = DateTime.Now,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
@@ -199,6 +200,7 @@ namespace ApiProject.Service.Transport
                     VihecleNo = req.VehicleNo,
                     DriverId = req.DriverId,
                     Active = true,
+                    Date = DateTime.Now,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
@@ -313,6 +315,7 @@ namespace ApiProject.Service.Transport
                     RouteId = RouteId,
                     Route = req.RouteName,
                     Active = true,
+                    Date = DateTime.Now,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
@@ -415,6 +418,8 @@ namespace ApiProject.Service.Transport
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
+
+
                 var existing = await _context.TransStoppageTbl.FirstOrDefaultAsync(p => p.Stoppage == req.Stoppage && p.CompanyId == SchoolId);
                 if (existing != null)
                 {
@@ -428,6 +433,7 @@ namespace ApiProject.Service.Transport
                     Stoppage = req.Stoppage,
                     RouteId = req.RouteId,
                     Active = true,
+                    Date = DateTime.Now,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     CompanyId = SchoolId,
@@ -689,17 +695,36 @@ namespace ApiProject.Service.Transport
                 int SchoolId = _loginUser.SchoolId;
                 int SessionId = _loginUser.SessionId;
 
+                //var RouteAssignEntity = await _context.RouteAssignTbl.Where(c => c.CompanyId == SchoolId)
+                //    .GroupBy(c => new { c.RAId, c.BusId, c.Active })
+                //    .Select(g => new GetRouteAssignModel
+                //    {
+                //        VehicleId = g.Key.BusId,
+                //        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == g.Key.BusId && a.CompanyId == SchoolId && a.Active == true).Select(a => a.VihecleNo).FirstOrDefault(),
+                //        Active = g.Key.Active,
+                //        Route = g.Select(r => new UpdateRouteModel
+                //        {
+                //            RouteId = r.RouteId,
+                //            RouteName = _context.TransRouteTbl.Where(a => a.RouteId == r.RouteId).Select(a => a.Route).FirstOrDefault(),
+                //        }).ToList()
+                //    }).ToListAsync();
                 var RouteAssignEntity = await _context.RouteAssignTbl.Where(c => c.CompanyId == SchoolId)
-                    .GroupBy(c => new { c.RAId, c.BusId, c.Active })
+                    .GroupBy(c => new { c.BusId, c.Active })
                     .Select(g => new GetRouteAssignModel
                     {
                         VehicleId = g.Key.BusId,
-                        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == g.Key.BusId && a.CompanyId == SchoolId && a.Active == true).Select(a => a.VihecleNo).FirstOrDefault(),
+                        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == g.Key.BusId && a.CompanyId == SchoolId && a.Active == true)
+                        .Select(a => a.VihecleNo).FirstOrDefault(),
+
                         Active = g.Key.Active,
+
                         Route = g.Select(r => new UpdateRouteModel
                         {
                             RouteId = r.RouteId,
-                            RouteName = _context.TransRouteTbl.Where(a => a.RouteId == r.RouteId).Select(a => a.Route).FirstOrDefault(),
+                            RouteName = _context.TransRouteTbl
+                                .Where(a => a.RouteId == r.RouteId)
+                                .Select(a => a.Route)
+                                .FirstOrDefault(),
                         }).ToList()
                     }).ToListAsync();
 
@@ -710,6 +735,7 @@ namespace ApiProject.Service.Transport
                 return ApiResponse<List<GetRouteAssignModel>>.ErrorResponse("Error: " + ex.Message);
             }
         }
+
         public async Task<ApiResponse<bool>> AddRouteAssign(AddRouteAssignRequest model)
         {
             try
@@ -1306,6 +1332,8 @@ namespace ApiProject.Service.Transport
                         RouteId = c.RouteId,
                         StoppageId = c.StoppageId,
                         Date = c.Date,
+                        TOldDueFee = c.OldDueFee,
+                        LastDueFee = c.TDueFee,
 
                         StudentName = _context.student_admission.Where(a => a.stu_id == c.stu_id).Select(a => a.stu_name).FirstOrDefault(),
 
@@ -1348,7 +1376,6 @@ namespace ApiProject.Service.Transport
                             Date = a.Date,
                             PaymentMode = a.PaymentMode,
                             Remark = a.Remark,
-
 
                         }).ToList(),
                     }).ToListAsync();
@@ -1529,7 +1556,26 @@ namespace ApiProject.Service.Transport
             try
             {
                 int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
+
+                // ===== GET START DATE =====
+                var startDate = await _context.StuRouteAssignTbl.Where(c => (req.StudentId == -1 ? true : c.stu_id == req.StudentId) && c.CompanyId == SchoolId && c.SessionId == SessionId).
+                    Select(c => c.Date).FirstOrDefaultAsync();
+
+                DateTime start = startDate ?? DateTime.Now;
+                DateTime current = DateTime.Now;
+
+                // ===== MONTH + YEAR RANGE =====   
+                var validMonths = new List<string>();
+
+                for (DateTime date = new DateTime(start.Year, start.Month, 1);
+                     date <= new DateTime(current.Year, current.Month, 1);
+                     date = date.AddMonths(1))
+                {
+                    validMonths.Add(date.ToString("MMMM"));
+                    //   validMonths.Add(date.ToString("MMMM yyyy"));
+                }
 
                 var query = from c in _context.StuRouteAssignTbl
                             join cls in _context.University
@@ -1541,10 +1587,13 @@ namespace ApiProject.Service.Transport
                             from sec in secJoin.DefaultIfEmpty()
 
 
-                           // vehicleId , routeId, stoppageId
+                                // vehicleId , routeId, stoppageId
                             where c.SessionId == SessionId
-                                  && c.CompanyId == SchoolId
-                                  && c.Active == true
+                                              && c.CompanyId == SchoolId
+                                              && c.Active == true
+                            orderby _context.student_admission.
+                            Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId).
+                            Select(a => a.stu_name).FirstOrDefault()
 
                             select new TransportFeereportModel
                             {
@@ -1557,37 +1606,59 @@ namespace ApiProject.Service.Transport
                                 Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
                                 Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SessionId).Select(a => a.collegename).FirstOrDefault(),
 
+                                VehicleId = c.BusId,
                                 Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
-                                VehicleId = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.BusId).FirstOrDefault(),
+                                // VehicleId = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.BusId).FirstOrDefault(),
 
+                                RouteId = c.RouteId,
                                 Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
-                                RouteId = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.RouteId).FirstOrDefault(),
+                                //  RouteId = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.RouteId).FirstOrDefault(),
 
+                                StoppageId = c.StoppageId,
                                 Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
-                                StoppageId = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.StoppageId).FirstOrDefault(),
+                                //   StoppageId = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.StoppageId).FirstOrDefault(),
+
                                 TransportFee = c.TransportFee,
                                 Discount = c.Discount,
                                 NetTransFee = c.NetTranSFee,
                                 TOldDueFee = c.OldDueFee,
                                 Date = c.Date,
 
-                                TransportReceipt = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId)
-                                .Select(a => new TraansportReceiptList
+                                TotalPayFee = c.TPayFee,
+                                //TotalPayFee = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId
+                                //&& a.Active == true).Sum(a => a.PayFee),
+
+                                TransportReceipt = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId
+                                && a.Active == true).Select(a => new TraansportReceiptList
                                 {
                                     PayFee = a.PayFee,
                                     FeeDiscount = a.Paydiscount,
                                     FeeType = a.FeeType,
                                 }).ToList(),
 
-                                TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId /* && validMonths.Contains(a.MonthName)*/
-                                ).Select(a => new TInstallmentList
-                                {
-                                    InstallmentFee = a.InstallFee,
-                                    InstallmentNo = a.InstallmentNo,
-                                    DueFee = a.DueFee,
-                                    MonthName = a.MonthName,
+                                // ===== TOTAL DUE =====
+                                TotalDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName))
+                                .Sum(a => a.DueFee) ?? 0,
 
-                                }).ToList(),
+                                // ===== INSTALLMENT LIST =====
+                                TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId && a.Active == true
+                                  && validMonths.Contains(a.MonthName)).Select(a => new TInstallmentList
+                                  {
+                                      InstallmentFee = a.InstallFee,
+                                      InstallmentNo = a.InstallmentNo,
+                                      MonthName = a.MonthName,
+                                      DueFee = a.DueFee,
+                                  }).ToList(),
+
+                                //TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId && a.Active == true /* && validMonths.Contains(a.MonthName)*/
+                                //).Select(a => new TInstallmentList
+                                //{
+                                //    InstallmentFee = a.InstallFee,
+                                //    InstallmentNo = a.InstallmentNo,
+                                //    DueFee = a.DueFee,
+                                //    MonthName = a.MonthName,
+
+                                //}).ToList(),
                             };
 
                 // 🔎 Filters
@@ -1768,7 +1839,7 @@ namespace ApiProject.Service.Transport
             }
         }
 
-        public async Task<ApiResponse<bool>> AddStudentTransportFee(StudentTransportFeeReq req)
+        public async Task<ApiResponse<StudentFeesRes>> AddStudentTransportFee(StudentTransportFeeReq req)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             {
@@ -1904,23 +1975,28 @@ namespace ApiProject.Service.Transport
 
                             }
                         }
+
+                        var studentDetail = new StudentFeesRes
+                        {
+                            receiptId = Receipt.NewPaymentId,
+                        };
+
                         await transaction.CommitAsync();
-                        return ApiResponse<bool>.SuccessResponse(true, "Student Route assign & installments saved successfully");
+                        return ApiResponse<StudentFeesRes>.SuccessResponse(studentDetail, "Student Route assign & installments saved successfully");
                     }
 
                     // Agar PayFee <= 0 hu
-                    return ApiResponse<bool>.ErrorResponse("Invalid request: PayFee must be greater than 0");
+                    return ApiResponse<StudentFeesRes>.ErrorResponse("Invalid request: PayFee must be greater than 0");
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
+                    return ApiResponse<StudentFeesRes>.ErrorResponse("Error : " + ex.Message);
                 }
             }
         }
 
         public async Task<ApiResponse<List<GetTransportFeeDetailModel>>> GetTransportFeeDetails(int StudentId)
-
         {
             try
             {
@@ -1929,8 +2005,8 @@ namespace ApiProject.Service.Transport
                 int SessionId = _loginUser.SessionId;
 
                 // ==== 1. GET Start Month FROM StuRouteAssignTbl ====
-                var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId
-                && c.SessionId == SessionId).Select(c => c.Date).FirstOrDefaultAsync();
+                var startDate = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true)
+                    .Select(c => c.Date).FirstOrDefaultAsync();
 
                 int startMonthNo = startDate?.Month ?? 1;           // route date ka month number (int)
                 string startMonth = new DateTime(DateTime.Now.Year, startMonthNo, 1).ToString("MMMM");
@@ -1940,32 +2016,32 @@ namespace ApiProject.Service.Transport
 
                 var validMonths = Enumerable.Range(startMonthNo, currentMonthNo - startMonthNo + 1).Select(m => new DateTime(DateTime.Now.Year, m, 1).ToString("MMMM")).ToList();
 
-                var res = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId)
+                var res = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true)
                     .Select(c => new GetTransportFeeDetailModel
                     {
-
-                        StudentName = _context.StudentRenewView.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId)
+                        StudentName = _context.StudentRenewView.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId && a.RActive == true)
                         .Select(a => new StudentDetailModel
                         {
                             Studentname = a.stu_name,
                             SRNo = a.registration_no,
                             Fathername = a.father_name,
                             Mothername = a.mother_name,
-                            MobileNo = a.mother_mobile,
+                            MobileNo = a.father_mobile,
                             RollNo = a.RollNo,
                         }).ToList(),
 
                         TransportFee = c.TransportFee,
                         Discount = c.Discount,
+                        OldDueFee = c.OldDueFee,
 
-                        Classname = _context.University.Where(a => a.university_id == c.university_id).Select(a => a.university_name).FirstOrDefault(),
-                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId).Select(a => a.collegename).FirstOrDefault(),
-                        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
-                        Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
-                        Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
+                        Classname = _context.University.Where(a => a.university_id == c.university_id && c.Active == true).Select(a => a.university_name).FirstOrDefault(),
+                        Sectionname = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId && a.active == true).Select(a => a.collegename).FirstOrDefault(),
+                        Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId && a.Active == true).Select(a => a.VihecleNo).FirstOrDefault(),
+                        Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId && a.CompanyId == SchoolId).Select(a => a.Route).FirstOrDefault(),
+                        Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId && a.CompanyId == SchoolId).Select(a => a.Stoppage).FirstOrDefault(),
 
-                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName))
-                        .Select(a => new TInstallmentList
+                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName) &&
+                        a.SessionId == SessionId && a.Active == true).Select(a => new TInstallmentList
                         {
                             InstallmentFee = a.InstallFee,
                             InstallmentNo = a.InstallmentNo,
@@ -1974,23 +2050,26 @@ namespace ApiProject.Service.Transport
 
                         }).ToList(),
 
-                        TransportReceiptlist = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId)
-                        .Select(a => new TraansportReceiptListMoldel
-                        {
-                            TReceiptId = a.NewPaymentId,
-                            ReceiptNo = a.ReceiptNo,
-                            MonthName = a.MonthName,
-                            FeeType = a.FeeType,
-                            TotalFee = a.NetTransFee,
-                            PayFee = a.PayFee,
-                            FeeDiscount = a.Discount,
-                            PaymentDate = a.Date,
-                            Remark = a.Remark,
-                        }).Distinct().ToList(),
+                        TransportReceiptlist = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.SessionId == SessionId &&
+                            a.Active == true).Select(a => new TraansportReceiptListMoldel
+                            {
+                                TReceiptId = a.NewPaymentId,
+                                ReceiptNo = a.ReceiptNo,
+                                MonthName = a.MonthName,
+                                FeeType = a.FeeType,
+                                TotalFee = a.NetTransFee,
+                                PayFee = a.PayFee,
+                                DueFee = a.DueFee,
+                                FeeDiscount = a.Paydiscount,
+                                PaymentDate = a.Date,
+                                Remark = a.Remark,
 
+                            }).Distinct().ToList(),
 
-                        //  NetTransFee = c.NetTransportFee,
-                        //  TOldDueFee = c.TOldDueFee,
+                        TotalPaidFee = _context.NewTransportFeeTbl.Where(p => p.StuRouteAssignId == c.StuRouteAssignId && p.stu_id == c.stu_id && p.CompanyId == SchoolId
+                            && p.SessionId == SessionId && p.Active == true && p.FeeType == "TransportFee").Sum(p => p.PayFee),
+                        TotalPayDiscountFee = _context.NewTransportFeeTbl.Where(p => p.StuRouteAssignId == c.StuRouteAssignId && p.stu_id == c.stu_id && p.CompanyId == SchoolId
+                            && p.SessionId == SessionId && p.Active == true && p.FeeType == "TransportFee").Sum(p => p.Paydiscount),
 
 
                     }).ToListAsync();
@@ -2003,7 +2082,7 @@ namespace ApiProject.Service.Transport
             }
         }
 
-        public async Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportPaidOldFee(int StudentId)
+        public async Task<ApiResponse<List<GetTransPaidoldFeeModel>>> GetTransportOldFee(int StudentId)
         {
             try
             {
@@ -2030,15 +2109,19 @@ namespace ApiProject.Service.Transport
                         Vehicleno = _context.TransBusTbl.Where(a => a.BusId == c.BusId).Select(a => a.VihecleNo).FirstOrDefault(),
                         Routename = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
                         Stoppagename = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
-                        PaidOldfee = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.FeeType == "TransportOldFee")
-                        .Select(a => new TraansportReceiptList
-                        {
-                            PayFee = a.PayFee,
-                            FeeDiscount = a.Discount,
-                            FeeType = a.FeeType,
-                        }).ToList(),
-                        TransportFee = c.TransportFee,
-                        Discount = c.Discount,
+                        PaidOldfee = c.OldPayFee,
+                        OldDueFee = c.OldTransDueFee,
+                        TOldDueeFee = c.OldDueFee,
+
+                        //PaidOldfee = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.FeeType == "TransportOldFee")
+                        //.Select(a => new TraansportReceiptList
+                        //{
+                        //    PayFee = a.PayFee,
+                        //    FeeDiscount = a.Discount,
+                        //    FeeType = a.FeeType,
+                        //}).ToList(),
+                        //TransportFee = c.TransportFee,
+                        //Discount = c.Discount,
                         //   NetTransFee = c.NetTransportFee,
                         //  TOldDueFee = c.TOldDueFee,
 
@@ -2052,7 +2135,173 @@ namespace ApiProject.Service.Transport
             }
         }
 
-        public async Task<ApiResponse<bool>> UpdateTransportOldFee(UpdateOldFeeReq req)
+        public async Task<ApiResponse<StudentFeesRes>> UpdateTransportOldFee(UpdateOldFeeReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
+
+                if (req.PayFee > 0)
+                {
+
+                    NewTransportFeeTbl Receipt = new NewTransportFeeTbl();
+
+                    // Safe TReceiptId calculation
+                    Receipt.NewPaymentId = (_context.NewTransportFeeTbl.Any() ? _context.NewTransportFeeTbl.Max(r => r.NewPaymentId) : 0) + 1;
+                    institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+                    string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+                    // Generate ReceiptNo
+                    var lastReceipt = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.NewPaymentId).FirstOrDefault();
+                    string ReceiptCode = "";
+                    var Id = 0;
+                    if (lastReceipt != null)
+                    {
+                        var Receipts = lastReceipt.ReceiptNo.Split('/');
+                        ReceiptCode = Receipts[1];
+
+                        Id = int.Parse(ReceiptCode);
+                        Id++;
+                    }
+                    else
+                    {
+                        Id = 1;
+                    }
+                    ReceiptCode = threeLetters + "/" + Id;
+
+                    int NewOrderNo = 1;
+
+                    var LastOrderNo = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).Select(s => s.OrderNo).ToList()
+                        .Where(x => !string.IsNullOrEmpty(x)).Select(x => int.Parse(x)).OrderByDescending(x => x).FirstOrDefault();
+
+                    if (LastOrderNo > 0)
+                    {
+                        NewOrderNo = LastOrderNo + 1;
+                    }
+
+
+                    // Assign properties
+                    Receipt.StuRouteAssignId = req.TSRAId;
+                    Receipt.ReceiptNo = ReceiptCode;
+                    Receipt.stu_id = req.StudentId;
+                    Receipt.university_id = req.ClassId;
+                    Receipt.SectionId = req.SectionId;
+                    Receipt.BusId = req.VehicleId;
+                    Receipt.RouteId = req.RouteId;
+                    Receipt.StoppageId = req.StoppageId;
+                    Receipt.PayFee = req.PayFee;
+                    Receipt.Paydiscount = req.FeeDiscount;
+                    Receipt.Cash = req.Cash;
+                    Receipt.UPI = req.UPI;
+                    Receipt.Date = req.PaymentDate;
+                    Receipt.PaymentMode = req.PaymentMode;
+                    Receipt.Remark = req.Remark;
+                    Receipt.FeeType = "TransportOldFee";
+                    Receipt.Active = true;
+                    Receipt.OrderNo = NewOrderNo.ToString();
+                    Receipt.OrderStatus = "Succcessfully";
+                    Receipt.TransactionId = "";
+                    Receipt.ReceiptType = "Offline";
+                    Receipt.Date = DateTime.Now;
+                    Receipt.CreateDate = DateTime.Now;
+                    Receipt.UpdateDate = DateTime.Now;
+                    Receipt.CompanyId = SchoolId;
+                    Receipt.Userid = UserId;
+                    Receipt.SessionId = SessionId;
+
+                    _context.NewTransportFeeTbl.Add(Receipt);
+                    await _context.SaveChangesAsync();
+
+                    var studentDetail = new StudentFeesRes
+                    {
+                        receiptId = Receipt.NewPaymentId,
+                    };
+
+                    //var sturouteasign = _context.StuRouteAssignTbl.FirstOrDefault(s => s.StudentId == req.StudentId && s.SessionId == SessionId && s.SchoolId == SchoolId);
+                    //sturouteasign.LastDueFee = req.DueFee;
+                    //await _context.SaveChangesAsync();
+
+                    return ApiResponse<StudentFeesRes>.SuccessResponse(studentDetail, "Student Transport  Pay Old Fee saved successfully");
+                }
+
+                // Agar PayFee <= 0 hua
+                return ApiResponse<StudentFeesRes>.ErrorResponse("Invalid request: PayFee must be greater than 0");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<StudentFeesRes>.ErrorResponse("Error : " + ex.Message);
+            }
+        }
+        //public async Task<ApiResponse<bool>> DeleteStudentReceipt(int receiptId)
+        //{
+        //    try
+        //    {
+        //        int SchoolId = _loginUser.SchoolId;
+        //        int UserId = _loginUser.UserId;
+        //        int SessionId = _loginUser.SessionId;
+
+        //        var StuReceipt = await _context.M_FeeDetail.FirstOrDefaultAsync(c => c.FDId == receiptId && c.CompanyId == SchoolId);
+
+        //        if (StuReceipt == null)
+        //        {
+        //            return ApiResponse<bool>.ErrorResponse("User not found");
+        //        }
+
+        //        StuReceipt.Active = StuReceipt.Active == null ? true : !StuReceipt.Active;
+        //        await _context.SaveChangesAsync();
+
+        //        var sturenew = _context.Student_Renew.Where(c => c.StuId == StuReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).FirstOrDefault();
+
+        //        if (sturenew != null)
+        //        {
+        //            sturenew.stu_fee -= StuReceipt.PayFees;
+        //            sturenew.due_fee += StuReceipt.PayFees;
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        var installments = _context.fee_installment.Where(c => c.stu_id == StuReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).ToList();
+
+        //        if (installments != null && installments.Count > 0)
+        //        {
+        //            decimal remainingFee = (decimal)sturenew.stu_fee;
+
+        //            for (int i = 0; i < installments.Count; i++)
+        //            {
+        //                var installmentId = installments[i].Id;
+
+        //                fee_installment feeInstall = _context.fee_installment.Where(p => p.stu_id == StuReceipt.stu_id && p.Id == installmentId).FirstOrDefault();
+
+        //                if (feeInstall != null)
+        //                {
+        //                    decimal deduction = Math.Min(remainingFee, Convert.ToDecimal((double)installments[i].FAmount));
+        //                    feeInstall.AdmissionPayfee = StuReceipt.AdmissionPayfee;
+        //                    feeInstall.AFeeDiscount = StuReceipt.AFeeDiscount;
+        //                    // feeInstall.total_fee = result.total_fee;
+        //                    feeInstall.due_fee = Convert.ToDouble((installments[i].FAmount ?? 0) - (double)deduction);
+        //                    feeInstall.FAmount = installments[i].FAmount;
+        //                    feeInstall.Installment = installments[i].Installment;
+        //                    feeInstall.IntallmentID = installments[i].IntallmentID;
+
+        //                    feeInstall.paid_date = DateTime.Now;
+        //                    feeInstall.Date = DateTime.Now;
+
+        //                    remainingFee -= deduction;
+
+        //                    await _context.SaveChangesAsync();
+        //                }
+        //            }
+        //        }
+
+        //        return ApiResponse<bool>.SuccessResponse(true, "Delete Student Fee Receipt successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+        //    }
+        //}
+
+        public async Task<ApiResponse<StudentFeesRes>> TransportLastOldFee(LastOldFeeReq req)
         {
             try
             {
@@ -2064,30 +2313,43 @@ namespace ApiProject.Service.Transport
                 {
                     NewTransportFeeTbl Receipt = new NewTransportFeeTbl();
 
-                    // Safe TReceiptId calculation
                     Receipt.NewPaymentId = (_context.NewTransportFeeTbl.Any() ? _context.NewTransportFeeTbl.Max(r => r.NewPaymentId) : 0) + 1;
-
+                    institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+                    string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
                     // Generate ReceiptNo
-                    var existingReceipt = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.NewPaymentId).FirstOrDefault();
-
-                    if (existingReceipt == null || !int.TryParse(existingReceipt.ReceiptNo, out int lastNo))
+                    var lastReceipt = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId).OrderByDescending(s => s.NewPaymentId).FirstOrDefault();
+                    string ReceiptCode = "";
+                    var Id = 0;
+                    if (lastReceipt != null)
                     {
-                        Receipt.ReceiptNo = "1";
+                        var Receipts = lastReceipt.ReceiptNo.Split('/');
+                        ReceiptCode = Receipts[1];
+
+                        Id = int.Parse(ReceiptCode);
+                        Id++;
                     }
                     else
                     {
-                        Receipt.ReceiptNo = (lastNo + 1).ToString();
+                        Id = 1;
+                    }
+                    ReceiptCode = threeLetters + "/" + Id;
+
+                    int NewOrderNo = 1;
+
+                    var LastOrderNo = _context.NewTransportFeeTbl.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).Select(s => s.OrderNo).ToList()
+                        .Where(x => !string.IsNullOrEmpty(x)).Select(x => int.Parse(x)).OrderByDescending(x => x).FirstOrDefault();
+
+                    if (LastOrderNo > 0)
+                    {
+                        NewOrderNo = LastOrderNo + 1;
                     }
 
                     // Assign properties
                     Receipt.StuRouteAssignId = req.TSRAId;
+                    Receipt.ReceiptNo = ReceiptCode;
                     Receipt.stu_id = req.StudentId;
                     Receipt.university_id = req.ClassId;
                     Receipt.SectionId = req.SectionId;
-                    Receipt.BusId = req.VehicleId;
-                    Receipt.RouteId = req.RouteId;
-                    Receipt.StoppageId = req.StoppageId;
-                    Receipt.Discount = req.FeeDiscount;
                     Receipt.PayFee = req.PayFee;
                     Receipt.Cash = req.Cash;
                     Receipt.UPI = req.UPI;
@@ -2096,6 +2358,10 @@ namespace ApiProject.Service.Transport
                     Receipt.Remark = req.Remark;
                     Receipt.FeeType = "TransportOldFee";
                     Receipt.Active = true;
+                    Receipt.OrderNo = NewOrderNo.ToString();
+                    Receipt.OrderStatus = "Succcessfully";
+                    Receipt.TransactionId = "";
+                    Receipt.ReceiptType = "Offline";
                     Receipt.Date = DateTime.Now;
                     Receipt.CreateDate = DateTime.Now;
                     Receipt.UpdateDate = DateTime.Now;
@@ -2106,25 +2372,115 @@ namespace ApiProject.Service.Transport
                     _context.NewTransportFeeTbl.Add(Receipt);
                     await _context.SaveChangesAsync();
 
+                    var sturouteasign = _context.StuRouteAssignTbl.Where(s => s.stu_id == req.StudentId && s.university_id == req.ClassId && s.SessionId == SessionId && s.CompanyId == SchoolId).FirstOrDefault();
+                    sturouteasign.OldPayFee += req.PayFee;
+                    sturouteasign.OldTransDueFee = sturouteasign.OldTransDueFee - req.PayFee;
+                    sturouteasign.OldDueFee = sturouteasign.OldDueFee - req.PayFee;
+                    await _context.SaveChangesAsync();
 
-                    //var sturouteasign = _context.StuRouteAssignTbl.FirstOrDefault(s => s.StudentId == req.StudentId && s.SessionId == SessionId && s.SchoolId == SchoolId);
-                    //sturouteasign.LastDueFee = req.DueFee;
-                    //await _context.SaveChangesAsync();
+                    var studentDetail = new StudentFeesRes
+                    {
+                        receiptId = Receipt.NewPaymentId,
+                    };
 
-                    return ApiResponse<bool>.SuccessResponse(true, "Student Transport  Pay Old Fee saved successfully");
+                    return ApiResponse<StudentFeesRes>.SuccessResponse(studentDetail, "Student Transport  Pay Old Fee saved successfully");
                 }
 
-                // Agar PayFee <= 0 hua
-                return ApiResponse<bool>.ErrorResponse("Invalid request: PayFee must be greater than 0");
+                return ApiResponse<StudentFeesRes>.ErrorResponse("Invalid request: PayFee must be greater than 0");
             }
             catch (Exception ex)
             {
-                return ApiResponse<bool>.ErrorResponse("Error : " + ex.Message);
+                return ApiResponse<StudentFeesRes>.ErrorResponse("Error : " + ex.Message);
             }
         }
 
-        #region GetEmployee
+        public async Task<ApiResponse<bool>> DeleteTransportReceipt(int receiptId)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int UserId = _loginUser.UserId;
+                int SessionId = _loginUser.SessionId;
 
+                var transReceipt = await _context.NewTransportFeeTbl.FirstOrDefaultAsync(c => c.NewPaymentId == receiptId && c.CompanyId == SchoolId);
+
+                if (transReceipt == null)
+                {
+                    return ApiResponse<bool>.ErrorResponse("User not found");
+                }
+
+                transReceipt.Active = transReceipt.Active == null ? true : !transReceipt.Active;
+                await _context.SaveChangesAsync();
+
+                if (transReceipt.FeeType == "TransportFee")
+                {
+                    var transrenew = _context.StuRouteAssignTbl.Where(c => c.StuRouteAssignId == transReceipt.StuRouteAssignId && c.stu_id == transReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).FirstOrDefault();
+
+                    if (transrenew != null)
+                    {
+                        transrenew.TTransportFee -= transReceipt.NetTransFee;
+                        transrenew.TPayFee -= transReceipt.PayFee;
+                        transrenew.TPayDiscount -= transReceipt.Paydiscount;
+                        transrenew.TDueFee -= transReceipt.DueFee;
+                        await _context.SaveChangesAsync();
+                    }
+
+                    var months = transReceipt.MonthName.Split(',').Select(m => m.Trim()).ToList();
+
+                    //   Total receipt amount
+                    double totalAmount = (transReceipt.PayFee ?? 0) + (transReceipt.Paydiscount ?? 0);
+
+                    //   Per month amount
+                    double perMonthAmount = months.Count > 0 ? totalAmount / months.Count : 0;
+
+                    // =====================     Get Installments
+                    var installmentList = _context.TransInstallmentTbl.Where(x => x.StuId == transReceipt.stu_id && x.ClassId == transReceipt.university_id &&
+                            x.SessionId == SessionId && x.CompanyId == SchoolId).ToList();
+
+                    // =====================     Add amount back month-wise 
+                    for (int i = 0; i < months.Count; i++)
+                    {
+                        string monthName = months[i].Trim();
+
+                        for (int j = 0; j < installmentList.Count; j++)
+                        {
+                            if (installmentList[j].MonthName == monthName)
+                            {
+                                if (installmentList[j].DueFee == null)
+                                    installmentList[j].DueFee = 0;
+
+                                installmentList[j].DueFee += perMonthAmount;
+                                break;
+                            }
+                        }
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    var sturenew = _context.StuRouteAssignTbl.Where(c => c.StuRouteAssignId == transReceipt.StuRouteAssignId && c.stu_id == transReceipt.stu_id && c.SessionId == SessionId && c.CompanyId == SchoolId).FirstOrDefault();
+
+                    if (sturenew != null)
+                    {
+                        sturenew.OldPayFee -= transReceipt.PayFee;
+                        sturenew.OldDueFee += transReceipt.PayFee;
+                        sturenew.OldTransDueFee += transReceipt.PayFee;
+
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                return ApiResponse<bool>.SuccessResponse(true, "Delete Transport  Receipt successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.ErrorResponse("Error: " + ex.Message);
+            }
+        }
+
+
+
+        #region GetEmployee
         #endregion GetEmployee
 
     }
