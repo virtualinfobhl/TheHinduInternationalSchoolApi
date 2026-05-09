@@ -250,8 +250,8 @@ namespace ApiProject.Service.Parents
             }
         }
 
-        // student test exam detail  start
 
+        // student test exam detail  start
         public async Task<ApiResponse<List<GetTestTypeModel>>> GetTestType(int studentid)
         {
             try
@@ -370,7 +370,7 @@ namespace ApiProject.Service.Parents
                         sectionId = a.SectionId,
                         sectionName = _context.collegeinfo.Where(s => s.collegeid == a.SectionId && s.CompanyId == SchoolId).Select(s => s.collegename).FirstOrDefault(),
                         AdmissionPayfee = a.AdmissionPayfee,
-                        TotalFee = a.total_fee,
+                        TotalFee = a.Rtotal_fee,
                         PaidFee = a.Rstu_fee,
                         Duefee = a.Rdue_fee,
                         DueInstallment = _context.fee_installment.Where(p => p.stu_id == a.StuId && p.university_id == a.ClassId && p.SessionId == SessionId && p.CompanyId == SchoolId)
@@ -508,7 +508,7 @@ namespace ApiProject.Service.Parents
                     // =========================================== SAVE INSTALLMENT RECORD
                     var fee = new M_FeeDetail
                     {
-                        FDId = FDId,
+                        //  FDId = FDId,
                         stu_id = req.StudentId,
                         ClassId = req.ClassId,
                         OrderNo = NewOrderNo.ToString(),
@@ -789,7 +789,6 @@ namespace ApiProject.Service.Parents
             }
         }
 
-
         public async Task<object> WebhookStatus()
         {
             try
@@ -1006,7 +1005,6 @@ namespace ApiProject.Service.Parents
 
 
 
-
         // ===================== Transport Payment Gateway code for api  ====================== // 
 
         public async Task<ApiResponse<GetTransportInstallFeeModel>> GetTransportInstallFee()
@@ -1115,7 +1113,7 @@ namespace ApiProject.Service.Parents
                     int SessionId = _loginUser.SessionId;
                     int UserId = _loginUser.UserId;
 
-                    var TransFee = await _context.NewTransportFeeTbl.Where(p => p.MonthName == req.MonthName && p.stu_id == req.StudentId && p.university_id == req.ClassId &&  p.Active == true).FirstOrDefaultAsync();
+                    var TransFee = await _context.NewTransportFeeTbl.Where(p => p.MonthName == req.MonthName && p.stu_id == req.StudentId && p.university_id == req.ClassId && p.Active == true).FirstOrDefaultAsync();
                     if (TransFee != null)
                     {
                         return ApiResponse<StudentTransportPaymentResult>.ErrorResponse("month name already avaliale");

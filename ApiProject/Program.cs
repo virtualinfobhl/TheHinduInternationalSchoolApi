@@ -29,8 +29,6 @@ builder.Services.AddHangfire(config =>
 
 builder.Services.AddHangfireServer();
 
-builder.Services.AddHangfireServer();
-
 // Add services to the container.
 
 builder.Services.AddControllers();

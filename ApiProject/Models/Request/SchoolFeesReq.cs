@@ -8,6 +8,9 @@ namespace ApiProject.Models.Request
         [Required]
         public int? ClassId { get; set; }
         public double? admission_fee { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
         public double? tution_fee { get; set; }
         public double? exam_fee { get; set; }
         public double? Develoment_fee { get; set; }
@@ -20,6 +23,9 @@ namespace ApiProject.Models.Request
         [Required]
         public int? ClassId { get; set; }
         public double? admission_fee { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
         public double? tution_fee { get; set; }
         public double? exam_fee { get; set; }
         public double? Develoment_fee { get; set; }
@@ -94,6 +100,29 @@ namespace ApiProject.Models.Request
         public string? Remark { get; set; }
         public double Cash { get; set; }
         public double Upi { get; set; }
+    }
+
+    public class OtherFeesReq
+    {
+        [Required]
+        public int? ClassId { get; set; }
+
+        [Required]
+        public int? StudentId { get; set; }
+        [Required]
+        public string? FeeType { get; set; }
+
+        [Required]
+        public double? PayFees { get; set; }
+
+        [Required]
+        public string? PaymentMode { get; set; }
+
+        [Required]
+        public DateTime? PaymentDate { get; set; }
+
+        public string? Remark { get; set; }
+      
     }
 
     public class FeesCollectionReq

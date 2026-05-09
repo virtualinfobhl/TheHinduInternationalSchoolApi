@@ -20,28 +20,22 @@ namespace ApiProject.Service.SchoolFees
         // fees collection
 
         Task<ApiResponse<List<ClassIdByStudentRes>>> getclassbystudent(int classid);
-
         Task<ApiResponse<StudentFeesDetailRes>> getstudentfeesdetail(StudentFeesDetailReq req);
-
         Task<ApiResponse<StudentFeesRes>> insertstudentfees(StudentFeesReq req);
-
         Task<ApiResponse<StudentFeesReceiptRes>> getfeereceipt(int receiptId);
+
+        //  Other  fees collection 
+        Task<ApiResponse<StudentFeesRes>> InsertOtherFees(OtherFeesReq req);
 
         //report
         Task<ApiResponse<DailyCollectionReportModel>> GetDailyFeeCollection(FeesCollectionReq req);
-    //    Task<ApiResponse<PagedResult<ClassFeesListRes>>> getclassfees(ClassFeesFilterReq req);
+        //    Task<ApiResponse<PagedResult<ClassFeesListRes>>> getclassfees(ClassFeesFilterReq req);
         Task<ApiResponse<ClassWiseTotalFeeModel>> GetClasswiseTotalFee(int ClassId);
         Task<ApiResponse<PagedResult<ClassFeesInstaListRes>>> getclassfeesInstallment(ClassFeesFilterReq req);
 
-
         //  STUDEMNT FEE REPORT 
-
         Task<ApiResponse<bool>> UpdateStudentReceipt(ReceiptupdateModel req);
-
         Task<ApiResponse<bool>> DeleteStudentReceipt(int receiptId);
-
-
-
 
 
 

@@ -25,6 +25,22 @@ namespace ApiProject.Controllers
         }
 
         // ********* Employee Details Start 
+        [HttpGet("GetEmployeeNo")]
+        public async Task<IActionResult> GetEmployeeNo()
+        {
+            try
+            {
+                var res = await _employeeService.GetEmployeeNo();
+
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return ErrorRepsponse(ex.Message);
+            }
+        }
+
+
         [HttpGet("GetEmployeeLit")]
         public async Task<IActionResult> GetEmployeeLit()
         {

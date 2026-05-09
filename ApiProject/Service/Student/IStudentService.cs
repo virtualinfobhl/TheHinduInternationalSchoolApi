@@ -9,6 +9,8 @@ namespace ApiProject.Service.Student
     public interface IStudentService
     {
         // student details
+
+        Task<ApiResponse<GetAdmissionNoModel>> GetAdmissionNo();
         Task<List<ClassResModel>> GetClass();
         Task<ApiResponse<FeendSectionByClasssModel>> GetClassByFeendSection(int ClassId);
         Task<ClassFeeResModel> GetClassByFee(int classid);

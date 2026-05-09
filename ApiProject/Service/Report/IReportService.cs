@@ -15,7 +15,7 @@ namespace ApiProject.Service.Report
         Task<ApiResponse<PagedResult<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req);
         //    Task<ApiResponse<List<GetStudentDetailsLisModel>>> GetStudentIDCardReport(GetStudentIDCardReq req);
         Task<ApiResponse<PagedResult<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req);
-        //   Task<ApiResponse<List<GetStudentFeeDetailsModel>>> GetStudentFeeReport(getstudentDellistReq req);     
+        Task<ApiResponse<PagedResult<GetOtherFeeDetailsModel>>> GetOtherFeeReport(getstudentDellistReq req);
         Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res);
         Task<ApiResponse<bool>> SaveYearlyNoDueFee(List<YearlyModel> res);          
         Task<ApiResponse<PagedResult<GetStudentNoDueeFeeModel>>> GetStudentNoDuesFeeReport(GetStudentReq req);

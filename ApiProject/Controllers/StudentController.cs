@@ -1,18 +1,10 @@
 ﻿using ApiProject.Models;
 using ApiProject.Models.Request;
 using ApiProject.Models.Response;
-using ApiProject.Service.SchoolFees;
 using ApiProject.Service.Student;
-using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.DataProtection.Internal;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
 using OfficeOpenXml;
-using System.Text.Json;
 
 //using Newtonsoft.Json;
 
@@ -34,6 +26,22 @@ namespace ApiProject.Controllers
         }
 
         // student details
+
+        [HttpGet("GetAdmissionNo")]
+        public async Task<IActionResult> GetAdmissionNo()
+        {
+            try
+            {
+                var res = await _studentService.GetAdmissionNo();
+
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return ErrorRepsponse(ex.Message);
+            }
+        }
+
         [HttpGet("getclass")]
         public async Task<IActionResult> getclass()
         {

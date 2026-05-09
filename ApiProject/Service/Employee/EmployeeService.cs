@@ -55,6 +55,45 @@ namespace ApiProject.Service.Employee
         }
 
         // Employee Details Start
+        public async Task<ApiResponse<GetEmployeeNoModel>> GetEmployeeNo()
+        {
+            int SchoolId = _loginUser.SchoolId;
+            int SessionId = _loginUser.SessionId;
+
+            var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(s => s.Id == SessionId);
+
+            DateTime date = DateTime.Parse(sessioninfo.StartSession);
+            string startyears = date.ToString("yy");
+
+
+            //  StudentCode generate (Always)
+            string EmployeeCode = "";
+            institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+
+            EmployeeRegister LastCode = _context.EmployeeRegister.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.Emp_Id).FirstOrDefault();
+
+            string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+            int year = int.Parse(startyears) % 100;
+            int NewId = 1;
+
+            if (LastCode != null)
+            {
+                var parts = LastCode.Emp_Code.Split('/');
+                if (parts.Length == 2 && int.TryParse(parts[1], out int lastId))
+                {
+                    NewId = lastId + 1;
+                }
+            }
+
+            EmployeeCode = threeLetters + "-" + year + "/" + NewId;
+            var result = new GetEmployeeNoModel
+            {
+                EmpAdmissionNo = EmployeeCode
+            };
+
+            return ApiResponse<GetEmployeeNoModel>.SuccessResponse(result, "Fetch successfully Admission No.");
+        }
+
         public async Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit()
         {
             try
@@ -475,7 +514,7 @@ namespace ApiProject.Service.Employee
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.EmployeeRegister.Where(c => (req.EmpId == -1 ? true : c.Emp_Id == req.EmpId) && c.Active == true && c.CompanyId == SchoolId
+                var res = await _context.EmployeeRegister.Where(c => (req.EmpId == -1 ? true : c.Emp_Id == req.EmpId) /*&& c.Active == true*/ && c.CompanyId == SchoolId
                  ).Select(c => new GetEmployeeListModel
                  {
                      Emp_Id = c.Emp_Id,
@@ -820,14 +859,19 @@ namespace ApiProject.Service.Employee
                 int SessionId = _loginUser.SessionId;
 
                 var year = DateTime.Now.Year;
+
                 var startDate = new DateTime(year, Month, 1);
-                var monthName = new DateTime(DateTime.Now.Year, Month, 1).ToString("MMMM");
                 var endDate = startDate.AddMonths(1).AddDays(-1);
+
+                var currentyear = DateTime.UtcNow.Year;
+
+                var selectedDate = new DateTime(currentyear, Month, 1);
+
+                var monthName = new DateTime(DateTime.Now.Year, Month, 1).ToString("MMMM");
 
                 var attendance = await _context.Emp_Attendance.Where(a => a.SessionId == SessionId && a.CompanyId == SchoolId && a.Date >= startDate && a.Date <= endDate).ToListAsync();
 
-                //  var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value.Month <= Month).ToListAsync();
-                var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.Value <= startDate).ToListAsync();
+                var employees = await _context.EmployeeRegister.Where(a => a.Active == true && a.CompanyId == SchoolId && a.JoiningDate.HasValue && a.JoiningDate.Value <= endDate).ToListAsync();
 
                 var result = employees.Select(emp =>
                 {

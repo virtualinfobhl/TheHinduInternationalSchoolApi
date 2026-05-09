@@ -17,7 +17,6 @@ namespace ApiProject.Data
         public DbSet<collegeinfo> collegeinfo { get; set; }
         public DbSet<ClassSectionTbl> ClassSectionTbl { get; set; }
         public DbSet<fees> fees { get; set; }
-
         public DbSet<student_admission> student_admission { get; set; }
         public DbSet<Student_Renew> Student_Renew { get; set; }
         public DbSet<InstallmentTbl> InstallmentTbl { get; set; }

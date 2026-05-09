@@ -469,6 +469,98 @@ namespace ApiProject.Service.Report
             }
         }
 
+        public async Task<ApiResponse<PagedResult<GetOtherFeeDetailsModel>>> GetOtherFeeReport(getstudentDellistReq req)
+        {
+            try
+            {
+                int SchoolId = _loginUser.SchoolId;
+                int SessionId = _loginUser.SessionId;
+
+                var query = from student in _context.StudentRenewView
+                            join cls in _context.University
+                                on student.ClassId equals cls.university_id into classJoin
+                            from cls in classJoin.DefaultIfEmpty()
+
+                            join sec in _context.collegeinfo
+                                on student.SectionId equals sec.collegeid into secJoin
+                            from sec in secJoin.DefaultIfEmpty()
+
+                            where student.SessionId == SessionId
+                                  // && student.stu_id == req.studentId
+                                  && student.CompanyId == SchoolId
+                                  && student.RActive == true
+                                  && student.StuDetail == true
+                                  && student.StuFees == true
+                                  && student.Dropout == false
+
+                            select new GetOtherFeeDetailsModel
+                            {
+                                stu_id = student.stu_id,
+                                stu_name = student.stu_name,
+                                FatherName = student.FatherName,
+                                SrNo = student.registration_no,
+                                ClassId = student.ClassId,
+                                SectionId = student.SectionId,
+                                ClassName = cls != null ? cls.university_name : "",
+                                SectionName = sec != null ? sec.collegename : "",
+                                BoardFee = _context.fees.Where(a => a.university_id == req.ClassId && a.CompanyId == SchoolId && a.active == true && a.SessionId == SessionId).Select(a => a.BoardFee).FirstOrDefault(),
+                                SportsFee = _context.fees.Where(a => a.university_id == req.ClassId && a.CompanyId == SchoolId && a.active == true && a.SessionId == SessionId).Select(a => a.SportFee).FirstOrDefault(),
+                                RoboticsFee = _context.fees.Where(a => a.university_id == req.ClassId && a.CompanyId == SchoolId && a.active == true && a.SessionId == SessionId).Select(a => a.RoboticsFee).FirstOrDefault(),
+
+                                BoardFeereceipt = _context.M_FeeDetail.Where(p => p.stu_id == student.StuId && p.ClassId == student.ClassId && p.SessionId == SessionId
+                                && p.CompanyId == SchoolId && p.Active == true && p.Status == "BoardFee").Select(p => p.PayFees).FirstOrDefault(),
+                                SportsFeereceipt = _context.M_FeeDetail.Where(p => p.stu_id == student.StuId && p.ClassId == student.ClassId && p.SessionId == SessionId
+                               && p.CompanyId == SchoolId && p.Active == true && p.Status == "SportsFee").Select(p => p.PayFees).FirstOrDefault(),
+                                RoboticsFeereceipt = _context.M_FeeDetail.Where(p => p.stu_id == student.StuId && p.ClassId == student.ClassId && p.SessionId == SessionId
+                                  && p.CompanyId == SchoolId && p.Active == true && p.Status == "RoboticsFee").Select(p => p.PayFees).FirstOrDefault(),
+
+                            };
+
+                //if (req.ClassId.HasValue)
+                //    query = query.Where(p => p.ClassId == req.ClassId);
+                if (req.ClassId.HasValue && req.ClassId.Value > 0)
+                {
+                    query = query.Where(p => p.ClassId == req.ClassId.Value);
+                }
+                if (req.SectionId.HasValue && req.SectionId.Value > 0)
+                {
+                    query = query.Where(p => p.SectionId == req.SectionId.Value);
+                }
+                if (req.studentId.HasValue && req.studentId.Value > 0)
+                {
+                    query = query.Where(p => p.stu_id == req.studentId.Value);
+                }
+
+                int totalrecords = await query.CountAsync();
+
+                int PageNumber = req.PageNumber > 0 ? req.PageNumber : 1;
+                int PageSize = req.PageSize > 0 ? req.PageSize : 50;
+
+                var data = await query
+                    .OrderByDescending(p => p.stu_id)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
+
+
+                var pagedResult = new PagedResult<GetOtherFeeDetailsModel>
+                {
+                    Data = data,
+                    TotalRecords = totalrecords,
+                    PageNumber = PageNumber,
+                    PageSize = PageSize,
+                    TotalPages = totalpages
+                };
+                return ApiResponse<PagedResult<GetOtherFeeDetailsModel>>.SuccessResponse(pagedResult, "Fetch student fee data successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResult<GetOtherFeeDetailsModel>>.ErrorResponse("Something went wrong: " + ex.Message);
+            }
+        }
+
         //Updated 04-04-2025
 
         public async Task<ApiResponse<bool>> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res)
@@ -636,7 +728,7 @@ namespace ApiProject.Service.Report
 
                     if (renew != null)
                     {
-                        renew.NDYearly = true; 
+                        renew.NDYearly = true;
                         renew.UpdateNDdate = DateTime.Now;
                     }
                     else
@@ -839,7 +931,7 @@ namespace ApiProject.Service.Report
                     query = query.Where(p => p.SectionId == req.SectionId.Value);
                 }
 
-              
+
 
                 int totalrecords = await query.CountAsync();
 
@@ -854,7 +946,7 @@ namespace ApiProject.Service.Report
 
                 int totalpages = (int)Math.Ceiling((double)totalrecords / PageSize);
 
-               
+
                 var pagedResult = new PagedResult<ClasswiseInstallModel>
                 {
                     Data = data,
@@ -988,7 +1080,7 @@ namespace ApiProject.Service.Report
 
                         SectionName = _context.collegeinfo.Where(a => a.collegeid == c.SectionId && a.CompanyId == SchoolId).Select(a => a.collegename).FirstOrDefault(),
 
-                        TransportDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.StuId && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName))
+                        TransportDueFee = _context.TransInstallmentTbl.Where(a => a.StuId == c.StuId && a.CompanyId == SchoolId && a.SessionId == SessionId && validMonths.Contains(a.MonthName))
                                 .Sum(a => a.DueFee) + _context.StuRouteAssignTbl.Where(a => a.stu_id == c.StuId && a.CompanyId == SchoolId && a.SessionId == SessionId)
                                  .Sum(a => a.OldDueFee),
 
@@ -1916,7 +2008,6 @@ namespace ApiProject.Service.Report
 
     }
 }
-    
 
 
 
@@ -1927,7 +2018,8 @@ namespace ApiProject.Service.Report
 
 
 
-       
+
+
 
 
 

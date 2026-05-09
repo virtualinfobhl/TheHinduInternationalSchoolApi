@@ -3,6 +3,10 @@ using ApiProject.Models.Request;
 
 namespace ApiProject.Models.Response
 {
+    public class GetAdmissionNoModel
+    {
+        public string? AdmissionNo { get; set; }
+    }
     public class ClassResModel
     {
         public int? ClassId { get; set; }

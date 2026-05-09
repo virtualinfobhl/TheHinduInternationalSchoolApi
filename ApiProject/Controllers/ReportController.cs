@@ -85,6 +85,22 @@ namespace ApiProject.Controllers
             }
         }
 
+        // student other fee 
+        [HttpPost("GetOtherFeeReport")]
+        public async Task<IActionResult> GetOtherFeeReport(getstudentDellistReq req)
+        {
+            try
+            {
+                var res = await _reportService.GetOtherFeeReport(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return BadRequest(res);
+            }
+        }
+
         [HttpPost("SaveHalfYearlyNoDueFee")]
         public async Task<IActionResult> SaveHalfYearlyNoDueFee(List<HalfYearlyModel> res)
         {

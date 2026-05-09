@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing.Template;
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Writers;
 using System.ComponentModel.Design;
@@ -900,8 +901,9 @@ namespace ApiProject.Service.Transport
                 int SessionId = _loginUser.SessionId;
 
                 var query = from c in _context.StuRouteAssignTbl.DefaultIfEmpty()
-                            where c.CompanyId == SchoolId
-
+                            where c.CompanyId == SchoolId && c.SessionId == SessionId && c.Active == true
+                              && _context.Student_Renew.Any(u => u.StuId == c.stu_id && u.CompanyId == SchoolId && u.Active == true && u.Dropout == false && u.SessionId == SessionId)
+                             && _context.University.Any(u => u.university_id == c.university_id && u.CompanyId == SchoolId && u.Active == true)
 
                             select new GetStuRouteAssignModel
                             {
@@ -1216,7 +1218,9 @@ namespace ApiProject.Service.Transport
                     }).ToListAsync();
 
 
-                var StudentDatas = await _context.StuRouteAssignTbl.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId)
+                var StudentDatas = await _context.StuRouteAssignTbl.Where(a => a.university_id == ClassId && a.CompanyId == SchoolId && a.SessionId == SessionId
+                  && _context.Student_Renew.Any(u => u.StuId == a.stu_id && u.CompanyId == SchoolId && u.Active == true && u.Dropout == false && u.SessionId == SessionId)
+                && _context.University.Any(u => u.university_id == a.university_id && u.CompanyId == SchoolId && u.Active == true))
                     .Select(a => new TStudentDataList
                     {
                         StudentId = a.stu_id,
@@ -1245,7 +1249,9 @@ namespace ApiProject.Service.Transport
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.StuRouteAssignTbl.Where(a => a.university_id == ClassId && a.SectionId == SectionId && a.CompanyId == SchoolId)
+                var res = await _context.StuRouteAssignTbl.Where(a => a.university_id == ClassId && a.SectionId == SectionId && a.CompanyId == SchoolId && a.SessionId == SessionId
+                  && _context.Student_Renew.Any(u => u.StuId == a.stu_id && u.CompanyId == SchoolId && u.Active == true && u.Dropout == false && u.SessionId == SessionId)
+                && _context.University.Any(u => u.university_id == a.university_id && u.CompanyId == SchoolId && u.Active == true))
                     .Select(a => new TStudentDataList
                     {
 
@@ -1318,7 +1324,7 @@ namespace ApiProject.Service.Transport
                 }
 
                 // ===== MAIN DATA =====
-                var res = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.Active == true)
+                var res = await _context.StuRouteAssignTbl.Where(c => c.stu_id == StudentId && c.CompanyId == SchoolId && c.Active == true && c.SessionId == SessionId)
                     .Select(c => new TransStudentDetailModel
                     {
                         TSRAId = c.StuRouteAssignId,
@@ -1364,7 +1370,7 @@ namespace ApiProject.Service.Transport
                           }).ToList(),
 
                         // ===== RECEIPT LIST =====
-                        TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.Active == true).Select(a => new TransReceiptList
+                        TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.Active == true && a.SessionId == SessionId).Select(a => new TransReceiptList
                         {
                             TReceiptId = a.NewPaymentId,
                             ReceiptNo = a.ReceiptNo,
@@ -1823,7 +1829,7 @@ namespace ApiProject.Service.Transport
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var res = await _context.TransportFeeTbl.Where(a => a.StopageId == StoppageId && a.CompanyId == SchoolId)
+                var res = await _context.TransportFeeTbl.Where(a => a.StopageId == StoppageId && a.CompanyId == SchoolId && a.SessionId == SessionId)
                     .Select(a => new GetFilteredStoppageTransFeeModel
                     {
                         TransFeeId = a.TransFeeId,

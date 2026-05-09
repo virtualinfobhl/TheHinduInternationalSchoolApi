@@ -12,6 +12,9 @@ namespace ApiProject.Data
         public Nullable<int> course_id { get; set; }
         public Nullable<int> YearID { get; set; }
         public Nullable<double> admission_fee { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
         public Nullable<double> tution_fee { get; set; }
         public Nullable<double> exam_fee { get; set; }
         public Nullable<double> Develoment_fee { get; set; }

@@ -437,6 +437,16 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.EmolpyeeController",
+    "Method": "GetEmployeeNo",
+    "RelativePath": "api/Emolpyee/GetEmployeeNo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.EmolpyeeController",
     "Method": "GetEmployeeSalary",
     "RelativePath": "api/Emolpyee/GetEmployeeSalary",
     "HttpMethod": "GET",
@@ -1365,6 +1375,27 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.ParentController",
+    "Method": "UpdateStudentPaymentSuccessfully",
+    "RelativePath": "api/Parent/UpdateStudentPaymentSuccessfully",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReceiptId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ParentController",
     "Method": "UpdateTransportPaymentSuccessfully",
     "RelativePath": "api/Parent/UpdateTransportPaymentSuccessfully",
     "HttpMethod": "GET",
@@ -1443,6 +1474,22 @@
       {
         "Name": "req",
         "Type": "ApiProject.Models.Request.BulkStudentReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.ReportController",
+    "Method": "GetOtherFeeReport",
+    "RelativePath": "api/Report/GetOtherFeeReport",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.getstudentDellistReq",
         "IsRequired": true
       }
     ],
@@ -2337,6 +2384,22 @@
   },
   {
     "ContainingType": "ApiProject.Controllers.SchoolFeesController",
+    "Method": "InsertOtherFees",
+    "RelativePath": "api/SchoolFees/InsertOtherFees",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ApiProject.Models.Request.OtherFeesReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.SchoolFeesController",
     "Method": "insertstudentfees",
     "RelativePath": "api/SchoolFees/insertstudentfees",
     "HttpMethod": "POST",
@@ -2784,6 +2847,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProject.Controllers.StudentController",
+    "Method": "GetAdmissionNo",
+    "RelativePath": "api/Student/GetAdmissionNo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

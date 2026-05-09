@@ -5,7 +5,10 @@ using System.Security.Cryptography.Pkcs;
 namespace ApiProject.Models.Response
 {
 
-
+    public class GetEmployeeNoModel
+    {
+        public string? EmpAdmissionNo { get; set; }
+    }
     public class GetEmployeeModel
     {
         public int Emp_Id { get; set; }

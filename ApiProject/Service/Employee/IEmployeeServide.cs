@@ -10,6 +10,8 @@ namespace ApiProject.Service.Employee
     public interface IEmployeeServide
     {
         // Employee detail stsrt
+
+        Task<ApiResponse<GetEmployeeNoModel>> GetEmployeeNo();
         Task<ApiResponse<List<GetEmployeeModel>>> GetEmployeeLit();
         Task<ApiResponse<List<GetEmployeeDetailsModel>>> GetEmployeeDetailById(int EmpId);
         Task<ApiResponse<bool>> AddEmployeeDetail(AddEmployeeDetailReq req);

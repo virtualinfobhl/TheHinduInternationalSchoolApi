@@ -269,6 +269,32 @@ namespace ApiProject.Controllers
             }
         }
 
+        //  insert Other fee 
+        [HttpPost("InsertOtherFees")]
+        public async Task<IActionResult> InsertOtherFees([FromBody] OtherFeesReq req)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                var response = ApiResponse<string>.ErrorResponse("Validation failed: " + string.Join(" | ", errorMessages));
+
+                return Ok(response);
+            }
+
+            try
+            {
+                var res = await _schoolFees.InsertOtherFees(req);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var response = ApiResponse<string>.ErrorResponse("Exception: " + ex.Message);
+                return Ok(response);
+            }
+        }
+
+        // Get Daily Fee Collection
         [HttpPost("GetDailyFeeCollection")]
         public async Task<IActionResult> GetDailyFeeCollection([FromBody] FeesCollectionReq req)
         {

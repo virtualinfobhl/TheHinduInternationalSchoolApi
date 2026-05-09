@@ -60,6 +60,25 @@ namespace ApiProject.Models.Response
         public List<FeeReceiptModel> FeeReceipt { get; set; }
     }
 
+    public class GetOtherFeeDetailsModel
+    {
+        public int stu_id { get; set; }
+        public string? SrNo { get; set; }
+        public string? stu_name { get; set; }
+        public string? FatherName { get; set; }
+        public Nullable<int> ClassId { get; set; }
+        public Nullable<int> SectionId { get; set; }
+        public string? ClassName { get; set; }
+        public string? SectionName { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportsFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
+        public Nullable<double> BoardFeereceipt { get; set; }
+        public Nullable<double> SportsFeereceipt { get; set; }
+        public Nullable<double> RoboticsFeereceipt { get; set; }
+
+    }
+
     public class HalfYearlyModel
     {
         public int StudentId { get; set; }
@@ -170,7 +189,7 @@ namespace ApiProject.Models.Response
         public int stu_id { get; set; }
         public string? stu_name { get; set; }
         public string? RollNo { get; set; }
-            public string? Srno { get; set; }
+        public string? Srno { get; set; }
         public string? ClassName { get; set; }
         public string? SectionName { get; set; }
         public List<GetExamSubjectModel> SubjectName { get; set; }

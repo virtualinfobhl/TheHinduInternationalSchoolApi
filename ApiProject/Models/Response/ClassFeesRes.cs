@@ -7,8 +7,10 @@ namespace ApiProject.Models.Response
         public int? fee_id { get; set; }
         public int? ClassId { get; set; }
         public string? ClassName { get; set; }
-
         public double? admission_fee { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
         public double? tution_fee { get; set; }
         public double? exam_fee { get; set; }
         public double? Develoment_fee { get; set; }
@@ -56,6 +58,9 @@ namespace ApiProject.Models.Response
         public string? fathermobileno { get; set; }
         public Nullable<bool> RTE { get; set; }
         public Nullable<double> admission_fee { get; set; }
+        public Nullable<double> BoardFee { get; set; }
+        public Nullable<double> SportsFee { get; set; }
+        public Nullable<double> RoboticsFee { get; set; }
         public Nullable<double> PramoteFees { get; set; }
         public Nullable<double> AFeeDiscount { get; set; }
         public Nullable<double> AdmissionPayfee { get; set; }
@@ -119,6 +124,8 @@ namespace ApiProject.Models.Response
         public string? SectionName { get; set; }
         public string? fathername { get; set; }
         public string? fathermobileno { get; set; }
+        public double? MAdmissionPayfee { get; set; }
+        public double? MPramoteFees { get; set; }
         public double? PayFees { get; set; }
         public string? FeeType { get; set; }
         public string? PaymentMode { get; set; }

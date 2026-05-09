@@ -41,6 +41,45 @@ namespace ApiProject.Service.Student
         }
 
         // student details
+
+        public async Task<ApiResponse<GetAdmissionNoModel>> GetAdmissionNo()
+        {
+            int SchoolId = _loginUser.SchoolId;
+            int SessionId = _loginUser.SessionId;
+
+            var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(s => s.Id == SessionId);
+
+            DateTime date = DateTime.Parse(sessioninfo.StartSession);
+            string startyears = date.ToString("yy");
+
+
+            //  StudentCode generate (Always)
+            string StudentCode = "";
+            institute GetInstituteCodeName = _context.institute.Where(i => i.institute_id == SchoolId).FirstOrDefault();
+
+            student_admission LastCode = _context.student_admission.Where(s => s.CompanyId == SchoolId && s.SessionId == SessionId).OrderByDescending(s => s.stu_id).FirstOrDefault();
+
+            string threeLetters = GetInstituteCodeName.instituteCode.Substring(0, 3).ToUpper();
+            int year = int.Parse(startyears) % 100;
+            int NewId = 1;
+
+            if (LastCode != null)
+            {
+                var parts = LastCode.stu_code.Split('/');
+                if (parts.Length == 2 && int.TryParse(parts[1], out int lastId))
+                {
+                    NewId = lastId + 1;
+                }
+            }
+
+            StudentCode = threeLetters + "-" + year + "/" + NewId;
+            var result = new GetAdmissionNoModel
+            {
+                AdmissionNo = StudentCode
+            };
+
+            return ApiResponse<GetAdmissionNoModel>.SuccessResponse(result, "Fetch successfully Admission No.");
+        }
         public async Task<List<ClassResModel>> GetClass()
         {
             int SchoolId = _loginUser.SchoolId;

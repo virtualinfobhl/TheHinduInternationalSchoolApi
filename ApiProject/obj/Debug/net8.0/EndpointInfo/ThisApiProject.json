@@ -4,6 +4,18 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Emolpyee/GetEmployeeNo": {
+      "get": {
+        "tags": [
+          "Emolpyee"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Emolpyee/GetEmployeeLit": {
       "get": {
         "tags": [
@@ -2000,6 +2012,36 @@
         }
       }
     },
+    "/api/Parent/UpdateStudentPaymentSuccessfully": {
+      "get": {
+        "tags": [
+          "Parent"
+        ],
+        "parameters": [
+          {
+            "name": "StudentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ReceiptId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Parent/GetTransportInstallFee": {
       "get": {
         "tags": [
@@ -2256,6 +2298,37 @@
       }
     },
     "/api/Report/GetStudentFeeReport": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getstudentDellistReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getstudentDellistReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/getstudentDellistReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Report/GetOtherFeeReport": {
       "post": {
         "tags": [
           "Report"
@@ -3791,6 +3864,37 @@
         }
       }
     },
+    "/api/SchoolFees/InsertOtherFees": {
+      "post": {
+        "tags": [
+          "SchoolFees"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherFeesReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherFeesReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherFeesReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/SchoolFees/GetDailyFeeCollection": {
       "post": {
         "tags": [
@@ -3920,6 +4024,18 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Student/GetAdmissionNo": {
+      "get": {
+        "tags": [
+          "Student"
         ],
         "responses": {
           "200": {
@@ -7035,6 +7151,21 @@
             "format": "double",
             "nullable": true
           },
+          "boardFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sportFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "roboticsFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "tution_fee": {
             "type": "number",
             "format": "double",
@@ -8078,6 +8209,48 @@
         },
         "additionalProperties": false
       },
+      "OtherFeesReq": {
+        "required": [
+          "classId",
+          "feeType",
+          "payFees",
+          "paymentDate",
+          "paymentMode",
+          "studentId"
+        ],
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "feeType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "payFees": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentMode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "remark": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ReceiptupdateModel": {
         "type": "object",
         "properties": {
@@ -8659,6 +8832,21 @@
             "format": "int32"
           },
           "admission_fee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "boardFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sportFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "roboticsFee": {
             "type": "number",
             "format": "double",
             "nullable": true
