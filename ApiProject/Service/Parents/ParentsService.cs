@@ -1803,11 +1803,11 @@ namespace ApiProject.Service.Parents
                 var Stufee = await _context.StudentRenewView.Where(a => a.StuId == StudentId && a.CompanyId == SchoolId && a.SessionId == SessionId && a.RActive == true)
                     .Select(a => new GetStudentFeeModel
                     {
-                        TotalFee = a.total_fee,
+                        TotalFee = a.Rtotal_fee,
                         PaidAmount = _context.M_FeeDetail.Where(u => u.stu_id == a.StuId && u.ClassId == a.ClassId && u.SessionId == SessionId && u.CompanyId == SchoolId
                         && u.Status == "1" && u.Active == true).Sum(u => u.PayFees) ?? 0,
 
-                        DueAmount = (a.total_fee ?? 0) - (_context.M_FeeDetail.Where(u => u.stu_id == a.StuId && u.ClassId == a.ClassId && u.SessionId == SessionId
+                        DueAmount = (a.Rtotal_fee ?? 0) - (_context.M_FeeDetail.Where(u => u.stu_id == a.StuId && u.ClassId == a.ClassId && u.SessionId == SessionId
                             && u.CompanyId == SchoolId && u.Status == "1" && u.Active == true).Sum(u => u.PayFees) ?? 0),
 
                     }).FirstOrDefaultAsync();

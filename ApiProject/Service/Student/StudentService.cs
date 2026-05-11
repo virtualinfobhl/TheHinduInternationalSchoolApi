@@ -19,8 +19,6 @@ using System.Drawing.Printing;
 using System.Linq.Expressions;
 using static ApiProject.Models.Response.ClassByFeeInResponse;
 
-
-
 namespace ApiProject.Service.Student
 {
     public class StudentService : IStudentService
@@ -167,6 +165,7 @@ namespace ApiProject.Service.Student
                         mother_mobile = a.MotherMobileNo,
                         mother_occupation = a.MotherOccupation,
                         MotherIncome = a.MotherIncome,
+
 
                     }).FirstOrDefaultAsync();
 
