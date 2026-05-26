@@ -79,11 +79,9 @@ namespace ApiProject.Models.Response
     }
     public class StufeeinstallmentModel
     {
-        public string? Installmentno { get; set; }
-        public Nullable<double> FeeAmount { get; set; }
-        public Nullable<double> dueInstallmentfee { get; set; }
-
+        public Nullable<double> SInsAmount { get; set; }
     }
+
 
     public class StudentFeesRes
     {
