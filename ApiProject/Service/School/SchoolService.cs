@@ -6,9 +6,14 @@ using ApiProject.Service.Current;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Writers;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ApiProject.Service.School
 {
@@ -16,11 +21,14 @@ namespace ApiProject.Service.School
     {
         private readonly ILoginUserService _loginUser;
         private readonly ApplicationDbContext _context;
+
+        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public SchoolService(
             ILoginUserService loginUser,
             ApplicationDbContext context,
+            IConfiguration configuration,
                         IMapper mapper
 
             )
@@ -28,6 +36,7 @@ namespace ApiProject.Service.School
             _context = context;
             _loginUser = loginUser;
             _mapper = mapper;
+            _configuration = configuration;
 
         }
 
@@ -78,24 +87,36 @@ namespace ApiProject.Service.School
         {
             try
             {
-                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(s => s.Id == SessionId);
+                var sessioninfo = await _context.SessionInfo.FirstOrDefaultAsync(p => p.Id == SessionId);
 
                 if (sessioninfo == null)
-                {
                     return ApiResponse<SessionResponseModel>.ErrorResponse("Session not found");
-                }
 
-                DateTime start = Convert.ToDateTime(sessioninfo.StartSession);
-                DateTime end = Convert.ToDateTime(sessioninfo.EndSession);
+                var company = await _context.institute.FirstOrDefaultAsync(p => p.institute_id == sessioninfo.CompanyId);
+
+                if (company == null)
+                    return ApiResponse<SessionResponseModel>.ErrorResponse("School not found");
+
+                if (sessioninfo.StartSession == null || sessioninfo.EndSession == null)
+                    return ApiResponse<SessionResponseModel>.ErrorResponse("Invalid session dates");
+
+                var token = GenerateSessionToken(company.institute_id, sessioninfo.Id);
 
                 var result = new SessionResponseModel
                 {
-                    startyear = start.Year,
-                    endyear = end.Year,
-                    startdate = start.ToString("dd-MMM-yyyy"),
-                    enddate = end.ToString("dd-MMM-yyyy"),
-                    startdatey = start.ToString("yy"),
-                    enddatey = end.ToString("yy"),
+                    Token = token,
+                    SchoolName = company.institute_name,
+                    SchoolAddress = company.address,
+                    Pincode = company.pincode,
+                    MobileNo1 = company.mob_num,
+                    MobileNo2 = company.alternatemob_num,
+
+                    startyear = Convert.ToDateTime(sessioninfo.StartSession).Year.ToString(),
+                    endyear = Convert.ToDateTime(sessioninfo.EndSession).Year.ToString(),
+                    startdate = Convert.ToDateTime(sessioninfo.StartSession).ToString("dd-MMM-yyyy"),
+                    enddate = Convert.ToDateTime(sessioninfo.EndSession).ToString("dd-MMM-yyyy"),
+                    startdatey = Convert.ToDateTime(sessioninfo.StartSession).ToString("yy"),
+                    enddatey = Convert.ToDateTime(sessioninfo.EndSession).ToString("yy"),
                     sessionId = sessioninfo.Id
                 };
 
@@ -107,8 +128,30 @@ namespace ApiProject.Service.School
             }
         }
 
+        private string GenerateSessionToken(int schoolId, int sessionId)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        // *********** School Informaction 
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, sessionId.ToString()),
+                new Claim("SchoolId", schoolId.ToString()),
+                 new Claim("SessionId", sessionId.ToString()),
+            };
+
+            var token = new JwtSecurityToken(
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+
         #region School Informaction
         public async Task<ApiResponse<SchoolDetail>> SchoolDetail()
         {

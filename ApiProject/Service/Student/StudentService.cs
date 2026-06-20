@@ -3069,7 +3069,7 @@ namespace ApiProject.Service.Student
                 int UserId = _loginUser.UserId;
                 int SessionId = _loginUser.SessionId;
 
-                var studentdata = await  _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.CompanyId == SchoolId
+                var studentdata = await _context.Student_Renew.Where(c => c.StuId == req.StudentId && c.ClassId == req.ClassId && c.CompanyId == SchoolId
                && c.SessionId == SessionId).FirstOrDefaultAsync();
 
                 if (studentdata == null)

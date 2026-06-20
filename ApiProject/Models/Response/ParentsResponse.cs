@@ -173,8 +173,8 @@ namespace ApiProject.Models.Response
         public Nullable<double> DueFee { get; set; }
         public Nullable<double> OldDueFee { get; set; }
         public Nullable<double> OldPaidFee { get; set; }
-        public List<TInstallmentList> TransInatallment { get; set; }
         public List<TransReceiptList> TransReceiptList { get; set; }
+        public List<TInstallmentList> TransInatallment { get; set; }
     }
 
     public class GetStuInstallmentModel

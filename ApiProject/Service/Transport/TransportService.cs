@@ -1284,7 +1284,7 @@ namespace ApiProject.Service.Transport
 
                 // 🔹 Pehle check karo student already assigned hai ya nahi
                 var sroute = await _context.NewTransportFeeTbl.FirstOrDefaultAsync(p => p.stu_id == req.StudentId && p.university_id == req.ClassId &&
-                 p.MonthName.ToLower().Contains(req.Month.ToLower()) && p.SessionId == SessionId && p.CompanyId == SchoolId);
+                 p.MonthName.ToLower().Contains(req.Month.ToLower()) && p.SessionId == SessionId && p.CompanyId == SchoolId && p.Active == true);
 
                 if (sroute != null)
                 {

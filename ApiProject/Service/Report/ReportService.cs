@@ -1515,7 +1515,6 @@ namespace ApiProject.Service.Report
                     TotalMatks = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType) && a.CompanyId == SchoolId
                     && a.SessionId == SessionId).Sum(a => a.Total),
 
-
                     // MaxMarks पहले ले आओ, फिर बाद में Sum करो
                     //MaxTotal = _context.TestExamTbl.Where(a => a.university_id == c.ClassId && a.stu_id == c.StuId && allowedTestTypes.Contains(a.TestType) &&
                     //a.CompanyId == SchoolId && a.SessionId == SessionId).Select(a => new

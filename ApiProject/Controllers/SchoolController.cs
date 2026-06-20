@@ -56,52 +56,12 @@ namespace ApiProject.Controllers
             }
         }
 
-        //[HttpGet("ChangeSession")]
-        //public async Task<IActionResult> ChangeSession(int SessionId)
-        //{
-        //    try
-        //    {
-        //        var res = await _schoolService.ChangeSession(SessionId);
-        //        return Ok(res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ErrorRepsponse(ex.Message);
-        //    }
-        //}
-
         [HttpGet("ChangeSession")]
         public async Task<IActionResult> ChangeSession(int SessionId)
         {
             try
             {
                 var res = await _schoolService.ChangeSession(SessionId);
-
-                if (!res.Success)
-                    return Ok(res);
-
-                var data = res.Data;
-
-                var options = new CookieOptions
-                {
-                    Expires = DateTime.Now.AddDays(30),
-                    HttpOnly = true,
-                    IsEssential = true
-                    // Secure = true // enable if HTTPS
-                };
-
-                // 🔥 SAME AS OLD MVC (CORE VERSION)
-                Response.Cookies.Append("Startsessionyear", data.startyear.ToString(), options);
-                Response.Cookies.Append("Endsessionyear", data.endyear.ToString(), options);
-
-                Response.Cookies.Append("StartsessionyearY", data.startdatey, options);
-                Response.Cookies.Append("EndsessionyearY", data.enddatey, options);
-
-                Response.Cookies.Append("Startsession", data.startdate, options);
-                Response.Cookies.Append("Endsession", data.enddate, options);
-
-                Response.Cookies.Append("SessionId", data.sessionId.ToString(), options);
-
                 return Ok(res);
             }
             catch (Exception ex)
@@ -109,6 +69,46 @@ namespace ApiProject.Controllers
                 return ErrorRepsponse(ex.Message);
             }
         }
+
+        //[HttpGet("ChangeSession")]
+        //public async Task<IActionResult> ChangeSession(int SessionId)
+        //{
+        //    try
+        //    {
+        //        var res = await _schoolService.ChangeSession(SessionId);
+
+        //        if (!res.Success)
+        //            return Ok(res);
+
+        //        var data = res.Data;
+
+        //        var options = new CookieOptions
+        //        {
+        //            Expires = DateTime.Now.AddDays(30),
+        //            HttpOnly = true,
+        //            IsEssential = true
+        //            // Secure = true // enable if HTTPS
+        //        };
+
+        //        // 🔥 SAME AS OLD MVC (CORE VERSION)
+        //        Response.Cookies.Append("Startsessionyear", data.startyear.ToString(), options);
+        //        Response.Cookies.Append("Endsessionyear", data.endyear.ToString(), options);
+
+        //        Response.Cookies.Append("StartsessionyearY", data.startdatey, options);
+        //        Response.Cookies.Append("EndsessionyearY", data.enddatey, options);
+
+        //        Response.Cookies.Append("Startsession", data.startdate, options);
+        //        Response.Cookies.Append("Endsession", data.enddate, options);
+
+        //        Response.Cookies.Append("SessionId", data.sessionId.ToString(), options);
+
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ErrorRepsponse(ex.Message);
+        //    }
+        //}
 
         // *********************** School Informaction  ***************************** //
         #region School Insformaction

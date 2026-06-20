@@ -29,8 +29,17 @@
 
     public class SessionResponseModel
     {
-        public int? startyear { get; set; }
-        public int? endyear { get; set; }
+
+        public string? Token { get; set; }
+        public int? Schoolid { get; set; }
+        public string? SchoolName { get; set; }
+        public string? SchoolAddress { get; set; }
+        public string? Pincode { get; set; }
+        public string? MobileNo1 { get; set; }
+        public string? MobileNo2 { get; set; }
+
+        public string? startyear { get; set; }
+        public string? endyear { get; set; }
         public string? startdate { get; set; }
         public string? enddate { get; set; }
         public string? startdatey { get; set; }

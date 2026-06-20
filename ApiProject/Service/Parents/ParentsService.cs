@@ -131,8 +131,8 @@ namespace ApiProject.Service.Parents
                  new Claim("StudentId", user.StuId.ToString()),
                   new Claim("Studentname", user.stu_name.ToString()),
                   new Claim("ClassId", user.ClassId.ToString()),
-                // new Claim("ClassName", user.ClassId.ToString()),
                 new Claim("ParentName", user.father_name.ToString())
+                // new Claim("ClassName", user.ClassId.ToString()),
                 //new Claim(ClaimTypes.Role, user.Status)
             };
 
@@ -1067,15 +1067,23 @@ namespace ApiProject.Service.Parents
                         RouteName = _context.TransRouteTbl.Where(a => a.RouteId == c.RouteId).Select(a => a.Route).FirstOrDefault(),
                         StoppageName = _context.TransStoppageTbl.Where(a => a.StoppageId == c.StoppageId).Select(a => a.Stoppage).FirstOrDefault(),
 
-                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId
-                        && validMonths.Contains(a.MonthName)).Select(a => new TInstallmentList
-                        {
-                            InstallmentFee = a.InstallFee,
-                            InstallmentNo = a.InstallmentNo,
-                            // TTotalFee = a.TotalTransFee,
-                            DueFee = a.DueFee,
-                            MonthName = a.MonthName,
+                        //TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId
+                        //&& validMonths.Contains(a.MonthName)).Select(a => new TInstallmentList
+                        //{
+                        //    InstallmentFee = a.InstallFee,
+                        //    InstallmentNo = a.InstallmentNo,
+                        //    // TTotalFee = a.TotalTransFee,
+                        //    DueFee = a.DueFee,
+                        //    MonthName = a.MonthName,
+                        //}).ToList(),
 
+                        TransInatallment = _context.TransInstallmentTbl.Where(a => a.StuId == c.stu_id && a.CompanyId == SchoolId && validMonths.Contains(a.MonthName.ToLower()))
+                        .GroupBy(a => new { a.MonthName, a.InstallmentNo }).Select(g => new TInstallmentList
+                        {
+                            InstallmentFee = g.First().InstallFee,
+                            InstallmentNo = g.Key.InstallmentNo,
+                            DueFee = g.First().DueFee,
+                            MonthName = g.Key.MonthName
                         }).ToList(),
 
                         TransReceiptList = _context.NewTransportFeeTbl.Where(a => a.stu_id == c.stu_id && a.CompanyId == SchoolId && a.Active == true)
